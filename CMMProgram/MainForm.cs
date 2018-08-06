@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace CMMProgram
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             InitEvent();
@@ -26,15 +26,12 @@ namespace CMMProgram
 
         private void BtnEnd_Click(object sender, EventArgs e)
         {
+            CMM.Entry.Test();
         }
 
         private void BtnStart_Click(object sender, EventArgs e)
         {
-            var session = NXOpen.Session.GetSession();
-            if (session != null)
-            {
-                System.Windows.Forms.MessageBox.Show("非空");
-            }
+           
         }
     }
 }
