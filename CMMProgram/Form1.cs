@@ -14,6 +14,27 @@ namespace CMMProgram
         public Form1()
         {
             InitializeComponent();
+            InitEvent();
+        }
+
+
+        void InitEvent()
+        {
+            btnStart.Click += BtnStart_Click;
+            btnEnd.Click += BtnEnd_Click;
+        }
+
+        private void BtnEnd_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
+            var session = NXOpen.Session.GetSession();
+            if (session != null)
+            {
+                System.Windows.Forms.MessageBox.Show("非空");
+            }
         }
     }
 }
