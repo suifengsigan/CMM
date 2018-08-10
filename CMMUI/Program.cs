@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace CMMTool
+namespace CMMUI
 {
     public static class Program
     {
         public static void Main()
         {
-            new MainForm().ShowDialog();
+            new Form1().ShowDialog();
         }
     }
 }

@@ -21,7 +21,6 @@ namespace CMMProgram
 
         public void Excute(string action)
         {
-            this.Enabled = false;
             try
             {
                 string actionNameStr = action;
@@ -34,8 +33,6 @@ namespace CMMProgram
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
-            this.Enabled = true;
-            this.BringToFront();
         }
 
 
@@ -68,7 +65,7 @@ namespace CMMProgram
        
         private void BtnStart_Click(object sender, EventArgs e)
         {
-           
+            Excute("CMMUI.dll");
         }
     }
 }
