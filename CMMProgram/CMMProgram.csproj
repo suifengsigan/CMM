@@ -32,14 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NXOpen.UF">
-      <HintPath>..\..\..\BLL\UG\NXOpen.UF.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NXOpen.Utilities">
-      <HintPath>..\..\..\BLL\UG\NXOpen.Utilities.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="ManagedLoader" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -57,8 +50,10 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="NxOpenHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProxyObject.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,17 +79,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CMMTool\CMMTool.csproj">
-      <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
-      <Name>CMMTool</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\CMM\CMM.csproj">
-      <Project>{3549d63a-6ad8-41c2-9527-39d38dc15ea0}</Project>
-      <Name>CMM</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

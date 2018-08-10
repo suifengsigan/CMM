@@ -7,17 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace CMMTool
+namespace CMM
 {
-    public partial class MainForm : Form
+    public partial class Form1 : Form
     {
-        public MainForm()
+        public Form1()
         {
             InitializeComponent();
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
         }
     }
 }

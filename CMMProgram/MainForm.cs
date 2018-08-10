@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -17,6 +19,25 @@ namespace CMMProgram
             InitEvent();
         }
 
+        public void Excute(string action)
+        {
+            this.Enabled = false;
+            try
+            {
+                string actionNameStr = action;
+                var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMMProg");
+                path = Path.Combine(path, "Application");
+                actionNameStr = Path.Combine(path, actionNameStr);
+                ProxyObject.ExecuteMothod(actionNameStr, path);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            this.Enabled = true;
+            this.BringToFront();
+        }
+
 
         void InitEvent()
         {
@@ -28,7 +49,7 @@ namespace CMMProgram
 
         private void BtnConfig_Click(object sender, EventArgs e)
         {
-            new CMMTool.MainForm().ShowDialog();
+            Excute("CMMTool.dll");
         }
 
         private void BtnSelectFile_Click(object sender, EventArgs e)
@@ -41,9 +62,10 @@ namespace CMMProgram
 
         private void BtnEnd_Click(object sender, EventArgs e)
         {
-            CMM.Entry.Test();
+            
         }
 
+       
         private void BtnStart_Click(object sender, EventArgs e)
         {
            

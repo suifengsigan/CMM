@@ -9,7 +9,7 @@ namespace CMMProgram
 {
     static class Program
     {
-        private static string UGBASEDIRUGII = @"I:\UG\NX 9.0-64bit\UGII";
+        private static string UGBASEDIRUGII = AppDomain.CurrentDomain.BaseDirectory;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -63,6 +63,11 @@ namespace CMMProgram
             else
             {
                 var fileName = PathCombine(UGBASEDIRUGII, "CMMProg", "Application", assemblyName.Name + ".dll");
+                if (File.Exists(fileName))
+                {
+                    return Assembly.LoadFile(fileName);
+                }
+                fileName = PathCombine(UGBASEDIRUGII, "CMMProg", "CSharpEx", assemblyName.Name + ".dll");
                 if (File.Exists(fileName))
                 {
                     return Assembly.LoadFile(fileName);

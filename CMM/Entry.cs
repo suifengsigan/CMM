@@ -10,6 +10,10 @@ namespace CMM
 {
     public class Entry
     {
+        public static void Main()
+        {
+
+        }
         public static void Test()
         {
             PartLoadStatus partLoadStatus1;

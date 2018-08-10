@@ -5,13 +5,9 @@ using System.Windows.Forms;
 
 namespace CMMTool
 {
-    static class Program
+    public static class Program
     {
-        /// <summary>
-        /// 应用程序的主入口点。
-        /// </summary>
-        [STAThread]
-        static void Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
