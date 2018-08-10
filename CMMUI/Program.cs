@@ -9,6 +9,7 @@ namespace CMMUI
     {
         public static void Main()
         {
+            AssemblyLoader.Entry.InitAssembly();
             new Form1().ShowDialog();
         }
     }

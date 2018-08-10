@@ -69,17 +69,6 @@ namespace CMMProgram
                     return Assembly.LoadFile(UGMANAGEDPATH);
                 }
             }
-            else if (assemblyName.Name.Contains("PHSnap"))
-            {
-                string fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-                var dir = System.IO.Path.GetDirectoryName(fileName);
-                Console.WriteLine("Resolving...");
-                var assemblbyName = args.Name.Split(',').FirstOrDefault();
-                var version = "UG9.0";
-                var path = string.Format("{0}\\SnapDll\\{1}", PathCombine(dir, "CMMProg", "Application"), version);
-                var file = System.IO.Directory.GetFiles(path).FirstOrDefault(u => u == string.Format("{0}.dll", System.IO.Path.Combine(path, assemblbyName)));
-                return Assembly.LoadFile(file);
-            }
             return null;
         }
 
