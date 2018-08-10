@@ -7,10 +7,19 @@ using System.IO;
 
 public partial class CMMProgramUIBusiness
 {
-    string _probeDataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION", "ProbeData.json");
+    string _probeDataPath = PathCombine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION", "ProbeData.json");
 
     List<ProbeData> _probeDatas = new List<ProbeData>();
     const string _propertyName = "PROPERTYNAME";
+
+    static string PathCombine(params string[] str)
+    {
+        var result = string.Empty;
+        str.ToList().ForEach(u => {
+            result = Path.Combine(result, u);
+        });
+        return result;
+    }
 
     /// <summary>
     /// 寻找隐藏图层
@@ -39,7 +48,7 @@ public partial class CMMProgramUIBusiness
             {
 
                 var probeData = _probeDatas.FirstOrDefault(u => u.ProbeName == probeName);
-                var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION", probeData.ProbeName);
+                var fileName = PathCombine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION", probeData.ProbeName);
 
                 probeData.Body = ImportPart(fileName);
                 if (probeData.Body != null)

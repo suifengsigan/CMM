@@ -22,6 +22,21 @@ namespace CMMProgram
         {
             btnStart.Click += BtnStart_Click;
             btnEnd.Click += BtnEnd_Click;
+            btnSelectFile.Click += BtnSelectFile_Click;
+            btnConfig.Click += BtnConfig_Click;
+        }
+
+        private void BtnConfig_Click(object sender, EventArgs e)
+        {
+            new CMMTool.MainForm().ShowDialog();
+        }
+
+        private void BtnSelectFile_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtFile.Text = openFileDialog1.FileName;
+            }
         }
 
         private void BtnEnd_Click(object sender, EventArgs e)

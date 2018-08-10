@@ -55,7 +55,7 @@ namespace CMMProgram
                 var partName = PartName;
                 var strs=partName.Split('-').ToList();
                 strs.Remove(strs.LastOrDefault());
-                return string.Join("-", strs);
+                return string.Join("-", strs.ToArray());
             }
         }
 
