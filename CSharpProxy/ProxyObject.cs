@@ -5,11 +5,20 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace CMMProgram
+namespace CSharpProxy
 {
-    public class ProxyObject: MarshalByRefObject
+    public class ProxyObject : MarshalByRefObject
     {
+        public Action<int, string> ShowMsgHandler;
         Assembly assembly = null;
+
+        public void ShowMsg(string msg, int type = 0)
+        {
+            if (ShowMsgHandler != null)
+            {
+                ShowMsgHandler(type, msg);
+            }
+        }
         public void LoadAssembly(string actionName)
         {
             assembly = Assembly.LoadFile(actionName);
@@ -36,14 +45,14 @@ namespace CMMProgram
         {
             var setup = new AppDomainSetup();
             setup.ApplicationBase = baseDirectory;
-            AppDomain _appDomain = AppDomain.CreateDomain(Path.Combine(actionName, ".dll"), null, setup);
+            AppDomain _appDomain = AppDomain.CreateDomain(PathCombine(actionName, ".dll"), null, setup);
             try
             {
                 var args = new string[] { actionName };
                 var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
                 ProxyObject po = (ProxyObject)_appDomain.CreateInstanceFromAndUnwrap(location, typeof(ProxyObject).FullName);
                 po.LoadAssembly(location);
-                po.Invoke("CMMProgram.NxOpenHelper", "Main", args);
+                po.Invoke(typeof(NxOpenHelper).FullName, "Main", args);
             }
             catch (Exception ex)
             {
@@ -53,6 +62,15 @@ namespace CMMProgram
             {
                 AppDomain.Unload(_appDomain);
             }
+        }
+
+        static string PathCombine(params string[] str)
+        {
+            var result = string.Empty;
+            str.ToList().ForEach(u => {
+                result = Path.Combine(result, u);
+            });
+            return result;
         }
     }
 }

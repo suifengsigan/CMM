@@ -27,7 +27,7 @@ namespace CMMProgram
                 var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMMProg");
                 path = Path.Combine(path, "Application");
                 actionNameStr = Path.Combine(path, actionNameStr);
-                ProxyObject.ExecuteMothod(actionNameStr, path);
+                CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path);
             }
             catch (Exception ex)
             {

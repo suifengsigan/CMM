@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace CMMProgram
+namespace CSharpProxy
 {
     public class NxOpenHelper
     {
@@ -25,7 +25,7 @@ namespace CMMProgram
                 var assembly = loader.Load(arg);
                 string outArg = string.Empty;
                 int result = 0;
-                loader.Run("Main", args, out outArg, out result);
+                loader.Run("Main", arg, out outArg, out result);
             }
             catch (Exception ex)
             {
@@ -42,10 +42,10 @@ namespace CMMProgram
                 var info = new System.IO.DirectoryInfo(dir);
                 var UGII_BASE_DIR = info.Parent.FullName;
 
-                var UGMANAGEDPATH = Path.Combine(dir, "managed", assemblyName.Name + ".dll");
+                var UGMANAGEDPATH = PathCombine(dir, "managed", assemblyName.Name + ".dll");
                 if (!File.Exists(UGMANAGEDPATH))
                 {
-                    UGMANAGEDPATH = Path.Combine(UGII_BASE_DIR, "NXBIN", "managed", assemblyName.Name + ".dll");
+                    UGMANAGEDPATH = PathCombine(UGII_BASE_DIR, "NXBIN", "managed", assemblyName.Name + ".dll");
                 }
                 if (File.Exists(UGMANAGEDPATH))
                 {
@@ -81,6 +81,4 @@ namespace CMMProgram
             return result;
         }
     }
-
-   
 }
