@@ -10,7 +10,15 @@ namespace CMMUI
         public static void Main()
         {
             AssemblyLoader.Entry.InitAssembly();
-            new Form1().ShowDialog();
+            
+            Execute();
+        }
+
+        static void Execute()
+        {
+            CSharpProxy.ProxyObject.Instance.ShowMsg("开始");
+            CMM.Entry.Test();
+            CSharpProxy.ProxyObject.Instance.ShowMsg(string.Format("{0}  结束",DateTime.Now));
         }
     }
 }

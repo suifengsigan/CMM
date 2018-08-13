@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 
@@ -13,6 +14,29 @@ namespace CMMProgram
 {
     public partial class s : Form
     {
+        /// <summary>
+        /// Override the DefWndProc function, in order to receive the message through it.
+        /// </summary>
+        /// <param name="m">message</param>
+        protected override void DefWndProc(ref System.Windows.Forms.Message m)
+        {
+            switch (m.Msg)
+            {
+                // Here, we use WM_COPYDATA message to receive the COPYDATASTRUCT
+                case CSharpProxy.ProxyObject.WM_DATA_TRANSFER:
+                    CSharpProxy.ProxyObject.COPYDATASTRUCT cds = new CSharpProxy.ProxyObject.COPYDATASTRUCT();
+                    cds = (CSharpProxy.ProxyObject.COPYDATASTRUCT)m.GetLParam(typeof(CSharpProxy.ProxyObject.COPYDATASTRUCT));
+                    byte[] bytData = new byte[cds.cbData];
+                    Marshal.Copy(cds.lpData, bytData, 0, bytData.Length);
+                    var msg = Encoding.Default.GetString(bytData);
+                    txtMsg.AppendText(msg);
+                    break;
+
+                default:
+                    base.DefWndProc(ref m);
+                    break;
+            }
+        }
         public s()
         {
             InitializeComponent();
@@ -39,7 +63,6 @@ namespace CMMProgram
         void InitEvent()
         {
             btnStart.Click += BtnStart_Click;
-            btnEnd.Click += BtnEnd_Click;
             btnSelectFile.Click += BtnSelectFile_Click;
             btnCMMConfig.Click += BtnConfig_Click;
             btnUserConfig.Click += BtnUserConfig_Click;
