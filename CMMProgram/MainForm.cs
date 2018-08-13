@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace CMMProgram
 {
-    public partial class MainForm : Form
+    public partial class s : Form
     {
-        public MainForm()
+        public s()
         {
             InitializeComponent();
             InitEvent();
@@ -41,7 +41,13 @@ namespace CMMProgram
             btnStart.Click += BtnStart_Click;
             btnEnd.Click += BtnEnd_Click;
             btnSelectFile.Click += BtnSelectFile_Click;
-            btnConfig.Click += BtnConfig_Click;
+            btnCMMConfig.Click += BtnConfig_Click;
+            btnUserConfig.Click += BtnUserConfig_Click;
+        }
+
+        private void BtnUserConfig_Click(object sender, EventArgs e)
+        {
+            Excute("EactConfig.dll");
         }
 
         private void BtnConfig_Click(object sender, EventArgs e)

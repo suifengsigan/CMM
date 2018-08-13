@@ -20,7 +20,7 @@ namespace CMMProgram
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            Application.Run(new s());
         }
 
         static string PathCombine(params string[] str)

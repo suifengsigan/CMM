@@ -1,6 +1,6 @@
 ﻿namespace CMMProgram
 {
-    partial class MainForm
+    partial class s
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -34,7 +34,8 @@
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.txtFile = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.btnConfig = new System.Windows.Forms.Button();
+            this.btnCMMConfig = new System.Windows.Forms.Button();
+            this.btnUserConfig = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnStart
@@ -85,27 +86,37 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // btnConfig
+            // btnCMMConfig
             // 
-            this.btnConfig.Location = new System.Drawing.Point(482, 271);
-            this.btnConfig.Name = "btnConfig";
-            this.btnConfig.Size = new System.Drawing.Size(67, 23);
-            this.btnConfig.TabIndex = 5;
-            this.btnConfig.Text = "配置";
-            this.btnConfig.UseVisualStyleBackColor = true;
+            this.btnCMMConfig.Location = new System.Drawing.Point(482, 271);
+            this.btnCMMConfig.Name = "btnCMMConfig";
+            this.btnCMMConfig.Size = new System.Drawing.Size(67, 23);
+            this.btnCMMConfig.TabIndex = 5;
+            this.btnCMMConfig.Text = "CMM配置";
+            this.btnCMMConfig.UseVisualStyleBackColor = true;
             // 
-            // MainForm
+            // btnUserConfig
+            // 
+            this.btnUserConfig.Location = new System.Drawing.Point(358, 271);
+            this.btnUserConfig.Name = "btnUserConfig";
+            this.btnUserConfig.Size = new System.Drawing.Size(75, 23);
+            this.btnUserConfig.TabIndex = 6;
+            this.btnUserConfig.Text = "用户配置";
+            this.btnUserConfig.UseVisualStyleBackColor = true;
+            // 
+            // s
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(561, 306);
-            this.Controls.Add(this.btnConfig);
+            this.Controls.Add(this.btnUserConfig);
+            this.Controls.Add(this.btnCMMConfig);
             this.Controls.Add(this.txtFile);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnEnd);
             this.Controls.Add(this.btnStart);
-            this.Name = "MainForm";
+            this.Name = "s";
             this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -120,7 +131,8 @@
         private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.TextBox txtFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button btnConfig;
+        private System.Windows.Forms.Button btnCMMConfig;
+        private System.Windows.Forms.Button btnUserConfig;
     }
 }
 
