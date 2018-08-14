@@ -29,61 +29,60 @@ namespace CMMTool
         public static bool CreateProbe(ProbeData data)
         {
             bool result = true;
-            //var theUI = NXOpen.UI.GetUI();
-            //var mark = Globals.SetUndoMark(Globals.MarkVisibility.Visible, "IsIntervene");
-            //try
-            //{
-            //    Snap.NX.CoordinateSystem wcs = Globals.WorkPart.NXOpenPart.WCS.CoordinateSystem;
-            //    var vector = wcs.AxisZ;
-            //    var position = new Snap.Position(0, 0, data.SphereRadius);
-            //    //创建探球
-            //    var body = Snap.Create.Sphere(position, data.SphereRadius * 2).Body;
-            //    body.IsHidden = true;
-            //    body.Faces.ToList().ForEach(u =>
-            //    {
-            //        u.Name = SnapEx.ConstString.CMM_INSPECTION_SPHERE;
-            //    });
-            //    //创建测针
-            //    var body1 = Snap.Create.Cylinder(position, position + (data.ArrowLength * vector), data.ArrowRadius * 2).Body;
-            //    body1.IsHidden = true;
-            //    position = position + (data.ArrowLength * vector);
-            //    //创建加长杆
-            //    var body2 = Snap.Create.Cylinder(position, position + (data.ExtensionBarLength * vector), data.ExtensionBarRadius * 2).Body;
-            //    body2.IsHidden = true;
-            //    //创建测头
-            //    position = position + (data.ExtensionBarLength * vector);
-            //    var body3 = Snap.Create.Cylinder(position, position + (data.HeadLength * vector), data.HeadRadius * 2).Body;
-            //    body3.IsHidden = true;
-            //    body3.Faces.ToList().ForEach(u =>
-            //    {
-            //        if (SnapEx.Helper.Equals(u.GetFaceDirection(), vector) && u.ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane)
-            //        {
-            //            u.Name = SnapEx.ConstString.CMM_INSPECTION_AXISPOINT;
-            //        }
-            //    });
-            //    var r = Snap.Create.Unite(body, body1, body2, body3);
-            //    r.Orphan();
+            try
+            {
+                Snap.NX.Part basePart = null;
+                if (NXOpen.Session.GetSession().Parts.Work == null)
+                {
+                    var filePath = Path.Combine(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), "blank.prt");
+                    basePart = Snap.NX.Part.OpenPart(filePath);
+                    Snap.Globals.WorkPart = basePart;
+                }
 
-            //    body.Name = data.ProbeName;
-
-            //    var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION", data.ProbeName);
-            //    if (File.Exists(fileName + ".prt"))
-            //    {
-            //        File.Delete(fileName + ".prt");
-            //    }
-            //    var dir = Path.GetDirectoryName(fileName);
-            //    if (!Directory.Exists(dir))
-            //    {
-            //        Directory.CreateDirectory(dir);
-            //    }
-            //    SnapEx.Create.ExtractBody(new List<NXOpen.Body> { body }, fileName, false, true);
-            //}
-            //catch (Exception ex)
-            //{
-            //    theUI.NXMessageBox.Show("提示", NXOpen.NXMessageBox.DialogType.Information, ex.Message);
-            //    result = false;
-            //}
-            //Globals.UndoToMark(mark, null);
+                var mark = Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "CreateProbe");
+                //创建探球
+                var vec = Snap.Orientation.Identity.AxisZ;
+                var sphere = Snap.Create.Sphere(new Position(), data.D).Body;
+                //连接部分值
+                var tmpConnectValue = 2;
+                var tmpConnectHeight = 3;
+                //创建加长杆
+                var lengtheningRodMaxPosition = new Position(0, 0, data.L - (data.D / 2) - tmpConnectHeight);
+                var lengtheningRod = Snap.Create.Cylinder(new Position(), lengtheningRodMaxPosition, data.d).Body;
+                //创建连接部分
+                var connect = Snap.Create.Cone(lengtheningRodMaxPosition, vec, new Number[] { data.d, data.d + tmpConnectValue }, tmpConnectHeight).Body;
+                //创建基座
+                var startPedestal = lengtheningRodMaxPosition + new Position(0,0, tmpConnectHeight);
+                var firstPedestal=Snap.Create.Cylinder(startPedestal, startPedestal + new Position(0, 0, data.L2), data.D3).Body;
+                var twoPedestalPosition = startPedestal + new Position(0, 0, data.L2);
+                var twoPedestal = Snap.Create.Sphere(twoPedestalPosition, data.D1).Body;
+                var threePedestalPosition = twoPedestalPosition;
+                var threePedestal = Snap.Create.Cylinder(threePedestalPosition, threePedestalPosition + new Position(0, 0, data.L1), data.D2).Body;
+                var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
+                r.Orphan();
+                sphere.Name = data.ProbeName;
+                var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), data.ProbeName);
+                if (File.Exists(fileName + ".prt"))
+                {
+                    File.Delete(fileName + ".prt");
+                }
+                var dir = Path.GetDirectoryName(fileName);
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+                SnapEx.Create.ExtractBody(new List<NXOpen.Body> { sphere }, fileName, false, true);
+                Globals.UndoToMark(mark, null);
+                if (basePart != null)
+                {
+                    basePart.Close(true, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+                result = false;
+            }
             return result;
         }
     }
