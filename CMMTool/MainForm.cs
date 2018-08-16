@@ -13,12 +13,12 @@ namespace CMMTool
     public partial class MainForm : Form
     {
         static string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("Config", "ProbeData.json"));
-        public static void WriteConfig(List<ProbeData> data)
+        public static void WriteConfig(CMMConfig data)
         {
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
             File.WriteAllText(_path, json);
         }
-        public static List<ProbeData> GetInstance()
+        public static CMMConfig GetInstance()
         {
             var json = string.Empty;
             if (File.Exists(_path))
@@ -28,9 +28,9 @@ namespace CMMTool
 
             if (!string.IsNullOrEmpty(json))
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<ProbeData>>(json) ?? new List<ProbeData>();
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<CMMConfig> (json) ?? new CMMConfig();
             }
-            return new List<ProbeData>();
+            return new CMMConfig();
         }
         public MainForm()
         {
@@ -40,6 +40,13 @@ namespace CMMTool
             btnAdd.Click += BtnAdd_Click;
             btnDelete.Click += BtnDelete_Click;
             dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
+            this.FormClosing += MainForm_FormClosing;
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var datasource = dataGridView1.DataSource as List<ProbeData>;
+            WriteConfig(new CMMConfig { ProbeDatas = datasource });
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -72,7 +79,6 @@ namespace CMMTool
                 var datasource = dataGridView1.DataSource as List<ProbeData>;
                 datasource.Remove(probeData);
                 dataGridView1.DataSource = datasource.ToList();
-                WriteConfig(datasource);
                 System.Windows.Forms.MessageBox.Show("删除成功");
             }
         }
@@ -93,13 +99,12 @@ namespace CMMTool
             var datasource = dataGridView1.DataSource as List<ProbeData>;
             datasource.Add(probeData);
             dataGridView1.DataSource = datasource.ToList();
-            WriteConfig(datasource);
             System.Windows.Forms.MessageBox.Show("新增成功");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var data=GetInstance();
+            var data=GetInstance().ProbeDatas;
             dataGridView1.DataSource = data;
         }
 
@@ -132,7 +137,6 @@ namespace CMMTool
                 probeData.ProbeAB = textAB.Text;
                 var datasource = dataGridView1.DataSource as List<ProbeData>;
                 dataGridView1.DataSource = datasource.ToList();
-                WriteConfig(datasource);
                 System.Windows.Forms.MessageBox.Show("保存成功");
             }
 

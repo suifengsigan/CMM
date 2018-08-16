@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="AB.cs" />
     <Compile Include="Business.cs" />
+    <Compile Include="CMMBusiness.cs" />
     <Compile Include="Electrode.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="GetPointInfo.cs" />
