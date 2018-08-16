@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -61,11 +63,13 @@
             this.txtD1 = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.textAB = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtA = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtB = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -80,6 +84,7 @@
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -88,10 +93,28 @@
             this.panel1.Controls.Add(this.btnDelete);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 536);
+            this.panel1.Location = new System.Drawing.Point(0, 585);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(810, 32);
             this.panel1.TabIndex = 0;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(477, 4);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 2;
+            this.btnAdd.Text = "新增";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(600, 4);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 1;
+            this.btnDelete.Text = "删除";
+            this.btnDelete.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -109,7 +132,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(810, 536);
+            this.panel2.Size = new System.Drawing.Size(810, 585);
             this.panel2.TabIndex = 1;
             // 
             // tabControl1
@@ -119,7 +142,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(810, 536);
+            this.tabControl1.Size = new System.Drawing.Size(810, 585);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage2
@@ -129,7 +152,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(802, 510);
+            this.tabPage2.Size = new System.Drawing.Size(802, 559);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "CMM配置";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -140,7 +163,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(395, 504);
+            this.panel4.Size = new System.Drawing.Size(395, 553);
             this.panel4.TabIndex = 1;
             // 
             // dataGridView1
@@ -150,7 +173,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(395, 504);
+            this.dataGridView1.Size = new System.Drawing.Size(395, 553);
             this.dataGridView1.TabIndex = 0;
             // 
             // panel3
@@ -160,16 +183,16 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(398, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(401, 504);
+            this.panel3.Size = new System.Drawing.Size(401, 553);
             this.panel3.TabIndex = 0;
             // 
             // panel6
             // 
             this.panel6.Controls.Add(this.tabControl2);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(0, 96);
+            this.panel6.Location = new System.Drawing.Point(0, 153);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(401, 408);
+            this.panel6.Size = new System.Drawing.Size(401, 400);
             this.panel6.TabIndex = 7;
             // 
             // tabControl2
@@ -180,7 +203,7 @@
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(401, 408);
+            this.tabControl2.Size = new System.Drawing.Size(401, 400);
             this.tabControl2.TabIndex = 5;
             // 
             // tabPage1
@@ -276,7 +299,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(393, 382);
+            this.tabPage3.Size = new System.Drawing.Size(393, 374);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "基座数据";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -377,14 +400,18 @@
             // 
             // panel5
             // 
+            this.panel5.Controls.Add(this.label12);
+            this.panel5.Controls.Add(this.txtB);
+            this.panel5.Controls.Add(this.label9);
+            this.panel5.Controls.Add(this.txtA);
+            this.panel5.Controls.Add(this.dataGridView2);
             this.panel5.Controls.Add(this.label2);
-            this.panel5.Controls.Add(this.textAB);
             this.panel5.Controls.Add(this.label1);
             this.panel5.Controls.Add(this.txtProbeName);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(401, 96);
+            this.panel5.Size = new System.Drawing.Size(401, 153);
             this.panel5.TabIndex = 6;
             // 
             // label2
@@ -395,13 +422,6 @@
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 3;
             this.label2.Text = "探针角度";
-            // 
-            // textAB
-            // 
-            this.textAB.Location = new System.Drawing.Point(104, 51);
-            this.textAB.Name = "textAB";
-            this.textAB.Size = new System.Drawing.Size(265, 21);
-            this.textAB.TabIndex = 2;
             // 
             // label1
             // 
@@ -419,29 +439,54 @@
             this.txtProbeName.Size = new System.Drawing.Size(265, 21);
             this.txtProbeName.TabIndex = 0;
             // 
-            // btnDelete
+            // dataGridView2
             // 
-            this.btnDelete.Location = new System.Drawing.Point(600, 4);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 1;
-            this.btnDelete.Text = "删除";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(104, 65);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(265, 82);
+            this.dataGridView2.TabIndex = 4;
             // 
-            // btnAdd
+            // label9
             // 
-            this.btnAdd.Location = new System.Drawing.Point(477, 4);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 2;
-            this.btnAdd.Text = "新增";
-            this.btnAdd.UseVisualStyleBackColor = true;
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(102, 42);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(11, 12);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "A";
+            // 
+            // txtA
+            // 
+            this.txtA.Location = new System.Drawing.Point(125, 39);
+            this.txtA.Name = "txtA";
+            this.txtA.Size = new System.Drawing.Size(97, 21);
+            this.txtA.TabIndex = 12;
+            this.txtA.Text = "0";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(249, 42);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(11, 12);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "B";
+            // 
+            // txtB
+            // 
+            this.txtB.Location = new System.Drawing.Point(272, 39);
+            this.txtB.Name = "txtB";
+            this.txtB.Size = new System.Drawing.Size(97, 21);
+            this.txtB.TabIndex = 14;
+            this.txtB.Text = "0";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(810, 568);
+            this.ClientSize = new System.Drawing.Size(810, 617);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "MainForm";
@@ -464,6 +509,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -502,11 +548,15 @@
         private System.Windows.Forms.TextBox txtD1;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textAB;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtB;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtA;
     }
 }
 
