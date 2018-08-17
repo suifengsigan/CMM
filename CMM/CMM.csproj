@@ -67,15 +67,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AB.cs" />
-    <Compile Include="Business.cs" />
     <Compile Include="CMMBusiness.cs" />
-    <Compile Include="Electrode.cs" />
+    <Compile Include="CMMConfigEX.cs" />
     <Compile Include="Entry.cs" />
-    <Compile Include="GetPointInfo.cs" />
-    <Compile Include="PointData.cs" />
-    <Compile Include="ProbeData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMMTool\CMMTool.csproj">
+      <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
+      <Name>CMMTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

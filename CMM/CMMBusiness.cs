@@ -1,4 +1,5 @@
-﻿using NXOpen.UF;
+﻿using CMMTool;
+using NXOpen.UF;
 using Snap;
 using System;
 using System.Collections.Generic;
@@ -23,12 +24,12 @@ namespace CMM
         /// <summary>
         /// 是否小于探针半径
         /// </summary>
-        static bool IsLessthanProbeR(List<Snap.NX.Curve> curves, Snap.Position p, CMMProgram.ProbeData probe)
+        static bool IsLessthanProbeR(List<Snap.NX.Curve> curves, Snap.Position p, ProbeData probe)
         {
             foreach (var item in curves)
             {
                 var d = Compute.Distance(p, item);
-                if (d <= probe.SphereRadius)
+                if (d <= probe.D/2)
                 {
                     return true;
                 }
@@ -39,7 +40,7 @@ namespace CMM
         /// <summary>
         /// 获取面上所有的测量点
         /// </summary>
-        static List<Snap.Position> GetFacePoints(Snap.NX.Face face, CMMProgram.ProbeData data, double max_facet_size = 1)
+        static List<Snap.Position> GetFacePoints(Snap.NX.Face face, double max_facet_size = 1)
         {
             var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Visible, "GetFacePoints");
             var positions = new List<Snap.Position>();
@@ -97,16 +98,7 @@ namespace CMM
                 ufSession.Obj.DeleteObject(facet_model);
                 positions = positions.Distinct().ToList();
                 #endregion
-
-                var edges = face.EdgeCurves.ToList();
-                //过滤小于探球半径的点
-                foreach (var item in positions.ToList())
-                {
-                    if (IsLessthanProbeR(edges, item, data))
-                    {
-                        positions.Remove(item);
-                    }
-                }
+               
             }
             catch(Exception ex)
             {
