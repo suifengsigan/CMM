@@ -72,7 +72,7 @@ namespace CMM
                     if (ps.Count > i)
                     {
                         var item = ps[i];
-                        var p1 = IsIntervene(item, config, PointType.HeadFace);
+                        var p1 = IsIntervene(elec, item, config, PointType.HeadFace);
                         if (p1 != null)
                         {
                             result.Add(p1);
@@ -105,7 +105,7 @@ namespace CMM
                 var ps = positions.OrderBy(u => Snap.Position.Distance(tempP, u));
                 foreach (var item in ps)
                 {
-                    var interveneP = IsIntervene(item,config,PointType.HorizontalDatumFace);
+                    var interveneP = IsIntervene(elec, item,config,PointType.HorizontalDatumFace);
                     if (interveneP == null)
                     {
                         positions.Remove(item);
@@ -161,7 +161,7 @@ namespace CMM
             return positions;
         }
 
-        static PointData IsIntervene(Snap.Position p, CMMConfig config, PointType pointType = PointType.UNKOWN)
+        static PointData IsIntervene(ElecManage.Electrode trode, Snap.Position p, CMMConfig config, PointType pointType = PointType.UNKOWN)
         {
             PointData result = null;
             return result;

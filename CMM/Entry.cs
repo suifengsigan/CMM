@@ -14,9 +14,40 @@ namespace CMM
         {
 
         }
+
+        /// <summary>
+        /// 自动选点
+        /// </summary>
+        public static void AutoSelPoint()
+        {
+            AutoSelPoint(@"C:\Users\PENGHUI\Desktop\prt1\test\SX-1833-4201-1002.prt");
+        }
+
+        /// <summary>
+        /// 自动选点
+        /// </summary>
         public static void AutoSelPoint(string filename)
         {
             //导入探针
+            var part = NXOpen.Session.GetSession().Parts.Work;
+            if (part != null)
+            {
+                Snap.NX.Part.Wrap(part.Tag).Close(true, true);
+            }
+
+            Snap.NX.Part snapPart = Snap.NX.Part.OpenPart(filename);
+            Snap.Globals.WorkPart = snapPart;
+            var config = CMMTool.CMMConfig.GetInstance();
+            foreach (var item in config.ProbeDatas)
+            {
+                foreach (var ab in item.GetABList())
+                {
+                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}.prt", item.ProbeName, ab.A, ab.B));
+                    SnapHelper.ImportPart(fileName);
+                }
+            }
+
+            snapPart.Close(true, true);
         }
 
         /// <summary>

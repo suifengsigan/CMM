@@ -10,7 +10,6 @@ namespace CMMUI
         public static void Main()
         {
             AssemblyLoader.Entry.InitAssembly();
-            
             Execute();
         }
 
@@ -18,6 +17,7 @@ namespace CMMUI
         {
             CSharpProxy.ProxyObject.Instance.ShowMsg("开始");
             CMM.Entry.Init();
+            CMM.Entry.AutoSelPoint();
             CSharpProxy.ProxyObject.Instance.ShowMsg(string.Format("{0}  结束",DateTime.Now));
         }
     }

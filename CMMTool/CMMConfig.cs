@@ -16,6 +16,7 @@ namespace CMMTool
             RetreatPoint = 10;
             SideFaceGetPointValue = 2;
             StepLength = 5;
+            SafeDistance = 10;
         }
 
         public static void WriteConfig(CMMConfig data)
@@ -54,5 +55,10 @@ namespace CMMTool
         /// 步长（用于动态增量干涉）
         /// </summary>
         public double StepLength { get; set; }
+        /// <summary>
+        /// 安全距离
+        /// </summary>
+
+        public double SafeDistance { get; set; }
     }
 }
