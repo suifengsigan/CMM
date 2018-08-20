@@ -39,7 +39,7 @@ namespace CMMTool
                 Snap.NX.Part basePart = null;
                 if (NXOpen.Session.GetSession().Parts.Work == null)
                 {
-                    var filePath = Path.Combine(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), "blank.prt");
+                    var filePath = Path.Combine(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Config"), "blank.prt");
                     basePart = Snap.NX.Part.OpenPart(filePath);
                     Snap.Globals.WorkPart = basePart;
                 }

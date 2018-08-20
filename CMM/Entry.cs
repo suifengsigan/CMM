@@ -14,22 +14,22 @@ namespace CMM
         {
 
         }
-        public static void Test()
+        public static void AutoSelPoint(string filename)
         {
-            PartLoadStatus partLoadStatus1;
-            Session theSession = Session.GetSession();
-            var fileName = Path.Combine(@"C:\Users\PENGHUI\Desktop", "18160-201.prt") ;
-            var basePart = theSession.Parts.OpenBase(fileName, out partLoadStatus1) as Part;
-            Snap.Globals.WorkPart = basePart;
-            var workPart = Snap.Globals.WorkPart;
-            //去参数
-            try
+            //导入探针
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public static void Init()
+        {
+            //初始化探针数据
+            var config = CMMTool.CMMConfig.GetInstance();
+            CMMTool.Business.DeleteProbe();
+            foreach (var item in config.ProbeDatas.ToList())
             {
-                SnapEx.Create.RemoveParameters(Enumerable.Select(workPart.Bodies.Where(u => u.ObjectSubType == Snap.NX.ObjectTypes.SubType.BodySolid), u => u.NXOpenBody).ToList());
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                CMMTool.Business.CreateProbe(item);
             }
         }
     }

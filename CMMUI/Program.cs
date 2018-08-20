@@ -17,7 +17,7 @@ namespace CMMUI
         static void Execute()
         {
             CSharpProxy.ProxyObject.Instance.ShowMsg("开始");
-            CMM.Entry.Test();
+            CMM.Entry.Init();
             CSharpProxy.ProxyObject.Instance.ShowMsg(string.Format("{0}  结束",DateTime.Now));
         }
     }

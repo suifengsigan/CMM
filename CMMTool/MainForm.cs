@@ -12,26 +12,6 @@ namespace CMMTool
 {
     public partial class MainForm : Form
     {
-        static string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("Config", "ProbeData.json"));
-        public static void WriteConfig(CMMConfig data)
-        {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
-            File.WriteAllText(_path, json);
-        }
-        public static CMMConfig GetInstance()
-        {
-            var json = string.Empty;
-            if (File.Exists(_path))
-            {
-                json = File.ReadAllText(_path);
-            }
-
-            if (!string.IsNullOrEmpty(json))
-            {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<CMMConfig> (json) ?? new CMMConfig();
-            }
-            return new CMMConfig();
-        }
         public MainForm()
         {
             InitializeComponent();
@@ -127,7 +107,7 @@ namespace CMMTool
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             var datasource = dataGridView1.DataSource as List<ProbeData>;
-            WriteConfig(new CMMConfig { ProbeDatas = datasource });
+            CMMConfig.WriteConfig(new CMMConfig { ProbeDatas = datasource });
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -185,7 +165,7 @@ namespace CMMTool
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var data=GetInstance().ProbeDatas;
+            var data=CMMConfig.GetInstance().ProbeDatas;
             dataGridView1.DataSource = data;
         }
 
