@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using SnapEx;
 
 namespace CMMTool
 {
@@ -42,6 +43,27 @@ namespace CMMTool
                 list.Add(new AB { });
             }
             return list;
+        }
+
+        /// <summary>
+        /// 获取球心
+        /// </summary>
+        public Snap.Position GetCentreOfSphere(ProbeData.AB ab)
+        {
+            var sphere=GetBody(ab);
+            Snap.NX.Face.Sphere sphereFace = sphere.Faces.FirstOrDefault(u => u.IsHasAttr(Business.EACTPROBESPHEREFACE)) as Snap.NX.Face.Sphere;
+            return sphereFace.Geometry.Center;
+        }
+
+
+        /// <summary>
+        /// 获取体
+        /// </summary>
+        public Snap.NX.Body GetBody(ProbeData.AB ab)
+        {
+            Snap.NX.Body result = null;
+            result = Snap.Globals.WorkPart.Bodies.FirstOrDefault(u => u.Name == string.Format("{0}A{1}B{2}", this.ProbeName, ab.A, ab.B));
+            return result;
         }
         public class AB
         {

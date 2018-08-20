@@ -10,18 +10,23 @@ namespace CMMTool
 {
     public class Business
     {
+        public const string EACTPROBESPHEREFACE = "EACTPROBESPHEREFACE";
         /// <summary>
         /// 删除模型
         /// </summary>
-        public static void DeleteProbe(ProbeData data)
+        public static void DeleteProbe()
         {
             var temp = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION");
-            var fileName = Path.Combine(temp, data.ProbeName);
-            if (File.Exists(fileName + ".prt"))
+            var files = Directory.GetFiles(temp);
+            foreach (var file in files)
             {
-                File.Delete(fileName + ".prt");
+                if (file.Contains(".prt"))
+                {
+                    File.Delete(file);
+                }
             }
         }
+        
 
         /// <summary>
         /// 创建探针模型
@@ -39,40 +44,58 @@ namespace CMMTool
                     Snap.Globals.WorkPart = basePart;
                 }
 
-                var mark = Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "CreateProbe");
-                //创建探球
-                var vec = Snap.Orientation.Identity.AxisZ;
-                var sphere = Snap.Create.Sphere(new Position(), data.D).Body;
-                //连接部分值
-                var tmpConnectValue = 2;
-                var tmpConnectHeight = 3;
-                //创建加长杆
-                var lengtheningRodMaxPosition = new Position(0, 0, data.L - (data.D / 2) - tmpConnectHeight);
-                var lengtheningRod = Snap.Create.Cylinder(new Position(), lengtheningRodMaxPosition, data.d).Body;
-                //创建连接部分
-                var connect = Snap.Create.Cone(lengtheningRodMaxPosition, vec, new Number[] { data.d, data.d + tmpConnectValue }, tmpConnectHeight).Body;
-                //创建基座
-                var startPedestal = lengtheningRodMaxPosition + new Position(0,0, tmpConnectHeight);
-                var firstPedestal=Snap.Create.Cylinder(startPedestal, startPedestal + new Position(0, 0, data.L2), data.D3).Body;
-                var twoPedestalPosition = startPedestal + new Position(0, 0, data.L2);
-                var twoPedestal = Snap.Create.Sphere(twoPedestalPosition, data.D1).Body;
-                var threePedestalPosition = twoPedestalPosition;
-                var threePedestal = Snap.Create.Cylinder(threePedestalPosition, threePedestalPosition + new Position(0, 0, data.L1), data.D2).Body;
-                var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
-                r.Orphan();
-                sphere.Name = data.ProbeName;
-                var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), data.ProbeName);
-                if (File.Exists(fileName + ".prt"))
+                foreach (var ab in data.GetABList())
                 {
-                    File.Delete(fileName + ".prt");
+                    var mark = Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "CreateProbe");
+                    //创建探球
+                    var vec = Snap.Orientation.Identity.AxisZ;
+                    var sphere = Snap.Create.Sphere(new Position(), data.D).Body;
+                    sphere.Faces.ToList().ForEach(u =>
+                    {
+                        u.SetStringAttribute(EACTPROBESPHEREFACE, "1");
+                    });
+                    //连接部分值
+                    var tmpConnectValue = 2;
+                    var tmpConnectHeight = 3;
+                    //创建加长杆
+                    var lengtheningRodMaxPosition = new Position(0, 0, data.L - (data.D / 2) - tmpConnectHeight);
+                    var lengtheningRod = Snap.Create.Cylinder(new Position(), lengtheningRodMaxPosition, data.d).Body;
+                    //创建连接部分
+                    var connect = Snap.Create.Cone(lengtheningRodMaxPosition, vec, new Number[] { data.d, data.d + tmpConnectValue }, tmpConnectHeight).Body;
+                    //创建基座
+                    var startPedestal = lengtheningRodMaxPosition + new Position(0, 0, tmpConnectHeight);
+                    var firstPedestal = Snap.Create.Cylinder(startPedestal, startPedestal + new Position(0, 0, data.L2), data.D3).Body;
+                    var twoPedestalPosition = startPedestal + new Position(0, 0, data.L2);
+                    var twoPedestal = Snap.Create.Sphere(twoPedestalPosition, data.D1).Body;
+                    var threePedestalPosition = twoPedestalPosition;
+                    var threePedestal = Snap.Create.Cylinder(threePedestalPosition, threePedestalPosition + new Position(0, 0, data.L1), data.D2).Body;
+
+                    //AB旋转
+                    var requireAbBodies = new List<Snap.NX.Body> { sphere, lengtheningRod, connect, firstPedestal };
+                    var trans=Snap.Geom.Transform.CreateRotation(twoPedestalPosition, Snap.Orientation.Identity.AxisX, ab.A);
+                    trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, Snap.Orientation.Identity.AxisZ, ab.B));
+                    foreach (var rBody in requireAbBodies)
+                    {
+                        rBody.Move(trans);
+                    }
+
+                    var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
+                    r.Orphan();
+                    sphere.Name = data.ProbeName;
+                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}", data.ProbeName, ab.A, ab.B));
+                    if (File.Exists(fileName + ".prt"))
+                    {
+                        File.Delete(fileName + ".prt");
+                    }
+                    var dir = Path.GetDirectoryName(fileName);
+                    if (!Directory.Exists(dir))
+                    {
+                        Directory.CreateDirectory(dir);
+                    }
+                    SnapEx.Create.ExtractBody(new List<NXOpen.Body> { sphere }, fileName, false, true);
+                    Globals.UndoToMark(mark, null);
                 }
-                var dir = Path.GetDirectoryName(fileName);
-                if (!Directory.Exists(dir))
-                {
-                    Directory.CreateDirectory(dir);
-                }
-                SnapEx.Create.ExtractBody(new List<NXOpen.Body> { sphere }, fileName, false, true);
-                Globals.UndoToMark(mark, null);
+
                 if (basePart != null)
                 {
                     basePart.Close(true, true);
@@ -80,7 +103,7 @@ namespace CMMTool
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
+                Console.WriteLine(string.Format("CreateProbe错误:{0}", ex.Message));
                 result = false;
             }
             return result;

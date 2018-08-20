@@ -8,6 +8,12 @@ namespace CMMTool
     public class CMMConfig
     {
         public List<ProbeData> ProbeDatas = new List<ProbeData>();
+        //获取探针体
+        public static Snap.NX.Body GetProbeBody(ProbeData data, ProbeData.AB ab)
+        {
+            Snap.NX.Body result = null;
+            return result;
+        }
         public CMMConfig()
         {
             EntryPoint = 10;
