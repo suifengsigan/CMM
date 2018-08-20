@@ -14,11 +14,40 @@ namespace CMM
     public class CMMBusiness
     {
         /// <summary>
-        /// 自动取点(使用增量干涉)
+        /// 自动取点
         /// </summary>
         public static string AutoSelPoint(Snap.NX.Body body)
         {
             return string.Empty;
+        }
+
+        /// <summary>
+        /// 获取检测点(使用增量干涉)
+        /// </summary>
+        public void GetCheckPoint()
+        {
+            //创建射线检测
+        }
+
+        /// <summary>
+        /// 干涉检查（1 -> there is interference  2 -> no interference  3 -> touching, that is coincident faces）
+        /// </summary>
+        static bool CheckInterference(NXOpen.Tag targetBody,NXOpen.Tag toolBody)
+        {
+            var result = true;
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            int[] r = new int[] { 0 };
+            ufSession.Modl.CheckInterference(targetBody, 1, new NXOpen.Tag[] { toolBody }, r);
+            result = r[0] != 3;
+            return result;
+        }
+
+        /// <summary>
+        /// 点是否在面上
+        /// </summary>
+        static bool IsPointAtFace(Snap.NX.Face face, Snap.Position p)
+        {
+            return Snap.Compute.Distance(p, face) < SnapEx.Helper.Tolerance;
         }
 
         /// <summary>
