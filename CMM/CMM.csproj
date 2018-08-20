@@ -70,6 +70,7 @@
     <Compile Include="CMMBusiness.cs" />
     <Compile Include="CMMConfigEX.cs" />
     <Compile Include="Entry.cs" />
+    <Compile Include="PointData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
