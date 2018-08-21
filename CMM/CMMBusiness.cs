@@ -65,6 +65,10 @@ namespace CMM
             foreach (var face in faces)
             {
                 var vector = face.GetFaceDirection();
+                if (double.IsNaN(vector.X)|| double.IsNaN(vector.Y)|| double.IsNaN(vector.Z))
+                {
+                    break;
+                }
                 var positions = SnapHelper.GetFacePoints(face);
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
