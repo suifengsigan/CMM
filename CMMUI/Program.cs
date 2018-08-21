@@ -15,10 +15,12 @@ namespace CMMUI
 
         static void Execute()
         {
-            CSharpProxy.ProxyObject.Instance.ShowMsg("开始");
+            CSharpProxy.ProxyObject.Instance.ShowMsg("初始化配置数据...");
             CMM.Entry.Init();
+            CSharpProxy.ProxyObject.Instance.ShowMsg("完成初始化配置数据");
+            CSharpProxy.ProxyObject.Instance.ShowMsg("开始自动取点");
             CMM.Entry.AutoSelPoint();
-            CSharpProxy.ProxyObject.Instance.ShowMsg(string.Format("{0}  结束",DateTime.Now));
+            CSharpProxy.ProxyObject.Instance.ShowMsg("结束自动取点");
         }
     }
 }

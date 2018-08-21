@@ -46,7 +46,7 @@ namespace CMMProgram
         private void DispMsg(string strMsg)
         {
             Action action = () => {
-                listBox1.Items.Insert(0, string.Format("信息:{0} - [ {1} ]", strMsg, DateTime.Now.ToString()));
+                listBox1.Items.Insert(0, string.Format("{0}:{1}", DateTime.Now.ToString(), strMsg));
             };
             if (this.listBox1.InvokeRequired == false)
             {
