@@ -58,18 +58,24 @@ namespace CMM
             snapPart.Close(true, true);
         }
 
+        static bool IsInit = false;
+
         /// <summary>
         /// 初始化
         /// </summary>
         public static void Init()
         {
-            //初始化探针数据
-            var config = CMMTool.CMMConfig.GetInstance();
-            CMMTool.Business.DeleteProbe();
-            foreach (var item in config.ProbeDatas.ToList())
-            {
-                CMMTool.Business.CreateProbe(item);
+            if (!IsInit)
+            { 
+                //初始化探针数据
+                var config = CMMTool.CMMConfig.GetInstance();
+                CMMTool.Business.DeleteProbe();
+                foreach (var item in config.ProbeDatas.ToList())
+                {
+                    CMMTool.Business.CreateProbe(item);
+                }
             }
+            IsInit = true;
         }
     }
 }
