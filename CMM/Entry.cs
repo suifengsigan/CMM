@@ -37,18 +37,24 @@ namespace CMM
 
             Snap.NX.Part snapPart = Snap.NX.Part.OpenPart(filename);
             Snap.Globals.WorkPart = snapPart;
-            var config = CMMTool.CMMConfig.GetInstance();
-            foreach (var item in config.ProbeDatas)
+            try
             {
-                foreach (var ab in item.GetABList())
+                var config = CMMTool.CMMConfig.GetInstance();
+                foreach (var item in config.ProbeDatas)
                 {
-                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}.prt", item.ProbeName, ab.A, ab.B));
-                    SnapHelper.ImportPart(fileName);
+                    foreach (var ab in item.GetABList())
+                    {
+                        var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}.prt", item.ProbeName, ab.A, ab.B));
+                        SnapHelper.ImportPart(fileName);
+                    }
                 }
+
+                CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
             }
-
-            CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
-
+            catch (Exception ex)
+            {
+                Console.WriteLine("AutoSelPoint错误:{0}", ex.Message);
+            }
             snapPart.Close(true, true);
         }
 

@@ -29,7 +29,7 @@ namespace CMMProgram
                     byte[] bytData = new byte[cds.cbData];
                     Marshal.Copy(cds.lpData, bytData, 0, bytData.Length);
                     var msg = Encoding.Default.GetString(bytData);
-                    txtMsg.AppendText(msg);
+                    DispMsg(msg);
                     break;
 
                 default:
@@ -41,6 +41,21 @@ namespace CMMProgram
         {
             InitializeComponent();
             InitEvent();
+        }
+
+        private void DispMsg(string strMsg)
+        {
+            Action action = () => {
+                listBox1.Items.Insert(0, string.Format("信息:{0} - [ {1} ]", strMsg, DateTime.Now.ToString()));
+            };
+            if (this.listBox1.InvokeRequired == false)
+            {
+                action();
+            }
+            else
+            {
+                this.listBox1.Invoke(action);
+            }
         }
 
         public void Excute(string action)
@@ -63,7 +78,6 @@ namespace CMMProgram
         void InitEvent()
         {
             btnStart.Click += BtnStart_Click;
-            btnSelectFile.Click += BtnSelectFile_Click;
             btnCMMConfig.Click += BtnConfig_Click;
             btnUserConfig.Click += BtnUserConfig_Click;
         }
@@ -77,14 +91,7 @@ namespace CMMProgram
         {
             Excute("CMMTool.dll");
         }
-
-        private void BtnSelectFile_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                txtFile.Text = openFileDialog1.FileName;
-            }
-        }
+        
 
         private void BtnEnd_Click(object sender, EventArgs e)
         {
