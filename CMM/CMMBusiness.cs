@@ -137,7 +137,44 @@ namespace CMM
             minZ -= config.SideFaceGetPointValue;
             foreach (var face in faces)
             {
-                
+                var positions = SnapHelper.GetFacePoints(face);
+                var faceDirection = face.GetFaceDirection();
+                var faceOrientation = new Orientation(faceDirection);
+                var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
+
+                var tempP = face.Box.MaxXYZ;
+                var ps = positions.Where(u => System.Math.Abs(u.Z - face.Box.MaxZ) < config.VerticalValue).OrderBy(u => Snap.Position.Distance(tempP, u)).ToList();
+
+                //对称点
+                while (ps.Count > 0)
+                {
+                    var item = ps.First();
+                    var trans = Snap.Geom.Transform.CreateReflection(new Snap.Geom.Surface.Plane(faceMidPoint, faceOrientation.AxisY));
+                    var symmetryPoint = item.Copy(trans);
+                    if (!SnapEx.Helper.Equals(item, symmetryPoint, SnapEx.Helper.Tolerance) && positions.Where(u => SnapEx.Helper.Equals(u, symmetryPoint, SnapEx.Helper.Tolerance)).Count() > 0)
+                    {
+                        var p1 = IsIntervene(elec,symmetryPoint, faceDirection, config,PointType.VerticalDatumFace);
+                        var p2 = IsIntervene(elec,item, faceDirection, config, PointType.VerticalDatumFace);
+                        if (p1 != null && p2 != null)
+                        {
+                            p1.PointType = PointType.VerticalDatumFace;
+                            p2.PointType = PointType.VerticalDatumFace;
+                            if (SnapEx.Helper.Equals(faceDirection, -Snap.Orientation.Identity.AxisX))
+                            {
+                                var orderPoints = OrderPointDatas(new List<PointData> { p1, p2 });
+                                result.Add(orderPoints.Last());
+                                result.Add(orderPoints.First());
+                            }
+                            else
+                            {
+                                result.AddRange(OrderPointDatas(new List<PointData> { p1, p2 }));
+                            }
+                            break;
+                        }
+                    }
+                    ps.Remove(item);
+                    positions.RemoveAll(u => SnapEx.Helper.Equals(u, symmetryPoint, SnapEx.Helper.Tolerance));
+                }
             }
             return result;
         }

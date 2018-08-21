@@ -17,6 +17,7 @@ namespace CMMTool
             SideFaceGetPointValue = 2;
             StepLength = 5;
             SafeDistance = 10;
+            VerticalValue = 3;
         }
 
         public static void WriteConfig(CMMConfig data)
@@ -59,5 +60,9 @@ namespace CMMTool
         /// 安全距离
         /// </summary>
         public double SafeDistance { get; set; }
+        /// <summary>
+        /// 侧面取值范围
+        /// </summary>
+        public double VerticalValue { get; set; }
     }
 }
