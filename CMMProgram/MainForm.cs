@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace CMMProgram
@@ -60,18 +61,11 @@ namespace CMMProgram
 
         public void Excute(string action)
         {
-            try
-            {
-                string actionNameStr = action;
-                var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMMProg");
-                path = Path.Combine(path, "Application");
-                actionNameStr = Path.Combine(path, actionNameStr);
-                CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path);
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
+            string actionNameStr = action;
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMMProg");
+            path = Path.Combine(path, "Application");
+            actionNameStr = Path.Combine(path, actionNameStr);
+            CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path);
         }
 
 
@@ -91,17 +85,22 @@ namespace CMMProgram
         {
             Excute("CMMTool.dll");
         }
-        
-
-        private void BtnEnd_Click(object sender, EventArgs e)
-        {
-            
-        }
-
        
         private void BtnStart_Click(object sender, EventArgs e)
         {
-            Excute("CMMUI.dll");
+            panel4.Visible = false;
+            ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
+                try
+                {
+                    Excute("CMMUI.dll");
+                }
+                catch(Exception ex)
+                {
+                    DispMsg(string.Format("启动CMM程序错误【{0}】",ex.Message));
+                    Console.WriteLine(ex.Message);
+                }
+            }));
+            
         }
     }
 }
