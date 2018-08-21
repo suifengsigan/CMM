@@ -65,6 +65,7 @@ namespace CMM
             foreach (var face in faces)
             {
                 var vector = face.GetFaceDirection();
+                var edges = face.EdgeCurves.ToList();
                 if (double.IsNaN(vector.X)|| double.IsNaN(vector.Y)|| double.IsNaN(vector.Z))
                 {
                     break;
@@ -77,7 +78,7 @@ namespace CMM
                     if (ps.Count > i)
                     {
                         var item = ps[i];
-                        var p1 = IsIntervene(elec, item, vector, config, PointType.HeadFace);
+                        var p1 = IsIntervene(elec, item, vector, edges, config, PointType.HeadFace);
                         if (p1 != null)
                         {
                             result.Add(p1);
@@ -96,6 +97,7 @@ namespace CMM
         {
             var result = new List<PointData>();
             var face = elec.BaseFace;
+            var edges = face.EdgeCurves.ToList();
             var positions = SnapHelper.GetFacePoints(face);
             var vector = face.GetFaceDirection();
             //边界点
@@ -110,7 +112,7 @@ namespace CMM
                 var ps = positions.OrderBy(u => Snap.Position.Distance(tempP, u));
                 foreach (var item in ps)
                 {
-                    var interveneP = IsIntervene(elec, item, vector, config,PointType.HorizontalDatumFace);
+                    var interveneP = IsIntervene(elec, item, vector, edges, config,PointType.HorizontalDatumFace);
                     if (interveneP == null)
                     {
                         positions.Remove(item);
@@ -142,6 +144,7 @@ namespace CMM
             foreach (var face in faces)
             {
                 var positions = SnapHelper.GetFacePoints(face);
+                var edges = face.EdgeCurves.ToList();
                 var faceDirection = face.GetFaceDirection();
                 var faceOrientation = new Orientation(faceDirection);
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
@@ -157,8 +160,8 @@ namespace CMM
                     var symmetryPoint = item.Copy(trans);
                     if (!SnapEx.Helper.Equals(item, symmetryPoint, SnapEx.Helper.Tolerance) && positions.Where(u => SnapEx.Helper.Equals(u, symmetryPoint, SnapEx.Helper.Tolerance)).Count() > 0)
                     {
-                        var p1 = IsIntervene(elec,symmetryPoint, faceDirection, config,PointType.VerticalDatumFace);
-                        var p2 = IsIntervene(elec,item, faceDirection, config, PointType.VerticalDatumFace);
+                        var p1 = IsIntervene(elec,symmetryPoint, faceDirection, edges, config,PointType.VerticalDatumFace);
+                        var p2 = IsIntervene(elec,item, faceDirection, edges, config, PointType.VerticalDatumFace);
                         if (p1 != null && p2 != null)
                         {
                             p1.PointType = PointType.VerticalDatumFace;
@@ -203,16 +206,21 @@ namespace CMM
             return positions;
         }
         
-        static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p,Snap.Vector pV, CMMConfig config, PointType pointType = PointType.UNKOWN)
+        static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p,Snap.Vector pV, List<Snap.NX.Curve> curves, CMMConfig config, PointType pointType = PointType.UNKOWN)
         {
             PointData result = null;
             var targetBody = elec.ElecBody;
             var box = targetBody.Box;
             var maxZ = box.MaxZ + config.SafeDistance;
-         
+            var minDistance = SnapHelper.GetPointToEdgeMinDistance(p, curves);
 
             foreach (var data in config.ProbeDatas.ToList())
             {
+                //过滤探球半径的点
+                if (minDistance < data.D / 2)
+                {
+                    break;
+                }
                 foreach (var ab in data.GetABList())
                 {
                     var toolBody = data.GetBody(ab);

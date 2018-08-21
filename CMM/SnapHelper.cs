@@ -9,6 +9,19 @@ namespace CMM
 {
     public class SnapHelper
     {
+        /// <summary>
+        /// 获取点到面边的最小距离
+        /// </summary>
+        public static double GetPointToEdgeMinDistance(Snap.Position pos, List<Snap.NX.Curve> curves)
+        {
+            var result = double.MaxValue;
+            foreach (var item in curves)
+            {
+                var d = Compute.Distance(pos, item);
+                result = System.Math.Min(d, result);
+            }
+            return result;
+        }
         public static Snap.NX.Body ImportPart(string fileName)
         {
             Snap.NX.Body result = null;
