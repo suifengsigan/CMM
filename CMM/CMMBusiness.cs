@@ -33,7 +33,7 @@ namespace CMM
             var positions = new List<PointData>();
             var tempPositions = new List<PointData>();
             tempPositions = GetHorizontalDatumFacePositions(electrode, config);
-            if (tempPositions.Count < 4)
+            if (tempPositions.Count < 3)
             {
                 throw new Exception("基准面取点异常！");
             }
