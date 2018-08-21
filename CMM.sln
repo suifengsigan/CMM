@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMUI", "CMMUI\CMMUI.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpProxy", "CSharpProxy\CSharpProxy.csproj", "{89348461-450D-4213-9FC4-C12A64E60A96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SnapEx", "..\..\Project\SnapEx\SnapEx.csproj", "{90E81E37-1ECB-48D1-AEF7-2372B9B3F32F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{89348461-450D-4213-9FC4-C12A64E60A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89348461-450D-4213-9FC4-C12A64E60A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89348461-450D-4213-9FC4-C12A64E60A96}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90E81E37-1ECB-48D1-AEF7-2372B9B3F32F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90E81E37-1ECB-48D1-AEF7-2372B9B3F32F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90E81E37-1ECB-48D1-AEF7-2372B9B3F32F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90E81E37-1ECB-48D1-AEF7-2372B9B3F32F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
