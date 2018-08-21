@@ -70,7 +70,7 @@ namespace CMM
                 {
                     break;
                 }
-                var positions = SnapHelper.GetFacePoints(face);
+                var positions = Helper.GetFacePoints(face);
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
                 for (var i = 0; i < LoopVarValue; i++)
@@ -98,7 +98,7 @@ namespace CMM
             var result = new List<PointData>();
             var face = elec.BaseFace;
             var edges = face.EdgeCurves.ToList();
-            var positions = SnapHelper.GetFacePoints(face);
+            var positions = Helper.GetFacePoints(face);
             var vector = face.GetFaceDirection();
             //边界点
             var p1 = face.Position(face.BoxUV.MinU, face.BoxUV.MinV);
@@ -143,7 +143,7 @@ namespace CMM
             minZ -= config.SideFaceGetPointValue;
             foreach (var face in faces)
             {
-                var positions = SnapHelper.GetFacePoints(face);
+                var positions = Helper.GetFacePoints(face);
                 var edges = face.EdgeCurves.ToList();
                 var faceDirection = face.GetFaceDirection();
                 var faceOrientation = new Orientation(faceDirection);
@@ -212,7 +212,7 @@ namespace CMM
             var targetBody = elec.ElecBody;
             var box = targetBody.Box;
             var maxZ = box.MaxZ + config.SafeDistance;
-            var minDistance = SnapHelper.GetPointToEdgeMinDistance(p, curves);
+            var minDistance = Helper.GetPointToEdgeMinDistance(p, curves);
 
             foreach (var data in config.ProbeDatas.ToList())
             {
@@ -243,7 +243,7 @@ namespace CMM
                     foreach (var trans in lstTrans)
                     {
                         toolBody.Move(trans);
-                        if (SnapHelper.CheckInterference(targetBody.NXOpenTag, toolBody.NXOpenTag))
+                        if (Helper.CheckInterference(targetBody.NXOpenTag, toolBody.NXOpenTag))
                         {
                             isHasInterference = true;
                             break;

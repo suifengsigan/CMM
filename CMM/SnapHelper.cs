@@ -7,8 +7,12 @@ using System.Text;
 
 namespace CMM
 {
-    public class SnapHelper
+    public class Helper
     {
+        public static void ShowMsg(string msg)
+        {
+            CSharpProxy.ProxyObject.Instance.ShowMsg(msg);
+        }
         /// <summary>
         /// 获取点到面边的最小距离
         /// </summary>

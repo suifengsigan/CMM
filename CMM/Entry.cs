@@ -36,6 +36,7 @@ namespace CMM
             }
 
             Snap.NX.Part snapPart = Snap.NX.Part.OpenPart(filename);
+            var name = Path.GetFileNameWithoutExtension(filename);
             Snap.Globals.WorkPart = snapPart;
             try
             {
@@ -45,14 +46,16 @@ namespace CMM
                     foreach (var ab in item.GetABList())
                     {
                         var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}.prt", item.ProbeName, ab.A, ab.B));
-                        SnapHelper.ImportPart(fileName);
+                        Helper.ImportPart(fileName);
                     }
                 }
-
+                Helper.ShowMsg(string.Format("{0}开始取点...", name));
                 CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
+                Helper.ShowMsg(string.Format("{0}取点成功", name));
             }
             catch (Exception ex)
             {
+                Helper.ShowMsg(string.Format("{0}取点错误【{1}】", name, ex.Message));
                 Console.WriteLine("AutoSelPoint错误:{0}", ex.Message);
             }
             snapPart.Close(true, true);

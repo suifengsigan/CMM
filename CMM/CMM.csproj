@@ -78,6 +78,10 @@
       <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
       <Name>CMMTool</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CSharpProxy\CSharpProxy.csproj">
+      <Project>{89348461-450d-4213-9fc4-c12a64e60a96}</Project>
+      <Name>CSharpProxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
