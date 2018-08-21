@@ -47,6 +47,8 @@ namespace CMM
                 }
             }
 
+            CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
+
             snapPart.Close(true, true);
         }
 

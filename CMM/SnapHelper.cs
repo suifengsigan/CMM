@@ -63,7 +63,7 @@ namespace CMM
             var ufSession = NXOpen.UF.UFSession.GetUFSession();
             int[] r = new int[] { 0 };
             ufSession.Modl.CheckInterference(targetBody, 1, new NXOpen.Tag[] { toolBody }, r);
-            result = r[0] != 3;
+            result = !(r[0] == 3 || r[0] == 2);
             return result;
         }
 

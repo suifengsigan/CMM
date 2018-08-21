@@ -64,6 +64,7 @@ namespace CMM
             var faces = elec.ElecHeadFaces;
             foreach (var face in faces)
             {
+                var vector = face.GetFaceDirection();
                 var positions = SnapHelper.GetFacePoints(face);
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
@@ -72,7 +73,7 @@ namespace CMM
                     if (ps.Count > i)
                     {
                         var item = ps[i];
-                        var p1 = IsIntervene(elec, item, config, PointType.HeadFace);
+                        var p1 = IsIntervene(elec, item, vector, config, PointType.HeadFace);
                         if (p1 != null)
                         {
                             result.Add(p1);
@@ -105,7 +106,7 @@ namespace CMM
                 var ps = positions.OrderBy(u => Snap.Position.Distance(tempP, u));
                 foreach (var item in ps)
                 {
-                    var interveneP = IsIntervene(elec, item,config,PointType.HorizontalDatumFace);
+                    var interveneP = IsIntervene(elec, item, vector, config,PointType.HorizontalDatumFace);
                     if (interveneP == null)
                     {
                         positions.Remove(item);
@@ -160,19 +161,56 @@ namespace CMM
             positions.AddRange(tempPositions);
             return positions;
         }
-
-        static PointData IsIntervene(ElecManage.Electrode trode, Snap.Position p, CMMConfig config, PointType pointType = PointType.UNKOWN)
+        
+        static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p,Snap.Vector pV, CMMConfig config, PointType pointType = PointType.UNKOWN)
         {
             PointData result = null;
-            return result;
-        }
+            var targetBody = elec.ElecBody;
+            var box = targetBody.Box;
+            var maxZ = box.MaxZ + config.SafeDistance;
+         
 
-        /// <summary>
-        /// 获取干涉点(使用增量干涉)
-        /// </summary>
-        static void GetCheckPoint(ElecManage.Electrode elec, ProbeData data)
-        {
-            //创建射线检测
+            foreach (var data in config.ProbeDatas.ToList())
+            {
+                foreach (var ab in data.GetABList())
+                {
+                    var toolBody = data.GetBody(ab);
+                    var lstTrans = new List<Snap.Geom.Transform>();
+                    var centreOfSphere = data.GetCentreOfSphere(ab);
+                    //退点
+                    var sRetreatPosition = p.Copy(Snap.Geom.Transform.CreateTranslation((data.D / 2) * pV));
+                    lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sRetreatPosition - centreOfSphere));
+                    var mRetreatPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.RetreatPoint*pV));
+                    lstTrans.Add(Snap.Geom.Transform.CreateTranslation(mRetreatPosition-sRetreatPosition));
+                    var fRetreatPosition = new Snap.Position(mRetreatPosition.X, mRetreatPosition.Y, maxZ);
+                    lstTrans.Add(Snap.Geom.Transform.CreateTranslation(fRetreatPosition - mRetreatPosition));
+                    if (config.RetreatPoint != config.EntryPoint)
+                    {
+                        //逼进拐点
+                        var sEntryPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.EntryPoint * pV));
+                        lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sEntryPosition - fRetreatPosition));
+                    }
+                    bool isHasInterference = false;
+                    foreach (var trans in lstTrans)
+                    {
+                        toolBody.Move(trans);
+                        if (SnapHelper.CheckInterference(targetBody.NXOpenTag, toolBody.NXOpenTag))
+                        {
+                            isHasInterference = true;
+                            break;
+                        }
+                    }
+
+                    if (!isHasInterference)
+                    {
+                        result= new PointData() { Vector = pV, Position = p, A = ab.A, B = ab.B, Arrow = data.ProbeName };
+                        result.PointType = pointType;
+                    }
+                }
+               
+            }
+            
+            return result;
         }
         
 

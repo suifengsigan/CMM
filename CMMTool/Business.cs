@@ -81,8 +81,8 @@ namespace CMMTool
 
                     var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
                     r.Orphan();
-                    sphere.Name = data.ProbeName;
-                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}", data.ProbeName, ab.A, ab.B));
+                    sphere.Name = string.Format("{0}A{1}B{2}", data.ProbeName, ab.A, ab.B);
+                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), sphere.Name);
                     if (File.Exists(fileName + ".prt"))
                     {
                         File.Delete(fileName + ".prt");

@@ -58,7 +58,6 @@ namespace CMMTool
         /// <summary>
         /// 安全距离
         /// </summary>
-
         public double SafeDistance { get; set; }
     }
 }
