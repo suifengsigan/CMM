@@ -198,7 +198,6 @@ namespace CMMTool
                 probeData.ABList = dataGridView2.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>();
                 var datasource = dataGridView1.DataSource as List<ProbeData>;
                 dataGridView1.DataSource = datasource.ToList();
-                Business.CreateProbe(probeData);
                 System.Windows.Forms.MessageBox.Show("保存成功");
             }
 
