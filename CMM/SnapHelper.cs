@@ -144,7 +144,17 @@ namespace CMM
 
                 ufSession.Obj.DeleteObject(facet_model);
                 positions = positions.Distinct().ToList();
+                var edges = face.EdgeCurves.ToList();
                 #endregion
+
+                //所有边上的点都不取
+                positions.ToList().ForEach(p => {
+                    if (Helper.GetPointToEdgeMinDistance(p, edges) < SnapEx.Helper.Tolerance)
+                    {
+                        positions.Remove(p);
+                    }
+                });
+                
 
             }
             catch (Exception ex)
