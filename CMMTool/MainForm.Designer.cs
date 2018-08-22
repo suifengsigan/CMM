@@ -62,14 +62,14 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtD1 = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtB = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtA = new System.Windows.Forms.TextBox();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtA = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtB = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -218,7 +218,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(393, 382);
+            this.tabPage1.Size = new System.Drawing.Size(393, 374);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "测头数据";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -414,6 +414,49 @@
             this.panel5.Size = new System.Drawing.Size(401, 153);
             this.panel5.TabIndex = 6;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(249, 42);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(11, 12);
+            this.label12.TabIndex = 15;
+            this.label12.Text = "B";
+            // 
+            // txtB
+            // 
+            this.txtB.Location = new System.Drawing.Point(272, 39);
+            this.txtB.Name = "txtB";
+            this.txtB.Size = new System.Drawing.Size(97, 21);
+            this.txtB.TabIndex = 14;
+            this.txtB.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(102, 42);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(11, 12);
+            this.label9.TabIndex = 13;
+            this.label9.Text = "A";
+            // 
+            // txtA
+            // 
+            this.txtA.Location = new System.Drawing.Point(125, 39);
+            this.txtA.Name = "txtA";
+            this.txtA.Size = new System.Drawing.Size(97, 21);
+            this.txtA.TabIndex = 12;
+            this.txtA.Text = "0";
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(104, 65);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(265, 82);
+            this.dataGridView2.TabIndex = 4;
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -439,49 +482,6 @@
             this.txtProbeName.Size = new System.Drawing.Size(265, 21);
             this.txtProbeName.TabIndex = 0;
             // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(104, 65);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(265, 82);
-            this.dataGridView2.TabIndex = 4;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(102, 42);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(11, 12);
-            this.label9.TabIndex = 13;
-            this.label9.Text = "A";
-            // 
-            // txtA
-            // 
-            this.txtA.Location = new System.Drawing.Point(125, 39);
-            this.txtA.Name = "txtA";
-            this.txtA.Size = new System.Drawing.Size(97, 21);
-            this.txtA.TabIndex = 12;
-            this.txtA.Text = "0";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(249, 42);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(11, 12);
-            this.label12.TabIndex = 15;
-            this.label12.Text = "B";
-            // 
-            // txtB
-            // 
-            this.txtB.Location = new System.Drawing.Point(272, 39);
-            this.txtB.Name = "txtB";
-            this.txtB.Size = new System.Drawing.Size(97, 21);
-            this.txtB.TabIndex = 14;
-            this.txtB.Text = "0";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -489,6 +489,7 @@
             this.ClientSize = new System.Drawing.Size(810, 617);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EAct_CMM配置工具";
