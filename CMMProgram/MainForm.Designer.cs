@@ -33,8 +33,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.btnUserConfig = new System.Windows.Forms.Button();
             this.btnCMMConfig = new System.Windows.Forms.Button();
+            this.btnUserConfig = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -84,15 +84,6 @@
             this.panel4.Size = new System.Drawing.Size(185, 438);
             this.panel4.TabIndex = 2;
             // 
-            // btnUserConfig
-            // 
-            this.btnUserConfig.Location = new System.Drawing.Point(29, 179);
-            this.btnUserConfig.Name = "btnUserConfig";
-            this.btnUserConfig.Size = new System.Drawing.Size(109, 79);
-            this.btnUserConfig.TabIndex = 8;
-            this.btnUserConfig.Text = "用户配置";
-            this.btnUserConfig.UseVisualStyleBackColor = true;
-            // 
             // btnCMMConfig
             // 
             this.btnCMMConfig.Location = new System.Drawing.Point(29, 311);
@@ -102,6 +93,15 @@
             this.btnCMMConfig.Text = "CMM配置";
             this.btnCMMConfig.UseVisualStyleBackColor = true;
             // 
+            // btnUserConfig
+            // 
+            this.btnUserConfig.Location = new System.Drawing.Point(29, 179);
+            this.btnUserConfig.Name = "btnUserConfig";
+            this.btnUserConfig.Size = new System.Drawing.Size(109, 79);
+            this.btnUserConfig.TabIndex = 8;
+            this.btnUserConfig.Text = "用户配置";
+            this.btnUserConfig.UseVisualStyleBackColor = true;
+            // 
             // s
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -109,7 +109,7 @@
             this.ClientSize = new System.Drawing.Size(659, 438);
             this.Controls.Add(this.panel2);
             this.Name = "s";
-            this.Text = "EAct_检测软件";
+            this.Text = "EAct_益模";
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
