@@ -64,13 +64,13 @@ namespace CMMProgram
             }
         }
 
-        public void Excute(string action)
+        public void Excute(string action,string methodName="Main")
         {
             string actionNameStr = action;
             var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMMProg");
             path = Path.Combine(path, "Application");
             actionNameStr = Path.Combine(path, actionNameStr);
-            CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path);
+            CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, methodName);
         }
 
 
@@ -95,15 +95,22 @@ namespace CMMProgram
         {
             panel4.Visible = false;
             ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
-                try
+                Excute("CMMUI.dll", "CMMInit");
+                while (true)
                 {
-                    Excute("CMMUI.dll");
+                    try
+                    {
+                        Excute("CMMUI.dll");
+                    }
+                    catch (Exception ex)
+                    {
+                        DispMsg(string.Format("启动CMM程序错误【{0}】", ex.Message));
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    Thread.Sleep(1000);
                 }
-                catch(Exception ex)
-                {
-                    DispMsg(string.Format("启动CMM程序错误【{0}】",ex.Message));
-                    Console.WriteLine(ex.Message);
-                }
+                
             }));
             
         }

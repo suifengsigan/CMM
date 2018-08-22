@@ -9,13 +9,13 @@ namespace CSharpProxy
 {
     public class NxOpenHelper
     {
-        public void Main(string[] args)
+        public void Main(string newMethodName, string[] args)
         {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            Show(args);
+            Show(newMethodName, args);
         }
 
-        static void Show(string[] args)
+        static void Show(string newMethodName,string[] args)
         {
             var arg = args.Count() > 0 ? args.First() : string.Empty;
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
@@ -24,8 +24,36 @@ namespace CSharpProxy
                 var loader = new ManagedLoader();
                 var assembly = loader.Load(arg);
                 string outArg = string.Empty;
-                int result = 0;
-                loader.Run("Main", arg, out outArg, out result);
+                //int result = 0;
+                //loader.Run(newMethodName, arg, out outArg, out result);
+
+                #region oldCode
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(u => u.Location == Path.Combine(AppDomain.CurrentDomain.BaseDirectory, arg));
+                Type[] types = assemblies.FirstOrDefault().GetTypes();
+                foreach (Type type in types)
+                {
+                    foreach (MethodInfo info in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                    {
+                        if (info.Name == newMethodName)
+                        {
+                            ParameterInfo[] parameters = info.GetParameters();
+                            if (parameters.Length == 1)
+                            {
+                                Type parameterType = parameters[0].ParameterType;
+                                Type returnType = info.ReturnType;
+                                if ((parameterType.IsArray && (parameterType.GetElementType() == typeof(string))) && (returnType.IsArray && (returnType.GetElementType() == typeof(string))))
+                                {
+                                    var result = (string[])info.Invoke(null, new object[] { args });
+                                }
+                            }
+                            else if (parameters.Length == 0)
+                            {
+                                var result = (string[])info.Invoke(null, null);
+                            }
+                        }
+                    }
+                }
+                #endregion
             }
             catch (Exception ex)
             {

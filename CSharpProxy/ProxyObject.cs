@@ -74,7 +74,7 @@ namespace CSharpProxy
         {
             assembly = Assembly.LoadFile(actionName);
         }
-        public bool Invoke(string fullClassName, string methodName, params string[] args)
+        public bool Invoke(string fullClassName, string methodName,string newMethodName, params string[] args)
         {
             if (assembly == null)
                 return false;
@@ -87,12 +87,12 @@ namespace CSharpProxy
             Object obj = Activator.CreateInstance(tp);
             if (obj is NxOpenHelper)
             {
-                (obj as NxOpenHelper).Main(args);
+                (obj as NxOpenHelper).Main(newMethodName,args);
             }
             else { method.Invoke(obj, args); }
             return true;
         }
-        public static void ExecuteMothod(string actionName, string baseDirectory)
+        public static void ExecuteMothod(string actionName, string baseDirectory,string methodName= "Main")
         {
             var setup = new AppDomainSetup();
             setup.ApplicationBase = baseDirectory;
@@ -105,7 +105,7 @@ namespace CSharpProxy
                 IntPtr hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
                 po.WindowPH = hWnd;
                 po.LoadAssembly(location);
-                po.Invoke(typeof(NxOpenHelper).FullName, "Main", args);
+                po.Invoke(typeof(NxOpenHelper).FullName, "Main", methodName, args);
             }
             catch (Exception ex)
             {
