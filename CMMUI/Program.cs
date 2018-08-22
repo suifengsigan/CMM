@@ -29,9 +29,9 @@ namespace CMMUI
 
         static void Execute()
         {
-            CSharpProxy.ProxyObject.Instance.ShowMsg("开始自动取点");
+            CSharpProxy.ProxyObject.Instance.ShowMsg("正在匹配图档...");
             CMM.Entry.AutoSelPoint();
-            CSharpProxy.ProxyObject.Instance.ShowMsg("结束自动取点");
+            //CSharpProxy.ProxyObject.Instance.ShowMsg("结束自动取点");
         }
     }
 }
