@@ -48,6 +48,11 @@ namespace CMMProgram
         {
             Action action = () => {
                 listBox1.Items.Insert(0, string.Format("{0}:{1}", DateTime.Now.ToString(), strMsg));
+                var maxItem = 1000;
+                if (listBox1.Items.Count > maxItem)
+                {
+                    listBox1.Items.RemoveAt(maxItem);
+                }
             };
             if (this.listBox1.InvokeRequired == false)
             {

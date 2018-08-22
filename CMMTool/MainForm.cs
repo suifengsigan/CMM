@@ -165,7 +165,7 @@ namespace CMMTool
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var data=CMMConfig.GetInstance().ProbeDatas;
+            var data = CMMConfig.GetInstance().ProbeDatas ?? new List<ProbeData>();
             dataGridView1.DataSource = data;
         }
 
