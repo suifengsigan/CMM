@@ -52,6 +52,12 @@ namespace CMM
             tempPositions = GetElectrodeHeadFacePositions(electrode, config);
             positions.AddRange(tempPositions);
 
+            //名称
+            foreach (var item in positions)
+            {
+                item.PointName = string.Format("P{0}", positions.IndexOf(item) + 1);
+            }
+
             return positions;
         }
 
