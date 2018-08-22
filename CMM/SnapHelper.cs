@@ -9,6 +9,16 @@ namespace CMM
 {
     public class Helper
     {
+        /// <summary>
+        /// 是否在相同的象限
+        /// </summary>
+        public static bool IsSameQuadrant(Snap.Position p1,Snap.Position p2,Snap.Position center)
+        {
+            var q1 = SnapEx.Helper.GetQuadrantType(p1, center, Snap.Orientation.Identity);
+            var q2 = SnapEx.Helper.GetQuadrantType(p2, center, Snap.Orientation.Identity);
+            return q1==q2;
+        }
+        
         public static void ShowMsg(string msg)
         {
             CSharpProxy.ProxyObject.Instance.ShowMsg(msg);

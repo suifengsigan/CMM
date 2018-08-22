@@ -105,11 +105,12 @@ namespace CMM
             var p2 = face.Position(face.BoxUV.MinU, face.BoxUV.MaxV);
             var p3 = face.Position(face.BoxUV.MaxU, face.BoxUV.MinV);
             var p4 = face.Position(face.BoxUV.MaxU, face.BoxUV.MaxV);
+            var center = face.GetCenterPoint();
 
             var tempPs = new List<Snap.Position> { p1, p2, p3, p4 };
             foreach (var tempP in tempPs)
             {
-                var ps = positions.OrderBy(u => Snap.Position.Distance(tempP, u));
+                var ps = positions.Where(u => Helper.IsSameQuadrant(tempP, u, center)).OrderBy(u => Snap.Position.Distance(tempP, u));
                 foreach (var item in ps)
                 {
                     var interveneP = IsIntervene(elec, item, vector, edges, config,PointType.HorizontalDatumFace);
