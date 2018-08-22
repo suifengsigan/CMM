@@ -70,7 +70,7 @@ namespace CMM
                 {
                     break;
                 }
-                var positions = Helper.GetFacePoints(face);
+                var positions = Helper.GetFacePoints(face,config);
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
                 for (var i = 0; i < LoopVarValue; i++)
@@ -98,7 +98,7 @@ namespace CMM
             var result = new List<PointData>();
             var face = elec.BaseFace;
             var edges = face.EdgeCurves.ToList();
-            var positions = Helper.GetFacePoints(face);
+            var positions = Helper.GetFacePoints(face,config);
             var vector = face.GetFaceDirection();
             //边界点
             var p1 = face.Position(face.BoxUV.MinU, face.BoxUV.MinV);
@@ -143,7 +143,7 @@ namespace CMM
             minZ -= config.SideFaceGetPointValue;
             foreach (var face in faces)
             {
-                var positions = Helper.GetFacePoints(face);
+                var positions = Helper.GetFacePoints(face,config);
                 var edges = face.EdgeCurves.ToList();
                 var faceDirection = face.GetFaceDirection();
                 var faceOrientation = new Orientation(faceDirection);

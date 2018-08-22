@@ -87,7 +87,7 @@ namespace CMM
         /// <summary>
         /// 获取面上所有的测量点
         /// </summary>
-        public static List<Snap.Position> GetFacePoints(Snap.NX.Face face, double max_facet_size = 1)
+        public static List<Snap.Position> GetFacePoints(Snap.NX.Face face, CMMTool.CMMConfig config, double max_facet_size = 1)
         {
             var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Visible, "GetFacePoints");
             var positions = new List<Snap.Position>();
@@ -148,8 +148,14 @@ namespace CMM
                 #endregion
 
                 //所有边上的点都不取
+                var minD = SnapEx.Helper.Tolerance;
+                var probeDatas = config.ProbeDatas ?? new List<CMMTool.ProbeData>();
+                foreach (var data in probeDatas)
+                {
+                    minD = System.Math.Min(data.D / 2, minD);
+                }
                 positions.ToList().ForEach(p => {
-                    if (Helper.GetPointToEdgeMinDistance(p, edges) < SnapEx.Helper.Tolerance)
+                    if (Helper.GetPointToEdgeMinDistance(p, edges) < minD)
                     {
                         positions.Remove(p);
                     }
