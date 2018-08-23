@@ -14,10 +14,9 @@ namespace CMMTool
         {
             EntryPoint = 10;
             RetreatPoint = 10;
-            SideFaceGetPointValue = 2;
             StepLength = 5;
             SafeDistance = 10;
-            VerticalValue = 3;
+            VerticalValue = 4;
         }
 
         public static void WriteConfig(CMMConfig data)
@@ -48,10 +47,6 @@ namespace CMMTool
         /// 退点
         /// </summary>
         public double RetreatPoint { get; set; }
-        /// <summary>
-        /// 电极侧面取点变量
-        /// </summary>
-        public double SideFaceGetPointValue { get; set; }
         /// <summary>
         /// 步长（用于动态增量干涉）
         /// </summary>

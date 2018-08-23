@@ -147,7 +147,6 @@ namespace CMM
             var faces = elec.BaseSideFaces;
             //获取Z值
             var minZ = elec.BaseFace.Box.MinZ;
-            minZ -= config.SideFaceGetPointValue;
             foreach (var face in faces)
             {
                 var positions = Helper.GetFacePoints(face,config);
@@ -157,7 +156,7 @@ namespace CMM
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
 
                 var tempP = face.Box.MaxXYZ;
-                var ps = positions.Where(u => System.Math.Abs(u.Z - face.Box.MaxZ) < config.VerticalValue).OrderBy(u => Snap.Position.Distance(tempP, u)).ToList();
+                var ps = positions.Where(u => System.Math.Abs(u.Z - minZ) < config.VerticalValue).OrderBy(u => Snap.Position.Distance(tempP, u)).ToList();
 
                 //对称点
                 while (ps.Count > 0)

@@ -70,6 +70,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtEntryPoint = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtRetreatPoint = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtVerticalValue = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtSafeDistance = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -85,6 +94,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -138,6 +148,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -482,6 +493,96 @@
             this.txtProbeName.Size = new System.Drawing.Size(265, 21);
             this.txtProbeName.TabIndex = 0;
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.label16);
+            this.tabPage4.Controls.Add(this.txtSafeDistance);
+            this.tabPage4.Controls.Add(this.label15);
+            this.tabPage4.Controls.Add(this.txtVerticalValue);
+            this.tabPage4.Controls.Add(this.label14);
+            this.tabPage4.Controls.Add(this.txtRetreatPoint);
+            this.tabPage4.Controls.Add(this.label13);
+            this.tabPage4.Controls.Add(this.txtEntryPoint);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(802, 559);
+            this.tabPage4.TabIndex = 2;
+            this.tabPage4.Text = "CMM基本配置";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(43, 30);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 12);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "进点";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtEntryPoint
+            // 
+            this.txtEntryPoint.Location = new System.Drawing.Point(185, 30);
+            this.txtEntryPoint.Name = "txtEntryPoint";
+            this.txtEntryPoint.Size = new System.Drawing.Size(265, 21);
+            this.txtEntryPoint.TabIndex = 2;
+            this.txtEntryPoint.Text = "10";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(43, 83);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(29, 12);
+            this.label14.TabIndex = 5;
+            this.label14.Text = "退点";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtRetreatPoint
+            // 
+            this.txtRetreatPoint.Location = new System.Drawing.Point(185, 83);
+            this.txtRetreatPoint.Name = "txtRetreatPoint";
+            this.txtRetreatPoint.Size = new System.Drawing.Size(265, 21);
+            this.txtRetreatPoint.TabIndex = 4;
+            this.txtRetreatPoint.Text = "10";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(43, 129);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(101, 12);
+            this.label15.TabIndex = 7;
+            this.label15.Text = "电极侧面取点变量";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtVerticalValue
+            // 
+            this.txtVerticalValue.Location = new System.Drawing.Point(185, 126);
+            this.txtVerticalValue.Name = "txtVerticalValue";
+            this.txtVerticalValue.Size = new System.Drawing.Size(265, 21);
+            this.txtVerticalValue.TabIndex = 6;
+            this.txtVerticalValue.Text = "3";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(43, 175);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(53, 12);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "安全距离";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtSafeDistance
+            // 
+            this.txtSafeDistance.Location = new System.Drawing.Point(185, 172);
+            this.txtSafeDistance.Name = "txtSafeDistance";
+            this.txtSafeDistance.Size = new System.Drawing.Size(265, 21);
+            this.txtSafeDistance.TabIndex = 8;
+            this.txtSafeDistance.Text = "10";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -511,6 +612,8 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -558,6 +661,15 @@
         private System.Windows.Forms.TextBox txtB;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtA;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtEntryPoint;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtRetreatPoint;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txtVerticalValue;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtSafeDistance;
     }
 }
 
