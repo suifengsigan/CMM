@@ -16,7 +16,7 @@ namespace AutoPrtTool
         static void Excute()
         {
             ShowMsg("正在匹配图档...");
-            var path = @"C:\Users\PENGHUI\Desktop\AutoPrtTool";
+            var path = CMMTool.CMMConfig.GetInstance().AutoPrtToolDir;
             var fileName=EactTool.FileHelper.FindFile(path);
             if (!string.IsNullOrEmpty(fileName))
             {
