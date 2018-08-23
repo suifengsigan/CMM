@@ -79,6 +79,29 @@ namespace CMMProgram
             btnStart.Click += BtnStart_Click;
             btnCMMConfig.Click += BtnConfig_Click;
             btnUserConfig.Click += BtnUserConfig_Click;
+            btnAutoPrt.Click += BtnAutoPrt_Click;
+        }
+
+        private void BtnAutoPrt_Click(object sender, EventArgs e)
+        {
+            panel4.Visible = false;
+            ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
+                while (true)
+                {
+                    try
+                    {
+                        Excute("AutoPrtTool.dll");
+                    }
+                    catch (Exception ex)
+                    {
+                        DispMsg(string.Format("启动AutoPrt程序错误【{0}】", ex.Message));
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    Thread.Sleep(1000);
+                }
+
+            }));
         }
 
         private void BtnUserConfig_Click(object sender, EventArgs e)

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpProxy", "CSharpProxy\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EactTool", "EactTool\EactTool.csproj", "{0BAB8AE1-2397-41C2-8946-7689B3E164C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPrtTool", "AutoPrtTool\AutoPrtTool.csproj", "{8B655BEA-3044-4A96-8A09-6E6C652E5679}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{0BAB8AE1-2397-41C2-8946-7689B3E164C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BAB8AE1-2397-41C2-8946-7689B3E164C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BAB8AE1-2397-41C2-8946-7689B3E164C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B655BEA-3044-4A96-8A09-6E6C652E5679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B655BEA-3044-4A96-8A09-6E6C652E5679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B655BEA-3044-4A96-8A09-6E6C652E5679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B655BEA-3044-4A96-8A09-6E6C652E5679}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
