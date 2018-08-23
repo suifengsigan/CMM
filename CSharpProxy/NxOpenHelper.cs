@@ -57,7 +57,8 @@ namespace CSharpProxy
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
+                Console.Write(ex.Message);
+                throw ex;
             }
         }
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
