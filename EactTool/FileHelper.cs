@@ -35,6 +35,10 @@ namespace EactTool
             var name = Path.GetFileName(fileName);
             var nameW = Path.GetFileNameWithoutExtension(fileName);
             var newPath = Path.Combine(path, EACTERROR);
+            if (!Directory.Exists(newPath))
+            {
+                Directory.CreateDirectory(newPath);
+            }
             File.Copy(fileName, Path.Combine(newPath, name));
             File.WriteAllText(Path.Combine(newPath, nameW + "error.txt"), errorMsg);
             DeleteFile(path, fileName);
