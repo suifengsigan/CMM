@@ -24,6 +24,26 @@ namespace CMMTool
             this.FormClosing += MainForm_FormClosing;
             dataGridView2.MouseDown += DataGridView2_MouseDown;
             dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
+            btnSelAutoCmmDir.Click += BtnSelAutoCmmDir_Click;
+            btnAutoPrtToolDir.Click += BtnAutoPrtToolDir_Click;
+        }
+
+        private void BtnAutoPrtToolDir_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                txtAutoPrtToolDir.Text = folderBrowser.SelectedPath;
+            }
+        }
+
+        private void BtnSelAutoCmmDir_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                txtAutoCmmDir.Text = folderBrowser.SelectedPath;
+            }
         }
 
         private void DataGridView2_MouseDown(object sender, MouseEventArgs e)
@@ -107,7 +127,14 @@ namespace CMMTool
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             var datasource = dataGridView1.DataSource as List<ProbeData>;
-            CMMConfig.WriteConfig(new CMMConfig { ProbeDatas = datasource });
+            var result = new CMMConfig { ProbeDatas = datasource };
+            result.AutoCmmDir = txtAutoCmmDir.Text;
+            result.AutoPrtToolDir = txtAutoPrtToolDir.Text;
+            result.EntryPoint = double.Parse(txtEntryPoint.Text);
+            result.RetreatPoint = double.Parse(txtRetreatPoint.Text);
+            result.SafeDistance = double.Parse(txtSafeDistance.Text);
+            result.VerticalValue = double.Parse(txtVerticalValue.Text);
+            CMMConfig.WriteConfig(result);
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -165,7 +192,14 @@ namespace CMMTool
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            var data = CMMConfig.GetInstance().ProbeDatas ?? new List<ProbeData>();
+            var result = CMMConfig.GetInstance();
+            var data = result.ProbeDatas ?? new List<ProbeData>();
+            txtAutoCmmDir.Text = result.AutoCmmDir;
+            txtAutoPrtToolDir.Text = result.AutoPrtToolDir;
+            txtEntryPoint.Text = result.EntryPoint.ToString();
+            txtRetreatPoint.Text = result.RetreatPoint.ToString();
+            txtSafeDistance.Text = result.SafeDistance.ToString();
+            txtVerticalValue.Text = result.VerticalValue.ToString();
             dataGridView1.DataSource = data;
         }
 

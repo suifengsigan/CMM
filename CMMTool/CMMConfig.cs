@@ -59,5 +59,13 @@ namespace CMMTool
         /// 侧面取值范围
         /// </summary>
         public double VerticalValue { get; set; }
+        /// <summary>
+        /// 图档工具路径
+        /// </summary>
+        public string AutoPrtToolDir { get; set; }
+        /// <summary>
+        /// AutoCMM路径
+        /// </summary>
+        public string AutoCmmDir { get; set; }
     }
 }

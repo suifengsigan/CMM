@@ -79,6 +79,13 @@
             this.txtVerticalValue = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtSafeDistance = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtAutoCmmDir = new System.Windows.Forms.TextBox();
+            this.btnSelAutoCmmDir = new System.Windows.Forms.Button();
+            this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -95,6 +102,7 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -149,6 +157,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -495,6 +504,9 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.btnSelAutoCmmDir);
+            this.tabPage4.Controls.Add(this.label17);
+            this.tabPage4.Controls.Add(this.txtAutoCmmDir);
             this.tabPage4.Controls.Add(this.label16);
             this.tabPage4.Controls.Add(this.txtSafeDistance);
             this.tabPage4.Controls.Add(this.label15);
@@ -514,7 +526,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(43, 30);
+            this.label13.Location = new System.Drawing.Point(71, 83);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(29, 12);
             this.label13.TabIndex = 3;
@@ -523,16 +535,16 @@
             // 
             // txtEntryPoint
             // 
-            this.txtEntryPoint.Location = new System.Drawing.Point(185, 30);
+            this.txtEntryPoint.Location = new System.Drawing.Point(193, 83);
             this.txtEntryPoint.Name = "txtEntryPoint";
-            this.txtEntryPoint.Size = new System.Drawing.Size(265, 21);
+            this.txtEntryPoint.Size = new System.Drawing.Size(285, 21);
             this.txtEntryPoint.TabIndex = 2;
             this.txtEntryPoint.Text = "10";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(43, 83);
+            this.label14.Location = new System.Drawing.Point(71, 136);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(29, 12);
             this.label14.TabIndex = 5;
@@ -541,16 +553,16 @@
             // 
             // txtRetreatPoint
             // 
-            this.txtRetreatPoint.Location = new System.Drawing.Point(185, 83);
+            this.txtRetreatPoint.Location = new System.Drawing.Point(193, 136);
             this.txtRetreatPoint.Name = "txtRetreatPoint";
-            this.txtRetreatPoint.Size = new System.Drawing.Size(265, 21);
+            this.txtRetreatPoint.Size = new System.Drawing.Size(285, 21);
             this.txtRetreatPoint.TabIndex = 4;
             this.txtRetreatPoint.Text = "10";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(43, 129);
+            this.label15.Location = new System.Drawing.Point(71, 182);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(101, 12);
             this.label15.TabIndex = 7;
@@ -559,16 +571,16 @@
             // 
             // txtVerticalValue
             // 
-            this.txtVerticalValue.Location = new System.Drawing.Point(185, 126);
+            this.txtVerticalValue.Location = new System.Drawing.Point(193, 179);
             this.txtVerticalValue.Name = "txtVerticalValue";
-            this.txtVerticalValue.Size = new System.Drawing.Size(265, 21);
+            this.txtVerticalValue.Size = new System.Drawing.Size(285, 21);
             this.txtVerticalValue.TabIndex = 6;
             this.txtVerticalValue.Text = "3";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(43, 175);
+            this.label16.Location = new System.Drawing.Point(71, 228);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(53, 12);
             this.label16.TabIndex = 9;
@@ -577,11 +589,80 @@
             // 
             // txtSafeDistance
             // 
-            this.txtSafeDistance.Location = new System.Drawing.Point(185, 172);
+            this.txtSafeDistance.Location = new System.Drawing.Point(193, 225);
             this.txtSafeDistance.Name = "txtSafeDistance";
-            this.txtSafeDistance.Size = new System.Drawing.Size(265, 21);
+            this.txtSafeDistance.Size = new System.Drawing.Size(285, 21);
             this.txtSafeDistance.TabIndex = 8;
             this.txtSafeDistance.Text = "10";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.btnAutoPrtToolDir);
+            this.tabPage5.Controls.Add(this.label18);
+            this.tabPage5.Controls.Add(this.txtAutoPrtToolDir);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(802, 559);
+            this.tabPage5.TabIndex = 3;
+            this.tabPage5.Text = "图档工具配置";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Enabled = false;
+            this.label17.Location = new System.Drawing.Point(71, 32);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(29, 12);
+            this.label17.TabIndex = 11;
+            this.label17.Text = "目录";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtAutoCmmDir
+            // 
+            this.txtAutoCmmDir.Enabled = false;
+            this.txtAutoCmmDir.Location = new System.Drawing.Point(193, 29);
+            this.txtAutoCmmDir.Name = "txtAutoCmmDir";
+            this.txtAutoCmmDir.Size = new System.Drawing.Size(285, 21);
+            this.txtAutoCmmDir.TabIndex = 10;
+            // 
+            // btnSelAutoCmmDir
+            // 
+            this.btnSelAutoCmmDir.Location = new System.Drawing.Point(484, 29);
+            this.btnSelAutoCmmDir.Name = "btnSelAutoCmmDir";
+            this.btnSelAutoCmmDir.Size = new System.Drawing.Size(75, 23);
+            this.btnSelAutoCmmDir.TabIndex = 12;
+            this.btnSelAutoCmmDir.Text = "选择目录";
+            this.btnSelAutoCmmDir.UseVisualStyleBackColor = true;
+            // 
+            // btnAutoPrtToolDir
+            // 
+            this.btnAutoPrtToolDir.Location = new System.Drawing.Point(439, 41);
+            this.btnAutoPrtToolDir.Name = "btnAutoPrtToolDir";
+            this.btnAutoPrtToolDir.Size = new System.Drawing.Size(75, 23);
+            this.btnAutoPrtToolDir.TabIndex = 15;
+            this.btnAutoPrtToolDir.Text = "选择目录";
+            this.btnAutoPrtToolDir.UseVisualStyleBackColor = true;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Enabled = false;
+            this.label18.Location = new System.Drawing.Point(107, 46);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(29, 12);
+            this.label18.TabIndex = 14;
+            this.label18.Text = "目录";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtAutoPrtToolDir
+            // 
+            this.txtAutoPrtToolDir.Enabled = false;
+            this.txtAutoPrtToolDir.Location = new System.Drawing.Point(168, 43);
+            this.txtAutoPrtToolDir.Name = "txtAutoPrtToolDir";
+            this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
+            this.txtAutoPrtToolDir.TabIndex = 13;
             // 
             // MainForm
             // 
@@ -614,6 +695,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -670,6 +753,13 @@
         private System.Windows.Forms.TextBox txtVerticalValue;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtSafeDistance;
+        private System.Windows.Forms.Button btnSelAutoCmmDir;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtAutoCmmDir;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button btnAutoPrtToolDir;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtAutoPrtToolDir;
     }
 }
 
