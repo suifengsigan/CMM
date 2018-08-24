@@ -17,7 +17,17 @@ namespace CMMUI
         {
             AssemblyLoader.Entry.InitAssembly();
             Init();
-          
+        }
+
+        public static void InitUG()
+        {
+            AssemblyLoader.Entry.InitAssembly();
+            _InitUG();
+        }
+
+        static void _InitUG()
+        {
+            CMM.Entry.InitUG();
         }
 
         static void Init()

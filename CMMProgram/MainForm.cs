@@ -41,6 +41,7 @@ namespace CMMProgram
         public s()
         {
             InitializeComponent();
+            Enabled = false;
             InitEvent();
         }
 
@@ -80,6 +81,25 @@ namespace CMMProgram
             btnCMMConfig.Click += BtnConfig_Click;
             btnUserConfig.Click += BtnUserConfig_Click;
             btnAutoPrt.Click += BtnAutoPrt_Click;
+            this.Shown += S_Shown;
+        }
+
+        private void S_Shown(object sender, EventArgs e)
+        {
+            ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
+                Excute("CMMUI.dll", "InitUG");
+                Action action = () => {
+                    this.Enabled = true;
+                };
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(action);
+                }
+                else
+                {
+                    action();
+                }
+            }));
         }
 
         private void BtnAutoPrt_Click(object sender, EventArgs e)

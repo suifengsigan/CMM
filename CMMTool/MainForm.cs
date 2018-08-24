@@ -26,6 +26,42 @@ namespace CMMTool
             dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
             btnSelAutoCmmDir.Click += BtnSelAutoCmmDir_Click;
             btnAutoPrtToolDir.Click += BtnAutoPrtToolDir_Click;
+            dataGridView1.CellMouseDown += DataGridView1_CellMouseDown;
+            dataGridView1.CellPainting += DataGridView1_CellPainting;
+        }
+
+        private void DataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            var dataGridViewPSelection = dataGridView1;
+            if (e.RowIndex > -1)
+            {
+                var obj = dataGridViewPSelection.Rows[e.RowIndex].DataBoundItem as ProbeData;
+                if (obj.IsBaseFaceProbe)
+                {
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                }
+                else
+                {
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Brown;
+                }
+            }
+        }
+
+        private void DataGridView1_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var dataGridViewPSelection = dataGridView1;
+            if (e.Button == MouseButtons.Right)
+            {
+                if (e.RowIndex >= 0)
+                {
+                    var obj = dataGridViewPSelection.Rows[e.RowIndex].DataBoundItem as ProbeData;
+                    _cms = new ContextMenuStrip();
+                    _cms.Items.Add("设置基准面测针");
+                    _cms.ItemClicked += _cms_ItemClicked;
+                    //弹出操作菜单
+                    _cms.Show(MousePosition.X, MousePosition.Y);
+                }
+            }
         }
 
         private void BtnAutoPrtToolDir_Click(object sender, EventArgs e)
@@ -88,7 +124,7 @@ namespace CMMTool
             double B = 0;
             double.TryParse(txtA.Text, out A);
             double.TryParse(txtB.Text, out B);
-            var datasource= dataGridViewPSelection.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>(); 
+            var datasource= dataGridViewPSelection.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>();
             if (e.ClickedItem.Text == "新增")
             {
                 datasource.Insert(0, new ProbeData.AB { A = A, B = B });
@@ -107,6 +143,21 @@ namespace CMMTool
                     dataGridViewPSelection.Refresh();
                 }
             }
+            else if (e.ClickedItem.Text == "设置基准面测针")
+            {
+                dataGridView1.Rows.Cast<DataGridViewRow>().ToList().ForEach(u => {
+                    var data = u.DataBoundItem as ProbeData;
+                    var currentRow = dataGridView1.CurrentRow;
+                    if (currentRow == u)
+                    {
+                        data.IsBaseFaceProbe = true;
+                    }
+                    else
+                    {
+                        data.IsBaseFaceProbe = false;
+                    }
+                });
+            }
             else
             {
                 if (dataGridViewPSelection.CurrentRow != null)
@@ -119,7 +170,7 @@ namespace CMMTool
                         dataGridViewPSelection.DataSource = datasource.ToList();
                     }
                 }
-              
+
             }
         }
 

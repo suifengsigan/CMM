@@ -15,6 +15,13 @@ namespace CMM
 
         }
 
+        public static void InitUG()
+        {
+            Helper.ShowMsg("UG正在初始化...");
+            var session=NXOpen.Session.GetSession();
+            Helper.ShowMsg("UG完成初始化");
+        }
+
         /// <summary>
         /// 自动选点
         /// </summary>

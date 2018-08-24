@@ -70,5 +70,10 @@ namespace CMMTool
             public double A { get; set; }
             public double B { get; set; }
         }
+
+        /// <summary>
+        /// 是否基准面测针
+        /// </summary>
+        public bool IsBaseFaceProbe = false;
     }
 }
