@@ -19,7 +19,7 @@ namespace CMM
         /// <summary>
         /// 循环变量值
         /// </summary>
-        static int LoopVarValue = 20;
+        static int LoopVarValue = 10;
 
         /// <summary>
         /// 上传CMM文件
@@ -121,7 +121,7 @@ namespace CMM
                 var edges = face.EdgeCurves.ToList();
                 if (double.IsNaN(vector.X)|| double.IsNaN(vector.Y)|| double.IsNaN(vector.Z))
                 {
-                    break;
+                    continue;
                 }
                 var positions = Helper.GetFacePoints(face,config);
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
