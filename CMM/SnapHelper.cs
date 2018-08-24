@@ -99,64 +99,12 @@ namespace CMM
         /// </summary>
         public static List<Snap.Position> GetFacePoints(Snap.NX.Face face, CMMTool.CMMConfig config, double max_facet_size = 1)
         {
-            var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Visible, "GetFacePoints");
+            var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Visible, "GetFacePointsEx");
             var positions = new List<Snap.Position>();
             try
             {
-                #region old code
-                var parameters = new UFFacet.Parameters();
-
-                var ufSession = NXOpen.UF.UFSession.GetUFSession();
-                var facet = ufSession.Facet;
-                facet.AskDefaultParameters(out parameters);
-                parameters.max_facet_edges = 3;
-                parameters.specify_max_facet_size = true;
-                parameters.max_facet_size = 1;
-
-                NXOpen.Tag facet_model = NXOpen.Tag.Null;
-                facet.FacetSolid(face.NXOpenTag, ref parameters, out facet_model);
-
-                if (facet_model == NXOpen.Tag.Null) return positions;
-                NXOpen.Tag solid = NXOpen.Tag.Null;
-                facet.AskSolidOfModel(facet_model, out solid);
-                if (solid != face.NXOpenTag) return positions;
-
-                int facet_id = NXOpen.UF.UFConstants.UF_FACET_NULL_FACET_ID;
-                bool isWhile = true;
-                while (isWhile)
-                {
-                    facet.CycleFacets(facet_model, ref facet_id);
-                    if (facet_id != NXOpen.UF.UFConstants.UF_FACET_NULL_FACET_ID)
-                    {
-                        int num_vertices = 0;
-                        facet.AskNumVertsInFacet(facet_model, facet_id, out num_vertices);
-                        if (num_vertices == 3)
-                        {
-                            var vertices = new double[num_vertices, 3];
-                            facet.AskVerticesOfFacet(facet_model, facet_id, out num_vertices, vertices);
-                            for (int i = 0; i < num_vertices; i++)
-                            {
-                                int pt_status = 0;
-                                var position = new Snap.Position(vertices[i, 0], vertices[i, 1], vertices[i, 2]);
-                                ufSession.Modl.AskPointContainment(position.Array, face.NXOpenTag, out pt_status);
-                                if (0x1 == pt_status || 0x3 == pt_status)
-                                {
-                                    positions.Add(position);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        isWhile = false;
-                    }
-                }
-
-                ufSession.Obj.DeleteObject(facet_model);
-                positions = positions.Distinct().ToList();
+                positions = SnapEx.Create.GetFacePoints(face, max_facet_size);
                 var edges = face.EdgeCurves.ToList();
-                #endregion
-
                 //所有边上的点都不取
                 var minD = SnapEx.Helper.Tolerance;
                 var probeDatas = config.ProbeDatas ?? new List<CMMTool.ProbeData>();
@@ -170,8 +118,6 @@ namespace CMM
                         positions.Remove(p);
                     }
                 });
-                
-
             }
             catch (Exception ex)
             {
