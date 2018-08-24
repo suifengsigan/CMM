@@ -33,9 +33,9 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.btnAutoPrt = new System.Windows.Forms.Button();
             this.btnCMMConfig = new System.Windows.Forms.Button();
             this.btnUserConfig = new System.Windows.Forms.Button();
-            this.btnAutoPrt = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -82,6 +82,15 @@
             this.panel4.Size = new System.Drawing.Size(185, 525);
             this.panel4.TabIndex = 2;
             // 
+            // btnAutoPrt
+            // 
+            this.btnAutoPrt.Location = new System.Drawing.Point(29, 162);
+            this.btnAutoPrt.Name = "btnAutoPrt";
+            this.btnAutoPrt.Size = new System.Drawing.Size(109, 79);
+            this.btnAutoPrt.TabIndex = 9;
+            this.btnAutoPrt.Text = "图档工具";
+            this.btnAutoPrt.UseVisualStyleBackColor = true;
+            // 
             // btnCMMConfig
             // 
             this.btnCMMConfig.Location = new System.Drawing.Point(29, 405);
@@ -100,15 +109,6 @@
             this.btnUserConfig.Text = "用户配置";
             this.btnUserConfig.UseVisualStyleBackColor = true;
             // 
-            // btnAutoPrt
-            // 
-            this.btnAutoPrt.Location = new System.Drawing.Point(29, 162);
-            this.btnAutoPrt.Name = "btnAutoPrt";
-            this.btnAutoPrt.Size = new System.Drawing.Size(109, 79);
-            this.btnAutoPrt.TabIndex = 9;
-            this.btnAutoPrt.Text = "图档工具";
-            this.btnAutoPrt.UseVisualStyleBackColor = true;
-            // 
             // s
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -117,6 +117,7 @@
             this.Controls.Add(this.panel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "s";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EAct_益模";
             this.panel2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);

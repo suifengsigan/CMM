@@ -42,7 +42,7 @@ namespace CMMTool
                 }
                 else
                 {
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Brown;
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 }
             }
         }
@@ -157,6 +157,8 @@ namespace CMMTool
                         data.IsBaseFaceProbe = false;
                     }
                 });
+
+                dataGridView1.Refresh();
             }
             else
             {

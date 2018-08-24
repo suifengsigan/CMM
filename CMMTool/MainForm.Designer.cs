@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.panel1 = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnSave = new System.Windows.Forms.Button();
@@ -71,22 +70,23 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtEntryPoint = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.txtRetreatPoint = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txtVerticalValue = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txtSafeDistance = new System.Windows.Forms.TextBox();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnSelAutoCmmDir = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.txtAutoCmmDir = new System.Windows.Forms.TextBox();
-            this.btnSelAutoCmmDir = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtSafeDistance = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtVerticalValue = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtRetreatPoint = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtEntryPoint = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.panel1.SuspendLayout();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -103,22 +103,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.btnAdd);
-            this.panel1.Controls.Add(this.btnDelete);
-            this.panel1.Controls.Add(this.btnSave);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 585);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(810, 32);
-            this.panel1.TabIndex = 0;
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(477, 4);
+            this.btnAdd.Location = new System.Drawing.Point(33, 19);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 2;
@@ -127,7 +118,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(600, 4);
+            this.btnDelete.Location = new System.Drawing.Point(155, 19);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 1;
@@ -136,7 +127,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(718, 3);
+            this.btnSave.Location = new System.Drawing.Point(280, 19);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -150,7 +141,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(810, 585);
+            this.panel2.Size = new System.Drawing.Size(810, 617);
             this.panel2.TabIndex = 1;
             // 
             // tabControl1
@@ -162,7 +153,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(810, 585);
+            this.tabControl1.Size = new System.Drawing.Size(810, 617);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage2
@@ -172,18 +163,19 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(802, 559);
+            this.tabPage2.Size = new System.Drawing.Size(802, 591);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "CMM配置";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.dataGridView1);
+            this.panel4.Controls.Add(this.panel8);
+            this.panel4.Controls.Add(this.panel7);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(395, 553);
+            this.panel4.Size = new System.Drawing.Size(395, 585);
             this.panel4.TabIndex = 1;
             // 
             // dataGridView1
@@ -193,7 +185,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(395, 553);
+            this.dataGridView1.Size = new System.Drawing.Size(395, 525);
             this.dataGridView1.TabIndex = 0;
             // 
             // panel3
@@ -203,7 +195,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel3.Location = new System.Drawing.Point(398, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(401, 553);
+            this.panel3.Size = new System.Drawing.Size(401, 585);
             this.panel3.TabIndex = 0;
             // 
             // panel6
@@ -212,7 +204,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(0, 153);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(401, 400);
+            this.panel6.Size = new System.Drawing.Size(401, 432);
             this.panel6.TabIndex = 7;
             // 
             // tabControl2
@@ -223,7 +215,7 @@
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(401, 400);
+            this.tabControl2.Size = new System.Drawing.Size(401, 432);
             this.tabControl2.TabIndex = 5;
             // 
             // tabPage1
@@ -238,7 +230,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(393, 374);
+            this.tabPage1.Size = new System.Drawing.Size(393, 406);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "测头数据";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -523,90 +515,14 @@
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label13
+            // btnSelAutoCmmDir
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(71, 83);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 12);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "进点";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtEntryPoint
-            // 
-            this.txtEntryPoint.Location = new System.Drawing.Point(193, 83);
-            this.txtEntryPoint.Name = "txtEntryPoint";
-            this.txtEntryPoint.Size = new System.Drawing.Size(285, 21);
-            this.txtEntryPoint.TabIndex = 2;
-            this.txtEntryPoint.Text = "10";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(71, 136);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(29, 12);
-            this.label14.TabIndex = 5;
-            this.label14.Text = "退点";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtRetreatPoint
-            // 
-            this.txtRetreatPoint.Location = new System.Drawing.Point(193, 136);
-            this.txtRetreatPoint.Name = "txtRetreatPoint";
-            this.txtRetreatPoint.Size = new System.Drawing.Size(285, 21);
-            this.txtRetreatPoint.TabIndex = 4;
-            this.txtRetreatPoint.Text = "10";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(71, 182);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(101, 12);
-            this.label15.TabIndex = 7;
-            this.label15.Text = "电极侧面取点变量";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtVerticalValue
-            // 
-            this.txtVerticalValue.Location = new System.Drawing.Point(193, 179);
-            this.txtVerticalValue.Name = "txtVerticalValue";
-            this.txtVerticalValue.Size = new System.Drawing.Size(285, 21);
-            this.txtVerticalValue.TabIndex = 6;
-            this.txtVerticalValue.Text = "3";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(71, 228);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 12);
-            this.label16.TabIndex = 9;
-            this.label16.Text = "安全距离";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtSafeDistance
-            // 
-            this.txtSafeDistance.Location = new System.Drawing.Point(193, 225);
-            this.txtSafeDistance.Name = "txtSafeDistance";
-            this.txtSafeDistance.Size = new System.Drawing.Size(285, 21);
-            this.txtSafeDistance.TabIndex = 8;
-            this.txtSafeDistance.Text = "10";
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.btnAutoPrtToolDir);
-            this.tabPage5.Controls.Add(this.label18);
-            this.tabPage5.Controls.Add(this.txtAutoPrtToolDir);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(802, 559);
-            this.tabPage5.TabIndex = 3;
-            this.tabPage5.Text = "图档工具配置";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.btnSelAutoCmmDir.Location = new System.Drawing.Point(484, 29);
+            this.btnSelAutoCmmDir.Name = "btnSelAutoCmmDir";
+            this.btnSelAutoCmmDir.Size = new System.Drawing.Size(75, 23);
+            this.btnSelAutoCmmDir.TabIndex = 12;
+            this.btnSelAutoCmmDir.Text = "选择目录";
+            this.btnSelAutoCmmDir.UseVisualStyleBackColor = true;
             // 
             // label17
             // 
@@ -627,14 +543,90 @@
             this.txtAutoCmmDir.Size = new System.Drawing.Size(285, 21);
             this.txtAutoCmmDir.TabIndex = 10;
             // 
-            // btnSelAutoCmmDir
+            // label16
             // 
-            this.btnSelAutoCmmDir.Location = new System.Drawing.Point(484, 29);
-            this.btnSelAutoCmmDir.Name = "btnSelAutoCmmDir";
-            this.btnSelAutoCmmDir.Size = new System.Drawing.Size(75, 23);
-            this.btnSelAutoCmmDir.TabIndex = 12;
-            this.btnSelAutoCmmDir.Text = "选择目录";
-            this.btnSelAutoCmmDir.UseVisualStyleBackColor = true;
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(71, 228);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(53, 12);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "安全距离";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtSafeDistance
+            // 
+            this.txtSafeDistance.Location = new System.Drawing.Point(193, 225);
+            this.txtSafeDistance.Name = "txtSafeDistance";
+            this.txtSafeDistance.Size = new System.Drawing.Size(285, 21);
+            this.txtSafeDistance.TabIndex = 8;
+            this.txtSafeDistance.Text = "10";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(71, 182);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(101, 12);
+            this.label15.TabIndex = 7;
+            this.label15.Text = "电极侧面取点变量";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtVerticalValue
+            // 
+            this.txtVerticalValue.Location = new System.Drawing.Point(193, 179);
+            this.txtVerticalValue.Name = "txtVerticalValue";
+            this.txtVerticalValue.Size = new System.Drawing.Size(285, 21);
+            this.txtVerticalValue.TabIndex = 6;
+            this.txtVerticalValue.Text = "3";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(71, 136);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(29, 12);
+            this.label14.TabIndex = 5;
+            this.label14.Text = "退点";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtRetreatPoint
+            // 
+            this.txtRetreatPoint.Location = new System.Drawing.Point(193, 136);
+            this.txtRetreatPoint.Name = "txtRetreatPoint";
+            this.txtRetreatPoint.Size = new System.Drawing.Size(285, 21);
+            this.txtRetreatPoint.TabIndex = 4;
+            this.txtRetreatPoint.Text = "10";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(71, 83);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 12);
+            this.label13.TabIndex = 3;
+            this.label13.Text = "进点";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtEntryPoint
+            // 
+            this.txtEntryPoint.Location = new System.Drawing.Point(193, 83);
+            this.txtEntryPoint.Name = "txtEntryPoint";
+            this.txtEntryPoint.Size = new System.Drawing.Size(285, 21);
+            this.txtEntryPoint.TabIndex = 2;
+            this.txtEntryPoint.Text = "10";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.btnAutoPrtToolDir);
+            this.tabPage5.Controls.Add(this.label18);
+            this.tabPage5.Controls.Add(this.txtAutoPrtToolDir);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(802, 559);
+            this.tabPage5.TabIndex = 3;
+            this.tabPage5.Text = "图档工具配置";
+            this.tabPage5.UseVisualStyleBackColor = true;
             // 
             // btnAutoPrtToolDir
             // 
@@ -664,18 +656,36 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.btnAdd);
+            this.panel7.Controls.Add(this.btnSave);
+            this.panel7.Controls.Add(this.btnDelete);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(0, 525);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(395, 60);
+            this.panel7.TabIndex = 1;
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.dataGridView1);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(395, 525);
+            this.panel8.TabIndex = 2;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(810, 617);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EAct_CMM配置工具";
-            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -697,13 +707,13 @@
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TabControl tabControl1;
@@ -760,6 +770,8 @@
         private System.Windows.Forms.Button btnAutoPrtToolDir;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtAutoPrtToolDir;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel7;
     }
 }
 
