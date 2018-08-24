@@ -65,6 +65,22 @@ namespace CMMTool
             result = Snap.Globals.WorkPart.Bodies.FirstOrDefault(u => u.Name == string.Format("{0}A{1}B{2}", this.ProbeName, ab.A, ab.B));
             return result;
         }
+
+        /// <summary>
+        /// 获取干涉数据
+        /// </summary>
+        public List<Snap.Position> GetInspectionPoints(ProbeData.AB ab)
+        {
+            var result = new List<Snap.Position>();
+            var sphere = GetBody(ab);
+            if (ab != null)
+            {
+                var str = sphere.GetAttrValue(Business.EACT_PROBEINSPECTIONPOINT);
+                result = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Snap.Position>>(str) ?? new List<Snap.Position>();
+            }
+            return result;
+        }
+
         public class AB
         {
             public double A { get; set; }

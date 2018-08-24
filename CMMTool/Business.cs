@@ -11,6 +11,7 @@ namespace CMMTool
     public class Business
     {
         public const string EACTPROBESPHEREFACE = "EACTPROBESPHEREFACE";
+        public const string EACT_PROBEINSPECTIONPOINT = "EACT_PROBEINSPECTIONPOINT";
         /// <summary>
         /// 删除模型
         /// </summary>
@@ -103,6 +104,16 @@ namespace CMMTool
                     {
                         Directory.CreateDirectory(dir);
                     }
+                    //创建干涉检查数据
+                    var faces = sphere.Faces;
+                    var points = new List<Position>();
+                    faces.ToList().ForEach(u =>
+                    {
+                        points.AddRange(SnapEx.Create.GetFacePoints(u, 10));
+                    });
+                    points = points.Distinct().ToList();
+                    var str = Newtonsoft.Json.JsonConvert.SerializeObject(points);
+                    sphere.SetStringAttribute(EACT_PROBEINSPECTIONPOINT, str);
                     SnapEx.Create.ExtractBody(new List<NXOpen.Body> { sphere }, fileName, false, true);
                     Globals.UndoToMark(mark, null);
                 }
