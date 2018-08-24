@@ -20,7 +20,21 @@ namespace CMM
         /// </summary>
         public static void AutoSelPoint()
         {
-            AutoSelPoint(@"C:\Users\PENGHUI\Desktop\prt1\test\SX-1833-4201-1002.prt");
+            Helper.ShowMsg("正在匹配图档...");
+            var path = CMMTool.CMMConfig.GetInstance().AutoCmmDir;
+            var fileName = EactTool.FileHelper.FindFile(path);
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                try
+                {
+                    AutoSelPoint(fileName);
+                    EactTool.FileHelper.DeleteFile(path, fileName);
+                }
+                catch (Exception ex)
+                {
+                    EactTool.FileHelper.WriteErrorFile(path, fileName, ex.Message);
+                }
+            }
         }
 
         /// <summary>
@@ -68,6 +82,7 @@ namespace CMM
         /// </summary>
         public static void Init()
         {
+            Helper.ShowMsg("初始化配置数据...");
             if (!IsInit)
             { 
                 //初始化探针数据
@@ -79,6 +94,7 @@ namespace CMM
                 }
             }
             IsInit = true;
+            Helper.ShowMsg("完成初始化配置数据");
         }
     }
 }

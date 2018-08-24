@@ -82,6 +82,10 @@
       <Project>{89348461-450d-4213-9fc4-c12a64e60a96}</Project>
       <Name>CSharpProxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EactTool\EactTool.csproj">
+      <Project>{0bab8ae1-2397-41c2-8946-7689b3e164c6}</Project>
+      <Name>EactTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
