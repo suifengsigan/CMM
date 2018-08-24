@@ -166,7 +166,7 @@ namespace CMM
                 var ps = positions.Where(u => Helper.IsSameQuadrant(tempP, u, center)).OrderBy(u => Snap.Position.Distance(tempP, u));
                 foreach (var item in ps)
                 {
-                    var interveneP = IsIntervene(elec, item, vector, edges, config,PointType.HorizontalDatumFace);
+                    var interveneP = IsIntervene(elec, item, vector, edges, config,PointType.HorizontalDatumFace,true);
                     if (interveneP == null)
                     {
                         positions.Remove(item);
@@ -259,15 +259,24 @@ namespace CMM
             return positions;
         }
         
-        static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p,Snap.Vector pV, List<Snap.NX.Curve> curves, CMMConfig config, PointType pointType = PointType.UNKOWN)
+        static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p,Snap.Vector pV, List<Snap.NX.Curve> curves, CMMConfig config, PointType pointType = PointType.UNKOWN,bool isBaseFace=false)
         {
             PointData result = null;
             var targetBody = elec.ElecBody;
             var box = targetBody.Box;
             var maxZ = box.MaxZ + config.SafeDistance;
             var minDistance = Helper.GetPointToEdgeMinDistance(p, curves);
+            var ProbeDatas = config.ProbeDatas??new List<ProbeData>();
+            if (isBaseFace)
+            {
+                var probeData = ProbeDatas.FirstOrDefault(u => u.IsBaseFaceProbe);
+                if (probeData != null)
+                {
+                    ProbeDatas = new List<ProbeData> { probeData };
+                }
+            }
 
-            foreach (var data in config.ProbeDatas.ToList())
+            foreach (var data in ProbeDatas)
             {
                 //过滤探球半径的点
                 if (minDistance < data.D / 2)
