@@ -124,7 +124,8 @@ namespace CMM
                     continue;
                 }
                 var positions = Helper.GetFacePoints(face,config);
-                var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
+                var boxUV = face.BoxUV;
+                var faceMidPoint = face.Position((boxUV.MaxU + boxUV.MinU) / 2, (boxUV.MaxV + boxUV.MinV) / 2);
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
                 for (var i = 0; i < LoopVarValue; i++)
                 {
