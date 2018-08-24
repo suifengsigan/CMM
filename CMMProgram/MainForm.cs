@@ -85,6 +85,7 @@ namespace CMMProgram
         private void BtnAutoPrt_Click(object sender, EventArgs e)
         {
             panel4.Visible = false;
+            Text = "Eact_图档工具";
             ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
                 while (true)
                 {
@@ -117,6 +118,7 @@ namespace CMMProgram
         private void BtnStart_Click(object sender, EventArgs e)
         {
             panel4.Visible = false;
+            Text = "Eact_自动取点工具";
             ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
                 Excute("CMMUI.dll", "CMMInit");
                 while (true)
