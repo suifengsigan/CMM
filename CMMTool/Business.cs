@@ -17,12 +17,15 @@ namespace CMMTool
         public static void DeleteProbe()
         {
             var temp = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION");
-            var files = Directory.GetFiles(temp);
-            foreach (var file in files)
+            if (Directory.Exists(temp))
             {
-                if (file.Contains(".prt"))
+                var files = Directory.GetFiles(temp);
+                foreach (var file in files)
                 {
-                    File.Delete(file);
+                    if (Path.GetExtension(file).ToUpper() == ".PRT")
+                    {
+                        File.Delete(file);
+                    }
                 }
             }
         }
@@ -42,6 +45,14 @@ namespace CMMTool
                     var filePath = Path.Combine(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Config"), "blank.prt");
                     basePart = Snap.NX.Part.OpenPart(filePath);
                     Snap.Globals.WorkPart = basePart;
+                }
+
+                var inPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION");
+
+                //创建路径
+                if (!Directory.Exists(inPath))
+                {
+                    Directory.CreateDirectory(inPath);
                 }
 
                 foreach (var ab in data.GetABList())
@@ -82,7 +93,7 @@ namespace CMMTool
                     var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
                     r.Orphan();
                     sphere.Name = string.Format("{0}A{1}B{2}", data.ProbeName, ab.A, ab.B);
-                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), sphere.Name);
+                    var fileName = Path.Combine(inPath, sphere.Name);
                     if (File.Exists(fileName + ".prt"))
                     {
                         File.Delete(fileName + ".prt");
