@@ -39,8 +39,12 @@ namespace EactTool
             {
                 Directory.CreateDirectory(newPath);
             }
-            File.Copy(fileName, Path.Combine(newPath, name));
-            File.WriteAllText(Path.Combine(newPath, nameW + "error.txt"), errorMsg);
+            var newFileName = Path.Combine(newPath, name);
+            if (!File.Exists(newFileName))
+            {
+                File.Copy(fileName, newFileName);
+                File.WriteAllText(Path.Combine(newPath, nameW + "error.txt"), errorMsg);
+            }
             DeleteFile(path, fileName);
         }
     }
