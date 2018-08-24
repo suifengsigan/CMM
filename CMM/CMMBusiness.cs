@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SnapEx;
+using System.IO;
 
 namespace CMM
 {
@@ -14,10 +15,54 @@ namespace CMM
     /// </summary>
     public class CMMBusiness
     {
+        static string _cmmFilePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "EACTCMMFILE");
         /// <summary>
         /// 循环变量值
         /// </summary>
-        static int LoopVarValue = 10;
+        static int LoopVarValue = 20;
+
+        /// <summary>
+        /// 上传CMM文件
+        /// </summary>
+        public static void WriteCMMFile(ElecManage.Electrode elec, object data)
+        {
+            var elecName = elec.GetElectrodeInfo().Elec_Name;
+            Helper.ShowMsg(string.Format("{0}开始上传取点文件...", elecName));
+            var MODEL_NUMBER = elec.ElecBody.GetAttrValue("EACT_DIE_NO_OF_WORKPIECE");
+            var fileName = string.Format("{0}{1}", elecName, ".txt");
+            var result = Path.Combine(_cmmFilePath, fileName);
+            if (Directory.Exists(_cmmFilePath))
+            {
+                Directory.Delete(_cmmFilePath, true);
+            }
+            Directory.CreateDirectory(_cmmFilePath);
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            File.WriteAllText(result, json);
+            FtpUpload("CMM", new ElecManage.MouldInfo { MODEL_NUMBER = MODEL_NUMBER }, result, elecName);
+            Helper.ShowMsg(string.Format("{0}取点文件上传成功", elecName));
+        }
+
+        static void FtpUpload(string type, ElecManage.MouldInfo steelInfo, string fileName, string partName)
+        {
+            var ConfigData = EactConfig.ConfigData.GetInstance();
+            var EACTFTP = FlieFTP.Entry.GetFtp(ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false);
+            string sToPath = string.Format("{0}/{1}/{2}", type, steelInfo.MODEL_NUMBER, partName);
+            switch (ConfigData.FtpPathType)
+            {
+                case 1:
+                    {
+                        sToPath = string.Format("{0}/{1}", type, steelInfo.MODEL_NUMBER, partName);
+                        break;
+                    }
+            }
+            if (!EACTFTP.DirectoryExist(sToPath))
+            {
+                EACTFTP.MakeDirPath(sToPath);
+            }
+            
+            EACTFTP.NextDirectory(sToPath);
+            EACTFTP.UpLoadFile(fileName);
+        }
 
         /// <summary>
         /// 自动取点
@@ -57,6 +102,8 @@ namespace CMM
             {
                 item.PointName = string.Format("P{0}", positions.IndexOf(item) + 1);
             }
+
+            WriteCMMFile(electrode, positions);
 
             return positions;
         }

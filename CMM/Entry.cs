@@ -64,7 +64,7 @@ namespace CMM
                     }
                 }
                 Helper.ShowMsg(string.Format("{0}开始取点...", name));
-                CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
+                var list=CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
                 Helper.ShowMsg(string.Format("{0}取点成功", name));
             }
             catch (Exception ex)

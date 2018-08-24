@@ -31,8 +31,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EactConfig, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\EactConfig.dll</HintPath>
+    </Reference>
     <Reference Include="ElecManage">
       <HintPath>..\..\..\..\PHEact\Application\ElecManage.dll</HintPath>
+    </Reference>
+    <Reference Include="FlieFTP, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\FlieFTP.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\BLL\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NXOpen">
       <HintPath>..\..\..\BLL\UG\NXOpen.dll</HintPath>
