@@ -67,6 +67,26 @@ namespace CMMTool
         }
 
         /// <summary>
+        /// 干涉点检查
+        /// </summary>
+        public bool GetPoint(ProbeData.AB ab, Snap.Geom.Transform tran,List<Snap.Geom.Transform> trans, params Snap.NX.NXObject[] inspectionBodies)
+        {
+            var reuslt = false;
+            var inspectionPoints = GetInspectionPoints(ab);
+            foreach (var item in inspectionPoints)
+            {
+                var p = item.Copy(tran);
+                var listP = new List<Snap.Position>();
+                listP.Add(p);
+                foreach (var tranItem in trans)
+                {
+                    listP.Add(p.Copy(tranItem));
+                }
+            }
+            return reuslt;
+        }
+
+        /// <summary>
         /// 获取干涉数据
         /// </summary>
         public List<Snap.Position> GetInspectionPoints(ProbeData.AB ab)
