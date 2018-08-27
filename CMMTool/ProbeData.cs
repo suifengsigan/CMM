@@ -69,19 +69,20 @@ namespace CMMTool
         /// <summary>
         /// 干涉点检查
         /// </summary>
-        public bool GetPoint(ProbeData.AB ab, Snap.Geom.Transform tran,List<Snap.Geom.Transform> trans, params Snap.NX.NXObject[] inspectionBodies)
+        public bool GetPoint(ProbeData.AB ab,List<Snap.Position> inspectionPath, params Snap.NX.NXObject[] inspectionBodies)
         {
             var reuslt = false;
             var inspectionPoints = GetInspectionPoints(ab);
+            var centreOfSphere = GetCentreOfSphere(ab);
+            var tran = Snap.Geom.Transform.CreateTranslation(centreOfSphere - Snap.Position.Origin);
             foreach (var item in inspectionPoints)
             {
-                var p = item.Copy(tran);
                 var listP = new List<Snap.Position>();
-                listP.Add(p);
-                foreach (var tranItem in trans)
+                foreach (var pItem in inspectionPath)
                 {
-                    listP.Add(p.Copy(tranItem));
+                    listP.Add(pItem.Copy(tran));
                 }
+                //创建spline曲线
             }
             return reuslt;
         }
