@@ -69,20 +69,39 @@ namespace CMMTool
         /// <summary>
         /// 干涉点检查
         /// </summary>
-        public bool GetPoint(ProbeData.AB ab,List<Snap.Position> inspectionPath, params Snap.NX.NXObject[] inspectionBodies)
+        public bool CheckInspectionPath(ProbeData.AB ab,List<Snap.Position> inspectionPath, params Snap.NX.NXObject[] inspectionBodies)
         {
+            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "CheckInspectionPath");
             var reuslt = false;
-            var inspectionPoints = GetInspectionPoints(ab);
-            var centreOfSphere = GetCentreOfSphere(ab);
-            var tran = Snap.Geom.Transform.CreateTranslation(centreOfSphere - Snap.Position.Origin);
-            foreach (var item in inspectionPoints)
+            try
             {
-                var listP = new List<Snap.Position>();
-                foreach (var pItem in inspectionPath)
+                var inspectionPoints = GetInspectionPoints(ab);
+                var trans = new List<Snap.Geom.Transform>();
+                inspectionPath.ForEach(u => {
+                    var tran = Snap.Geom.Transform.CreateTranslation(u - Snap.Position.Origin);
+                    trans.Add(tran);
+                });
+                foreach (var item in inspectionPoints)
                 {
-                    listP.Add(pItem.Copy(tran));
+                    var listP = new List<Snap.Position>();
+                    foreach (var tranItem in trans)
+                    {
+                        listP.Add(item.Copy(tranItem));
+                    }
+                    //创建spline曲线
+                    var polyLine = Snap.Create.PolyLine(listP.ToArray());
+                    //碰撞检测
+
+                    //删除
+                    //polyLine.ToList().ForEach(u => {
+                    //    u.Delete();
+                    //});
                 }
-                //创建spline曲线
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Snap.Globals.UndoToMark(mark, null);
             }
             return reuslt;
         }
