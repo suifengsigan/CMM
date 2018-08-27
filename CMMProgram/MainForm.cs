@@ -140,24 +140,31 @@ namespace CMMProgram
             panel4.Visible = false;
             Text = "Eact_自动取点工具";
             ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
-                Excute("CMMUI.dll", "CMMInit");
-                while (true)
+                try
                 {
-                    try
-                    {
-                        Excute("CMMUI.dll");
-                    }
-                    catch (Exception ex)
-                    {
-                        DispMsg(string.Format("启动CMM程序错误【{0}】", ex.Message));
-                        Console.WriteLine(ex.Message);
-                    }
+                    Excute("CMMUI.dll", "CMMInit");
 
-                    Thread.Sleep(1000);
+                    while (true)
+                    {
+                        try
+                        {
+                            Excute("CMMUI.dll");
+                        }
+                        catch (Exception ex)
+                        {
+                            DispMsg(string.Format("CMM程序错误【{0}】", ex.Message));
+                            Console.WriteLine(ex.Message);
+                        }
+
+                        Thread.Sleep(1000);
+                    }
                 }
-                
+                catch (Exception ex)
+                {
+                    DispMsg(string.Format("启动CMM程序错误【{0}】", ex.Message));
+                    Console.WriteLine(ex.Message);
+                } 
             }));
-            
         }
     }
 }

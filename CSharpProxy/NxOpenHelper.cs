@@ -12,7 +12,20 @@ namespace CSharpProxy
         public void Main(string newMethodName, string[] args)
         {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Show(newMethodName, args);
+        }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ProxyObject.Instance.ShowMsg(ex.Message, 1);
+            }
         }
 
         static void Show(string newMethodName,string[] args)

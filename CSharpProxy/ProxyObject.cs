@@ -56,6 +56,9 @@ namespace CSharpProxy
             Instance = this;
         }
 
+        /// <summary>
+        ///type 0 普通信息 1 错误信息
+        /// </summary>
         public void ShowMsg(string msg, int type = 0)
         {
             if (WindowPH != IntPtr.Zero)
