@@ -90,10 +90,8 @@ namespace CMMTool
                     {
                         listP.Add(item.Copy(tranItem));
                     }
-                    //创建spline曲线
-                    var polyLine = Snap.Create.PolyLine(listP.ToArray()).ToList();
                     //碰撞检测
-                    foreach (var pLine in polyLine)
+                    foreach (var pLine in listP)
                     {
                         var dis=Snap.Compute.Distance(pLine, inspectionBodies.First());
                         if (dis <= SnapEx.Helper.Tolerance)
@@ -102,11 +100,6 @@ namespace CMMTool
                             break;
                         }
                     }
-                    //删除
-                    polyLine.ToList().ForEach(u =>
-                    {
-                        u.Delete();
-                    });
 
                     if (reuslt)
                     {
