@@ -107,14 +107,23 @@ namespace CMMTool
                     //创建干涉检查数据
                     var faces = sphere.Faces;
                     var points = new List<Position>();
+                    points.Add(Position.Origin);
                     faces.ToList().ForEach(u =>
                     {
-                        points.AddRange(SnapEx.Create.GetFacePoints(u, 10));
+                        var faceBox = u.Box;
+                        var centerPoint = new Snap.Position((faceBox.MaxX + faceBox.MinX) / 2, (faceBox.MaxY + faceBox.MinY) / 2, (faceBox.MaxZ + faceBox.MinZ) / 2);
+                        points.Add(centerPoint);
+                        u.Edges.ToList().ForEach(e => {
+                            points.Add(e.StartPoint);
+                            points.Add(e.EndPoint);
+                        });
                     });
                     points = points.Distinct().ToList();
                     var str = Newtonsoft.Json.JsonConvert.SerializeObject(points);
                     sphere.SetStringAttribute(EACT_PROBEINSPECTIONPOINT, str);
-                    SnapEx.Create.ExtractBody(new List<NXOpen.Body> { sphere }, fileName, false, true);
+                    var exObject = new List<NXOpen.NXObject> { sphere };
+                    Snap.Globals.WorkPart.Lines.ToList().ForEach(u => { exObject.Add(u.NXOpenDisplayableObject); });
+                    SnapEx.Create.ExtractObject(exObject, fileName, false, true);
                     Globals.UndoToMark(mark, null);
                 }
 
