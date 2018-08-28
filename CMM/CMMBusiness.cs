@@ -204,7 +204,7 @@ namespace CMM
                 var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
 
                 var tempP = face.Box.MaxXYZ;
-                var ps = positions.Where(u => System.Math.Abs(u.Z - minZ) < config.VerticalValue).OrderBy(u => Snap.Position.Distance(tempP, u)).ToList();
+                var ps = positions.Where(u => System.Math.Abs(u.Z - minZ) <= config.VerticalValue).OrderByDescending(u => Snap.Position.Distance(tempP, u)).ToList();
 
                 //对称点
                 while (ps.Count > 0)

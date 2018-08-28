@@ -71,15 +71,19 @@ namespace CMM
                     }
                 }
                 Helper.ShowMsg(string.Format("{0}开始取点...", name));
-                var list=CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
+                var list = CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
                 Helper.ShowMsg(string.Format("{0}取点成功", name));
             }
             catch (Exception ex)
             {
                 Helper.ShowMsg(string.Format("{0}取点错误【{1}】", name, ex.Message));
                 Console.WriteLine("AutoSelPoint错误:{0}", ex.Message);
+                throw ex;
             }
-            snapPart.Close(true, true);
+            finally
+            {
+                snapPart.Close(true, true);
+            }
         }
 
         static bool IsInit = false;
