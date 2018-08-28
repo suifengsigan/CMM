@@ -282,13 +282,15 @@ namespace CMM
                 //过滤探球半径的点
                 if (minDistance < data.D / 2)
                 {
-                    break;
+                    continue;
                 }
                 foreach (var ab in data.GetABList())
                 {
                     var toolBody = data.GetBody(ab);
                     var lstTrans = new List<Snap.Geom.Transform>();
                     var centreOfSphere = data.GetCentreOfSphere(ab);
+                    var inspectionPoints = new List<Position>();
+                        
                     //退点
                     var sRetreatPosition = p.Copy(Snap.Geom.Transform.CreateTranslation((data.D / 2) * pV));
                     lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sRetreatPosition - centreOfSphere));
@@ -301,7 +303,11 @@ namespace CMM
                         //逼进拐点
                         var sEntryPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.EntryPoint * pV));
                         lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sEntryPosition - fRetreatPosition));
+                        inspectionPoints.Add(sEntryPosition);
                     }
+                    inspectionPoints.Add(sRetreatPosition);
+                    inspectionPoints.Add(mRetreatPosition);
+                    inspectionPoints.Add(fRetreatPosition);
                     bool isHasInterference = false;
                     foreach (var trans in lstTrans)
                     {
