@@ -308,6 +308,10 @@ namespace CMM
                     inspectionPoints.Add(sRetreatPosition);
                     inspectionPoints.Add(mRetreatPosition);
                     inspectionPoints.Add(fRetreatPosition);
+                    if (config.IsInspectionPath)
+                    {
+                        data.CheckInspectionPath(ab, inspectionPoints, targetBody);
+                    }
                     bool isHasInterference = false;
                     foreach (var trans in lstTrans)
                     {

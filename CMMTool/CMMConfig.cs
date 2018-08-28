@@ -67,5 +67,9 @@ namespace CMMTool
         /// AutoCMM路径
         /// </summary>
         public string AutoCmmDir { get; set; }
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool IsInspectionPath = false;
     }
 }
