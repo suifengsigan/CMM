@@ -9,6 +9,17 @@ namespace CMM
 {
     public class Helper
     {
+        public static bool AskPointContainment(Snap.Position position, Snap.NX.Face face)
+        {
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            int pt_status = 0;
+            ufSession.Modl.AskPointContainment(position.Array, face.NXOpenTag, out pt_status);
+            if (0x1 == pt_status || 0x3 == pt_status)
+            {
+                return true;
+            }
+            return false;
+        }
         /// <summary>
         /// 是否在相同的象限
         /// </summary>

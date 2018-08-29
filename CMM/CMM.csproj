@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CMMBusiness.cs" />
+    <Compile Include="CMMFaceInfo.cs" />
     <Compile Include="SnapHelper.cs" />
     <Compile Include="Entry.cs" />
     <Compile Include="PointData.cs" />
