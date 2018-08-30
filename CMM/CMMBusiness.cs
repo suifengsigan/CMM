@@ -183,7 +183,6 @@ namespace CMM
             }
             return result;
         }
-
         
         /// <summary>
         /// 获取侧面的检测点
@@ -191,52 +190,104 @@ namespace CMM
         static List<PointData> GetVerticalDatumFacesPositions(ElecManage.Electrode elec, CMMConfig config)
         {
             var result = new List<PointData>();
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
             //获取所有的侧面
             var faces = elec.BaseSideFaces;
             //获取Z值
             var minZ = elec.BaseFace.Box.MinZ;
+            var dicFace = new Dictionary<Snap.NX.Face, CMMFaceInfo>();
+            var listZ = new List<double>();
+            var firstFaces = faces.Where(u =>
+            SnapEx.Helper.Equals(u.GetFaceDirection(), new Snap.Vector(0, 1, 0))
+             || SnapEx.Helper.Equals(u.GetFaceDirection(), new Snap.Vector(0, -1, 0))
+            ).ToList();
+            var twoFaces = faces.Where(u =>
+            SnapEx.Helper.Equals(u.GetFaceDirection(), new Snap.Vector(1, 0, 0))
+            || SnapEx.Helper.Equals(u.GetFaceDirection(), new Snap.Vector(-1, 0, 0))
+            ).ToList();
+
+            if (!(firstFaces.Count() >= 2 && twoFaces.Count >= 2))
+            {
+                throw new Exception("获取侧面异常");
+            }
             foreach (var face in faces)
             {
-                var positions = Helper.GetFacePoints(face,config);
+                var positions = Helper.GetFacePoints(face, config);
                 var edges = face.EdgeCurves.ToList();
                 var faceDirection = face.GetFaceDirection();
                 var faceOrientation = new Orientation(faceDirection);
-                var faceMidPoint = face.Position((face.BoxUV.MaxU + face.BoxUV.MinU) / 2, (face.BoxUV.MaxV + face.BoxUV.MinV) / 2);
-
+                var faceMidPoint = face.GetCenterPoint();
                 var tempP = face.Box.MaxXYZ;
                 var ps = positions.Where(u => System.Math.Abs(u.Z - minZ) <= config.VerticalValue).OrderByDescending(u => Snap.Position.Distance(tempP, u)).ToList();
-
-                //对称点
-                while (ps.Count > 0)
+                dicFace.Add(face, new CMMFaceInfo { Positions = ps, Edges = edges, FaceDirection = faceDirection, FaceOrientation = faceOrientation, FaceMidPoint = faceMidPoint });
+                if (faces.IndexOf(face) == 0)
                 {
-                    var item = ps.First();
-                    var trans = Snap.Geom.Transform.CreateReflection(new Snap.Geom.Surface.Plane(faceMidPoint, faceOrientation.AxisY));
-                    var symmetryPoint = item.Copy(trans);
-                    if (!SnapEx.Helper.Equals(item, symmetryPoint, SnapEx.Helper.Tolerance) && positions.Where(u => SnapEx.Helper.Equals(u, symmetryPoint, SnapEx.Helper.Tolerance)).Count() > 0)
-                    {
-                        var p1 = IsIntervene(elec,symmetryPoint, faceDirection, edges, config,PointType.VerticalDatumFace);
-                        var p2 = IsIntervene(elec,item, faceDirection, edges, config, PointType.VerticalDatumFace);
-                        if (p1 != null && p2 != null)
-                        {
-                            p1.PointType = PointType.VerticalDatumFace;
-                            p2.PointType = PointType.VerticalDatumFace;
-                            if (SnapEx.Helper.Equals(faceDirection, -Snap.Orientation.Identity.AxisX))
-                            {
-                                var orderPoints = OrderPointDatas(new List<PointData> { p1, p2 });
-                                result.Add(orderPoints.Last());
-                                result.Add(orderPoints.First());
-                            }
-                            else
-                            {
-                                result.AddRange(OrderPointDatas(new List<PointData> { p1, p2 }));
-                            }
-                            break;
-                        }
-                    }
-                    ps.Remove(item);
-                    positions.RemoveAll(u => SnapEx.Helper.Equals(u, symmetryPoint, SnapEx.Helper.Tolerance));
+                    ps.ForEach(u => {
+                        listZ.Add(u.Z);
+                    });
+                    listZ = listZ.Distinct().ToList();
                 }
             }
+
+            var tempFaces = new Dictionary<Snap.NX.Face, List<Snap.NX.Face>>();
+            tempFaces.Add(firstFaces.First(), firstFaces);
+            tempFaces.Add(twoFaces.First(), twoFaces);
+            foreach (var z in listZ)
+            {
+                var cmmPointData = new List<PointData>();
+                foreach (var tf in tempFaces)
+                {
+                    var firstFace = tf.Key;
+                    var firstCmmFaceInfo = dicFace[firstFace];
+                    var twoFace = tf.Value.Last();
+                    var twoCMMFaceInfo = dicFace[twoFace];
+                    var ftDistance = Snap.Compute.Distance(firstFace, twoFace);
+                    var ps = firstCmmFaceInfo.Positions
+                            .Where(u => (System.Math.Abs(u.Z - z) < SnapEx.Helper.Tolerance))
+                            .OrderByDescending(u => Snap.Position.Distance(u, firstCmmFaceInfo.FaceMidPoint))
+                            .ToList();
+                    //对称点
+                    while (ps.Count > 0)
+                    {
+                        //获取4个对称点
+                        var item = ps.First();
+                        var trans = Snap.Geom.Transform.CreateReflection(new Snap.Geom.Surface.Plane(firstCmmFaceInfo.FaceMidPoint, firstCmmFaceInfo.FaceOrientation.AxisY));
+                        var symmetryPoint = item.Copy(trans);
+                        var trans1 = Snap.Geom.Transform.CreateTranslation(ftDistance * (-firstCmmFaceInfo.FaceDirection));
+                        var tItem = item.Copy(trans1);
+                        var tSymmetryPoint = symmetryPoint.Copy(trans1);
+                        if (
+                            !SnapEx.Helper.Equals(item, symmetryPoint, SnapEx.Helper.Tolerance)
+                            && Helper.AskPointContainment(symmetryPoint, firstFace)
+                            && Helper.AskPointContainment(tItem, twoFace)
+                            && Helper.AskPointContainment(tSymmetryPoint, twoFace))
+                        {
+                            var p1 = IsIntervene(elec, symmetryPoint, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace);
+                            var p2 = IsIntervene(elec, item, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace);
+                            var p3 = IsIntervene(elec, tItem, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
+                            var p4 = IsIntervene(elec, tSymmetryPoint, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
+                            ps.Remove(symmetryPoint);
+                            if (p1 != null && p2 != null && p3 != null && p4 != null)
+                            {
+                                cmmPointData.Add(p1);
+                                cmmPointData.Add(p2);
+                                cmmPointData.Add(p3);
+                                cmmPointData.Add(p4);
+                                break;
+                            }
+                        }
+                        ps.Remove(item);
+                    }
+
+                }
+
+                if (cmmPointData.Count >= 8)
+                {
+                    result = OrderPointDatas(cmmPointData);
+                    break;
+                }
+            }
+
             return result;
         }
 
