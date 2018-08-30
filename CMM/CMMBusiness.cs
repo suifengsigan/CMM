@@ -59,7 +59,7 @@ namespace CMM
             {
                 EACTFTP.MakeDirPath(sToPath);
             }
-            
+
             EACTFTP.NextDirectory(sToPath);
             EACTFTP.UpLoadFile(fileName);
         }
@@ -67,7 +67,7 @@ namespace CMM
         /// <summary>
         /// 自动取点
         /// </summary>
-        public static List<PointData> AutoSelPoint(Snap.NX.Body body,CMMConfig config)
+        public static List<PointData> AutoSelPoint(Snap.NX.Body body, CMMConfig config)
         {
             var electrode = ElecManage.Electrode.GetElectrode(body);
             if (electrode == null)
@@ -77,14 +77,15 @@ namespace CMM
             electrode.InitAllFace();
             var positions = new List<PointData>();
             var tempPositions = new List<PointData>();
-
+            var elecName = electrode.GetElectrodeInfo().Elec_Name;
+            Helper.ShowMsg(string.Format("{0}侧面取点", elecName));
             tempPositions = GetVerticalDatumFacesPositions(electrode, config);
             if (tempPositions.Count < 8)
             {
                 throw new Exception("侧面取点异常！");
             }
             positions.AddRange(tempPositions);
-
+            Helper.ShowMsg(string.Format("{0}基准面取点", elecName));
             tempPositions = GetHorizontalDatumFacePositions(electrode, config);
             if (tempPositions.Count < 3)
             {
@@ -93,7 +94,7 @@ namespace CMM
 
             //根据象限排序
             positions.AddRange(OrderPointDatas(tempPositions));
-
+            Helper.ShowMsg(string.Format("{0}电极头部面取点", elecName));
             tempPositions = GetElectrodeHeadFacePositions(electrode, config);
             positions.AddRange(tempPositions);
 
@@ -119,11 +120,11 @@ namespace CMM
             {
                 var vector = face.GetFaceDirection();
                 var edges = face.EdgeCurves.ToList();
-                if (double.IsNaN(vector.X)|| double.IsNaN(vector.Y)|| double.IsNaN(vector.Z))
+                if (double.IsNaN(vector.X) || double.IsNaN(vector.Y) || double.IsNaN(vector.Z))
                 {
                     continue;
                 }
-                var positions = Helper.GetFacePoints(face,config);
+                var positions = Helper.GetFacePoints(face, config);
                 var boxUV = face.BoxUV;
                 var faceMidPoint = face.Position((boxUV.MaxU + boxUV.MinU) / 2, (boxUV.MaxV + boxUV.MinV) / 2);
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
@@ -152,7 +153,7 @@ namespace CMM
             var result = new List<PointData>();
             var face = elec.BaseFace;
             var edges = face.EdgeCurves.ToList();
-            var positions = Helper.GetFacePoints(face,config);
+            var positions = Helper.GetFacePoints(face, config);
             var vector = face.GetFaceDirection();
             //边界点
             var p1 = face.Position(face.BoxUV.MinU, face.BoxUV.MinV);
@@ -167,7 +168,7 @@ namespace CMM
                 var ps = positions.Where(u => Helper.IsSameQuadrant(tempP, u, center)).OrderBy(u => Snap.Position.Distance(tempP, u));
                 foreach (var item in ps)
                 {
-                    var interveneP = IsIntervene(elec, item, vector, edges, config,PointType.HorizontalDatumFace,true);
+                    var interveneP = IsIntervene(elec, item, vector, edges, config, PointType.HorizontalDatumFace, true);
                     if (interveneP == null)
                     {
                         positions.Remove(item);
@@ -183,7 +184,7 @@ namespace CMM
             }
             return result;
         }
-        
+
         /// <summary>
         /// 获取侧面的检测点
         /// </summary>
@@ -195,6 +196,7 @@ namespace CMM
             var faces = elec.BaseSideFaces;
             //获取Z值
             var minZ = elec.BaseFace.Box.MinZ;
+            var VecZ = minZ - config.VerticalValue;
             var dicFace = new Dictionary<Snap.NX.Face, CMMFaceInfo>();
             var listZ = new List<double>();
             var firstFaces = faces.Where(u =>
@@ -218,10 +220,22 @@ namespace CMM
                 var faceOrientation = new Orientation(faceDirection);
                 var faceMidPoint = face.GetCenterPoint();
                 var tempP = face.Box.MaxXYZ;
+                //侧面变量Z
+                if (positions.Count > 0)
+                {
+                    var sideZP = positions.First();
+                    var tempPs = positions
+                       .Where(u => (System.Math.Abs(u.Z - sideZP.Z) < SnapEx.Helper.Tolerance)).ToList();
+                    tempPs.ForEach(u => {
+                        u.Z = VecZ;
+                        positions.Add(u);
+                    }); 
+                }
                 var ps = positions.Where(u => System.Math.Abs(u.Z - minZ) <= config.VerticalValue).OrderByDescending(u => Snap.Position.Distance(tempP, u)).ToList();
                 dicFace.Add(face, new CMMFaceInfo { Positions = ps, Edges = edges, FaceDirection = faceDirection, FaceOrientation = faceOrientation, FaceMidPoint = faceMidPoint });
                 if (faces.IndexOf(face) == 0)
                 {
+                    listZ.Add(VecZ);
                     ps.ForEach(u => {
                         listZ.Add(u.Z);
                     });
@@ -266,7 +280,7 @@ namespace CMM
                             var p2 = IsIntervene(elec, item, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace);
                             var p3 = IsIntervene(elec, tItem, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
                             var p4 = IsIntervene(elec, tSymmetryPoint, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
-                            
+
                             if (p1 != null && p2 != null && p3 != null && p4 != null)
                             {
                                 cmmPointData.Add(p1);
@@ -311,15 +325,15 @@ namespace CMM
             positions.AddRange(tempPositions);
             return positions;
         }
-        
-        static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p,Snap.Vector pV, List<Snap.NX.Curve> curves, CMMConfig config, PointType pointType = PointType.UNKOWN,bool isBaseFace=false)
+
+        static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p, Snap.Vector pV, List<Snap.NX.Curve> curves, CMMConfig config, PointType pointType = PointType.UNKOWN, bool isBaseFace = false)
         {
             PointData result = null;
             var targetBody = elec.ElecBody;
             var box = targetBody.Box;
             var maxZ = box.MaxZ + config.SafeDistance;
             var minDistance = Helper.GetPointToEdgeMinDistance(p, curves);
-            var ProbeDatas = config.ProbeDatas??new List<ProbeData>();
+            var ProbeDatas = config.ProbeDatas ?? new List<ProbeData>();
             if (isBaseFace)
             {
                 var probeData = ProbeDatas.FirstOrDefault(u => u.IsBaseFaceProbe);
@@ -342,12 +356,12 @@ namespace CMM
                     var lstTrans = new List<Snap.Geom.Transform>();
                     var centreOfSphere = data.GetCentreOfSphere(ab);
                     var inspectionPoints = new List<Position>();
-                        
+
                     //退点
                     var sRetreatPosition = p.Copy(Snap.Geom.Transform.CreateTranslation((data.D / 2) * pV));
                     lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sRetreatPosition - centreOfSphere));
-                    var mRetreatPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.RetreatPoint*pV));
-                    lstTrans.Add(Snap.Geom.Transform.CreateTranslation(mRetreatPosition-sRetreatPosition));
+                    var mRetreatPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.RetreatPoint * pV));
+                    lstTrans.Add(Snap.Geom.Transform.CreateTranslation(mRetreatPosition - sRetreatPosition));
                     var fRetreatPosition = new Snap.Position(mRetreatPosition.X, mRetreatPosition.Y, maxZ);
                     lstTrans.Add(Snap.Geom.Transform.CreateTranslation(fRetreatPosition - mRetreatPosition));
                     if (config.RetreatPoint != config.EntryPoint)
@@ -380,16 +394,16 @@ namespace CMM
 
                     if (!isHasInterference)
                     {
-                        result= new PointData() { Vector = pV, Position = p, A = ab.A, B = ab.B, Arrow = data.ProbeName };
+                        result = new PointData() { Vector = pV, Position = p, A = ab.A, B = ab.B, Arrow = data.ProbeName };
                         result.PointType = pointType;
                     }
                 }
-               
+
             }
-            
+
             return result;
         }
-        
+
 
         /// <summary>
         /// 是否小于探针半径
@@ -399,7 +413,7 @@ namespace CMM
             foreach (var item in curves)
             {
                 var d = Compute.Distance(p, item);
-                if (d <= probe.D/2)
+                if (d <= probe.D / 2)
                 {
                     return true;
                 }
