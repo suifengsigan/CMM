@@ -113,10 +113,13 @@ namespace CMMTool
                         var faceBox = u.Box;
                         var centerPoint = new Snap.Position((faceBox.MaxX + faceBox.MinX) / 2, (faceBox.MaxY + faceBox.MinY) / 2, (faceBox.MaxZ + faceBox.MinZ) / 2);
                         points.Add(centerPoint);
-                        u.Edges.ToList().ForEach(e => {
-                            points.Add(e.StartPoint);
-                            points.Add(e.EndPoint);
-                        });
+                        if (!u.IsHasAttr(EACTPROBESPHEREFACE))
+                        {
+                            u.Edges.ToList().ForEach(e => {
+                                points.Add(e.StartPoint);
+                                points.Add(e.EndPoint);
+                            });
+                        }
                     });
                     points = points.Distinct().ToList();
                     var str = Newtonsoft.Json.JsonConvert.SerializeObject(points);
