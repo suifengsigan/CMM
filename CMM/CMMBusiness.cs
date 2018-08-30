@@ -28,7 +28,7 @@ namespace CMM
         {
             var elecName = elec.GetElectrodeInfo().Elec_Name;
             Helper.ShowMsg(string.Format("{0}开始上传取点文件...", elecName));
-            var MODEL_NUMBER = elec.ElecBody.GetAttrValue("EACT_DIE_NO_OF_WORKPIECE");
+            var MODEL_NUMBER = elec.ElecBody.GetAttrValue(ElecManage.EactElectrodeInfo.EACT_DIE_NO_OF_WORKPIECE);
             var fileName = string.Format("{0}{1}", elecName, ".txt");
             var result = Path.Combine(_cmmFilePath, fileName);
             if (Directory.Exists(_cmmFilePath))
@@ -78,6 +78,18 @@ namespace CMM
             var positions = new List<PointData>();
             var tempPositions = new List<PointData>();
             var elecName = electrode.GetElectrodeInfo().Elec_Name;
+
+            Helper.ShowMsg(string.Format("{0}基准面取点", elecName));
+            tempPositions = GetHorizontalDatumFacePositions(electrode, config);
+            if (tempPositions.Count < 3)
+            {
+                throw new Exception("基准面取点异常！");
+            }
+            //根据象限排序
+            positions.AddRange(OrderPointDatas(tempPositions));
+
+
+
             Helper.ShowMsg(string.Format("{0}侧面取点", elecName));
             tempPositions = GetVerticalDatumFacesPositions(electrode, config);
             if (tempPositions.Count < 8)
@@ -85,15 +97,9 @@ namespace CMM
                 throw new Exception("侧面取点异常！");
             }
             positions.AddRange(tempPositions);
-            Helper.ShowMsg(string.Format("{0}基准面取点", elecName));
-            tempPositions = GetHorizontalDatumFacePositions(electrode, config);
-            if (tempPositions.Count < 3)
-            {
-                throw new Exception("基准面取点异常！");
-            }
 
-            //根据象限排序
-            positions.AddRange(OrderPointDatas(tempPositions));
+            
+
             Helper.ShowMsg(string.Format("{0}电极头部面取点", elecName));
             tempPositions = GetElectrodeHeadFacePositions(electrode, config);
             positions.AddRange(tempPositions);
@@ -104,7 +110,7 @@ namespace CMM
                 item.PointName = string.Format("P{0}", positions.IndexOf(item) + 1);
             }
 
-            WriteCMMFile(electrode, positions);
+            WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode));
 
             return positions;
         }
