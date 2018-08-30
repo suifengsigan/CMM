@@ -30,9 +30,9 @@ namespace CMM
             return q1==q2;
         }
         
-        public static void ShowMsg(string msg)
+        public static void ShowMsg(string msg,int type=0)
         {
-            CSharpProxy.ProxyObject.Instance.ShowMsg(msg);
+            CSharpProxy.ProxyObject.Instance.ShowMsg(msg,type);
         }
         /// <summary>
         /// 获取点到面边的最小距离

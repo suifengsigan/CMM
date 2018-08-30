@@ -39,6 +39,7 @@ namespace CMM
                 }
                 catch (Exception ex)
                 {
+                    Helper.ShowMsg("自动取点异常:" + ex.Message, 1);
                     EactTool.FileHelper.WriteErrorFile(path, fileName, ex.Message);
                 }
             }
