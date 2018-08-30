@@ -266,7 +266,7 @@ namespace CMM
                             var p2 = IsIntervene(elec, item, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace);
                             var p3 = IsIntervene(elec, tItem, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
                             var p4 = IsIntervene(elec, tSymmetryPoint, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
-                            ps.Remove(symmetryPoint);
+                            
                             if (p1 != null && p2 != null && p3 != null && p4 != null)
                             {
                                 cmmPointData.Add(p1);
@@ -277,6 +277,7 @@ namespace CMM
                             }
                         }
                         ps.Remove(item);
+                        ps.RemoveAll(u => SnapEx.Helper.Equals(u, symmetryPoint, SnapEx.Helper.Tolerance));
                     }
 
                 }
