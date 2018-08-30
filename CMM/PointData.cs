@@ -204,6 +204,6 @@ namespace CMM
         /// <summary>
         /// 电极取点的象限角
         /// </summary>
-        public string cornor { get; set; }
+        public int cornor { get; set; }
     }
 }
