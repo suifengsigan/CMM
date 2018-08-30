@@ -77,14 +77,6 @@ namespace CMM
             electrode.InitAllFace();
             var positions = new List<PointData>();
             var tempPositions = new List<PointData>();
-            tempPositions = GetHorizontalDatumFacePositions(electrode, config);
-            if (tempPositions.Count < 3)
-            {
-                throw new Exception("基准面取点异常！");
-            }
-
-            //根据象限排序
-            positions.AddRange(OrderPointDatas(tempPositions));
 
             tempPositions = GetVerticalDatumFacesPositions(electrode, config);
             if (tempPositions.Count < 8)
@@ -93,6 +85,14 @@ namespace CMM
             }
             positions.AddRange(tempPositions);
 
+            tempPositions = GetHorizontalDatumFacePositions(electrode, config);
+            if (tempPositions.Count < 3)
+            {
+                throw new Exception("基准面取点异常！");
+            }
+
+            //根据象限排序
+            positions.AddRange(OrderPointDatas(tempPositions));
 
             tempPositions = GetElectrodeHeadFacePositions(electrode, config);
             positions.AddRange(tempPositions);
