@@ -187,6 +187,7 @@ namespace CMMTool
             result.RetreatPoint = double.Parse(txtRetreatPoint.Text);
             result.SafeDistance = double.Parse(txtSafeDistance.Text);
             result.VerticalValue = double.Parse(txtVerticalValue.Text);
+            result.IsInspectionPath = cbIsInspectionPath.Checked;
             CMMConfig.WriteConfig(result);
         }
 
@@ -253,6 +254,7 @@ namespace CMMTool
             txtRetreatPoint.Text = result.RetreatPoint.ToString();
             txtSafeDistance.Text = result.SafeDistance.ToString();
             txtVerticalValue.Text = result.VerticalValue.ToString();
+            cbIsInspectionPath.Checked = result.IsInspectionPath;
             dataGridView1.DataSource = data;
         }
 

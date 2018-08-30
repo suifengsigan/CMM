@@ -36,7 +36,9 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel7 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -85,13 +87,14 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.panel8 = new System.Windows.Forms.Panel();
+            this.cbIsInspectionPath = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel7.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel6.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -103,8 +106,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            this.panel7.SuspendLayout();
-            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -178,6 +179,15 @@
             this.panel4.Size = new System.Drawing.Size(395, 585);
             this.panel4.TabIndex = 1;
             // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.dataGridView1);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(395, 525);
+            this.panel8.TabIndex = 2;
+            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -187,6 +197,17 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(395, 525);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.btnAdd);
+            this.panel7.Controls.Add(this.btnSave);
+            this.panel7.Controls.Add(this.btnDelete);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel7.Location = new System.Drawing.Point(0, 525);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(395, 60);
+            this.panel7.TabIndex = 1;
             // 
             // panel3
             // 
@@ -311,7 +332,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(393, 374);
+            this.tabPage3.Size = new System.Drawing.Size(393, 406);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "基座数据";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -496,6 +517,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.cbIsInspectionPath);
             this.tabPage4.Controls.Add(this.btnSelAutoCmmDir);
             this.tabPage4.Controls.Add(this.label17);
             this.tabPage4.Controls.Add(this.txtAutoCmmDir);
@@ -510,7 +532,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(802, 559);
+            this.tabPage4.Size = new System.Drawing.Size(802, 591);
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -623,7 +645,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(802, 559);
+            this.tabPage5.Size = new System.Drawing.Size(802, 591);
             this.tabPage5.TabIndex = 3;
             this.tabPage5.Text = "图档工具配置";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -656,25 +678,15 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // panel7
+            // cbIsInspectionPath
             // 
-            this.panel7.Controls.Add(this.btnAdd);
-            this.panel7.Controls.Add(this.btnSave);
-            this.panel7.Controls.Add(this.btnDelete);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel7.Location = new System.Drawing.Point(0, 525);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(395, 60);
-            this.panel7.TabIndex = 1;
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.dataGridView1);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(0, 0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(395, 525);
-            this.panel8.TabIndex = 2;
+            this.cbIsInspectionPath.AutoSize = true;
+            this.cbIsInspectionPath.Location = new System.Drawing.Point(73, 271);
+            this.cbIsInspectionPath.Name = "cbIsInspectionPath";
+            this.cbIsInspectionPath.Size = new System.Drawing.Size(84, 16);
+            this.cbIsInspectionPath.TabIndex = 13;
+            this.cbIsInspectionPath.Text = "干涉点检查";
+            this.cbIsInspectionPath.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -690,7 +702,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel7.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
@@ -707,8 +721,6 @@
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
-            this.panel7.ResumeLayout(false);
-            this.panel8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -772,6 +784,7 @@
         private System.Windows.Forms.TextBox txtAutoPrtToolDir;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.CheckBox cbIsInspectionPath;
     }
 }
 
