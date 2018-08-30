@@ -316,6 +316,23 @@ namespace CMM
         {
             var positions = new List<PointData>();
             var predicates = new List<Func<PointData, bool>>();
+            //p1
+            predicates.Add(u => u.Position.X < 0 && u.Position.Y < 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(0, -1, 0)));
+            //p2
+            predicates.Add(u => u.Position.X > 0 && u.Position.Y < 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(0, -1, 0)));
+            //p3
+            predicates.Add(u => u.Position.X > 0 && u.Position.Y < 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(1, 0, 0)));
+            //p4
+            predicates.Add(u => u.Position.X > 0 && u.Position.Y > 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(1, 0, 0)));
+            //p5
+            predicates.Add(u => u.Position.X > 0 && u.Position.Y > 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(0, 1, 0)));
+            //p6
+            predicates.Add(u => u.Position.X < 0 && u.Position.Y > 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(0, 1, 0)));
+            //p7
+            predicates.Add(u => u.Position.X < 0 && u.Position.Y > 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(-1, 0, 0)));
+            //p8
+            predicates.Add(u => u.Position.X < 0 && u.Position.Y < 0 && SnapEx.Helper.Equals(u.Vector, new Snap.Vector(-1, 0, 0)));
+
             predicates.Add(u => u.Position.X < 0 && u.Position.Y < 0);
             predicates.Add(u => u.Position.X > 0 && u.Position.Y < 0);
             predicates.Add(u => u.Position.X > 0 && u.Position.Y > 0);
