@@ -127,7 +127,7 @@ namespace CMMProgram
 
         private void BtnUserConfig_Click(object sender, EventArgs e)
         {
-            Excute("EactConfig.dll");
+            Excute("CMMTool.dll", "ShowEactConfig");
         }
 
         private void BtnConfig_Click(object sender, EventArgs e)
