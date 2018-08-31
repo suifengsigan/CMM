@@ -68,8 +68,13 @@ namespace CMMTool
         /// </summary>
         public string AutoCmmDir { get; set; }
         /// <summary>
-        /// 是否启用
+        /// 是否启用干涉点检测
         /// </summary>
         public bool IsInspectionPath = false;
+        /// <summary>
+        /// 放电面取点
+        /// </summary>
+        public bool IsEDMFaceGetPoint = false;
+
     }
 }

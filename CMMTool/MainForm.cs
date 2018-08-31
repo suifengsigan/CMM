@@ -188,6 +188,7 @@ namespace CMMTool
             result.SafeDistance = double.Parse(txtSafeDistance.Text);
             result.VerticalValue = double.Parse(txtVerticalValue.Text);
             result.IsInspectionPath = cbIsInspectionPath.Checked;
+            result.IsEDMFaceGetPoint = cbIsEDMFaceGetPoint.Checked;
             CMMConfig.WriteConfig(result);
         }
 
@@ -255,6 +256,7 @@ namespace CMMTool
             txtSafeDistance.Text = result.SafeDistance.ToString();
             txtVerticalValue.Text = result.VerticalValue.ToString();
             cbIsInspectionPath.Checked = result.IsInspectionPath;
+            cbIsEDMFaceGetPoint.Checked = result.IsEDMFaceGetPoint;
             dataGridView1.DataSource = data;
         }
 

@@ -16,6 +16,7 @@ namespace CMM
     public class CMMBusiness
     {
         static string _cmmFilePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "EACTCMMFILE");
+        static EactConfig.ConfigData _EactConfigData = EactConfig.ConfigData.GetInstance();
         /// <summary>
         /// 循环变量值
         /// </summary>
@@ -44,10 +45,9 @@ namespace CMM
 
         static void FtpUpload(string type, ElecManage.MouldInfo steelInfo, string fileName, string partName)
         {
-            var ConfigData = EactConfig.ConfigData.GetInstance();
-            var EACTFTP = FlieFTP.Entry.GetFtp(ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false);
+            var EACTFTP = FlieFTP.Entry.GetFtp(_EactConfigData.FTP.Address, "", _EactConfigData.FTP.User, _EactConfigData.FTP.Pass, false);
             string sToPath = string.Format("{0}/{1}/{2}", type, steelInfo.MODEL_NUMBER, partName);
-            switch (ConfigData.FtpPathType)
+            switch (_EactConfigData.FtpPathType)
             {
                 case 1:
                     {
@@ -124,6 +124,13 @@ namespace CMM
             var faces = elec.ElecHeadFaces;
             foreach (var face in faces)
             {
+                if (config.IsEDMFaceGetPoint)
+                {
+                    if (Snap.Color.ColorIndex(face.Color) != _EactConfigData.EDMColor)
+                    {
+                        continue;
+                    }
+                }
                 var vector = face.GetFaceDirection();
                 var edges = face.EdgeCurves.ToList();
                 if (double.IsNaN(vector.X) || double.IsNaN(vector.Y) || double.IsNaN(vector.Z))

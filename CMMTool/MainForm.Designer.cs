@@ -72,6 +72,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cbIsInspectionPath = new System.Windows.Forms.CheckBox();
             this.btnSelAutoCmmDir = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.txtAutoCmmDir = new System.Windows.Forms.TextBox();
@@ -87,7 +88,7 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.cbIsInspectionPath = new System.Windows.Forms.CheckBox();
+            this.cbIsEDMFaceGetPoint = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -517,6 +518,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.cbIsEDMFaceGetPoint);
             this.tabPage4.Controls.Add(this.cbIsInspectionPath);
             this.tabPage4.Controls.Add(this.btnSelAutoCmmDir);
             this.tabPage4.Controls.Add(this.label17);
@@ -536,6 +538,16 @@
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // cbIsInspectionPath
+            // 
+            this.cbIsInspectionPath.AutoSize = true;
+            this.cbIsInspectionPath.Location = new System.Drawing.Point(73, 312);
+            this.cbIsInspectionPath.Name = "cbIsInspectionPath";
+            this.cbIsInspectionPath.Size = new System.Drawing.Size(84, 16);
+            this.cbIsInspectionPath.TabIndex = 13;
+            this.cbIsInspectionPath.Text = "干涉点检查";
+            this.cbIsInspectionPath.UseVisualStyleBackColor = true;
             // 
             // btnSelAutoCmmDir
             // 
@@ -678,15 +690,15 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // cbIsInspectionPath
+            // cbIsEDMFaceGetPoint
             // 
-            this.cbIsInspectionPath.AutoSize = true;
-            this.cbIsInspectionPath.Location = new System.Drawing.Point(73, 271);
-            this.cbIsInspectionPath.Name = "cbIsInspectionPath";
-            this.cbIsInspectionPath.Size = new System.Drawing.Size(84, 16);
-            this.cbIsInspectionPath.TabIndex = 13;
-            this.cbIsInspectionPath.Text = "干涉点检查";
-            this.cbIsInspectionPath.UseVisualStyleBackColor = true;
+            this.cbIsEDMFaceGetPoint.AutoSize = true;
+            this.cbIsEDMFaceGetPoint.Location = new System.Drawing.Point(73, 274);
+            this.cbIsEDMFaceGetPoint.Name = "cbIsEDMFaceGetPoint";
+            this.cbIsEDMFaceGetPoint.Size = new System.Drawing.Size(84, 16);
+            this.cbIsEDMFaceGetPoint.TabIndex = 14;
+            this.cbIsEDMFaceGetPoint.Text = "放电面取点";
+            this.cbIsEDMFaceGetPoint.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -785,6 +797,7 @@
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.CheckBox cbIsInspectionPath;
+        private System.Windows.Forms.CheckBox cbIsEDMFaceGetPoint;
     }
 }
 
