@@ -110,7 +110,7 @@ namespace CMM
         /// </summary>
         public static List<Snap.Position> GetFacePoints(Snap.NX.Face face, CMMTool.CMMConfig config, double max_facet_size = 1)
         {
-            var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Visible, "GetFacePointsEx");
+            var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "GetFacePointsEx");
             var positions = new List<Snap.Position>();
             try
             {

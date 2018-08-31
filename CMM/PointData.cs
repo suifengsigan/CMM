@@ -81,12 +81,12 @@ namespace CMM
                 pointInfo.a = u.A;
                 pointInfo.b = u.B;
                 pointInfo.type = (int)u.PointType;
-                pointInfo.x = u.Position.X;
-                pointInfo.y = u.Position.Y;
-                pointInfo.z = u.Position.Z;
-                pointInfo.i = u.Vector.X;
-                pointInfo.j = u.Vector.Y;
-                pointInfo.k = u.Vector.Z;
+                pointInfo.x = System.Math.Round(u.Position.X, 4);
+                pointInfo.y = System.Math.Round(u.Position.Y, 4);
+                pointInfo.z = System.Math.Round(u.Position.Z, 4);
+                pointInfo.i = System.Math.Round(u.Vector.X, 4);
+                pointInfo.j = System.Math.Round(u.Vector.Y, 4);
+                pointInfo.k = System.Math.Round(u.Vector.Z, 4);
                 info.pointlist.Add(pointInfo);
             });
 
