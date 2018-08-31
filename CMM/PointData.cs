@@ -57,10 +57,7 @@ namespace CMM
             var info = new GetPointInfo();
             var elecInfo = elec.GetElectrodeInfo();
             info.basestationh = elecInfo.BasestationH;
-            info.sizex = elecInfo.X;
-            info.sizey = elecInfo.Y;
-            info.sizez = elecInfo.Z;
-            info.headh = System.Math.Abs(info.sizez - info.basestationh);
+            info.headh = elecInfo.HEADPULLUPH;
             info.partname = elecInfo.Elec_Name;
             var MODEL_NUMBER = elec.ElecBody.GetAttrValue(ElecManage.EactElectrodeInfo.EACT_DIE_NO_OF_WORKPIECE);
             info.mouldname = MODEL_NUMBER;
