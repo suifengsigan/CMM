@@ -52,13 +52,17 @@ namespace CMM
         /// <summary>
         /// 获取取点信息
         /// </summary>
-        public static GetPointInfo GetCMMPointInfo(List<PointData> points,ElecManage.Electrode elec)
+        public static GetPointInfo GetCMMPointInfo(List<PointData> points,ElecManage.Electrode elec,EactConfig.ConfigData configData)
         {
             var info = new GetPointInfo();
             var elecInfo = elec.GetElectrodeInfo();
             info.basestationh = elecInfo.BasestationH;
+            info.sizex = elecInfo.X;
+            info.sizey = elecInfo.Y;
+            info.sizez = elecInfo.Z;
             info.headh = elecInfo.HEADPULLUPH;
             info.partname = elecInfo.Elec_Name;
+            info.cornor = ((int)elec.GetCMMQuadrantType(configData.QuadrantType)) + 1;
             var MODEL_NUMBER = elec.ElecBody.GetAttrValue(ElecManage.EactElectrodeInfo.EACT_DIE_NO_OF_WORKPIECE);
             info.mouldname = MODEL_NUMBER;
 

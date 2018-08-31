@@ -110,7 +110,7 @@ namespace CMM
                 item.PointName = string.Format("P{0}", positions.IndexOf(item) + 1);
             }
 
-            WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode));
+            WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode,_EactConfigData));
 
             return positions;
         }
