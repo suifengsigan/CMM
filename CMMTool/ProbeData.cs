@@ -102,6 +102,8 @@ namespace CMMTool
                     }
                 }
 
+                listLine.ForEach(u => { u.Delete(); });
+
                 if (reuslt)
                 {
                     return reuslt;
