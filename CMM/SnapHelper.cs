@@ -124,11 +124,11 @@ namespace CMM
                 positions = SnapEx.Create.GetFacePoints(face, max_facet_size);
                 var edges = face.EdgeCurves.ToList();
                 //所有边上的点都不取
-                var minD = SnapEx.Helper.Tolerance;
+                var minD = double.MaxValue;
                 var probeDatas = config.ProbeDatas ?? new List<CMMTool.ProbeData>();
                 foreach (var data in probeDatas)
                 {
-                    minD = System.Math.Min(data.D / 2, minD);
+                    minD = System.Math.Min(data.D, minD);
                 }
                 positions.ToList().ForEach(p => {
                     if (Helper.GetPointToEdgeMinDistance(p, edges) < minD)

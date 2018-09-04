@@ -423,7 +423,7 @@ namespace CMM
             foreach (var data in ProbeDatas)
             {
                 //过滤探球半径的点
-                if (minDistance < data.D / 2)
+                if (minDistance < data.D)
                 {
                     continue;
                 }
