@@ -8,7 +8,6 @@ using SnapEx;
 
 public partial class CMMProgramUI:SnapEx.BaseUI
 {
-    string _probeDataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("CMM_INSPECTION", "ProbeData.json"));
     const string _propertyName = "PROPERTYNAME";
     CMMTool.CMMConfig _config = CMMTool.CMMConfig.GetInstance();
     ElecManage.Electrode _electrode = null;
@@ -158,14 +157,15 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         var node = tree_control0.CreateNode(point.PointName);
         node.GetNodeData().AddString(_propertyName, Newtonsoft.Json.JsonConvert.SerializeObject(point));
         tree_control0.InsertNode(node, null, null, NXOpen.BlockStyler.Tree.NodeInsertOption.AlwaysLast);
-        node.SetColumnDisplayText(1, point.Position.X.ToString("F4"));
-        node.SetColumnDisplayText(2, point.Position.Y.ToString("F4"));
-        node.SetColumnDisplayText(3, point.Position.Z.ToString("F4"));
-        node.SetColumnDisplayText(4, point.Vector.X.ToString("F4"));
-        node.SetColumnDisplayText(5, point.Vector.Y.ToString("F4"));
-        node.SetColumnDisplayText(6, point.Vector.Z.ToString("F4"));
-        node.SetColumnDisplayText(7, point.A.ToString());
-        node.SetColumnDisplayText(8, point.B.ToString());
+        node.SetColumnDisplayText(1, point.Arrow);
+        node.SetColumnDisplayText(2, point.Position.X.ToString("F4"));
+        node.SetColumnDisplayText(3, point.Position.Y.ToString("F4"));
+        node.SetColumnDisplayText(4, point.Position.Z.ToString("F4"));
+        node.SetColumnDisplayText(5, point.Vector.X.ToString("F4"));
+        node.SetColumnDisplayText(6, point.Vector.Y.ToString("F4"));
+        node.SetColumnDisplayText(7, point.Vector.Z.ToString("F4"));
+        node.SetColumnDisplayText(8, point.A.ToString());
+        node.SetColumnDisplayText(9, point.B.ToString());
         return node;
     }
     #endregion
@@ -371,14 +371,15 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         RefreshUI();
         tree_control0.ShowHeader = true;
         tree_control0.InsertColumn(0, "名称", 50);
-        tree_control0.InsertColumn(1, "X", 200);
-        tree_control0.InsertColumn(2, "Y", 200);
-        tree_control0.InsertColumn(3, "Z", 200);
-        tree_control0.InsertColumn(4, "I", 200);
-        tree_control0.InsertColumn(5, "J", 200);
-        tree_control0.InsertColumn(6, "K", 200);
-        tree_control0.InsertColumn(7, "A", 200);
-        tree_control0.InsertColumn(8, "B", 200);
+        tree_control0.InsertColumn(1, "探针", 200);
+        tree_control0.InsertColumn(2, "X", 200);
+        tree_control0.InsertColumn(3, "Y", 200);
+        tree_control0.InsertColumn(4, "Z", 200);
+        tree_control0.InsertColumn(5, "I", 200);
+        tree_control0.InsertColumn(6, "J", 200);
+        tree_control0.InsertColumn(7, "K", 200);
+        tree_control0.InsertColumn(8, "A", 100);
+        tree_control0.InsertColumn(9, "B", 100);
 
         tree_control0.SetColumnResizePolicy(1, NXOpen.BlockStyler.Tree.ColumnResizePolicy.ResizeWithTree);
         tree_control0.SetColumnResizePolicy(2, NXOpen.BlockStyler.Tree.ColumnResizePolicy.ResizeWithTree);
@@ -388,6 +389,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         tree_control0.SetColumnResizePolicy(6, NXOpen.BlockStyler.Tree.ColumnResizePolicy.ResizeWithTree);
         tree_control0.SetColumnResizePolicy(7, NXOpen.BlockStyler.Tree.ColumnResizePolicy.ResizeWithTree);
         tree_control0.SetColumnResizePolicy(8, NXOpen.BlockStyler.Tree.ColumnResizePolicy.ResizeWithTree);
+        tree_control0.SetColumnResizePolicy(9, NXOpen.BlockStyler.Tree.ColumnResizePolicy.ResizeWithTree);
 
         tree_control0.SetColumnSortable(0, false);
         tree_control0.SetColumnSortable(1, false);
@@ -398,7 +400,8 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         tree_control0.SetColumnSortable(6, false);
         tree_control0.SetColumnSortable(7, false);
         tree_control0.SetColumnSortable(8, false);
-        
+        tree_control0.SetColumnSortable(9, false);
+
 
         if (Snap.Globals.WorkPart.Bodies.Count() == 1) 
         {
