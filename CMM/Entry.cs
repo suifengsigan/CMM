@@ -55,7 +55,7 @@ namespace CMM
             {
                 foreach (var ab in item.GetABList())
                 {
-                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}.prt", item.ProbeName, ab.A, ab.B));
+                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}_{3}.prt", item.ProbeName, ab.A, ab.B,SnapEx.ConstString.CMM_INSPECTION_SPHERE));
                     Helper.ImportPart(fileName);
                 }
             }
