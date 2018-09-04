@@ -161,9 +161,9 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         node.SetColumnDisplayText(1, point.Position.X.ToString("F4"));
         node.SetColumnDisplayText(2, point.Position.Y.ToString("F4"));
         node.SetColumnDisplayText(3, point.Position.Z.ToString("F4"));
-        node.SetColumnDisplayText(4, point.Vector.X.ToString());
-        node.SetColumnDisplayText(5, point.Vector.Y.ToString());
-        node.SetColumnDisplayText(6, point.Vector.Z.ToString());
+        node.SetColumnDisplayText(4, point.Vector.X.ToString("F4"));
+        node.SetColumnDisplayText(5, point.Vector.Y.ToString("F4"));
+        node.SetColumnDisplayText(6, point.Vector.Z.ToString("F4"));
         node.SetColumnDisplayText(7, point.A.ToString());
         node.SetColumnDisplayText(8, point.B.ToString());
         return node;
