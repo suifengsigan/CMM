@@ -11,6 +11,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     string _probeDataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("CMM_INSPECTION", "ProbeData.json"));
     const string _propertyName = "PROPERTYNAME";
     CMMTool.CMMConfig _config = CMMTool.CMMConfig.GetInstance();
+    ElecManage.Electrode _electrode = null;
     void UFDisp() 
     {
         UFDisp(new List<PointData>());
@@ -185,23 +186,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         selectionPoint.Show = !btnAutoSelectPoint.Show;
         SetProbeHide();
     }
-
-    /// <summary>
-    /// 寻找隐藏图层
-    /// </summary>
-    int FindLayer(Snap.NX.Body body) 
-    {
-        int r = 1;
-        for (int i = 1; i <= 256; i++) 
-        {
-            if (i != body.Layer && i != Snap.Globals.WorkLayer) 
-            {
-                r = i;
-                break;
-            }
-        }
-        return r;
-    }
+    
 
     void ComponentHelper(Action action) 
     {
@@ -220,43 +205,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
             Snap.Globals.UndoToMark(mark, null);
         }
     }
-
-    Snap.NX.Body ImportPart(string fileName) 
-    {
-        Snap.NX.Body result = null;
-        NXOpen.UF.ImportPartModes modes = new NXOpen.UF.ImportPartModes();
-        //坐标系
-        double[] dest_csys = new double[6];
-        //基准点
-        double[] dest_point = new double[3];
-
-        dest_csys[0] = 1; //坐标系X轴的矢量
-        dest_csys[1] = 0;
-        dest_csys[2] = 0;
-        dest_csys[3] = 0; //坐标系Y轴的矢量
-        dest_csys[4] = 1;
-        dest_csys[5] = 0;
-        dest_point[0] = 0.0; //基准点【导入到点坐标】
-        dest_point[1] = 0.0;
-        dest_point[2] = 0.0;
-
-        //导入对象比例缩放
-        double scale = 1.0; 
-        NXOpen.Tag group;
-        NXOpen.UF.UFSession.GetUFSession().Part.Import(fileName, ref modes, dest_csys, dest_point, scale, out group);
-
-        foreach (var m in Snap.Globals.WorkPart.Bodies)
-        {
-            var axisFace = m.Faces.FirstOrDefault(u => u.Name == SnapEx.ConstString.CMM_INSPECTION_AXISPOINT);
-            if (axisFace != null)
-            {
-                result = m;
-                break;
-            }
-        }
-      
-        return result;
-    }
+    
 
 
     void AutoSelectPoint() 
@@ -266,7 +215,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         var pointDatas = new List<PointData>();
         ComponentHelper(() =>
         {
-            pointDatas = CMMBusiness.AutoSelPoint(body, _config, false);
+            pointDatas = CMMBusiness.AutoSelPoint(_electrode, _config, false);
         });
         UFDisp(pointDatas);
     }
@@ -275,30 +224,48 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     {
         RefreshUI();
         var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
-        if (block == btnAutoSelectPoint) 
+        if (block == btnAutoSelectPoint)
         {
             AutoSelectPoint();
             RefreshUI();
         }
-        else if (block == toggle0) 
+        else if (block == selectCuprum)
+        {
+            _electrode = null;
+            if (body != null)
+            {
+                var elec=ElecManage.Electrode.GetElectrode(body);
+                if (elec != null)
+                {
+                    elec.InitAllFace();
+                    _electrode = elec;
+                }
+                else
+                {
+                    selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { });
+                    NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage("该电极无法识别",1);
+                }
+            }
+        }
+        else if (block == toggle0)
         {
             UFDisp();
             DeleteNodes();
         }
-        else if (block == btnDown) 
+        else if (block == btnDown)
         {
-           var node= GetSelectNode();
-           if (node != null) 
-           {
-               var list = GetNodes();
-               var index = list.IndexOf(node) + 1;
-               index = index > list.Count-1 ? list.Count - 1 : index;
-               list.Remove(node);
-               list.Insert(index, node);
-               UFDisp(GetPointDatasFromTree(list));
-           }
+            var node = GetSelectNode();
+            if (node != null)
+            {
+                var list = GetNodes();
+                var index = list.IndexOf(node) + 1;
+                index = index > list.Count - 1 ? list.Count - 1 : index;
+                list.Remove(node);
+                list.Insert(index, node);
+                UFDisp(GetPointDatasFromTree(list));
+            }
         }
-        else if (block == btnUP) 
+        else if (block == btnUP)
         {
             var node = GetSelectNode();
             if (node != null)
@@ -311,7 +278,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 UFDisp(GetPointDatasFromTree(list));
             }
         }
-        else if (block == btnRemove) 
+        else if (block == btnRemove)
         {
             var node = GetSelectNode();
             if (node != null)
@@ -324,7 +291,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                     UFDisp(GetPointDatasFromTree(list));
                     theUI.NXMessageBox.Show("提示", NXOpen.NXMessageBox.DialogType.Information, "删除成功！");
                 }
-                else 
+                else
                 {
                     theUI.NXMessageBox.Show("提示", NXOpen.NXMessageBox.DialogType.Information, "无法删除该点！");
                 }
@@ -337,10 +304,10 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 PointData data = null;
                 ComponentHelper(() =>
                 {
-                    //data = new Electrode(body).IsIntervene(selectionPoint.PickPoint, probeData);
+                    data = CMMBusiness.IsInterveneBySelPoint(_electrode, selectionPoint.PickPoint, _config);
                 });
 
-                if (data != null&&data.PointType==PointType.HeadFace)
+                if (data != null && data.PointType == PointType.HeadFace)
                 {
                     var points = GetPointDatasFromTree();
                     points.Add(data);
@@ -370,7 +337,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                     CMMBusiness.WriteCMMFile(body, list);
                 }
             }
-            else 
+            else
             {
                 //ImportPart(  Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION", enumSelectTool.ValueAsString));
             }
@@ -389,7 +356,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         snapSelectedPoint.SetFilter(Snap.NX.ObjectTypes.Type.Face);
 
         tree_control0.SetOnSelectHandler(new NXOpen.BlockStyler.Tree.OnSelectCallback(OnSelectcallback));
-        
+        _electrode = null;
     }
     public override void DialogShown()
     {

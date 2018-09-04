@@ -81,14 +81,8 @@ namespace CMM
         /// <summary>
         /// 自动取点
         /// </summary>
-        public static List<PointData> AutoSelPoint(Snap.NX.Body body, CMMConfig config,bool isUploadFile=true)
+        public static List<PointData> AutoSelPoint(ElecManage.Electrode electrode, CMMConfig config, bool isUploadFile = true)
         {
-            var electrode = ElecManage.Electrode.GetElectrode(body);
-            if (electrode == null)
-            {
-                throw new Exception("无法识别该电极！");
-            }
-            electrode.InitAllFace();
             var positions = new List<PointData>();
             var tempPositions = new List<PointData>();
             var elecName = electrode.GetElectrodeInfo().Elec_Name;
@@ -112,7 +106,7 @@ namespace CMM
             }
             positions.AddRange(tempPositions);
 
-            
+
 
             Helper.ShowMsg(string.Format("{0}电极头部面取点", elecName));
             tempPositions = GetElectrodeHeadFacePositions(electrode, config);
@@ -129,6 +123,20 @@ namespace CMM
                 WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode, _EactConfigData));
             }
             return positions;
+        }
+
+        /// <summary>
+        /// 自动取点
+        /// </summary>
+        public static List<PointData> AutoSelPoint(Snap.NX.Body body, CMMConfig config,bool isUploadFile=true)
+        {
+            var electrode = ElecManage.Electrode.GetElectrode(body);
+            if (electrode == null)
+            {
+                throw new Exception("无法识别该电极！");
+            }
+            electrode.InitAllFace();
+            return AutoSelPoint(electrode, config, isUploadFile);
         }
 
         /// <summary>
@@ -370,6 +378,35 @@ namespace CMM
             }
             positions.AddRange(tempPositions);
             return positions;
+        }
+
+        public static PointData IsInterveneBySelPoint(ElecManage.Electrode elec, Snap.Position p, CMMConfig config)
+        {
+            try
+            {
+                var electrode = elec;
+                if (electrode == null)
+                {
+                    return null;
+                }
+
+                var faces = electrode.ElecHeadFaces;
+                var face = faces.FirstOrDefault(u => Helper.AskPointContainment(p, u));
+
+                var vector = face.GetFaceDirection();
+                var edges = face.EdgeCurves.ToList();
+                if (double.IsNaN(vector.X) || double.IsNaN(vector.Y) || double.IsNaN(vector.Z))
+                {
+                    return null;
+                }
+
+                return IsIntervene(electrode, p, vector, edges, config, PointType.HeadFace);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return null;
         }
 
         static PointData IsIntervene(ElecManage.Electrode elec, Snap.Position p, Snap.Vector pV, List<Snap.NX.Curve> curves, CMMConfig config, PointType pointType = PointType.UNKOWN, bool isBaseFace = false)
