@@ -22,14 +22,14 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     public static void SetProbeShow(PointData data,CMMTool.CMMConfig config)
     {
         SetProbeHide();
-        //
+
         var probe = config.ProbeDatas.FirstOrDefault(u => u.ProbeName == data.Arrow);
         if (probe != null)
         {
-            var ab=probe.GetABList().FirstOrDefault(u => u.A == data.A && u.B == data.B);
+            var ab = probe.GetABList().FirstOrDefault(u => u.A == data.A && u.B == data.B);
             if (ab != null)
             {
-                var body=probe.GetBody(ab);
+                var body = probe.GetBody(ab);
                 //移动
                 var centreOfSphere = probe.GetCentreOfSphere(ab);
                 //退点
@@ -117,9 +117,15 @@ public partial class CMMProgramUI:SnapEx.BaseUI
             var selectedNode = GetSelectNode();
             if (selectedNode != null) 
             {
-                UFDisp(GetPointDatasFromTree(), GetNodes().IndexOf(selectedNode),false);
+                var datas = GetPointDatasFromTree();
+                var index = GetNodes().IndexOf(selectedNode);
+                UFDisp(datas, index, false);
+                if (index >= 0 && datas.Count > index)
+                {
+                    //显示探针
+                    SetProbeShow(datas.ElementAt(index), _config);
+                }
             }
-           
         }
     }
 
@@ -177,6 +183,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         enumSelectTool.Show = false;
         btnAutoSelectPoint.Show = GetNodes().Count == 0;
         selectionPoint.Show = !btnAutoSelectPoint.Show;
+        SetProbeHide();
     }
 
     /// <summary>
