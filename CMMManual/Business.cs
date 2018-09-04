@@ -9,6 +9,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
 {
     string _probeDataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("CMM_INSPECTION", "ProbeData.json"));
     const string _propertyName = "PROPERTYNAME";
+    CMMTool.CMMConfig _config = CMMTool.CMMConfig.GetInstance();
     void UFDisp() 
     {
         UFDisp(new List<PointData>());
@@ -164,7 +165,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
         if (body != null)
         {
-            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Visible, "AutoSelectPoint");
+            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "AutoSelectPoint");
             try
             {
                 action();
@@ -222,7 +223,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         var pointDatas = new List<PointData>();
         ComponentHelper(() =>
         {
-
+            pointDatas = CMMBusiness.AutoSelPoint(body, _config, false);
         });
         UFDisp(pointDatas);
     }

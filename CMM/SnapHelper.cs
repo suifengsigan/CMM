@@ -32,7 +32,14 @@ namespace CMM
         
         public static void ShowMsg(string msg,int type=0)
         {
-            CSharpProxy.ProxyObject.Instance.ShowMsg(msg,type);
+            if (CSharpProxy.ProxyObject.Instance == null)
+            {
+                UFSession.GetUFSession().Ui.SetStatus(msg);
+            }
+            else
+            {
+                CSharpProxy.ProxyObject.Instance.ShowMsg(msg, type);
+            }
         }
         /// <summary>
         /// 获取点到面边的最小距离

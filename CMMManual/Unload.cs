@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -9,20 +10,27 @@ namespace CMMManual
     {
         public static void Main()
         {
+            Show();
+        }
+
+        private static void Show()
+        {
+            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "CMMManualShow");
             try
             {
-                Show();
+                //导入探针数据
+                CMM.Entry.ImportProbePart();
+                var ui = new CMMProgramUI();
+                ui.Show();
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
-        }
-
-        private static void Show()
-        {
-            var ui = new CMMProgramUI();
-            ui.Show();
+            finally
+            {
+                Snap.Globals.UndoToMark(mark, null);
+            }
         }
 
     }

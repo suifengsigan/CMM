@@ -67,7 +67,7 @@ namespace CMM
         /// <summary>
         /// 自动取点
         /// </summary>
-        public static List<PointData> AutoSelPoint(Snap.NX.Body body, CMMConfig config)
+        public static List<PointData> AutoSelPoint(Snap.NX.Body body, CMMConfig config,bool isUploadFile=true)
         {
             var electrode = ElecManage.Electrode.GetElectrode(body);
             if (electrode == null)
@@ -110,8 +110,10 @@ namespace CMM
                 item.PointName = string.Format("P{0}", positions.IndexOf(item) + 1);
             }
 
-            WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode,_EactConfigData));
-
+            if (isUploadFile)
+            {
+                WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode, _EactConfigData));
+            }
             return positions;
         }
 

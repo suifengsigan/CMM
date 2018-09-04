@@ -46,6 +46,23 @@ namespace CMM
         }
 
         /// <summary>
+        /// 导入探针数据
+        /// </summary>
+        public static CMMTool.CMMConfig ImportProbePart()
+        {
+            var config = CMMTool.CMMConfig.GetInstance();
+            foreach (var item in config.ProbeDatas)
+            {
+                foreach (var ab in item.GetABList())
+                {
+                    var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}.prt", item.ProbeName, ab.A, ab.B));
+                    Helper.ImportPart(fileName);
+                }
+            }
+            return config;
+        }
+
+        /// <summary>
         /// 自动选点
         /// </summary>
         public static void AutoSelPoint(string filename)
@@ -62,15 +79,7 @@ namespace CMM
             Snap.Globals.WorkPart = snapPart;
             try
             {
-                var config = CMMTool.CMMConfig.GetInstance();
-                foreach (var item in config.ProbeDatas)
-                {
-                    foreach (var ab in item.GetABList())
-                    {
-                        var fileName = Path.Combine(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMM_INSPECTION"), string.Format("{0}A{1}B{2}.prt", item.ProbeName, ab.A, ab.B));
-                        Helper.ImportPart(fileName);
-                    }
-                }
+                var config = ImportProbePart();
                 Helper.ShowMsg(string.Format("{0}开始取点...", name));
                 var list = CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
                 Helper.ShowMsg(string.Format("{0}取点成功", name));
