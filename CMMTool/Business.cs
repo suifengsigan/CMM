@@ -12,6 +12,21 @@ namespace CMMTool
     {
         public const string EACTPROBESPHEREFACE = "EACTPROBESPHEREFACE";
         public const string EACT_PROBEINSPECTIONPOINT = "EACT_PROBEINSPECTIONPOINT";
+
+        /// <summary>
+        /// 初始化配置
+        /// </summary>
+        public static void InitConfig()
+        {
+            //初始化探针数据
+            var config = CMMTool.CMMConfig.GetInstance();
+            CMMTool.Business.DeleteProbe();
+            foreach (var item in config.ProbeDatas.ToList())
+            {
+                CMMTool.Business.CreateProbe(item);
+            }
+        }
+
         /// <summary>
         /// 删除模型
         /// </summary>

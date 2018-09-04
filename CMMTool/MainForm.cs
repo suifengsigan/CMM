@@ -189,7 +189,12 @@ namespace CMMTool
             result.VerticalValue = double.Parse(txtVerticalValue.Text);
             result.IsInspectionPath = cbIsInspectionPath.Checked;
             result.IsEDMFaceGetPoint = cbIsEDMFaceGetPoint.Checked;
+            result.IsInitConfig = cbIsInitConfig.Checked;
             CMMConfig.WriteConfig(result);
+            if (result.IsInitConfig)
+            {
+                CMMTool.Business.InitConfig();
+            }
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -257,6 +262,7 @@ namespace CMMTool
             txtVerticalValue.Text = result.VerticalValue.ToString();
             cbIsInspectionPath.Checked = result.IsInspectionPath;
             cbIsEDMFaceGetPoint.Checked = result.IsEDMFaceGetPoint;
+            cbIsInitConfig.Checked = result.IsInitConfig;
             dataGridView1.DataSource = data;
         }
 

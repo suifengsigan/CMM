@@ -75,6 +75,10 @@ namespace CMMTool
         /// 放电面取点
         /// </summary>
         public bool IsEDMFaceGetPoint = false;
+        /// <summary>
+        /// 是否初始化配置
+        /// </summary>
+        public bool IsInitConfig = false;
 
     }
 }

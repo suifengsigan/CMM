@@ -106,13 +106,7 @@ namespace CMM
             Helper.ShowMsg("初始化配置数据...");
             if (!IsInit)
             { 
-                //初始化探针数据
-                var config = CMMTool.CMMConfig.GetInstance();
-                CMMTool.Business.DeleteProbe();
-                foreach (var item in config.ProbeDatas.ToList())
-                {
-                    CMMTool.Business.CreateProbe(item);
-                }
+                CMMTool.Business.InitConfig();
             }
             IsInit = true;
             Helper.ShowMsg("完成初始化配置数据");
