@@ -139,6 +139,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         toggle0.Show = false;
         btnUP.Show = false;
         btnDown.Show = false;
+        enumSelectTool.Show = false;
         btnAutoSelectPoint.Show = GetNodes().Count == 0;
         selectionPoint.Show = !btnAutoSelectPoint.Show;
     }
@@ -324,7 +325,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 if (list.Count > 0)
                 {
                     //导出
-                   
+                    CMMBusiness.WriteCMMFile(body, list);
                 }
             }
             else 

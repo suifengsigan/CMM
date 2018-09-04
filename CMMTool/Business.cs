@@ -125,7 +125,10 @@ namespace CMMTool
                     var str = Newtonsoft.Json.JsonConvert.SerializeObject(points);
                     sphere.SetStringAttribute(EACT_PROBEINSPECTIONPOINT, str);
                     var exObject = new List<NXOpen.NXObject> { sphere };
-                    Snap.Globals.WorkPart.Lines.ToList().ForEach(u => { exObject.Add(u.NXOpenDisplayableObject); });
+                    exObject.ForEach(u => {
+                        Snap.NX.NXObject uO = u;
+                        uO.IsHidden = true;
+                    });
                     SnapEx.Create.ExtractObject(exObject, fileName, false, true);
                     Globals.UndoToMark(mark, null);
                 }
