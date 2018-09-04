@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(s));
             this.btnStart = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -36,6 +37,7 @@
             this.btnAutoPrt = new System.Windows.Forms.Button();
             this.btnCMMConfig = new System.Windows.Forms.Button();
             this.btnUserConfig = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.panel2.SuspendLayout();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
@@ -109,6 +111,11 @@
             this.btnUserConfig.Text = "用户配置";
             this.btnUserConfig.UseVisualStyleBackColor = true;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Text = "notifyIcon1";
+            this.notifyIcon1.Visible = true;
+            // 
             // s
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -134,6 +141,7 @@
         private System.Windows.Forms.Button btnUserConfig;
         private System.Windows.Forms.Button btnCMMConfig;
         private System.Windows.Forms.Button btnAutoPrt;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

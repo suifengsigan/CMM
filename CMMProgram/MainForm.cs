@@ -88,6 +88,22 @@ namespace CMMProgram
             btnUserConfig.Click += BtnUserConfig_Click;
             btnAutoPrt.Click += BtnAutoPrt_Click;
             this.Shown += S_Shown;
+            notifyIcon1.MouseDoubleClick += NotifyIcon1_MouseDoubleClick;
+        }
+    
+        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Visible = !this.Visible;
+            if (this.Visible)
+            {
+                if (this.WindowState == FormWindowState.Minimized)
+                {
+                    this.Show();
+                    this.WindowState = FormWindowState.Maximized;
+                    this.Activate();
+                }
+                this.BringToFront();
+            }
         }
 
         private void S_Shown(object sender, EventArgs e)
@@ -145,6 +161,9 @@ namespace CMMProgram
         {
             panel4.Visible = false;
             Text = "Eact_自动取点工具";
+            this.notifyIcon1.Icon = this.Icon;
+            this.notifyIcon1.Text = this.Text;
+            this.Visible = false;
             ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
                 try
                 {
