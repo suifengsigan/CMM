@@ -64,7 +64,7 @@ namespace CMMTool
         public Snap.NX.Body GetBody(ProbeData.AB ab)
         {
             Snap.NX.Body result = null;
-            result = Snap.Globals.WorkPart.Bodies.FirstOrDefault(u => u.Name == string.Format("{0}A{1}B{2}", this.ProbeName, ab.A, ab.B));
+            result = Snap.Globals.WorkPart.Bodies.FirstOrDefault(u => u.IsHasAttr(SnapEx.ConstString.CMM_INSPECTION_SPHERE)&&u.Name == string.Format("{0}A{1}B{2}", this.ProbeName, ab.A, ab.B));
             return result;
         }
         

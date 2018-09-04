@@ -19,11 +19,26 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     /// <summary>
     /// 设置探针显示
     /// </summary>
-    public static void SetProbeShow(PointData data)
+    public static void SetProbeShow(PointData data,CMMTool.CMMConfig config)
     {
         SetProbeHide();
-        var bodies = Snap.Globals.WorkPart.Bodies.ToList().Where(u => u.IsHasAttr(SnapEx.ConstString.CMM_INSPECTION_SPHERE)).ToList();
-        bodies.ForEach(u => u.IsHidden = true);
+        //
+        var probe = config.ProbeDatas.FirstOrDefault(u => u.ProbeName == data.Arrow);
+        if (probe != null)
+        {
+            var ab=probe.GetABList().FirstOrDefault(u => u.A == data.A && u.B == data.B);
+            if (ab != null)
+            {
+                var body=probe.GetBody(ab);
+                //移动
+                var centreOfSphere = probe.GetCentreOfSphere(ab);
+                //退点
+                var sRetreatPosition = data.Position.Copy(Snap.Geom.Transform.CreateTranslation((probe.D / 2) * data.Vector));
+                var trans = Snap.Geom.Transform.CreateTranslation(sRetreatPosition - centreOfSphere);
+                body.Move(trans);
+                body.IsHidden = false;
+            }
+        }
     }
 
     /// <summary>
