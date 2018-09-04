@@ -215,7 +215,14 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         var pointDatas = new List<PointData>();
         ComponentHelper(() =>
         {
-            pointDatas = CMMBusiness.AutoSelPoint(_electrode, _config, false);
+            try { pointDatas = CMMBusiness.AutoSelPoint(_electrode, _config, false); }
+            catch (Exception ex)
+            {
+                pointDatas = new List<PointData>();
+                selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { });
+                NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage(ex.Message, 1);
+            }
+
         });
         UFDisp(pointDatas);
     }
@@ -334,7 +341,8 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 if (list.Count > 0)
                 {
                     //导出
-                    CMMBusiness.WriteCMMFile(body, list);
+                    CMMBusiness.WriteCMMFileByPointData(_electrode, list);
+                    NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage("导出成功", 1);
                 }
             }
             else

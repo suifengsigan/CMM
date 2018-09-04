@@ -25,15 +25,9 @@ namespace CMM
         /// <summary>
         /// 上传CMM文件
         /// </summary>
-
-        public static void WriteCMMFile(Snap.NX.Body body, object data)
+        public static void WriteCMMFileByPointData(ElecManage.Electrode elec, List<PointData> pointData)
         {
-            var electrode = ElecManage.Electrode.GetElectrode(body);
-            if (electrode == null)
-            {
-                throw new Exception("无法识别该电极！");
-            }
-            WriteCMMFile(electrode, data);
+            WriteCMMFile(elec, GetPointInfo.GetCMMPointInfo(pointData, elec, _EactConfigData));
         }
 
         /// <summary>
