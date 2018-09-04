@@ -93,7 +93,7 @@ namespace CMMTool
 
                     var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
                     r.Orphan();
-                    sphere.Name = string.Format("{0}A{1}B{2}_{3}", data.ProbeName, ab.A, ab.B,SnapEx.ConstString.CMM_INSPECTION_SPHERE);
+                    sphere.Name = string.Format("{0}A{1}B{2}", data.ProbeName, ab.A, ab.B);
                     var fileName = Path.Combine(inPath, sphere.Name);
                     if (File.Exists(fileName + ".prt"))
                     {
@@ -128,6 +128,7 @@ namespace CMMTool
                     exObject.ForEach(u => {
                         Snap.NX.NXObject uO = u;
                         uO.IsHidden = true;
+                        uO.SetStringAttribute(SnapEx.ConstString.CMM_INSPECTION_SPHERE, "1");
                     });
                     SnapEx.Create.ExtractObject(exObject, fileName, false, true);
                     Globals.UndoToMark(mark, null);

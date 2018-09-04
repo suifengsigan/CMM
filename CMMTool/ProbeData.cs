@@ -45,6 +45,8 @@ namespace CMMTool
             return list;
         }
 
+        
+
         /// <summary>
         /// 获取球心
         /// </summary>
@@ -62,9 +64,10 @@ namespace CMMTool
         public Snap.NX.Body GetBody(ProbeData.AB ab)
         {
             Snap.NX.Body result = null;
-            result = Snap.Globals.WorkPart.Bodies.FirstOrDefault(u => u.Name == string.Format("{0}A{1}B{2}_{3}", this.ProbeName, ab.A, ab.B, SnapEx.ConstString.CMM_INSPECTION_SPHERE));
+            result = Snap.Globals.WorkPart.Bodies.FirstOrDefault(u => u.Name == string.Format("{0}A{1}B{2}", this.ProbeName, ab.A, ab.B));
             return result;
         }
+        
 
         /// <summary>
         /// 干涉点检查

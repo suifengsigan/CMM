@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using CMM;
+using SnapEx;
 
 public partial class CMMProgramUI:SnapEx.BaseUI
 {
@@ -13,6 +14,25 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     void UFDisp() 
     {
         UFDisp(new List<PointData>());
+    }
+
+    /// <summary>
+    /// 设置探针显示
+    /// </summary>
+    public static void SetProbeShow(PointData data)
+    {
+        SetProbeHide();
+        var bodies = Snap.Globals.WorkPart.Bodies.ToList().Where(u => u.IsHasAttr(SnapEx.ConstString.CMM_INSPECTION_SPHERE)).ToList();
+        bodies.ForEach(u => u.IsHidden = true);
+    }
+
+    /// <summary>
+    /// 设置探针隐藏
+    /// </summary>
+    public static void SetProbeHide()
+    {
+        var bodies = Snap.Globals.WorkPart.Bodies.ToList().Where(u => u.IsHasAttr(SnapEx.ConstString.CMM_INSPECTION_SPHERE)).ToList();
+        bodies.ForEach(u => u.IsHidden = true);
     }
     void UFDisp(List<PointData> points, int selectedIndex = -1, bool isAddNode = true) 
     {
