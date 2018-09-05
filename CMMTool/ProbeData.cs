@@ -78,7 +78,7 @@ namespace CMMTool
             var reuslt = false;
             try
             {
-                if (inspectionBodies.Count() <= 0)
+                if (inspectionBodies.Count() <= 0 && inspectionPath.Count >= 2)
                     return reuslt;
                 var inspectionPoints = GetInspectionPoints(ab);
                 var trans = new List<Snap.Geom.Transform>();
@@ -86,32 +86,6 @@ namespace CMMTool
                     var tran = Snap.Geom.Transform.CreateTranslation(u - Snap.Position.Origin);
                     trans.Add(tran);
                 });
-
-                #region 探球点路径检测
-                var listSphereP = new List<Snap.Position>();
-                var sphereCenterPoint = Snap.Position.Origin;
-                foreach (var tranItem in trans)
-                {
-                    listSphereP.Add(sphereCenterPoint.Copy(tranItem));
-                }
-                var listLine = Snap.Create.PolyLine(listSphereP.ToArray()).ToList();
-                foreach (var pLine in listLine)
-                {
-                    var dis = Snap.Compute.Distance(pLine, inspectionBodies.First());
-                    if (dis <= SnapEx.Helper.Tolerance)
-                    {
-                        reuslt = true;
-                        break;
-                    }
-                }
-
-                listLine.ForEach(u => { u.Delete(); });
-
-                if (reuslt)
-                {
-                    return reuslt;
-                }
-                #endregion
 
                 foreach (var item in inspectionPoints)
                 {
@@ -121,12 +95,11 @@ namespace CMMTool
                         listP.Add(item.Copy(tranItem));
                     }
                     //碰撞检测
-                    foreach (var pLine in listP)
+                    for (int i = 0; i < listP.Count - 1; i++)
                     {
-                        var dis=Snap.Compute.Distance(pLine, inspectionBodies.First());
-                        if (dis <= SnapEx.Helper.Tolerance)
+                        reuslt = SnapEx.Create.Intersect(inspectionBodies, listP[i], listP[i + 1]);
+                        if (reuslt)
                         {
-                            reuslt = true;
                             break;
                         }
                     }
