@@ -356,7 +356,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     {
         toggle0.Value = false;
         var snapSelectCuprum = Snap.UI.Block.SelectObject.GetBlock(theDialog, selectCuprum.Name);
-        snapSelectCuprum.SetFilter(Snap.NX.ObjectTypes.Type.Body, Snap.NX.ObjectTypes.SubType.BodySolid);
+        snapSelectCuprum.SetFilter(Snap.NX.ObjectTypes.Type.Body);
         snapSelectCuprum.AllowMultiple = false;
 
         var snapSelectedPoint = Snap.UI.Block.SelectObject.GetBlock(theDialog, selectionPoint.Name);
