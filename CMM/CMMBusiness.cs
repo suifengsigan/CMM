@@ -446,6 +446,8 @@ namespace CMM
                         //逼进拐点
                         var sEntryPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.EntryPoint * pV));
                         lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sEntryPosition - fRetreatPosition));
+                        var fEntryPosition = new Snap.Position(sEntryPosition.X, sEntryPosition.Y, maxZ);
+                        inspectionPoints.Add(fEntryPosition);
                         inspectionPoints.Add(sEntryPosition);
                     }
                     inspectionPoints.Add(sRetreatPosition);
