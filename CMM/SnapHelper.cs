@@ -115,14 +115,13 @@ namespace CMM
         /// <summary>
         /// 获取面上所有的测量点
         /// </summary>
-        public static List<Snap.Position> GetFacePoints(Snap.NX.Face face, CMMTool.CMMConfig config, double max_facet_size = 1)
+        public static List<Snap.Position> GetFacePoints(Snap.NX.Face face, CMMTool.CMMConfig config,List<Snap.NX.Curve> edges, double max_facet_size = 1)
         {
             var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "GetFacePointsEx");
             var positions = new List<Snap.Position>();
             try
             {
                 positions = SnapEx.Create.GetFacePoints(face, max_facet_size);
-                var edges = face.EdgeCurves.ToList();
                 //所有边上的点都不取
                 var minD = double.MaxValue;
                 var probeDatas = config.ProbeDatas ?? new List<CMMTool.ProbeData>();
