@@ -104,6 +104,8 @@ namespace CMM
 
             Helper.ShowMsg(string.Format("{0}电极头部面取点", elecName));
             tempPositions = GetElectrodeHeadFacePositions(electrode, config);
+            //排序
+            tempPositions = tempPositions.OrderBy(u => u.A).ThenBy(u => u.B).ThenByDescending(u => u.Position.Z).ToList();
             positions.AddRange(tempPositions);
 
             //名称
