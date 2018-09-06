@@ -190,6 +190,7 @@ namespace CMMTool
             result.IsInspectionPath = cbIsInspectionPath.Checked;
             result.IsEDMFaceGetPoint = cbIsEDMFaceGetPoint.Checked;
             result.IsInitConfig = cbIsInitConfig.Checked;
+            result.IsUploadDataBase = cbIsUploadDatabase.Checked;
             CMMConfig.WriteConfig(result);
             if (result.IsInitConfig)
             {
@@ -254,6 +255,7 @@ namespace CMMTool
         {
             var result = CMMConfig.GetInstance();
             var data = result.ProbeDatas ?? new List<ProbeData>();
+            cbIsUploadDatabase.Checked = result.IsUploadDataBase;
             txtAutoCmmDir.Text = result.AutoCmmDir;
             txtAutoPrtToolDir.Text = result.AutoPrtToolDir;
             txtEntryPoint.Text = result.EntryPoint.ToString();

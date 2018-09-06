@@ -72,6 +72,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cbIsInitConfig = new System.Windows.Forms.CheckBox();
             this.cbIsEDMFaceGetPoint = new System.Windows.Forms.CheckBox();
             this.cbIsInspectionPath = new System.Windows.Forms.CheckBox();
             this.btnSelAutoCmmDir = new System.Windows.Forms.Button();
@@ -89,7 +90,7 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.cbIsInitConfig = new System.Windows.Forms.CheckBox();
+            this.cbIsUploadDatabase = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -519,6 +520,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.cbIsUploadDatabase);
             this.tabPage4.Controls.Add(this.cbIsInitConfig);
             this.tabPage4.Controls.Add(this.cbIsEDMFaceGetPoint);
             this.tabPage4.Controls.Add(this.cbIsInspectionPath);
@@ -540,6 +542,16 @@
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // cbIsInitConfig
+            // 
+            this.cbIsInitConfig.AutoSize = true;
+            this.cbIsInitConfig.Location = new System.Drawing.Point(73, 386);
+            this.cbIsInitConfig.Name = "cbIsInitConfig";
+            this.cbIsInitConfig.Size = new System.Drawing.Size(84, 16);
+            this.cbIsInitConfig.TabIndex = 15;
+            this.cbIsInitConfig.Text = "初始化配置";
+            this.cbIsInitConfig.UseVisualStyleBackColor = true;
             // 
             // cbIsEDMFaceGetPoint
             // 
@@ -702,15 +714,15 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // cbIsInitConfig
+            // cbIsUploadDatabase
             // 
-            this.cbIsInitConfig.AutoSize = true;
-            this.cbIsInitConfig.Location = new System.Drawing.Point(73, 346);
-            this.cbIsInitConfig.Name = "cbIsInitConfig";
-            this.cbIsInitConfig.Size = new System.Drawing.Size(84, 16);
-            this.cbIsInitConfig.TabIndex = 15;
-            this.cbIsInitConfig.Text = "初始化配置";
-            this.cbIsInitConfig.UseVisualStyleBackColor = true;
+            this.cbIsUploadDatabase.AutoSize = true;
+            this.cbIsUploadDatabase.Location = new System.Drawing.Point(73, 351);
+            this.cbIsUploadDatabase.Name = "cbIsUploadDatabase";
+            this.cbIsUploadDatabase.Size = new System.Drawing.Size(84, 16);
+            this.cbIsUploadDatabase.TabIndex = 16;
+            this.cbIsUploadDatabase.Text = "上传数据库";
+            this.cbIsUploadDatabase.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -811,6 +823,7 @@
         private System.Windows.Forms.CheckBox cbIsInspectionPath;
         private System.Windows.Forms.CheckBox cbIsEDMFaceGetPoint;
         private System.Windows.Forms.CheckBox cbIsInitConfig;
+        private System.Windows.Forms.CheckBox cbIsUploadDatabase;
     }
 }
 
