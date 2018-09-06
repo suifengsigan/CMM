@@ -35,12 +35,15 @@ namespace CMM
 
     }
 
+    /// <summary>
+    /// CJ 点的类型，2为基准面上的点，1为基准台的点，3为电极头部的点
+    /// </summary>
     public enum PointType
     {
         UNKOWN = 0,
+        VerticalDatumFace,
         HorizontalDatumFace,
-        HeadFace,
-        VerticalDatumFace
+        HeadFace
     }
 
 
