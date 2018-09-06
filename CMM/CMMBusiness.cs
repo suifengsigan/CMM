@@ -476,12 +476,15 @@ namespace CMM
                     var mRetreatPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.RetreatPoint * pV));
                     lstTrans.Add(Snap.Geom.Transform.CreateTranslation(mRetreatPosition - sRetreatPosition));
                     var fRetreatPosition = new Snap.Position(mRetreatPosition.X, mRetreatPosition.Y, maxZ);
-                    lstTrans.Add(Snap.Geom.Transform.CreateTranslation(fRetreatPosition - mRetreatPosition));
+                    //lstTrans.Add(Snap.Geom.Transform.CreateTranslation(fRetreatPosition - mRetreatPosition));
                     if (config.RetreatPoint != config.EntryPoint)
                     {
                         //逼进拐点
                         var sEntryPosition = sRetreatPosition.Copy(Snap.Geom.Transform.CreateTranslation(config.EntryPoint * pV));
-                        lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sEntryPosition - fRetreatPosition));
+                        if (config.EntryPoint > 0)
+                        {
+                            lstTrans.Add(Snap.Geom.Transform.CreateTranslation(sEntryPosition - mRetreatPosition));
+                        }
                         var fEntryPosition = new Snap.Position(sEntryPosition.X, sEntryPosition.Y, maxZ);
                         inspectionPoints.Add(fEntryPosition);
                         inspectionPoints.Add(sEntryPosition);
