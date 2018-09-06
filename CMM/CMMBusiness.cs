@@ -179,6 +179,7 @@ namespace CMM
             {
                 if (config.IsEDMFaceGetPoint)
                 {
+                    LoopVarValue = 50;
                     if (Snap.Color.ColorIndex(face.Color) != _EactConfigData.EDMColor)
                     {
                         continue;
