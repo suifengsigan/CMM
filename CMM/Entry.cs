@@ -82,7 +82,7 @@ namespace CMM
                 var config = ImportProbePart();
                 Helper.ShowMsg(string.Format("{0}开始取点...", name));
                 var list = CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
-                Helper.ShowMsg(string.Format("{0}取点成功", name));
+                Helper.ShowMsg(string.Format("{0}取点完成", name));
             }
             catch (Exception ex)
             {
