@@ -66,7 +66,7 @@ namespace CMM
             info.headh = Math.Round(elecInfo.HEADPULLUPH,4);
             info.partname = elecInfo.Elec_Name;
             info.cornor = ((int)elec.GetCMMQuadrantType(configData.QuadrantType)) + 1;
-            var MODEL_NUMBER = elec.ElecBody.GetAttrValue(ElecManage.EactElectrodeInfo.EACT_DIE_NO_OF_WORKPIECE);
+            var MODEL_NUMBER = elecInfo.EACT_MODELNO;
             info.mouldname = MODEL_NUMBER;
 
             var trans = Snap.Geom.Transform.CreateTranslation();

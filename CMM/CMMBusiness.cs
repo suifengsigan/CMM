@@ -35,9 +35,10 @@ namespace CMM
         /// </summary>
         public static void WriteCMMFile(ElecManage.Electrode elec, object data)
         {
-            var elecName = elec.GetElectrodeInfo().Elec_Name;
+            var info = elec.GetElectrodeInfo();
+            var elecName = info.Elec_Name;
             Helper.ShowMsg(string.Format("{0}开始上传取点文件...", elecName));
-            var MODEL_NUMBER = elec.ElecBody.GetAttrValue(ElecManage.EactElectrodeInfo.EACT_DIE_NO_OF_WORKPIECE);
+            var MODEL_NUMBER = info.EACT_MODELNO;
             var fileName = string.Format("{0}{1}", elecName, ".txt");
             var result = Path.Combine(_cmmFilePath, fileName);
             if (Directory.Exists(_cmmFilePath))
