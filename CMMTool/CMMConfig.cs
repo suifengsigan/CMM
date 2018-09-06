@@ -79,6 +79,10 @@ namespace CMMTool
         /// 是否初始化配置
         /// </summary>
         public bool IsInitConfig = false;
+        /// <summary>
+        /// 是否上传到数据库
+        /// </summary>
+        public bool IsUploadDataBase = false;
 
     }
 }

@@ -124,13 +124,48 @@ namespace CMM
         /// </summary>
         public static List<PointData> AutoSelPoint(Snap.NX.Body body, CMMConfig config,bool isUploadFile=true)
         {
+            var result = new List<PointData>();
             var electrode = ElecManage.Electrode.GetElectrode(body);
             if (electrode == null)
             {
                 throw new Exception("无法识别该电极！");
             }
             electrode.InitAllFace();
-            return AutoSelPoint(electrode, config, isUploadFile);
+            bool CMMResult = true;
+            string CMMInfo = string.Empty;
+            try
+            {
+                result = AutoSelPoint(electrode, config, isUploadFile);
+            }
+            catch (Exception ex)
+            {
+                CMMResult = false;
+                CMMInfo = ex.Message;
+                if (!config.IsUploadDataBase)
+                {
+                    throw ex;
+                }
+            }
+
+            if (config.IsUploadDataBase)
+            {
+                DataAccess.Model.EACT_AUTOCMM_RECORD record= new DataAccess.Model.EACT_AUTOCMM_RECORD();
+                record.CMMDATE = DateTime.Now;
+                record.CMMINFO = CMMInfo;
+                record.CMMRESULT = CMMResult ? 1 : 2;
+                var info = electrode.GetElectrodeInfo();
+                record.MODELNO = info.EACT_MODELNO;
+                record.PARTNO = info.EACT_PARTNO;
+                record.PARTNAME = info.Elec_Name;
+                Helper.ShowMsg(string.Format("{0}上传取点记录", info.Elec_Name));
+                var data = _EactConfigData;
+                var connStr = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3}", data.DataBaseInfo.IP, data.DataBaseInfo.Name, data.DataBaseInfo.User, data.DataBaseInfo.Pass);
+                DataAccess.Entry.Instance.Init(connStr);
+                DataAccess.BOM.UploadAutoCMMRecord(record);
+                Helper.ShowMsg(string.Format("{0}取点记录上传完成", info.Elec_Name));
+            }
+
+            return result;
         }
 
         /// <summary>
