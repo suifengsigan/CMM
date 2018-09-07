@@ -10,7 +10,6 @@ namespace CMMProgram
 {
     static class Program
     {
-        private static string UGBASEDIRUGII = AppDomain.CurrentDomain.BaseDirectory;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -18,7 +17,6 @@ namespace CMMProgram
         static void Main()
         {
             #region 系统只运行一次
-
             bool bCreatedNew;
             Mutex ltt = new Mutex(false, Path.GetFileNameWithoutExtension(Application.ExecutablePath), out bCreatedNew);
             if (!bCreatedNew)
@@ -28,8 +26,6 @@ namespace CMMProgram
             }
 
             #endregion
-
-            System.IO.Directory.SetCurrentDirectory(UGBASEDIRUGII);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new s());
