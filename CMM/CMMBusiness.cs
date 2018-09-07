@@ -461,6 +461,10 @@ namespace CMM
 
             foreach (var data in ProbeDatas)
             {
+                if (result != null)
+                {
+                    break;
+                }
                 //过滤探球半径的点
                 if (minDistance < data.D)
                 {
@@ -517,6 +521,7 @@ namespace CMM
                     {
                         result = new PointData() { Vector = pV, Position = p, A = ab.A, B = ab.B, Arrow = data.ProbeName };
                         result.PointType = pointType;
+                        break;
                     }
                 }
 
