@@ -63,6 +63,13 @@ namespace CMM
             info.sizex = elecInfo.X;
             info.sizey = elecInfo.Y;
             info.sizez = elecInfo.Z;
+            var box = elec.ElecBody.Box;
+            info.boxMaxX =Math.Round(box.MaxXYZ.X,4);
+            info.boxMaxY =Math.Round(box.MaxXYZ.Y,4);
+            info.boxMaxZ =Math.Round(box.MaxXYZ.Z,4);
+            info.boxMinX =Math.Round(box.MinXYZ.X,4);
+            info.boxMinY =Math.Round(box.MinXYZ.Y,4);
+            info.boxMinZ =Math.Round(box.MinXYZ.Z,4);
             info.headh = Math.Round(elecInfo.HEADPULLUPH,4);
             info.partname = elecInfo.Elec_Name;
             info.cornor = ((int)elec.GetCMMQuadrantType(configData.QuadrantType)) + 1;
@@ -193,6 +200,12 @@ namespace CMM
         /// 电极的Y大小，已基准台底面中心为原点，创建一个包络体，包含电极头部
         /// </summary>
         public double sizey { get; set; }
+        public double boxMinX { get; set; }
+        public double boxMinY { get; set; }
+        public double boxMinZ { get; set; }
+        public double boxMaxX { get; set; }
+        public double boxMaxY { get; set; }
+        public double boxMaxZ { get; set; }
         /// <summary>
         /// 电极的Z大小，已基准台底面中心为原点，创建一个包络体，包含电极头部
         /// </summary>
