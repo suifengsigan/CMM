@@ -83,6 +83,11 @@ namespace CMMTool
         /// 是否上传到数据库
         /// </summary>
         public bool IsUploadDataBase = false;
+        /// <summary>
+        /// 电极最大Z值
+        /// </summary>
+        [NonSerialized]
+        public double ElecMaxZ = 0;
 
     }
 }

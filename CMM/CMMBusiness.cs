@@ -80,7 +80,9 @@ namespace CMM
         {
             var positions = new List<PointData>();
             var tempPositions = new List<PointData>();
-            var elecName = electrode.GetElectrodeInfo().Elec_Name;
+            var elecInfo = electrode.GetElectrodeInfo();
+            config.ElecMaxZ = electrode.ElecBody.Box.MaxZ;
+            var elecName = elecInfo.Elec_Name;
 
             Helper.ShowMsg(string.Format("{0}基准面取点", elecName));
             tempPositions = GetHorizontalDatumFacePositions(electrode, config);
@@ -446,8 +448,7 @@ namespace CMM
         {
             PointData result = null;
             var targetBody = elec.ElecBody;
-            var box = targetBody.Box;
-            var maxZ = box.MaxZ + config.SafeDistance;
+            var maxZ = config.ElecMaxZ + config.SafeDistance;
             var minDistance = Helper.GetPointToEdgeMinDistance(p, curves);
             var ProbeDatas = config.ProbeDatas ?? new List<ProbeData>();
             if (isBaseFace)
