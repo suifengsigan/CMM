@@ -18,6 +18,7 @@ namespace CMMManual
             var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "CMMManualShow");
             try
             {
+                CMM.Entry.ImportProbePart();
                 //导入探针数据
                 var ui = new CMMProgramUI();
                 ui.Show();
@@ -25,6 +26,9 @@ namespace CMMManual
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+            finally
+            {
                 try
                 {
                     Snap.Globals.UndoToMark(mark, null);
