@@ -127,7 +127,7 @@ namespace CMMTool
             var datasource= dataGridViewPSelection.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>();
             if (e.ClickedItem.Text == "新增")
             {
-                datasource.Insert(0, new ProbeData.AB { A = A, B = B });
+                datasource.Add(new ProbeData.AB { A = A, B = B });
                 dataGridViewPSelection.DataSource = datasource.ToList();
             }
             else if (e.ClickedItem.Text == "修改")
