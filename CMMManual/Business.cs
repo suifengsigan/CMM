@@ -193,7 +193,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
         if (body != null)
         {
-            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "AutoSelectPoint");
+            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "ComponentHelper");
             try
             {
                 action();
@@ -201,8 +201,8 @@ public partial class CMMProgramUI:SnapEx.BaseUI
             catch(Exception ex)
             {
                 theUI.NXMessageBox.Show("提示", NXOpen.NXMessageBox.DialogType.Information, ex.Message);
+                Snap.Globals.UndoToMark(mark, null);
             }
-            Snap.Globals.UndoToMark(mark, null);
         }
     }
     
@@ -213,18 +213,19 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         DeleteNodes();
         var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
         var pointDatas = new List<PointData>();
-        ComponentHelper(() =>
+        var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "ComponentHelperAutoSelectPoint");
+        try
         {
-            try { pointDatas = CMMBusiness.AutoSelPoint(_electrode, _config, false); }
-            catch (Exception ex)
-            {
-                pointDatas = new List<PointData>();
-                selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { });
-                _electrode = null;
-                NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage(ex.Message, 1);
-            }
-
-        });
+            pointDatas = CMMBusiness.AutoSelPoint(_electrode, _config, false);
+        }
+        catch (Exception ex)
+        {
+            Snap.Globals.UndoToMark(mark, null);
+            pointDatas = new List<PointData>();
+            selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { });
+            _electrode = null;
+            NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage(ex.Message, 1);
+        }
         UFDisp(pointDatas);
     }
 
