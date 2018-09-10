@@ -24,6 +24,7 @@ namespace CMM
 
         public static string[] Verification()
         {
+            Helper.ShowMsg("正在验证加密锁...");
             var result = new string[] { "1",""};
             string msg = string.Empty;
             if (!License.Entry.Instance.Verification(EactConfig.ConfigData.GetInstance().LicenseType, out msg))
@@ -31,6 +32,7 @@ namespace CMM
                 result[0] = "2";
                 result[1] = msg;
             }
+            Helper.ShowMsg("验证加密锁完成");
             return result;
         }
 
