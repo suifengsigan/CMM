@@ -79,9 +79,10 @@ namespace CMM
             Snap.Globals.WorkPart = snapPart;
             try
             {
+                var body = snapPart.Bodies.FirstOrDefault();
                 var config = ImportProbePart();
                 Helper.ShowMsg(string.Format("{0}开始取点...", name));
-                var list = CMMBusiness.AutoSelPoint(snapPart.Bodies.FirstOrDefault(), config);
+                var list = CMMBusiness.AutoSelPoint(body, config);
                 Helper.ShowMsg(string.Format("{0}取点完成", name));
             }
             catch (Exception ex)
