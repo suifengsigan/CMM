@@ -19,23 +19,19 @@ namespace CMMManual
             try
             {
                 //导入探针数据
-                CMM.Entry.ImportProbePart();
                 var ui = new CMMProgramUI();
                 ui.Show();
             }
             catch (Exception ex)
             {
                 System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
-            finally
-            {
                 try
                 {
                     Snap.Globals.UndoToMark(mark, null);
                 }
-                catch (Exception ex)
+                catch (Exception ex1)
                 {
-                    System.Windows.Forms.MessageBox.Show(ex.Message);
+                    System.Windows.Forms.MessageBox.Show(ex1.Message);
                 }
             }
         }

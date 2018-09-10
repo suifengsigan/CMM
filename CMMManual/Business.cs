@@ -367,6 +367,8 @@ public partial class CMMProgramUI:SnapEx.BaseUI
 
         tree_control0.SetOnSelectHandler(new NXOpen.BlockStyler.Tree.OnSelectCallback(OnSelectcallback));
         _electrode = null;
+
+        CMM.Entry.ImportProbePart();
     }
     public override void DialogShown()
     {
