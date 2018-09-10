@@ -235,8 +235,11 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
         if (block == btnAutoSelectPoint)
         {
-            AutoSelectPoint();
-            RefreshUI();
+            if (body != null)
+            {
+                AutoSelectPoint();
+                RefreshUI();
+            }
         }
         else if (block == selectCuprum)
         {
