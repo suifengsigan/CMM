@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4817A577-0922-40D3-B110-2CDACEDBE0F6}</ProjectGuid>
+    <ProjectGuid>{3D27C9EB-3F85-4005-9583-8C835FE86984}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CMMManual</RootNamespace>
+    <RootNamespace>CMMManualUI</RootNamespace>
     <AssemblyName>CMMManual</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -31,62 +31,40 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ElecManage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AssemblyLoader, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\PHEact\Application\ElecManage.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\BLL\UG\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NXOpen">
-      <HintPath>..\..\..\BLL\UG\UG9.0\NXOpen.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NXOpen.UF">
-      <HintPath>..\..\..\BLL\UG\UG9.0\NXOpen.UF.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NXOpen.Utilities">
-      <HintPath>..\..\..\BLL\UG\UG9.0\NXOpen.Utilities.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NXOpenUI">
-      <HintPath>..\..\..\BLL\UG\UG9.0\NXOpenUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PHSnap">
-      <HintPath>..\..\..\..\PHEact\Application\SnapDll\UG9.0\PHSnap.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SnapEx, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\BLL\UG\SnapEx.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\..\PHEact\Application\AssemblyLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business.cs" />
-    <Compile Include="CMMProgramUI.cs" />
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Unload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CMMTool\CMMTool.csproj">
-      <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
-      <Name>CMMTool</Name>
+    <ProjectReference Include="..\CMMManual\CMMManualUI.csproj">
+      <Project>{4817a577-0922-40d3-b110-2cdacedbe0f6}</Project>
+      <Name>CMMManualUI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CMM\CMM.csproj">
-      <Project>{3549d63a-6ad8-41c2-9527-39d38dc15ea0}</Project>
-      <Name>CMM</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NXSigningResource.res" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
