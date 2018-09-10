@@ -99,8 +99,8 @@ namespace CMMTool
 
                     //AB旋转
                     var requireAbBodies = new List<Snap.NX.Body> { sphere, lengtheningRod, connect, firstPedestal };
-                    var trans=Snap.Geom.Transform.CreateRotation(twoPedestalPosition, Snap.Orientation.Identity.AxisX, ab.A);
-                    trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, Snap.Orientation.Identity.AxisZ, ab.B));
+                    var trans=Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisX, ab.A);
+                    trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisZ, ab.B));
                     foreach (var rBody in requireAbBodies)
                     {
                         rBody.Move(trans);
@@ -122,7 +122,6 @@ namespace CMMTool
                     //创建干涉检查数据
                     var faces = sphere.Faces;
                     var points = new List<Position>();
-                    points.Add(Position.Origin);
                     faces.ToList().ForEach(u =>
                     {
                         var faceBox = u.Box;
@@ -130,10 +129,16 @@ namespace CMMTool
                         points.Add(centerPoint);
                         if (!u.IsHasAttr(EACTPROBESPHEREFACE))
                         {
-                            u.Edges.ToList().ForEach(e => {
+                            u.Edges.ToList().ForEach(e =>
+                            {
                                 points.Add(e.StartPoint);
                                 points.Add(e.EndPoint);
                             });
+                        }
+                        else
+                        {
+                            Snap.NX.Face.Sphere sphereFace = u as Snap.NX.Face.Sphere;
+                            points.Add(sphereFace.Geometry.Center);
                         }
                     });
                     points = points.Distinct().ToList();
