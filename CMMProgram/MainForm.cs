@@ -108,19 +108,8 @@ namespace CMMProgram
 
         private void S_Shown(object sender, EventArgs e)
         {
-            string[] str = (string[])Excute("CMMUI.dll", "Verification");
-            if (str[0] == "2")
-            {
-                System.Windows.Forms.MessageBox.Show(str[1]);
-                Application.Exit();
-            }
-            else
-            {
-                ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
-                    Excute("CMMUI.dll", "InitUG");
-                    Action action = () => {
-                        this.Enabled = true;
-                    };
+            ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
+                Action<Action> invokeAction = (action) => {
                     if (this.InvokeRequired)
                     {
                         this.Invoke(action);
@@ -129,8 +118,27 @@ namespace CMMProgram
                     {
                         action();
                     }
-                }));
-            }
+                };
+                string[] str = (string[])Excute("CMMUI.dll", "Verification");
+                if (str[0] == "2")
+                {
+                    invokeAction(() => {
+                        System.Windows.Forms.MessageBox.Show(str[1]);
+                        Application.Exit();
+                    });
+
+                }
+                else
+                {
+                    Excute("CMMUI.dll", "InitUG");
+                    Action action = () => {
+                        this.Enabled = true;
+                    };
+                    invokeAction(action);
+                }
+
+            }));
+
         }
 
         private void BtnAutoPrt_Click(object sender, EventArgs e)
