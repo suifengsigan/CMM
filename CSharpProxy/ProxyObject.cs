@@ -77,26 +77,31 @@ namespace CSharpProxy
         {
             assembly = Assembly.LoadFile(actionName);
         }
-        public bool Invoke(string fullClassName, string methodName,string newMethodName, params string[] args)
+        public object Invoke(string fullClassName, string methodName,string newMethodName, params string[] args)
         {
+            object result = null;
             if (assembly == null)
-                return false;
+                return result;
             Type tp = assembly.GetType(fullClassName);
             if (tp == null)
-                return false;
+                return result;
             MethodInfo method = tp.GetMethod(methodName);
             if (method == null)
-                return false;
+                return result;
             Object obj = Activator.CreateInstance(tp);
             if (obj is NxOpenHelper)
             {
-                (obj as NxOpenHelper).Main(newMethodName,args);
+                result=(obj as NxOpenHelper).Main(newMethodName,args);
             }
-            else { method.Invoke(obj, args); }
+            else
+            {
+                result=method.Invoke(obj, args);
+            }
             return true;
         }
-        public static void ExecuteMothod(string actionName, string baseDirectory,string methodName= "Main")
+        public static object ExecuteMothod(string actionName, string baseDirectory,string methodName= "Main")
         {
+            object result = null;
             var setup = new AppDomainSetup();
             setup.ApplicationBase = baseDirectory;
             AppDomain _appDomain = AppDomain.CreateDomain(PathCombine(actionName, ".dll"), null, setup);
@@ -108,7 +113,7 @@ namespace CSharpProxy
                 IntPtr hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
                 po.WindowPH = hWnd;
                 po.LoadAssembly(location);
-                po.Invoke(typeof(NxOpenHelper).FullName, "Main", methodName, args);
+                result=po.Invoke(typeof(NxOpenHelper).FullName, "Main", methodName, args);
             }
             catch (Exception ex)
             {
@@ -118,6 +123,7 @@ namespace CSharpProxy
             {
                 AppDomain.Unload(_appDomain);
             }
+            return result;
         }
 
         static string PathCombine(params string[] str)

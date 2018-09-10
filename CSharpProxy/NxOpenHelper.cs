@@ -9,11 +9,11 @@ namespace CSharpProxy
 {
     public class NxOpenHelper
     {
-        public void Main(string newMethodName, string[] args)
+        public object Main(string newMethodName, string[] args)
         {
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            Show(newMethodName, args);
+            return Show(newMethodName, args);
         }
 
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -28,9 +28,10 @@ namespace CSharpProxy
             }
         }
 
-        static void Show(string newMethodName,string[] args)
+        static object Show(string newMethodName,string[] args)
         {
             var arg = args.Count() > 0 ? args.First() : string.Empty;
+            object result = null;
             Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
             try
             {
@@ -56,12 +57,12 @@ namespace CSharpProxy
                                 Type returnType = info.ReturnType;
                                 if ((parameterType.IsArray && (parameterType.GetElementType() == typeof(string))) && (returnType.IsArray && (returnType.GetElementType() == typeof(string))))
                                 {
-                                    var result = (string[])info.Invoke(null, new object[] { args });
+                                    result = (string[])info.Invoke(null, new object[] { args });
                                 }
                             }
                             else if (parameters.Length == 0)
                             {
-                                var result = (string[])info.Invoke(null, null);
+                                result = (string[])info.Invoke(null, null);
                             }
                         }
                     }
@@ -73,6 +74,8 @@ namespace CSharpProxy
                 Console.Write(ex.Message);
                 throw ex;
             }
+
+            return result;
         }
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
