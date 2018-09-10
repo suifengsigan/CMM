@@ -97,7 +97,7 @@ namespace CSharpProxy
             {
                 result=method.Invoke(obj, args);
             }
-            return true;
+            return result;
         }
         public static object ExecuteMothod(string actionName, string baseDirectory,string methodName= "Main")
         {

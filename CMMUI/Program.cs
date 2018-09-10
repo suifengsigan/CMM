@@ -25,6 +25,11 @@ namespace CMMUI
             _InitUG();
         }
 
+        public static string[] Verification()
+        {
+            return CMM.Entry.Verification();
+        }
+
         static void _InitUG()
         {
             CMM.Entry.InitUG();

@@ -22,6 +22,18 @@ namespace CMM
             Helper.ShowMsg("UG完成初始化");
         }
 
+        public static string[] Verification()
+        {
+            var result = new string[] { "1",""};
+            string msg = string.Empty;
+            if (!License.Entry.Instance.Verification(EactConfig.ConfigData.GetInstance().LicenseType, out msg))
+            {
+                result[0] = "2";
+                result[1] = msg;
+            }
+            return result;
+        }
+
         /// <summary>
         /// 自动选点
         /// </summary>

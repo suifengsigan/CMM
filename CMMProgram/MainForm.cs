@@ -65,7 +65,7 @@ namespace CMMProgram
             }
         }
 
-        public void Excute(string action,string methodName="Main")
+        public object Excute(string action,string methodName="Main")
         {
             string actionNameStr = action;
             var programPath = System.Configuration.ConfigurationManager.AppSettings.Get("ProgramPath");
@@ -77,7 +77,7 @@ namespace CMMProgram
                 path = info.FullName;
             }
             actionNameStr = Path.Combine(path, actionNameStr);
-            CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, methodName);
+            return CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, methodName);
         }
 
 
@@ -108,20 +108,29 @@ namespace CMMProgram
 
         private void S_Shown(object sender, EventArgs e)
         {
-            ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
-                Excute("CMMUI.dll", "InitUG");
-                Action action = () => {
-                    this.Enabled = true;
-                };
-                if (this.InvokeRequired)
-                {
-                    this.Invoke(action);
-                }
-                else
-                {
-                    action();
-                }
-            }));
+            string[] str = (string[])Excute("CMMUI.dll", "Verification");
+            if (str[0] == "2")
+            {
+                System.Windows.Forms.MessageBox.Show(str[1]);
+                Application.Exit();
+            }
+            else
+            {
+                ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
+                    Excute("CMMUI.dll", "InitUG");
+                    Action action = () => {
+                        this.Enabled = true;
+                    };
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(action);
+                    }
+                    else
+                    {
+                        action();
+                    }
+                }));
+            }
         }
 
         private void BtnAutoPrt_Click(object sender, EventArgs e)
