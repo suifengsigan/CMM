@@ -220,12 +220,13 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         }
         catch (Exception ex)
         {
-            Snap.Globals.UndoToMark(mark, null);
             pointDatas = new List<PointData>();
             selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { });
             _electrode = null;
             NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage(ex.Message, 1);
         }
+
+        Snap.Globals.UndoToMark(mark, "ComponentHelperAutoSelectPoint");
         UFDisp(pointDatas);
     }
 

@@ -117,7 +117,7 @@ namespace CMM
         /// </summary>
         public static List<Snap.Position> GetFacePoints(Snap.NX.Face face, CMMTool.CMMConfig config,List<Snap.NX.Curve> edges, double max_facet_size = 1)
         {
-            var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "GetFacePointsEx");
+            //var mark = Snap.Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "GetFacePointsEx");
             var positions = new List<Snap.Position>();
             try
             {
@@ -139,7 +139,7 @@ namespace CMM
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Snap.Globals.UndoToMark(mark, null);
+                //Snap.Globals.UndoToMark(mark, null);
             }
 
             return positions;
