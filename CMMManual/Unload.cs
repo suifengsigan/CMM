@@ -29,7 +29,14 @@ namespace CMMManual
             }
             finally
             {
-                Snap.Globals.UndoToMark(mark, null);
+                try
+                {
+                    Snap.Globals.UndoToMark(mark, null);
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.Forms.MessageBox.Show(ex.Message);
+                }
             }
         }
 
