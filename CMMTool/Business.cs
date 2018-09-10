@@ -108,6 +108,7 @@ namespace CMMTool
 
                     var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
                     r.Orphan();
+                    sphere.Move(Snap.Geom.Transform.CreateTranslation(Snap.Position.Origin-Snap.Position.Origin.Copy(trans)));
                     sphere.Name = string.Format("{0}A{1}B{2}", data.ProbeName, ab.A, ab.B);
                     var fileName = Path.Combine(inPath, sphere.Name);
                     if (File.Exists(fileName + ".prt"))
