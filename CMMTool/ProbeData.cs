@@ -40,7 +40,7 @@ namespace CMMTool
             var list = ABList ?? new List<AB>();
             if (list.Where(u => u.A == 0 && u.B == 0).Count() == 0)
             {
-                list.Add(new AB { });
+                list.Insert(0, new AB { });
             }
             return list;
         }
