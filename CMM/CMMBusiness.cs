@@ -229,7 +229,7 @@ namespace CMM
             var result = new List<PointData>();
             var face = elec.BaseFace;
             var edges = face.EdgeCurves.ToList();
-            var positions = Helper.GetFacePoints(face, config, edges);
+            var positions = Helper.GetFacePoints(face, config, edges, config.IsBaseRoundInt);
             var vector = face.GetFaceDirection();
             //边界点
             var p1 = face.Position(face.BoxUV.MinU, face.BoxUV.MinV);
@@ -291,7 +291,7 @@ namespace CMM
             foreach (var face in faces)
             {
                 var edges = face.EdgeCurves.ToList();
-                var positions = Helper.GetFacePoints(face, config, edges);
+                var positions = Helper.GetFacePoints(face, config, edges,config.IsBaseRoundInt);
                 var faceDirection = face.GetFaceDirection();
                 var faceOrientation = new Orientation(faceDirection);
                 var faceMidPoint = face.GetCenterPoint();

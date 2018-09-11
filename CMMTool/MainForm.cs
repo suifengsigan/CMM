@@ -191,6 +191,7 @@ namespace CMMTool
             result.IsEDMFaceGetPoint = cbIsEDMFaceGetPoint.Checked;
             result.IsInitConfig = cbIsInitConfig.Checked;
             result.IsUploadDataBase = cbIsUploadDatabase.Checked;
+            result.IsBaseRoundInt = cbIsBaseRoundInt.Checked;
             CMMConfig.WriteConfig(result);
             if (result.IsInitConfig)
             {
@@ -265,6 +266,7 @@ namespace CMMTool
             cbIsInspectionPath.Checked = result.IsInspectionPath;
             cbIsEDMFaceGetPoint.Checked = result.IsEDMFaceGetPoint;
             cbIsInitConfig.Checked = result.IsInitConfig;
+            cbIsBaseRoundInt.Checked = result.IsBaseRoundInt;
             dataGridView1.DataSource = data;
         }
 

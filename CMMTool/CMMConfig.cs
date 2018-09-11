@@ -88,6 +88,10 @@ namespace CMMTool
         /// </summary>
         [NonSerialized]
         public double ElecMaxZ = 0;
+        /// <summary>
+        /// 基准面和基准台是否取整
+        /// </summary>
+        public bool IsBaseRoundInt = false;
 
     }
 }
