@@ -308,9 +308,10 @@ namespace CMM
                 if (faces.IndexOf(face) == 0)
                 {
                     listZ.Add(VecZ);
-                    ps.ForEach(u => {
-                        listZ.Add(u.Z);
-                    });
+                    //其他测量Z值不取 update ph
+                    //ps.ForEach(u => {
+                    //    listZ.Add(u.Z);
+                    //}); 
                     listZ = listZ.Distinct().ToList();
                 }
             }
@@ -348,10 +349,10 @@ namespace CMM
                             && Helper.AskPointContainment(tItem, twoFace)
                             && Helper.AskPointContainment(tSymmetryPoint, twoFace))
                         {
-                            var p1 = IsIntervene(elec, symmetryPoint, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace);
-                            var p2 = IsIntervene(elec, item, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace);
-                            var p3 = IsIntervene(elec, tItem, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
-                            var p4 = IsIntervene(elec, tSymmetryPoint, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace);
+                            var p1 = IsIntervene(elec, symmetryPoint, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace,true);
+                            var p2 = IsIntervene(elec, item, firstCmmFaceInfo.FaceDirection, firstCmmFaceInfo.Edges, config, PointType.VerticalDatumFace,true);
+                            var p3 = IsIntervene(elec, tItem, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace,true);
+                            var p4 = IsIntervene(elec, tSymmetryPoint, twoCMMFaceInfo.FaceDirection, twoCMMFaceInfo.Edges, config, PointType.VerticalDatumFace,true);
 
                             if (p1 != null && p2 != null && p3 != null && p4 != null)
                             {
