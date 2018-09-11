@@ -20,7 +20,7 @@ namespace CMM
         /// <summary>
         /// 循环变量值
         /// </summary>
-        static int LoopVarValue = 10;
+        static int LoopVarValue = 30;
 
         /// <summary>
         /// 上传CMM文件
@@ -188,7 +188,7 @@ namespace CMM
             {
                 if (config.IsEDMFaceGetPoint)
                 {
-                    LoopVarValue = 50;
+                    LoopVarValue = 100;
                     if (Snap.Color.ColorIndex(face.Color) != _EactConfigData.EDMColor)
                     {
                         continue;
