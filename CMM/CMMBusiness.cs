@@ -230,8 +230,8 @@ namespace CMM
             //边界点
             var p1 = face.Position(face.BoxUV.MinU, face.BoxUV.MinV);
             var p2 = face.Position(face.BoxUV.MinU, face.BoxUV.MaxV);
-            var p3 = face.Position(face.BoxUV.MaxU, face.BoxUV.MinV);
-            var p4 = face.Position(face.BoxUV.MaxU, face.BoxUV.MaxV);
+            var p3 = face.Position(face.BoxUV.MaxU, face.BoxUV.MaxV);
+            var p4 = face.Position(face.BoxUV.MaxU, face.BoxUV.MinV);
             var center = face.GetCenterPoint();
 
             var tempPs = new List<Snap.Position> { p1, p2, p3, p4 };
