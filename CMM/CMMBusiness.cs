@@ -195,7 +195,7 @@ namespace CMM
                     }
                 }
                 var vector = face.GetFaceDirection();
-                var pointVector = vector;
+                
                 var edges = face.EdgeCurves.ToList();
                 var positions = Helper.GetFacePoints(face, config, edges);
                 var boxUV = face.BoxUV;
@@ -206,6 +206,7 @@ namespace CMM
                     if (i < LoopVarValue)
                     {
                         var item = ps[i];
+                        var pointVector = vector;
                         if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
                         {
                             pointVector = face.GetFaceDirectionByPoint(item);
