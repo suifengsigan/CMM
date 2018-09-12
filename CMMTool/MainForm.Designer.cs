@@ -72,6 +72,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cbIsBaseRoundInt = new System.Windows.Forms.CheckBox();
             this.cbIsUploadDatabase = new System.Windows.Forms.CheckBox();
             this.cbIsInitConfig = new System.Windows.Forms.CheckBox();
             this.cbIsEDMFaceGetPoint = new System.Windows.Forms.CheckBox();
@@ -91,7 +92,6 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.cbIsBaseRoundInt = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -545,6 +545,16 @@
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // cbIsBaseRoundInt
+            // 
+            this.cbIsBaseRoundInt.AutoSize = true;
+            this.cbIsBaseRoundInt.Location = new System.Drawing.Point(73, 387);
+            this.cbIsBaseRoundInt.Name = "cbIsBaseRoundInt";
+            this.cbIsBaseRoundInt.Size = new System.Drawing.Size(72, 16);
+            this.cbIsBaseRoundInt.TabIndex = 17;
+            this.cbIsBaseRoundInt.Text = "基准取整";
+            this.cbIsBaseRoundInt.UseVisualStyleBackColor = true;
+            // 
             // cbIsUploadDatabase
             // 
             this.cbIsUploadDatabase.AutoSize = true;
@@ -558,12 +568,13 @@
             // cbIsInitConfig
             // 
             this.cbIsInitConfig.AutoSize = true;
-            this.cbIsInitConfig.Location = new System.Drawing.Point(73, 386);
+            this.cbIsInitConfig.Location = new System.Drawing.Point(650, 567);
             this.cbIsInitConfig.Name = "cbIsInitConfig";
             this.cbIsInitConfig.Size = new System.Drawing.Size(84, 16);
             this.cbIsInitConfig.TabIndex = 15;
             this.cbIsInitConfig.Text = "初始化配置";
             this.cbIsInitConfig.UseVisualStyleBackColor = true;
+            this.cbIsInitConfig.Visible = false;
             // 
             // cbIsEDMFaceGetPoint
             // 
@@ -725,16 +736,6 @@
             this.txtAutoPrtToolDir.Name = "txtAutoPrtToolDir";
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
-            // 
-            // cbIsBaseRoundInt
-            // 
-            this.cbIsBaseRoundInt.AutoSize = true;
-            this.cbIsBaseRoundInt.Location = new System.Drawing.Point(73, 418);
-            this.cbIsBaseRoundInt.Name = "cbIsBaseRoundInt";
-            this.cbIsBaseRoundInt.Size = new System.Drawing.Size(72, 16);
-            this.cbIsBaseRoundInt.TabIndex = 17;
-            this.cbIsBaseRoundInt.Text = "基准取整";
-            this.cbIsBaseRoundInt.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

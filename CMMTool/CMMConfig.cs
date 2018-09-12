@@ -17,6 +17,7 @@ namespace CMMTool
             StepLength = 5;
             SafeDistance = 10;
             VerticalValue = 4;
+            IsInitConfig = System.IO.Path.GetFileNameWithoutExtension(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).ToUpper() == "UGRAF";
         }
 
         public static void WriteConfig(CMMConfig data)
@@ -78,6 +79,7 @@ namespace CMMTool
         /// <summary>
         /// 是否初始化配置
         /// </summary>
+       [NonSerialized]
         public bool IsInitConfig = false;
         /// <summary>
         /// 是否上传到数据库
