@@ -198,8 +198,7 @@ namespace CMM
                 
                 var edges = face.EdgeCurves.ToList();
                 var positions = Helper.GetFacePoints(face, config, edges);
-                var boxUV = face.BoxUV;
-                var faceMidPoint = face.Position((boxUV.MaxU + boxUV.MinU) / 2, (boxUV.MaxV + boxUV.MinV) / 2);
+                var faceMidPoint = face.GetCenterPointEx();
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
                 for (var i = 0; i < ps.Count; i++)
                 {
