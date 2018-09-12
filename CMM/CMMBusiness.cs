@@ -204,17 +204,30 @@ namespace CMM
                 var boxUV = face.BoxUV;
                 var faceMidPoint = face.Position((boxUV.MaxU + boxUV.MinU) / 2, (boxUV.MaxV + boxUV.MinV) / 2);
                 var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
-                for (var i = 0; i < LoopVarValue; i++)
+                for (var i = 0; i < ps.Count; i++)
                 {
-                    if (ps.Count > i)
+                    if (i < LoopVarValue)
                     {
                         var item = ps[i];
-                        var p1 = IsIntervene(elec, item, vector, edges, config, PointType.HeadFace);
+                        var pointVector = vector;
+                        if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
+                        {
+                            pointVector = face.GetFaceDirectionByPoint(item);
+                        }
+                        if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
+                        {
+                            continue;
+                        }
+                        var p1 = IsIntervene(elec, item, pointVector, edges, config, PointType.HeadFace);
                         if (p1 != null)
                         {
                             result.Add(p1);
                             break;
                         }
+                    }
+                    else
+                    {
+                        break;
                     }
                 }
             }
@@ -435,12 +448,17 @@ namespace CMM
 
                 var vector = face.GetFaceDirection();
                 var edges = face.EdgeCurves.ToList();
-                if (double.IsNaN(vector.X) || double.IsNaN(vector.Y) || double.IsNaN(vector.Z))
+                var pointVector = vector;
+                if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
+                {
+                    pointVector = face.GetFaceDirectionByPoint(p);
+                }
+                if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
                 {
                     return null;
                 }
 
-                return IsIntervene(electrode, p, vector, edges, config, PointType.HeadFace);
+                return IsIntervene(electrode, p, pointVector, edges, config, PointType.HeadFace);
             }
             catch (Exception ex)
             {
