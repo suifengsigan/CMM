@@ -196,10 +196,6 @@ namespace CMM
                 }
                 var vector = face.GetFaceDirection();
                 var edges = face.EdgeCurves.ToList();
-                if (double.IsNaN(vector.X) || double.IsNaN(vector.Y) || double.IsNaN(vector.Z))
-                {
-                    continue;
-                }
                 var positions = Helper.GetFacePoints(face, config, edges);
                 var boxUV = face.BoxUV;
                 var faceMidPoint = face.Position((boxUV.MaxU + boxUV.MinU) / 2, (boxUV.MaxV + boxUV.MinV) / 2);
