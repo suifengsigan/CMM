@@ -104,7 +104,7 @@ namespace CSharpProxy
             object result = null;
             var setup = new AppDomainSetup();
             setup.ApplicationBase = baseDirectory;
-            AppDomain _appDomain = AppDomain.CreateDomain(PathCombine(actionName, ".dll"), null, setup);
+            AppDomain _appDomain = AppDomain.CreateDomain(actionName, null, setup);
             try
             {
                 var args = new string[] { actionName };
