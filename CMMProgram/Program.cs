@@ -26,9 +26,40 @@ namespace CMMProgram
             }
 
             #endregion
+
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new s());
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            var assemblyName = new AssemblyName(args.Name);
+            if (assemblyName.Name == "CSharpProxy")
+            {
+                var programPath = System.Configuration.ConfigurationManager.AppSettings.Get("ProgramPath");
+                if (Directory.Exists(programPath))
+                {
+                    DirectoryInfo info = new DirectoryInfo(programPath);
+                    programPath = info.FullName;
+                }
+                var UGMANAGEDPATH = PathCombine(programPath, assemblyName.Name + ".dll");
+                if (File.Exists(UGMANAGEDPATH))
+                {
+                    return Assembly.LoadFile(UGMANAGEDPATH);
+                }
+            }
+            return null; 
+        }
+
+        static string PathCombine(params string[] str)
+        {
+            var result = string.Empty;
+            str.ToList().ForEach(u => {
+                result = Path.Combine(result, u);
+            });
+            return result;
         }
     }
 }
