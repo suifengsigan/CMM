@@ -7,7 +7,7 @@
     <ProjectGuid>{347376C3-4B79-4C48-864B-08BA9A0239BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>CMMUI</RootNamespace>
-    <AssemblyName>CMMUI</AssemblyName>
+    <AssemblyName>CMM</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -72,9 +72,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CMM\CMM.csproj">
+    <ProjectReference Include="..\CMM\CMMUI.csproj">
       <Project>{3549d63a-6ad8-41c2-9527-39d38dc15ea0}</Project>
-      <Name>CMM</Name>
+      <Name>CMMUI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -83,9 +83,9 @@
       <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
       <Name>CMMTool</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CMM\CMM.csproj">
+    <ProjectReference Include="..\CMM\CMMUI.csproj">
       <Project>{3549d63a-6ad8-41c2-9527-39d38dc15ea0}</Project>
-      <Name>CMM</Name>
+      <Name>CMMUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

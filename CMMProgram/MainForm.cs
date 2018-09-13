@@ -119,7 +119,7 @@ namespace CMMProgram
                         action();
                     }
                 };
-                string[] str = (string[])Excute("CMMUI.dll", "Verification");
+                string[] str = (string[])Excute("CMM.dll", "Verification");
                 if (str[0] == "2")
                 {
                     invokeAction(() => {
@@ -130,7 +130,7 @@ namespace CMMProgram
                 }
                 else
                 {
-                    Excute("CMMUI.dll", "InitUG");
+                    Excute("CMM.dll", "InitUG");
                     Action action = () => {
                         this.Enabled = true;
                     };
@@ -184,13 +184,13 @@ namespace CMMProgram
             ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
                 try
                 {
-                    Excute("CMMUI.dll", "CMMInit");
+                    Excute("CMM.dll", "CMMInit");
 
                     while (true)
                     {
                         try
                         {
-                            Excute("CMMUI.dll");
+                            Excute("CMM.dll");
                         }
                         catch (Exception ex)
                         {
