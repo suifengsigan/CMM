@@ -16,6 +16,9 @@ namespace CMMProgram
         [STAThread]
         static void Main()
         {
+            System.Environment.SetEnvironmentVariable("Path", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR"));
+            System.Environment.SetEnvironmentVariable("UGII_ROOT_DIR", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR"));
+            System.Environment.SetEnvironmentVariable("UGII_BASE_DIR", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_BASE_DIR"));
             #region 系统只运行一次
             bool bCreatedNew;
             Mutex ltt = new Mutex(false, Path.GetFileNameWithoutExtension(Application.ExecutablePath), out bCreatedNew);
@@ -43,6 +46,10 @@ namespace CMMProgram
                 {
                     DirectoryInfo info = new DirectoryInfo(programPath);
                     programPath = info.FullName;
+                }
+                else
+                {
+                    programPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, programPath);
                 }
                 var UGMANAGEDPATH = PathCombine(programPath, assemblyName.Name + ".dll");
                 if (File.Exists(UGMANAGEDPATH))

@@ -69,12 +69,18 @@ namespace CMMProgram
         {
             string actionNameStr = action;
             var programPath = System.Configuration.ConfigurationManager.AppSettings.Get("ProgramPath");
-            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CMMProg");
-            path = Path.Combine(path, "Application");
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Application");
             if (Directory.Exists(programPath))
             {
                 DirectoryInfo info = new DirectoryInfo(programPath);
                 path = info.FullName;
+            }
+            else
+            {
+                if (!Directory.Exists(path))
+                {
+                    path = Path.Combine(path, "CMMProg");
+                }
             }
             actionNameStr = Path.Combine(path, actionNameStr);
             return CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, methodName);
