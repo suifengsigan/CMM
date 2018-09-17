@@ -80,12 +80,23 @@ namespace CSharpProxy
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             var assemblyName = new AssemblyName(args.Name);
-            if (assemblyName.Name == "ManagedLoader"|| assemblyName.Name.Contains("NXOpen"))
+            if (assemblyName.Name == "ManagedLoader")
             {
-                string fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-                var dir = System.IO.Path.GetDirectoryName(fileName);
-                var info = new System.IO.DirectoryInfo(dir);
-                var UGII_BASE_DIR = info.Parent.FullName;
+                var UGII_BASE_DIR = string.Empty;
+                var dir = string.Empty;
+                if (System.IO.Path.GetFileNameWithoutExtension(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).ToUpper() == "UGRAF")
+                {
+                    string fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+                    dir = System.IO.Path.GetDirectoryName(fileName);
+                    var info = new System.IO.DirectoryInfo(dir);
+                    UGII_BASE_DIR = info.Parent.FullName;
+                }
+                else
+                {
+                    dir = System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR");
+                    var info = new System.IO.DirectoryInfo(dir);
+                    UGII_BASE_DIR = info.Parent.FullName;
+                }
 
                 var UGMANAGEDPATH = PathCombine(dir, "managed", assemblyName.Name + ".dll");
                 if (!File.Exists(UGMANAGEDPATH))
