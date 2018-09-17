@@ -80,24 +80,7 @@ namespace CSharpProxy
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             var assemblyName = new AssemblyName(args.Name);
-            if (assemblyName.Name == "ManagedLoader")
-            {
-                string fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-                var dir = System.IO.Path.GetDirectoryName(fileName);
-                var info = new System.IO.DirectoryInfo(dir);
-                var UGII_BASE_DIR = info.Parent.FullName;
-
-                var UGMANAGEDPATH = PathCombine(dir, "managed", assemblyName.Name + ".dll");
-                if (!File.Exists(UGMANAGEDPATH))
-                {
-                    UGMANAGEDPATH = PathCombine(UGII_BASE_DIR, "NXBIN", "managed", assemblyName.Name + ".dll");
-                }
-                if (File.Exists(UGMANAGEDPATH))
-                {
-                    return Assembly.LoadFile(UGMANAGEDPATH);
-                }
-            }
-            else if (assemblyName.Name.Contains("NXOpen"))
+            if (assemblyName.Name == "ManagedLoader"|| assemblyName.Name.Contains("NXOpen"))
             {
                 string fileName = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
                 var dir = System.IO.Path.GetDirectoryName(fileName);
