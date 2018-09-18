@@ -281,6 +281,7 @@ namespace CMM
             var faces = elec.BaseSideFaces;
             //获取Z值
             var minZ = elec.BaseFace.Box.MinZ;
+            var baseFaceMidPoint = elec.BaseFace.GetCenterPoint();
             var VecZ = minZ - config.VerticalValue;
             var dicFace = new Dictionary<Snap.NX.Face, CMMFaceInfo>();
             var listZ = new List<double>();
@@ -303,7 +304,6 @@ namespace CMM
                 var positions = Helper.GetFacePoints(face, config, edges,config.IsBaseRoundInt);
                 var faceDirection = face.GetFaceDirection();
                 var faceOrientation = new Orientation(faceDirection);
-                var faceMidPoint = face.GetCenterPoint();
                 var tempP = face.Box.MaxXYZ;
                 //侧面变量Z
                 if (positions.Count > 0)
@@ -317,7 +317,7 @@ namespace CMM
                     }); 
                 }
                 var ps = positions.Where(u => System.Math.Abs(u.Z - minZ) <= config.VerticalValue).OrderByDescending(u => Snap.Position.Distance(tempP, u)).ToList();
-                dicFace.Add(face, new CMMFaceInfo { Positions = ps, Edges = edges, FaceDirection = faceDirection, FaceOrientation = faceOrientation, FaceMidPoint = faceMidPoint });
+                dicFace.Add(face, new CMMFaceInfo { Positions = ps, Edges = edges, FaceDirection = faceDirection, FaceOrientation = faceOrientation });
                 if (faces.IndexOf(face) == 0)
                 {
                     listZ.Add(VecZ);
@@ -344,14 +344,14 @@ namespace CMM
                     var ftDistance = Snap.Compute.Distance(firstFace, twoFace);
                     var ps = firstCmmFaceInfo.Positions
                             .Where(u => (System.Math.Abs(u.Z - z) < SnapEx.Helper.Tolerance))
-                            .OrderByDescending(u => Snap.Position.Distance(u, firstCmmFaceInfo.FaceMidPoint))
+                            .OrderByDescending(u => Snap.Position.Distance(u, baseFaceMidPoint))
                             .ToList();
                     //对称点
                     while (ps.Count > 0)
                     {
                         //获取4个对称点
                         var item = ps.First();
-                        var trans = Snap.Geom.Transform.CreateReflection(new Snap.Geom.Surface.Plane(firstCmmFaceInfo.FaceMidPoint, firstCmmFaceInfo.FaceOrientation.AxisY));
+                        var trans = Snap.Geom.Transform.CreateReflection(new Snap.Geom.Surface.Plane(baseFaceMidPoint, firstCmmFaceInfo.FaceOrientation.AxisY));
                         var symmetryPoint = item.Copy(trans);
                         var trans1 = Snap.Geom.Transform.CreateTranslation(ftDistance * (-firstCmmFaceInfo.FaceDirection));
                         var tItem = item.Copy(trans1);
