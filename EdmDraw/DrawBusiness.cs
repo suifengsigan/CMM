@@ -324,14 +324,13 @@ namespace EdmDraw
             theUFSession.Draw.SetViewScale(draw_view_tag, 0.1);
 
             var allObj = new List<NXOpen.NXObject>();
-            //allObj.AddRange(workPart.Bodies.ToArray().Where(u=>sList.Contains(u.Layer)));
-            //allObj.AddRange(workPart.Points.ToArray().Where(u => sList.Contains(u.Layer)));
-            //allObj.AddRange(workPart.Lines.ToArray().Where(u => sList.Contains(u.Layer)));
-            //allObj.AddRange(workPart.Curves.ToArray().Where(u => sList.Contains(u.Layer)));
-            //allObj.AddRange(workPart.Sketches.ToArray().Where(u => sList.Contains(u.Layer)));
-            //allObj.AddRange(workPart.Axes.ToArray().Where(u => sList.Contains(u.Layer)));
-            //allObj.AddRange(workPart.Datums.ToArray().Where(u => sList.Contains(u.Layer)));
-
+            allObj.AddRange(Enumerable.Select(workPart.Bodies.ToArray().Where(u => sList.Contains(u.Layer)),m=>m as NXObject));
+            allObj.AddRange(Enumerable.Select(workPart.Points.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
+            allObj.AddRange(Enumerable.Select(workPart.Lines.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
+            allObj.AddRange(Enumerable.Select(workPart.Curves.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
+            allObj.AddRange(Enumerable.Select(workPart.Sketches.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
+            allObj.AddRange(Enumerable.Select(workPart.Axes.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
+            allObj.AddRange(Enumerable.Select(workPart.Datums.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
 
             allObj.Distinct().ToList().ForEach(u =>
             {
