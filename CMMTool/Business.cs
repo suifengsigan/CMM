@@ -85,7 +85,7 @@ namespace CMMTool
                     var tmpConnectValue = 2;
                     var tmpConnectHeight = 3;
                     //创建加长杆
-                    var lengtheningRodMaxPosition = new Position(0, 0, data.L - (data.D / 2) - tmpConnectHeight);
+                    var lengtheningRodMaxPosition = new Position(0, 0, data.L- tmpConnectHeight);
                     var lengtheningRod = Snap.Create.Cylinder(new Position(), lengtheningRodMaxPosition, data.d).Body;
                     //创建连接部分
                     var connect = Snap.Create.Cone(lengtheningRodMaxPosition, vec, new Number[] { data.d, data.d + tmpConnectValue }, tmpConnectHeight).Body;

@@ -216,6 +216,10 @@ namespace CMMTool
                 txtD3.Text = probeData.D3.ToString();
                 txtL1.Text = probeData.L1.ToString();
                 txtL2.Text = probeData.L2.ToString();
+                txt_E1.Text = probeData.E1.ToString();
+                txt_ED1.Text = probeData.ED1.ToString();
+                txt_E2.Text = probeData.E2.ToString();
+                txt_ED1.Text = probeData.ED1.ToString();
                 dataGridView2.DataSource = probeData.GetABList().ToList();
             }
         }
@@ -245,6 +249,10 @@ namespace CMMTool
             probeData.D3 = double.Parse(txtD3.Text);
             probeData.L1 = double.Parse(txtL1.Text);
             probeData.L2 = double.Parse(txtL2.Text);
+            probeData.E1 = double.Parse(txt_E1.Text);
+            probeData.ED1 = double.Parse(txt_ED1.Text);
+            probeData.E2 = double.Parse(txt_E2.Text);
+            probeData.ED2 = double.Parse(txt_ED2.Text);
             probeData.ABList = dataGridView2.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>();
             var datasource = dataGridView1.DataSource as List<ProbeData>;
             datasource.Add(probeData);

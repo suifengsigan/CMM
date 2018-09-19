@@ -31,6 +31,10 @@ namespace CMMTool
         public double L2 = 0;
         public double D2 = 0;
         public double D3 = 0;
+        public double E1 = 0;
+        public double ED1 = 0;
+        public double E2 = 0;
+        public double ED2 = 0;
           /// <summary>
         /// 探针角度
         /// </summary>
