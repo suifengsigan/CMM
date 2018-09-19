@@ -92,6 +92,14 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.txt_E1 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txt_ED1 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txt_E2 = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.txt_ED2 = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -245,6 +253,14 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label22);
+            this.tabPage1.Controls.Add(this.txt_ED2);
+            this.tabPage1.Controls.Add(this.label21);
+            this.tabPage1.Controls.Add(this.txt_E2);
+            this.tabPage1.Controls.Add(this.label20);
+            this.tabPage1.Controls.Add(this.txt_ED1);
+            this.tabPage1.Controls.Add(this.label19);
+            this.tabPage1.Controls.Add(this.txt_E1);
             this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.txt_d);
@@ -272,17 +288,17 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(20, 231);
+            this.label5.Location = new System.Drawing.Point(20, 223);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(11, 12);
+            this.label5.Size = new System.Drawing.Size(71, 12);
             this.label5.TabIndex = 9;
-            this.label5.Text = "d";
+            this.label5.Text = "d(测针直径)";
             // 
             // txt_d
             // 
-            this.txt_d.Location = new System.Drawing.Point(92, 228);
+            this.txt_d.Location = new System.Drawing.Point(132, 220);
             this.txt_d.Name = "txt_d";
-            this.txt_d.Size = new System.Drawing.Size(265, 21);
+            this.txt_d.Size = new System.Drawing.Size(225, 21);
             this.txt_d.TabIndex = 8;
             this.txt_d.Text = "3";
             // 
@@ -297,9 +313,9 @@
             // 
             // txtL
             // 
-            this.txtL.Location = new System.Drawing.Point(92, 184);
+            this.txtL.Location = new System.Drawing.Point(132, 184);
             this.txtL.Name = "txtL";
-            this.txtL.Size = new System.Drawing.Size(265, 21);
+            this.txtL.Size = new System.Drawing.Size(225, 21);
             this.txtL.TabIndex = 6;
             this.txtL.Text = "40";
             // 
@@ -308,15 +324,15 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(20, 148);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(11, 12);
+            this.label4.Size = new System.Drawing.Size(71, 12);
             this.label4.TabIndex = 5;
-            this.label4.Text = "D";
+            this.label4.Text = "D(探球直径)";
             // 
             // txtD
             // 
-            this.txtD.Location = new System.Drawing.Point(92, 145);
+            this.txtD.Location = new System.Drawing.Point(132, 145);
             this.txtD.Name = "txtD";
-            this.txtD.Size = new System.Drawing.Size(265, 21);
+            this.txtD.Size = new System.Drawing.Size(225, 21);
             this.txtD.TabIndex = 4;
             this.txtD.Text = "5";
             // 
@@ -737,6 +753,74 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(6, 259);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(95, 12);
+            this.label19.TabIndex = 12;
+            this.label19.Text = "E1(加长杆1长度)";
+            // 
+            // txt_E1
+            // 
+            this.txt_E1.Location = new System.Drawing.Point(132, 256);
+            this.txt_E1.Name = "txt_E1";
+            this.txt_E1.Size = new System.Drawing.Size(225, 21);
+            this.txt_E1.TabIndex = 11;
+            this.txt_E1.Text = "23";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 295);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(101, 12);
+            this.label20.TabIndex = 14;
+            this.label20.Text = "ED1(加长杆1直径)";
+            // 
+            // txt_ED1
+            // 
+            this.txt_ED1.Location = new System.Drawing.Point(132, 292);
+            this.txt_ED1.Name = "txt_ED1";
+            this.txt_ED1.Size = new System.Drawing.Size(225, 21);
+            this.txt_ED1.TabIndex = 13;
+            this.txt_ED1.Text = "3";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(6, 329);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(95, 12);
+            this.label21.TabIndex = 16;
+            this.label21.Text = "E2(加长杆2长度)";
+            // 
+            // txt_E2
+            // 
+            this.txt_E2.Location = new System.Drawing.Point(132, 329);
+            this.txt_E2.Name = "txt_E2";
+            this.txt_E2.Size = new System.Drawing.Size(225, 21);
+            this.txt_E2.TabIndex = 15;
+            this.txt_E2.Text = "35";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(6, 359);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(101, 12);
+            this.label22.TabIndex = 18;
+            this.label22.Text = "ED2(加长杆2直径)";
+            // 
+            // txt_ED2
+            // 
+            this.txt_ED2.Location = new System.Drawing.Point(132, 359);
+            this.txt_ED2.Name = "txt_ED2";
+            this.txt_ED2.Size = new System.Drawing.Size(225, 21);
+            this.txt_ED2.TabIndex = 17;
+            this.txt_ED2.Text = "14";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -838,6 +922,14 @@
         private System.Windows.Forms.CheckBox cbIsInitConfig;
         private System.Windows.Forms.CheckBox cbIsUploadDatabase;
         private System.Windows.Forms.CheckBox cbIsBaseRoundInt;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox txt_ED2;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox txt_E2;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txt_ED1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox txt_E1;
     }
 }
 
