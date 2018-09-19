@@ -441,6 +441,7 @@ namespace EdmDraw
             if (modelingView == null) 
             {
                 var ufSession = NXOpen.UF.UFSession.GetUFSession();
+                SnapEx.Ex.UC6434("", 4, NXOpen.Tag.Null, martrix);
                 //ufSession.View.SetViewMatrix("", 4, NXOpen.Tag.Null, martrix);
 
                 #region createCamera Code
