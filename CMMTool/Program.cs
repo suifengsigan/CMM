@@ -10,7 +10,6 @@ namespace CMMTool
     {
         public static void Main()
         {
-            AssemblyLoader.Entry.InitAssembly();
             new MainForm().ShowDialog();
         }
 
@@ -19,7 +18,6 @@ namespace CMMTool
         /// </summary>
         public static void ShowEactConfig()
         {
-            AssemblyLoader.Entry.InitAssembly();
             _ShowEactConfig();
         }
         

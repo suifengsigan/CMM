@@ -96,9 +96,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CMMTool\CMMTool.csproj">
+    <ProjectReference Include="..\CMMTool\CMMToolUI.csproj">
       <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
-      <Name>CMMTool</Name>
+      <Name>CMMToolUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\CSharpProxy\CSharpProxy.csproj">
       <Project>{89348461-450d-4213-9fc4-c12a64e60a96}</Project>

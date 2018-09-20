@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMUI", "CMM\CMMUI.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMProgram", "CMMProgram\CMMProgram.csproj", "{E3A72961-4CB2-4966-9953-D7058747FBCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMTool", "CMMTool\CMMTool.csproj", "{B82F3151-D1EF-48E0-999A-DC8A5BB724B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMToolUI", "CMMTool\CMMToolUI.csproj", "{B82F3151-D1EF-48E0-999A-DC8A5BB724B4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMM", "CMMUI\CMM.csproj", "{347376C3-4B79-4C48-864B-08BA9A0239BA}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMManual", "CMMManualUI\CMMManual.csproj", "{3D27C9EB-3F85-4005-9583-8C835FE86984}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdmDraw", "EdmDraw\EdmDraw.csproj", "{E02F0664-9BE4-4B87-8BBC-186F46C33E69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMTool", "CMMToolEx\CMMTool.csproj", "{EB2F88D0-4230-4C30-95AF-7EB4CC217A19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{E02F0664-9BE4-4B87-8BBC-186F46C33E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E02F0664-9BE4-4B87-8BBC-186F46C33E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E02F0664-9BE4-4B87-8BBC-186F46C33E69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB2F88D0-4230-4C30-95AF-7EB4CC217A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2F88D0-4230-4C30-95AF-7EB4CC217A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2F88D0-4230-4C30-95AF-7EB4CC217A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2F88D0-4230-4C30-95AF-7EB4CC217A19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
