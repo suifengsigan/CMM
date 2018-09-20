@@ -73,6 +73,8 @@ namespace CMMTool
 
                 foreach (var ab in data.GetABList())
                 {
+                    var requireAbBodies = new List<Snap.NX.Body>();
+                    var requireUnite = new List<Snap.NX.Body>();
                     var mark = Globals.SetUndoMark(Globals.MarkVisibility.Invisible, "CreateProbe");
                     //创建探球
                     var vec = Snap.Orientation.Identity.AxisZ;
@@ -98,7 +100,8 @@ namespace CMMTool
                     var threePedestal = Snap.Create.Cylinder(threePedestalPosition, threePedestalPosition + new Position(0, 0, data.L1), data.D2).Body;
 
                     //AB旋转
-                    var requireAbBodies = new List<Snap.NX.Body> { sphere, lengtheningRod, connect, firstPedestal };
+                    requireAbBodies.AddRange(new List<Snap.NX.Body> { sphere, lengtheningRod, connect, firstPedestal });
+                    requireUnite.AddRange( new List<Snap.NX.Body> { lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal });
                     var trans=Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisX, ab.A);
                     trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisZ, ab.B));
                     foreach (var rBody in requireAbBodies)
@@ -106,7 +109,7 @@ namespace CMMTool
                         rBody.Move(trans);
                     }
 
-                    var r = Snap.Create.Unite(sphere, lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal);
+                    var r = Snap.Create.Unite(sphere, requireUnite.ToArray());
                     r.Orphan();
                     sphere.Move(Snap.Geom.Transform.CreateTranslation(Snap.Position.Origin-Snap.Position.Origin.Copy(trans)));
                     sphere.Name = string.Format("{0}A{1}B{2}", data.ProbeName, ab.A, ab.B);
