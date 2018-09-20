@@ -91,6 +91,26 @@ namespace CMMTool
                     var lengtheningRod = Snap.Create.Cylinder(new Position(), lengtheningRodMaxPosition, data.d).Body;
                     //创建连接部分
                     var connect = Snap.Create.Cone(lengtheningRodMaxPosition, vec, new Number[] { data.d, data.d + tmpConnectValue }, tmpConnectHeight).Body;
+
+                    Action<double,double> action = (e,ed) => 
+                    {
+                        if (e > 0 && ed > 0)
+                        {
+                            lengtheningRodMaxPosition = lengtheningRodMaxPosition + new Position(0, 0, tmpConnectHeight);
+                            //创建加长杆1
+                            var lengtheningRodMaxPosition1 = lengtheningRodMaxPosition + new Position(0, 0, e - tmpConnectHeight);
+                            var lengtheningRod1 = Snap.Create.Cylinder(lengtheningRodMaxPosition, lengtheningRodMaxPosition1, ed).Body;
+                            //创建连接部分1
+                            var connect1 = Snap.Create.Cone(lengtheningRodMaxPosition1, vec, new Number[] { ed, ed + tmpConnectValue }, tmpConnectHeight).Body;
+                            lengtheningRodMaxPosition = lengtheningRodMaxPosition1;
+                            requireAbBodies.AddRange(new List<Snap.NX.Body> { lengtheningRod1, connect1 });
+                            requireUnite.AddRange(new List<Snap.NX.Body> { lengtheningRod1, connect1 });
+                        }
+                    };
+
+                    action(data.E1, data.ED1);
+                    action(data.E2, data.ED2);
+
                     //创建基座
                     var startPedestal = lengtheningRodMaxPosition + new Position(0, 0, tmpConnectHeight);
                     var firstPedestal = Snap.Create.Cylinder(startPedestal, startPedestal + new Position(0, 0, data.L2), data.D3).Body;
