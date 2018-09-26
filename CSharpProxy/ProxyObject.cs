@@ -99,7 +99,7 @@ namespace CSharpProxy
             }
             return result;
         }
-        public static object ExecuteMothod(string actionName, string baseDirectory,string methodName= "Main")
+        public static object ExecuteMothod(string actionName, string baseDirectory, IntPtr hWnd, string methodName= "Main")
         {
             object result = null;
             var setup = new AppDomainSetup();
@@ -110,7 +110,7 @@ namespace CSharpProxy
                 var args = new string[] { actionName };
                 var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
                 ProxyObject po = (ProxyObject)_appDomain.CreateInstanceFromAndUnwrap(location, typeof(ProxyObject).FullName);
-                IntPtr hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+                //IntPtr hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
                 po.WindowPH = hWnd;
                 po.LoadAssembly(location);
                 result=po.Invoke(typeof(NxOpenHelper).FullName, "Main", methodName, args);

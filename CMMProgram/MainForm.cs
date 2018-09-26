@@ -15,6 +15,7 @@ namespace CMMProgram
 {
     public partial class s : Form
     {
+        private IntPtr _windowPtr = IntPtr.Zero;
         /// <summary>
         /// Override the DefWndProc function, in order to receive the message through it.
         /// </summary>
@@ -83,7 +84,7 @@ namespace CMMProgram
                 }
             }
             actionNameStr = Path.Combine(path, actionNameStr);
-            return CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, methodName);
+            return CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, _windowPtr, methodName);
         }
 
 
@@ -114,6 +115,7 @@ namespace CMMProgram
 
         private void S_Shown(object sender, EventArgs e)
         {
+            _windowPtr = this.Handle;
             ThreadPool.QueueUserWorkItem(new WaitCallback((o) => {
                 Action<Action> invokeAction = (action) => {
                     if (this.InvokeRequired)
