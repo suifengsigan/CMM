@@ -26,9 +26,9 @@ namespace CMMTool
             dataGridView1.SelectionChanged += DataGridView1_SelectionChanged;
             this.FormClosing += MainForm_FormClosing;
             dataGridView2.MouseDown += DataGridView2_MouseDown;
-            dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
+            //dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
             dataGridViewExtensionBar.MouseDown += DataGridViewExtensionBar_MouseDown;
-            dataGridViewExtensionBar.SelectionChanged += DataGridViewExtensionBar_SelectionChanged;
+            //dataGridViewExtensionBar.SelectionChanged += DataGridViewExtensionBar_SelectionChanged;
             btnSelAutoCmmDir.Click += BtnSelAutoCmmDir_Click;
             btnAutoPrtToolDir.Click += BtnAutoPrtToolDir_Click;
             dataGridView1.CellMouseDown += DataGridView1_CellMouseDown;
