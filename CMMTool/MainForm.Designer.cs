@@ -43,14 +43,6 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label22 = new System.Windows.Forms.Label();
-            this.txt_ED2 = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.txt_E2 = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.txt_ED1 = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txt_E1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.txt_d = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -70,10 +62,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtD1 = new System.Windows.Forms.TextBox();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtB = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtA = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -99,6 +87,7 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
+            this.dataGridViewExtensionBar = new System.Windows.Forms.DataGridView();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -116,6 +105,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtensionBar)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -251,14 +241,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label22);
-            this.tabPage1.Controls.Add(this.txt_ED2);
-            this.tabPage1.Controls.Add(this.label21);
-            this.tabPage1.Controls.Add(this.txt_E2);
-            this.tabPage1.Controls.Add(this.label20);
-            this.tabPage1.Controls.Add(this.txt_ED1);
-            this.tabPage1.Controls.Add(this.label19);
-            this.tabPage1.Controls.Add(this.txt_E1);
+            this.tabPage1.Controls.Add(this.dataGridViewExtensionBar);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.txt_d);
             this.tabPage1.Controls.Add(this.label3);
@@ -272,74 +255,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "测头数据";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(14, 240);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(101, 12);
-            this.label22.TabIndex = 18;
-            this.label22.Text = "ED2(加长杆2直径)";
-            // 
-            // txt_ED2
-            // 
-            this.txt_ED2.Location = new System.Drawing.Point(140, 240);
-            this.txt_ED2.Name = "txt_ED2";
-            this.txt_ED2.Size = new System.Drawing.Size(225, 21);
-            this.txt_ED2.TabIndex = 17;
-            this.txt_ED2.Text = "14";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(14, 210);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(95, 12);
-            this.label21.TabIndex = 16;
-            this.label21.Text = "E2(加长杆2高度)";
-            // 
-            // txt_E2
-            // 
-            this.txt_E2.Location = new System.Drawing.Point(140, 210);
-            this.txt_E2.Name = "txt_E2";
-            this.txt_E2.Size = new System.Drawing.Size(225, 21);
-            this.txt_E2.TabIndex = 15;
-            this.txt_E2.Text = "35";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(14, 176);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(101, 12);
-            this.label20.TabIndex = 14;
-            this.label20.Text = "ED1(加长杆1直径)";
-            // 
-            // txt_ED1
-            // 
-            this.txt_ED1.Location = new System.Drawing.Point(140, 173);
-            this.txt_ED1.Name = "txt_ED1";
-            this.txt_ED1.Size = new System.Drawing.Size(225, 21);
-            this.txt_ED1.TabIndex = 13;
-            this.txt_ED1.Text = "3";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(14, 140);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(95, 12);
-            this.label19.TabIndex = 12;
-            this.label19.Text = "E1(加长杆1高度)";
-            // 
-            // txt_E1
-            // 
-            this.txt_E1.Location = new System.Drawing.Point(140, 137);
-            this.txt_E1.Name = "txt_E1";
-            this.txt_E1.Size = new System.Drawing.Size(225, 21);
-            this.txt_E1.TabIndex = 11;
-            this.txt_E1.Text = "23";
             // 
             // label5
             // 
@@ -509,10 +424,6 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.label12);
-            this.panel5.Controls.Add(this.txtB);
-            this.panel5.Controls.Add(this.label9);
-            this.panel5.Controls.Add(this.txtA);
             this.panel5.Controls.Add(this.dataGridView2);
             this.panel5.Controls.Add(this.label2);
             this.panel5.Controls.Add(this.label1);
@@ -523,47 +434,13 @@
             this.panel5.Size = new System.Drawing.Size(401, 153);
             this.panel5.TabIndex = 6;
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(249, 42);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(11, 12);
-            this.label12.TabIndex = 15;
-            this.label12.Text = "B";
-            // 
-            // txtB
-            // 
-            this.txtB.Location = new System.Drawing.Point(272, 39);
-            this.txtB.Name = "txtB";
-            this.txtB.Size = new System.Drawing.Size(97, 21);
-            this.txtB.TabIndex = 14;
-            this.txtB.Text = "0";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(102, 42);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(11, 12);
-            this.label9.TabIndex = 13;
-            this.label9.Text = "A";
-            // 
-            // txtA
-            // 
-            this.txtA.Location = new System.Drawing.Point(125, 39);
-            this.txtA.Name = "txtA";
-            this.txtA.Size = new System.Drawing.Size(97, 21);
-            this.txtA.TabIndex = 12;
-            this.txtA.Text = "0";
-            // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(104, 65);
+            this.dataGridView2.Location = new System.Drawing.Point(104, 54);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(265, 82);
+            this.dataGridView2.Size = new System.Drawing.Size(265, 93);
             this.dataGridView2.TabIndex = 4;
             // 
             // label2
@@ -809,6 +686,15 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
+            // dataGridViewExtensionBar
+            // 
+            this.dataGridViewExtensionBar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewExtensionBar.Location = new System.Drawing.Point(15, 154);
+            this.dataGridViewExtensionBar.Name = "dataGridViewExtensionBar";
+            this.dataGridViewExtensionBar.RowTemplate.Height = 23;
+            this.dataGridViewExtensionBar.Size = new System.Drawing.Size(362, 238);
+            this.dataGridViewExtensionBar.TabIndex = 19;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -841,6 +727,7 @@
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtensionBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -881,10 +768,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtB;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtA;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtEntryPoint;
@@ -908,14 +791,7 @@
         private System.Windows.Forms.CheckBox cbIsInitConfig;
         private System.Windows.Forms.CheckBox cbIsUploadDatabase;
         private System.Windows.Forms.CheckBox cbIsBaseRoundInt;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox txt_ED2;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox txt_E2;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox txt_ED1;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox txt_E1;
+        private System.Windows.Forms.DataGridView dataGridViewExtensionBar;
     }
 }
 

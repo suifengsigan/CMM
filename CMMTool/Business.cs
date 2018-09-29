@@ -83,36 +83,42 @@ namespace CMMTool
                     {
                         u.SetStringAttribute(EACTPROBESPHEREFACE, "1");
                     });
-                    //连接部分值
-                    var tmpConnectValue = 2;
-                    var tmpConnectHeight = 3;
                     //创建加长杆
-                    var lengtheningRodMaxPosition = new Position(0, 0, data.L- tmpConnectHeight);
+                    var lengtheningRodMaxPosition = new Position(0, 0, data.L);
                     var lengtheningRod = Snap.Create.Cylinder(new Position(), lengtheningRodMaxPosition, data.d).Body;
-                    //创建连接部分
-                    var connect = Snap.Create.Cone(lengtheningRodMaxPosition, vec, new Number[] { data.d, data.d + tmpConnectValue }, tmpConnectHeight).Body;
+                   
 
-                    Action<double,double> action = (e,ed) => 
+                    Action<double,double,double> action = (h,ed,ed2) => 
                     {
-                        if (e > 0 && ed > 0)
+                        if (h > 0 && ed > 0)
                         {
-                            lengtheningRodMaxPosition = lengtheningRodMaxPosition + new Position(0, 0, tmpConnectHeight);
+                            if (ed2 <= 0)
+                            {
+                                ed2 = ed;
+                            }
                             //创建加长杆1
-                            var lengtheningRodMaxPosition1 = lengtheningRodMaxPosition + new Position(0, 0, e - tmpConnectHeight);
-                            var lengtheningRod1 = Snap.Create.Cylinder(lengtheningRodMaxPosition, lengtheningRodMaxPosition1, ed).Body;
-                            //创建连接部分1
-                            var connect1 = Snap.Create.Cone(lengtheningRodMaxPosition1, vec, new Number[] { ed, ed + tmpConnectValue }, tmpConnectHeight).Body;
-                            lengtheningRodMaxPosition = lengtheningRodMaxPosition1;
-                            requireAbBodies.AddRange(new List<Snap.NX.Body> { lengtheningRod1, connect1 });
-                            requireUnite.AddRange(new List<Snap.NX.Body> { lengtheningRod1, connect1 });
+                            Snap.NX.Body connect1;
+                            if (ed != ed2)
+                            {
+                                connect1 = Snap.Create.Cone(lengtheningRodMaxPosition, vec, new Number[] { ed, ed2 }, h).Body;
+                            }
+                            else
+                            {
+                                connect1 = Snap.Create.Cylinder(lengtheningRodMaxPosition, lengtheningRodMaxPosition + new Position(0, 0, h), h).Body;
+                            }
+                           
+                            lengtheningRodMaxPosition = lengtheningRodMaxPosition + new Position(0, 0, h);
+                            requireAbBodies.AddRange(new List<Snap.NX.Body> { connect1 });
+                            requireUnite.AddRange(new List<Snap.NX.Body> { connect1 });
                         }
                     };
 
-                    action(data.E1, data.ED1);
-                    action(data.E2, data.ED2);
+                    data.ExtensionBarDataList.ForEach(u => {
+                        action(u.Height, u.D1, u.D2);
+                    });
 
                     //创建基座
-                    var startPedestal = lengtheningRodMaxPosition + new Position(0, 0, tmpConnectHeight);
+                    var startPedestal = lengtheningRodMaxPosition;
                     var firstPedestal = Snap.Create.Cylinder(startPedestal, startPedestal + new Position(0, 0, data.L2), data.D3).Body;
                     var twoPedestalPosition = startPedestal + new Position(0, 0, data.L2);
                     var twoPedestal = Snap.Create.Sphere(twoPedestalPosition, data.D1).Body;
@@ -120,8 +126,8 @@ namespace CMMTool
                     var threePedestal = Snap.Create.Cylinder(threePedestalPosition, threePedestalPosition + new Position(0, 0, data.L1), data.D2).Body;
 
                     //AB旋转
-                    requireAbBodies.AddRange(new List<Snap.NX.Body> { sphere, lengtheningRod, connect, firstPedestal });
-                    requireUnite.AddRange( new List<Snap.NX.Body> { lengtheningRod, connect, firstPedestal, twoPedestal, threePedestal });
+                    requireAbBodies.AddRange(new List<Snap.NX.Body> { sphere, lengtheningRod, firstPedestal });
+                    requireUnite.AddRange( new List<Snap.NX.Body> { lengtheningRod, firstPedestal, twoPedestal, threePedestal });
                     var trans=Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisX, ab.A);
                     trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisZ, ab.B));
                     foreach (var rBody in requireAbBodies)

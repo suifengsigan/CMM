@@ -17,6 +17,9 @@ namespace CMMTool
             InitializeComponent();
             InitDgv(dataGridView1);
             InitDgv(dataGridView2);
+            dataGridView2.ReadOnly = false;
+            InitDgv(dataGridViewExtensionBar);
+            dataGridViewExtensionBar.ReadOnly = false;
             this.Load += MainForm_Load;
             btnAdd.Click += BtnAdd_Click;
             btnDelete.Click += BtnDelete_Click;
@@ -24,10 +27,47 @@ namespace CMMTool
             this.FormClosing += MainForm_FormClosing;
             dataGridView2.MouseDown += DataGridView2_MouseDown;
             dataGridView2.SelectionChanged += DataGridView2_SelectionChanged;
+            dataGridViewExtensionBar.MouseDown += DataGridViewExtensionBar_MouseDown;
+            dataGridViewExtensionBar.SelectionChanged += DataGridViewExtensionBar_SelectionChanged;
             btnSelAutoCmmDir.Click += BtnSelAutoCmmDir_Click;
             btnAutoPrtToolDir.Click += BtnAutoPrtToolDir_Click;
             dataGridView1.CellMouseDown += DataGridView1_CellMouseDown;
             dataGridView1.CellPainting += DataGridView1_CellPainting;
+        }
+
+        private void DataGridViewExtensionBar_SelectionChanged(object sender, EventArgs e)
+        {
+            var dataGridViewPSelection = dataGridViewExtensionBar;
+            var list = (dataGridViewPSelection.DataSource as List<ProbeData.ExtensionBarData>) ?? new List<ProbeData.ExtensionBarData>();
+            bool temp = dataGridViewPSelection.CurrentRow != null && dataGridViewPSelection.CurrentRow.Index >= 0 && dataGridViewPSelection.CurrentRow.Index < list.Count;
+            if (temp)
+            {
+                var probeData = dataGridViewPSelection.CurrentRow.DataBoundItem as ProbeData.ExtensionBarData;
+                //txt_Height.Text = probeData.Height.ToString();
+                //txt_ED1.Text = probeData.D1.ToString();
+                //txt_ED2.Text = probeData.D2.ToString();
+            }
+        }
+
+        private void DataGridViewExtensionBar_MouseDown(object sender, MouseEventArgs e)
+        {
+            var dataGridViewPSelection = dataGridViewExtensionBar;
+            if (e.Button == MouseButtons.Right)
+            {
+                _cms = new ContextMenuStrip();
+                _cms.Items.Add("新增加长杆");
+                var list = (dataGridViewPSelection.DataSource as List<ProbeData.ExtensionBarData>) ?? new List<ProbeData.ExtensionBarData>();
+                bool temp = dataGridViewPSelection.CurrentRow != null && dataGridViewPSelection.CurrentRow.Index >= 0 && dataGridViewPSelection.CurrentRow.Index < list.Count;
+                if (temp)
+                {
+                    //_cms.Items.Add("修改加长杆");
+                    _cms.Items.Add("删除加长杆");
+                }
+
+                _cms.ItemClicked += _cms_ItemClicked;
+                //弹出操作菜单
+                _cms.Show(MousePosition.X, MousePosition.Y);
+            }
         }
 
         private void DataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
@@ -93,7 +133,7 @@ namespace CMMTool
                 bool temp = dataGridView2.CurrentRow != null && dataGridView2.CurrentRow.Index >= 0 && dataGridView2.CurrentRow.Index < list.Count;
                 if (temp)
                 {
-                    _cms.Items.Add("修改");
+                    //_cms.Items.Add("修改");
                     _cms.Items.Add("删除");
                 }
               
@@ -110,8 +150,8 @@ namespace CMMTool
             if (temp)
             {
                 var probeData = dataGridView2.CurrentRow.DataBoundItem as ProbeData.AB;
-                txtA.Text = probeData.A.ToString();
-                txtB.Text = probeData.B.ToString();
+                //txtA.Text = probeData.A.ToString();
+                //txtB.Text = probeData.B.ToString();
             }
         }
 
@@ -122,9 +162,17 @@ namespace CMMTool
             var dataGridViewPSelection = dataGridView2;
             double A = 0;
             double B = 0;
-            double.TryParse(txtA.Text, out A);
-            double.TryParse(txtB.Text, out B);
+            //double.TryParse(txtA.Text, out A);
+            //double.TryParse(txtB.Text, out B);
             var datasource= dataGridViewPSelection.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>();
+            double Height = 0;
+            double ED1 = 0;
+            double ED2 = 0;
+            //double.TryParse(txt_Height.Text, out Height);
+            //double.TryParse(txt_ED1.Text, out ED1);
+            //double.TryParse(txt_ED2.Text, out ED2);
+            var dataGridViewPSelection1 = dataGridViewExtensionBar;
+            var datasource1 = dataGridViewPSelection1.DataSource as List<ProbeData.ExtensionBarData> ?? new List<ProbeData.ExtensionBarData>();
             if (e.ClickedItem.Text == "新增")
             {
                 datasource.Add(new ProbeData.AB { A = A, B = B });
@@ -141,6 +189,38 @@ namespace CMMTool
                         obj.B = B;
                     }
                     dataGridViewPSelection.Refresh();
+                }
+            }
+            else if (e.ClickedItem.Text == "新增加长杆")
+            {
+                datasource1.Add(new ProbeData.ExtensionBarData { Height = Height, D1 = ED1, D2 = ED2 });
+                dataGridViewPSelection1.DataSource = datasource1.ToList();
+            }
+            else if (e.ClickedItem.Text == "修改加长杆")
+            {
+                if (dataGridViewPSelection1.CurrentRow != null)
+                {
+                    var obj = dataGridViewPSelection1.CurrentRow.DataBoundItem as ProbeData.ExtensionBarData;
+                    if (obj != null)
+                    {
+                        obj.Height = Height;
+                        obj.D1 = ED1;
+                        obj.D2 = ED2;
+                    }
+                    dataGridViewPSelection.Refresh();
+                }
+            }
+            else if (e.ClickedItem.Text == "删除加长杆")
+            {
+                if (dataGridViewPSelection.CurrentRow != null)
+                {
+                    var obj = dataGridViewPSelection1.CurrentRow.DataBoundItem as ProbeData.ExtensionBarData;
+                    if (obj != null)
+                    {
+                        datasource1.Remove(obj);
+
+                        dataGridViewPSelection1.DataSource = datasource1.ToList();
+                    }
                 }
             }
             else if (e.ClickedItem.Text == "设置基准面测针")
@@ -216,11 +296,8 @@ namespace CMMTool
                 txtD3.Text = probeData.D3.ToString();
                 txtL1.Text = probeData.L1.ToString();
                 txtL2.Text = probeData.L2.ToString();
-                txt_E1.Text = probeData.E1.ToString();
-                txt_ED1.Text = probeData.ED1.ToString();
-                txt_E2.Text = probeData.E2.ToString();
-                txt_ED1.Text = probeData.ED1.ToString();
                 dataGridView2.DataSource = probeData.GetABList().ToList();
+                dataGridViewExtensionBar.DataSource = probeData.ExtensionBarDataList;
             }
         }
 
@@ -249,11 +326,8 @@ namespace CMMTool
             probeData.D3 = double.Parse(txtD3.Text);
             probeData.L1 = double.Parse(txtL1.Text);
             probeData.L2 = double.Parse(txtL2.Text);
-            probeData.E1 = double.Parse(txt_E1.Text);
-            probeData.ED1 = double.Parse(txt_ED1.Text);
-            probeData.E2 = double.Parse(txt_E2.Text);
-            probeData.ED2 = double.Parse(txt_ED2.Text);
             probeData.ABList = dataGridView2.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>();
+            probeData.ExtensionBarDataList= dataGridViewExtensionBar.DataSource as List<ProbeData.ExtensionBarData> ?? new List<ProbeData.ExtensionBarData>();
             var datasource = dataGridView1.DataSource as List<ProbeData>;
             datasource.Add(probeData);
             dataGridView1.DataSource = datasource.ToList();
@@ -305,6 +379,7 @@ namespace CMMTool
                 probeData.L1 = double.Parse(txtL1.Text);
                 probeData.L2 = double.Parse(txtL2.Text);
                 probeData.ABList = dataGridView2.DataSource as List<ProbeData.AB> ?? new List<ProbeData.AB>();
+                probeData.ExtensionBarDataList = dataGridViewExtensionBar.DataSource as List<ProbeData.ExtensionBarData> ?? new List<ProbeData.ExtensionBarData>();
                 var datasource = dataGridView1.DataSource as List<ProbeData>;
                 dataGridView1.DataSource = datasource.ToList();
                 System.Windows.Forms.MessageBox.Show("保存成功");

@@ -31,13 +31,13 @@ namespace CMMTool
         public double L2 = 0;
         public double D2 = 0;
         public double D3 = 0;
-        public double E1 = 0;
-        public double ED1 = 0;
-        public double E2 = 0;
-        public double ED2 = 0;
-          /// <summary>
-        /// 探针角度
+        /// <summary>
+        /// 加长杆数据
         /// </summary>
+        public List<ExtensionBarData> ExtensionBarDataList = new List<ExtensionBarData>();
+          /// <summary>
+          /// 探针角度
+          /// </summary>
         public List<AB> ABList = new List<AB>();
         public List<AB> GetABList()
         {
@@ -141,6 +141,19 @@ namespace CMMTool
         {
             public double A { get; set; }
             public double B { get; set; }
+        }
+
+        /// <summary>
+        /// 加长杆数据
+        /// </summary>
+        public class ExtensionBarData
+        {
+            [DisplayName("高度")]
+            public double Height { get; set; }
+            [DisplayName("底面直径")]
+            public double D1 { get; set; }
+            [DisplayName("顶面直径")]
+            public double D2 { get; set; }
         }
 
         /// <summary>
