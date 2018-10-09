@@ -237,7 +237,7 @@ public partial class EdmDrawUI
         try
         {
             
-            selectCuprum = Snap.UI.Block.SelectObject.GetBlock(theDialog, ""); 
+            selectCuprum = Snap.UI.Block.SelectObject.GetBlock(theDialog, "selectCuprum"); 
             selectSteel = Snap.UI.Block.SelectObject.GetBlock(theDialog, "selectSteel"); 
             txtDrfLayer = Snap.UI.Block.Integer.GetBlock(theDialog, "txtDrfLayer"); 
             selectTemplate0 = Snap.UI.Block.Enumeration.GetBlock(theDialog, "selectTemplate0");
