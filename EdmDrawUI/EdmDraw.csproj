@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E02F0664-9BE4-4B87-8BBC-186F46C33E69}</ProjectGuid>
+    <ProjectGuid>{C800B7D0-104E-4504-AD30-F8E820195A09}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EdmDraw</RootNamespace>
+    <RootNamespace>EdmDrawUI</RootNamespace>
     <AssemblyName>EdmDraw</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -30,32 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ElecManage">
-      <HintPath>..\..\..\..\PHEact\Application\ElecManage.dll</HintPath>
-    </Reference>
-    <Reference Include="NXOpen">
-      <HintPath>..\..\..\BLL\UG\NXOpen.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NXOpen.UF">
-      <HintPath>..\..\..\BLL\UG\NXOpen.UF.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NXOpen.Utilities">
-      <HintPath>..\..\..\BLL\UG\NXOpen.Utilities.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="NXOpenUI">
-      <HintPath>..\..\..\BLL\UG\NXOpenUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="PHSnap">
-      <HintPath>..\..\..\BLL\UG\PHSnap.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="SnapEx">
-      <HintPath>..\..\..\BLL\UG\SnapEx.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="AssemblyLoader">
+      <HintPath>..\..\..\..\PHEact\Application\AssemblyLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -65,10 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Business.cs" />
-    <Compile Include="DrawBusiness.cs" />
-    <Compile Include="EdmDrawUI.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EdmDraw\EdmDrawUI.csproj">
+      <Project>{e02f0664-9be4-4b87-8bbc-186f46c33e69}</Project>
+      <Name>EdmDrawUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
