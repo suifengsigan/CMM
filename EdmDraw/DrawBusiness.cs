@@ -165,6 +165,21 @@ namespace EdmDraw
 
             NXOpen.Tag tabularNote = NXOpen.Tag.Null;
             theUFSession.Draw.CreateTabularNote(ref tableParam, out tabularNote);
+
+            //设置列宽
+            for (int i = 0; i < columnCount; i++)
+            {
+                DraftingHelper.SetTabularColumnWidth(i, columnWidth, tabularNote);
+            }
+
+            DraftingHelper.WriteTabularCell(0, 0, "N", tabularNote);
+            DraftingHelper.WriteTabularCell(0, 1, "X", tabularNote);
+            DraftingHelper.WriteTabularCell(0, 2, "Y", tabularNote);
+            DraftingHelper.WriteTabularCell(0, 3, "Z", tabularNote);
+
+
+            DraftingHelper.UpdateTabularNote(tabularNote);
+
             //var tabnot=theUFSession.Tabnot;
             //var section_prefs = new NXOpen.UF.UFTabnot.SectionPrefs();
             //theUFSession.Tabnot.AskDefaultSectionPrefs(out section_prefs);
