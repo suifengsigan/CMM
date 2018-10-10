@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Business.cs" />
+    <Compile Include="DraftingEnvironmentData.cs" />
     <Compile Include="DrawBusiness.cs" />
     <Compile Include="EdmDrawUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

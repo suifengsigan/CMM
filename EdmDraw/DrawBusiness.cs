@@ -570,6 +570,12 @@ namespace EdmDraw
 
         public static void SetToleranceType(NXOpen.Tag tag)
         {
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            var eData = new DraftingEnvironmentData();
+            ufSession.Drf.AskObjectPreferences(tag, eData.mpi, eData.mpr, out eData.radiusValue, out eData.diameterValue);
+            //设置公差类型 首选项→尺寸→公差→类型
+            eData.mpi[6] = 8;
+            ufSession.Drf.SetObjectPreferences(tag, eData.mpi, eData.mpr, eData.radiusValue, eData.diameterValue);
             //Session theSession = Session.GetSession();
             //Part workPart = theSession.Parts.Work;
             //Part displayPart = theSession.Parts.Display;
