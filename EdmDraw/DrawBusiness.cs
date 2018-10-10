@@ -121,7 +121,51 @@ namespace EdmDraw
         {
             var workPart = Snap.Globals.WorkPart.NXOpenPart;
             var theUFSession = NXOpen.UF.UFSession.GetUFSession();
-            var tabnot=theUFSession.Tabnot;
+            var tableParam = new NXOpen.UF.UFDraw.TabnotParams();
+
+            //设置单元格默认样式
+            NXOpen.UF.UFTabnot.CellPrefs cellPrefs=new NXOpen.UF.UFTabnot.CellPrefs();
+            theUFSession.Tabnot.AskDefaultCellPrefs(out cellPrefs);
+            cellPrefs.nm_fit_methods = 2;
+            cellPrefs.fit_methods[0] = NXOpen.UF.UFTabnot.FitMethod.FitMethodAutoSizeText;//UF_TABNOT_fit_method_auto_size_text;
+            cellPrefs.fit_methods[1] = NXOpen.UF.UFTabnot.FitMethod.FitMethodAutoSizeRow; //UF_TABNOT_fit_method_auto_size_row;
+            cellPrefs.text_density = 3;
+            cellPrefs.zero_display = NXOpen.UF.UFTabnot.ZeroDisplay.ZeroDisplayZero;
+            theUFSession.Tabnot.SetDefaultCellPrefs(ref cellPrefs);
+
+            //创建的表格信息
+            tableParam.position = new double[3];
+            tableParam.position[0] = origin.X;
+            tableParam.position[1] = origin.Y;
+            tableParam.position[2] = origin.Z;
+            tableParam.range_start.row = 1;
+            tableParam.range_start.col = 1;
+            tableParam.range_end.row = rowCount;
+            tableParam.range_end.col = columnCount;
+
+            //标题;
+            tableParam.title_cell.row = 0;
+
+            //标题;
+            tableParam.title_cell.col = 0;
+            tableParam.ug_aspect_ratio = 1.0;
+            tableParam.border_type = NXOpen.UF.UFDraw.TabnotBorderType.TabnotBorderTypeSingle;
+            tableParam.border_width = 0;
+
+            //标题;
+            tableParam.use_title_cell = false;
+
+            //网络线使用;
+            tableParam.use_grid_lines = true;
+            tableParam.use_vert_grid_lines = true;
+            tableParam.use_horiz_grid_lines = true;
+            tableParam.use_row_hdr_grid_lines = true;
+            tableParam.use_col_hdr_grid_lines = true;
+            tableParam.auto_size_cells = false;
+
+            NXOpen.Tag tabularNote = NXOpen.Tag.Null;
+            theUFSession.Draw.CreateTabularNote(ref tableParam, out tabularNote);
+            //var tabnot=theUFSession.Tabnot;
             //var section_prefs = new NXOpen.UF.UFTabnot.SectionPrefs();
             //theUFSession.Tabnot.AskDefaultSectionPrefs(out section_prefs);
             //section_prefs.border_width = 60;
