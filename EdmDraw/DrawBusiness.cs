@@ -656,43 +656,5 @@ namespace EdmDraw
 
             ufSession.Drf.SetPreferences(mpi, mpr, radius_value, diameter_value);  
         }
-
-#if !NET35
-        /// <summary>
-        /// 制图首选项初始化
-        /// </summary>
-        /// <param name="font">字体</param>
-        /// <param name="size">高度</param>
-        /// <param name="aspectRatio">宽高比</param>
-        /// <param name="nxTextCharacterSpaceFactor">NX字体间隙因子</param>
-        public static void InitPreferences(int font, double size, double aspectRatio, double nxTextCharacterSpaceFactor)
-        {
-           
-            //var theSession = NXOpen.Session.GetSession();
-            //var workPart = theSession.Parts.Work;
-            //NXOpen.Drafting.PreferencesBuilder preferencesBuilder1;
-            //preferencesBuilder1 = workPart.SettingsManager.CreatePreferencesBuilder();
-            //preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralTextFont = font;  //字体
-
-            ////preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralTextColor = workPart.Colors.Find("Red");//字体颜色
-
-            ////preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralTextLineWidth = NXOpen.Annotations.LineWidth.Thick;//字体样式
-
-            //preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralTextSize = size;//高度
-
-            //preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralNxTextCharacterSpaceFactor = nxTextCharacterSpaceFactor;//NX字体间隙因子
-
-            ////preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralStandardTextCharacterSpaceFactor = 0.1;//标准字体间隙因子
-
-            //preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralTextAspectRatio = aspectRatio;//宽高比
-
-            ////preferencesBuilder1.AnnotationStyle.LetteringStyle.GeneralTextLineSpaceFactor = 3.0;//行间隙因子
-
-            ////preferencesBuilder1.AnnotationStyle.LetteringStyle.Angle = 0.1;//文字角度
-            //preferencesBuilder1.Commit();
-            //preferencesBuilder1.Destroy();
-           
-        }
-#endif
     }
 }
