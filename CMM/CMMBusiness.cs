@@ -198,12 +198,13 @@ namespace CMM
                 
                 var edges = face.EdgeCurves.ToList();
                 var positions = Helper.GetFacePoints(face, config, edges);
-                var faceBox3d = face.BoxEx();
-                var faceMidPoint = new Snap.Position((faceBox3d.MaxX + faceBox3d.MinX) / 2, (faceBox3d.MaxY + faceBox3d.MinY) / 2, (faceBox3d.MaxZ + faceBox3d.MinZ) / 2);
-                var faceLength = System.Math.Abs(faceBox3d.MaxX - faceBox3d.MinX);
-                var faceWidth = System.Math.Abs(faceBox3d.MaxY - faceBox3d.MinY);
-                var faceHeight = System.Math.Abs(faceBox3d.MaxZ - faceBox3d.MinZ);
-                var faceArea = (faceLength * faceWidth + faceLength * faceHeight + faceWidth * faceHeight) * 2;
+                var faceMidPoint = face.GetCenterPointEx();
+                var faceArea = 0.0;
+
+                if (config.IsMinGetPointArea || config.IsGetTowPointArea)
+                {
+                    faceArea = face.Area;
+                }
 
                 //面积小于某值的不取点（可配置）
                 if (config.IsMinGetPointArea)
