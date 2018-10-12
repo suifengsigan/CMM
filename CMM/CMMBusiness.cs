@@ -167,14 +167,19 @@ namespace CMM
                 record.PARTNO = info.EACT_PARTNO;
                 record.PARTNAME = info.Elec_Name;
                 Helper.ShowMsg(string.Format("{0}上传取点记录", info.Elec_Name));
-                var data = _EactConfigData;
-                var connStr = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3}", data.DataBaseInfo.IP, data.DataBaseInfo.Name, data.DataBaseInfo.User, data.DataBaseInfo.Pass);
-                DataAccess.Entry.Instance.Init(connStr);
+                InitDatabase();
                 DataAccess.BOM.UploadAutoCMMRecord(record);
                 Helper.ShowMsg(string.Format("{0}取点记录上传完成", info.Elec_Name));
             }
 
             return result;
+        }
+
+        public static void InitDatabase()
+        {
+            var data = _EactConfigData;
+            var connStr = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3}", data.DataBaseInfo.IP, data.DataBaseInfo.Name, data.DataBaseInfo.User, data.DataBaseInfo.Pass);
+            DataAccess.Entry.Instance.Init(connStr);
         }
 
         /// <summary>

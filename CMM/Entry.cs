@@ -42,7 +42,21 @@ namespace CMM
         public static void AutoSelPoint()
         {
             Helper.ShowMsg("正在匹配图档...");
-            var path = CMMTool.CMMConfig.GetInstance().AutoCmmDir;
+            var cmmConfig = CMMTool.CMMConfig.GetInstance();
+            if (cmmConfig.IsUploadDataBase)
+            {
+                try
+                {
+                    CMMBusiness.InitDatabase();
+                    DataAccess.BOM.IsConnect();
+                }
+                catch (Exception ex)
+                {
+                    Helper.ShowMsg("数据库连接异常：" + ex.Message);
+                    return;
+                }
+            }
+            var path = cmmConfig.AutoCmmDir;
             var fileName = EactTool.FileHelper.FindFile(path);
             if (!string.IsNullOrEmpty(fileName))
             {
