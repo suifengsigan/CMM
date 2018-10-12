@@ -198,33 +198,72 @@ namespace CMM
                 
                 var edges = face.EdgeCurves.ToList();
                 var positions = Helper.GetFacePoints(face, config, edges);
-                var faceMidPoint = face.GetCenterPointEx();
-                var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
-                for (var i = 0; i < ps.Count; i++)
+                var faceBox3d = face.BoxEx();
+                var faceMidPoint = new Snap.Position((faceBox3d.MaxX + faceBox3d.MinX) / 2, (faceBox3d.MaxY + faceBox3d.MinY) / 2, (faceBox3d.MaxZ + faceBox3d.MinZ) / 2);
+                var faceLength = System.Math.Abs(faceBox3d.MaxX - faceBox3d.MinX);
+                var faceWidth = System.Math.Abs(faceBox3d.MaxY - faceBox3d.MinY);
+                var faceHeight = System.Math.Abs(faceBox3d.MaxZ - faceBox3d.MinZ);
+                var faceArea = (faceLength * faceWidth + faceLength * faceHeight + faceWidth * faceHeight) * 2;
+
+                //面积小于某值的不取点（可配置）
+                if (config.IsMinGetPointArea)
                 {
-                    if (i < LoopVarValue)
+                    if (faceArea < config.MinGetPointArea)
                     {
-                        var item = ps[i];
-                        var pointVector = vector;
-                        if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
+                        continue;
+                    }
+                }
+
+                Action<List<Position>> action = (p) =>
+                {
+                    for (var i = 0; i < p.Count; i++)
+                    {
+                        if (i < LoopVarValue)
                         {
-                            pointVector = face.GetFaceDirectionByPoint(item);
+                            var item = p[i];
+                            var pointVector = vector;
+                            if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
+                            {
+                                pointVector = face.GetFaceDirectionByPoint(item);
+                            }
+                            if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
+                            {
+                                continue;
+                            }
+                            var p1 = IsIntervene(elec, item, pointVector, edges, config, PointType.HeadFace);
+                            if (p1 != null)
+                            {
+                                result.Add(p1);
+                                break;
+                            }
                         }
-                        if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
+                        else
                         {
-                            continue;
-                        }
-                        var p1 = IsIntervene(elec, item, pointVector, edges, config, PointType.HeadFace);
-                        if (p1 != null)
-                        {
-                            result.Add(p1);
                             break;
                         }
                     }
-                    else
-                    {
-                        break;
-                    }
+                };
+
+                //面积超过以上配置的某个值的，取靠近面的UV百分比为25 % 及75 % 的两个点（一个面最多两个点）
+                if (config.IsGetTowPointArea && faceArea > config.GetTowPointArea)
+                {
+                    var faceBoxUV = face.BoxUV;
+                    var faceU = faceBoxUV.MaxU - faceBoxUV.MinU;
+                    var faceV = faceBoxUV.MaxV - faceBoxUV.MinV;
+                    var firstUV = face.Position(faceBoxUV.MinU + faceU / 4, (faceBoxUV.MaxV + faceBoxUV.MinV) / 2);
+                    var twoUV = face.Position(faceBoxUV.MinU + faceU * 3 / 4, (faceBoxUV.MaxV + faceBoxUV.MinV) / 2);
+                    var centerUV = face.Position((faceBoxUV.MaxU + faceBoxUV.MinU) / 2, (faceBoxUV.MaxV + faceBoxUV.MinV) / 2);
+                    var fDistance = Snap.Position.Distance(firstUV, centerUV);
+                    var tDistance = Snap.Position.Distance(twoUV, centerUV);
+                    var ps1 = positions.Where(u => Snap.Position.Distance(firstUV, u) < fDistance).OrderBy(u => Snap.Position.Distance(firstUV, u)).ToList();
+                    var ps2 = positions.Where(u => Snap.Position.Distance(twoUV, u) < tDistance && !ps1.Contains(u)).OrderBy(u => Snap.Position.Distance(twoUV, u)).ToList();
+                    action(ps1);
+                    action(ps2);
+                }
+                else
+                {
+                    var ps = positions.OrderBy(u => Snap.Position.Distance(faceMidPoint, u)).ToList();
+                    action(ps);
                 }
             }
             return result;

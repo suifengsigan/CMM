@@ -272,6 +272,10 @@ namespace CMMTool
             result.IsInitConfig = cbIsInitConfig.Checked;
             result.IsUploadDataBase = cbIsUploadDatabase.Checked;
             result.IsBaseRoundInt = cbIsBaseRoundInt.Checked;
+            result.IsGetTowPointArea = cbIsGetTowPointArea.Checked;
+            result.IsMinGetPointArea = cbIsMinGetPointArea.Checked;
+            result.GetTowPointArea = double.Parse(txtGetTowPointArea.Text);
+            result.MinGetPointArea = double.Parse(txtMinGetPointArea.Text);
             CMMConfig.WriteConfig(result);
             if (result.IsInitConfig)
             {
@@ -349,6 +353,10 @@ namespace CMMTool
             cbIsEDMFaceGetPoint.Checked = result.IsEDMFaceGetPoint;
             cbIsInitConfig.Checked = result.IsInitConfig;
             cbIsBaseRoundInt.Checked = result.IsBaseRoundInt;
+            cbIsGetTowPointArea.Checked = result.IsGetTowPointArea;
+            cbIsMinGetPointArea.Checked = result.IsMinGetPointArea;
+            txtGetTowPointArea.Text = result.GetTowPointArea.ToString();
+            txtMinGetPointArea.Text = result.MinGetPointArea.ToString();
             dataGridView1.DataSource = data;
         }
 

@@ -43,6 +43,7 @@
             this.panel6 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataGridViewExtensionBar = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
             this.txt_d = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -87,7 +88,10 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.dataGridViewExtensionBar = new System.Windows.Forms.DataGridView();
+            this.cbIsGetTowPointArea = new System.Windows.Forms.CheckBox();
+            this.cbIsMinGetPointArea = new System.Windows.Forms.CheckBox();
+            this.txtMinGetPointArea = new System.Windows.Forms.TextBox();
+            this.txtGetTowPointArea = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -99,13 +103,13 @@
             this.panel6.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtensionBar)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtensionBar)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -255,6 +259,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "测头数据";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridViewExtensionBar
+            // 
+            this.dataGridViewExtensionBar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewExtensionBar.Location = new System.Drawing.Point(15, 154);
+            this.dataGridViewExtensionBar.Name = "dataGridViewExtensionBar";
+            this.dataGridViewExtensionBar.RowTemplate.Height = 23;
+            this.dataGridViewExtensionBar.Size = new System.Drawing.Size(362, 238);
+            this.dataGridViewExtensionBar.TabIndex = 19;
             // 
             // label5
             // 
@@ -470,6 +483,10 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.txtGetTowPointArea);
+            this.tabPage4.Controls.Add(this.txtMinGetPointArea);
+            this.tabPage4.Controls.Add(this.cbIsGetTowPointArea);
+            this.tabPage4.Controls.Add(this.cbIsMinGetPointArea);
             this.tabPage4.Controls.Add(this.cbIsBaseRoundInt);
             this.tabPage4.Controls.Add(this.cbIsUploadDatabase);
             this.tabPage4.Controls.Add(this.cbIsInitConfig);
@@ -686,14 +703,41 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // dataGridViewExtensionBar
+            // cbIsGetTowPointArea
             // 
-            this.dataGridViewExtensionBar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewExtensionBar.Location = new System.Drawing.Point(15, 154);
-            this.dataGridViewExtensionBar.Name = "dataGridViewExtensionBar";
-            this.dataGridViewExtensionBar.RowTemplate.Height = 23;
-            this.dataGridViewExtensionBar.Size = new System.Drawing.Size(362, 238);
-            this.dataGridViewExtensionBar.TabIndex = 19;
+            this.cbIsGetTowPointArea.AutoSize = true;
+            this.cbIsGetTowPointArea.Location = new System.Drawing.Point(73, 460);
+            this.cbIsGetTowPointArea.Name = "cbIsGetTowPointArea";
+            this.cbIsGetTowPointArea.Size = new System.Drawing.Size(528, 16);
+            this.cbIsGetTowPointArea.TabIndex = 19;
+            this.cbIsGetTowPointArea.Text = "面积超过以上配置的某个值的，取靠近面的UV百分比为25%及75%的两个点（一个面最多两个点）";
+            this.cbIsGetTowPointArea.UseVisualStyleBackColor = true;
+            // 
+            // cbIsMinGetPointArea
+            // 
+            this.cbIsMinGetPointArea.AutoSize = true;
+            this.cbIsMinGetPointArea.Location = new System.Drawing.Point(73, 424);
+            this.cbIsMinGetPointArea.Name = "cbIsMinGetPointArea";
+            this.cbIsMinGetPointArea.Size = new System.Drawing.Size(144, 16);
+            this.cbIsMinGetPointArea.TabIndex = 18;
+            this.cbIsMinGetPointArea.Text = "面积小于某值的不取点";
+            this.cbIsMinGetPointArea.UseVisualStyleBackColor = true;
+            // 
+            // txtMinGetPointArea
+            // 
+            this.txtMinGetPointArea.Location = new System.Drawing.Point(240, 422);
+            this.txtMinGetPointArea.Name = "txtMinGetPointArea";
+            this.txtMinGetPointArea.Size = new System.Drawing.Size(46, 21);
+            this.txtMinGetPointArea.TabIndex = 20;
+            this.txtMinGetPointArea.Text = "3";
+            // 
+            // txtGetTowPointArea
+            // 
+            this.txtGetTowPointArea.Location = new System.Drawing.Point(607, 455);
+            this.txtGetTowPointArea.Name = "txtGetTowPointArea";
+            this.txtGetTowPointArea.Size = new System.Drawing.Size(46, 21);
+            this.txtGetTowPointArea.TabIndex = 21;
+            this.txtGetTowPointArea.Text = "10";
             // 
             // MainForm
             // 
@@ -717,6 +761,7 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtensionBar)).EndInit();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -727,7 +772,6 @@
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewExtensionBar)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -792,6 +836,10 @@
         private System.Windows.Forms.CheckBox cbIsUploadDatabase;
         private System.Windows.Forms.CheckBox cbIsBaseRoundInt;
         private System.Windows.Forms.DataGridView dataGridViewExtensionBar;
+        private System.Windows.Forms.TextBox txtMinGetPointArea;
+        private System.Windows.Forms.CheckBox cbIsGetTowPointArea;
+        private System.Windows.Forms.CheckBox cbIsMinGetPointArea;
+        private System.Windows.Forms.TextBox txtGetTowPointArea;
     }
 }
 

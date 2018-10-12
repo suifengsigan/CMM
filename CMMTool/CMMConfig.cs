@@ -94,6 +94,9 @@ namespace CMMTool
         /// 基准面和基准台是否取整
         /// </summary>
         public bool IsBaseRoundInt = false;
-
+        public bool IsMinGetPointArea = false;
+        public double MinGetPointArea = 3;
+        public bool IsGetTowPointArea = false;
+        public double GetTowPointArea = 10;
     }
 }
