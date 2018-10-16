@@ -17,7 +17,7 @@ namespace EdmDraw
         /// <summary>
         /// 字体
         /// </summary>
-        public int TextMpi88;
+        public string TextMpi88;
         /// <summary>
         /// 字大小
         /// </summary>
@@ -37,7 +37,7 @@ namespace EdmDraw
         /// <summary>
         /// 尺寸字体
         /// </summary>
-        public int DimensionMpi85;
+        public string DimensionMpi85;
         /// <summary>
         /// 尺寸小数点位数
         /// </summary>
