@@ -28,7 +28,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         snapSelectCuprum.SetFilter(Snap.NX.ObjectTypes.Type.Body, Snap.NX.ObjectTypes.SubType.BodySolid);
 
         var members = new List<string>();
-        var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template");
+        var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EdmTemplate");
         if (System.IO.Directory.Exists(path))
         {
             _paramFileList = System.IO.Directory.GetFiles(path).ToList();
