@@ -8,13 +8,13 @@ using System.Windows.Forms;
 
 namespace CMMProgram
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             System.Environment.SetEnvironmentVariable("Path", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR"));
             System.Environment.SetEnvironmentVariable("UGII_ROOT_DIR", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR"));

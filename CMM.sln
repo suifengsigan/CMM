@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMTool", "CMMToolEx\CMMToo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdmDraw", "EdmDrawUI\EdmDraw.csproj", "{C800B7D0-104E-4504-AD30-F8E820195A09}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMProgramX86", "CMMProgramX86\CMMProgramX86.csproj", "{0CBAA42F-3B52-476A-87A8-3124053D0EA7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{C800B7D0-104E-4504-AD30-F8E820195A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C800B7D0-104E-4504-AD30-F8E820195A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C800B7D0-104E-4504-AD30-F8E820195A09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CBAA42F-3B52-476A-87A8-3124053D0EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CBAA42F-3B52-476A-87A8-3124053D0EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CBAA42F-3B52-476A-87A8-3124053D0EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CBAA42F-3B52-476A-87A8-3124053D0EA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
