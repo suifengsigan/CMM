@@ -66,5 +66,102 @@ namespace EdmDraw
         /// Edm图纸模板
         /// </summary>
         public string EdmTemplate;
+        /// <summary>
+        /// 放电图纸视图
+        /// </summary>
+        public List<DraftViewLocation> DraftViewLocations = new List<DraftViewLocation>();
+        /// <summary>
+        /// 电极信息
+        /// </summary>
+        public List<PropertyInfo> PropertyInfos = new List<PropertyInfo>();
+
+        /// <summary>
+        /// 表格信息
+        /// </summary>
+        public class TableInfo
+        {
+            /// <summary>
+            /// 位置X
+            /// </summary>
+            public double locationX { get; set; }
+            /// <summary>
+            /// 位置Y
+            /// </summary>
+            public double locationY { get; set; }
+            /// <summary>
+            /// 列宽
+            /// </summary>
+            public double ColumnWidth { get; set; }
+            /// <summary>
+            /// 行高
+            /// </summary>
+            public double RowHeight { get; set; }
+            /// <summary>
+            /// 列信息
+            /// </summary>
+            public List<ColumnInfo> ColumnInfos = new List<ColumnInfo>();
+        }
+
+        /// <summary>
+        /// 表格列信息
+        /// </summary>
+        public class ColumnInfo
+        {
+            /// <summary>
+            /// 显示名称
+            /// </summary>
+            public string DisplayName { get;set; }
+            public string Ex { get; set; }
+        }
+
+        /// <summary>
+        /// 放电图纸视图位置
+        /// </summary>
+        public class DraftViewLocation
+        {
+            /// <summary>
+            /// 视图类型
+            /// </summary>
+            public string ViewType { get; set; }
+            /// <summary>
+            /// 长
+            /// </summary>
+            public double SizeX { get; set; }
+            /// <summary>
+            /// 宽
+            /// </summary>
+            public double SizeY { get; set; }
+            /// <summary>
+            /// 位置X
+            /// </summary>
+            public double LocationX { get; set; }
+            /// <summary>
+            /// 位置Y
+            /// </summary>
+            public double LocationY { get; set; }
+        }
+
+        /// <summary>
+        /// 属性信息
+        /// </summary>
+        public class PropertyInfo
+        {
+            /// <summary>
+            /// 显示名称(特性)
+            /// </summary>
+            public string DisplayName { get; set; }
+            /// <summary>
+            /// 位置X
+            /// </summary>
+            public double LocationX { get; set; }
+            /// <summary>
+            /// 位置Y
+            /// </summary>
+            public double LocationY { get; set; }
+            /// <summary>
+            /// 拓展字段（用于判断是否是勾选）
+            /// </summary>
+            public string Ex { get; set; }
+        }
     }
 }
