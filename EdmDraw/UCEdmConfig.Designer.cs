@@ -30,23 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label16 = new System.Windows.Forms.Label();
-            this.txtSafeDistance = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.txtVerticalValue = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.txtRetreatPoint = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtEntryPoint = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cbIsEDMFaceGetPoint = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -55,22 +40,37 @@
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
-            this.cbIsEDMFaceGetPoint = new System.Windows.Forms.CheckBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.cbbFtpPathType = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtSafeDistance = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.txtVerticalValue = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtRetreatPoint = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtEntryPoint = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.cbbEdmTemplate = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -79,12 +79,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel4.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -136,161 +136,25 @@
             this.tabPage1.Text = "图纸设置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // checkBox1
             // 
-            this.tabPage2.Controls.Add(this.cbbFtpPathType);
-            this.tabPage2.Controls.Add(this.label18);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(924, 652);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "放电图纸基本设置";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(72, 30);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(96, 16);
+            this.checkBox1.TabIndex = 35;
+            this.checkBox1.Text = "使用系统参数";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // label16
+            // cbIsEDMFaceGetPoint
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(70, 202);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(41, 12);
-            this.label16.TabIndex = 17;
-            this.label16.Text = "纵横比";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtSafeDistance
-            // 
-            this.txtSafeDistance.Location = new System.Drawing.Point(192, 199);
-            this.txtSafeDistance.Name = "txtSafeDistance";
-            this.txtSafeDistance.Size = new System.Drawing.Size(285, 21);
-            this.txtSafeDistance.TabIndex = 16;
-            this.txtSafeDistance.Text = "10";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(70, 156);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(41, 12);
-            this.label15.TabIndex = 15;
-            this.label15.Text = "字间距";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtVerticalValue
-            // 
-            this.txtVerticalValue.Location = new System.Drawing.Point(192, 153);
-            this.txtVerticalValue.Name = "txtVerticalValue";
-            this.txtVerticalValue.Size = new System.Drawing.Size(285, 21);
-            this.txtVerticalValue.TabIndex = 14;
-            this.txtVerticalValue.Text = "3";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(70, 110);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(41, 12);
-            this.label14.TabIndex = 13;
-            this.label14.Text = "字大小";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtRetreatPoint
-            // 
-            this.txtRetreatPoint.Location = new System.Drawing.Point(192, 110);
-            this.txtRetreatPoint.Name = "txtRetreatPoint";
-            this.txtRetreatPoint.Size = new System.Drawing.Size(285, 21);
-            this.txtRetreatPoint.TabIndex = 12;
-            this.txtRetreatPoint.Text = "10";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(70, 68);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 12);
-            this.label13.TabIndex = 11;
-            this.label13.Text = "字体";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtEntryPoint
-            // 
-            this.txtEntryPoint.Location = new System.Drawing.Point(192, 68);
-            this.txtEntryPoint.Name = "txtEntryPoint";
-            this.txtEntryPoint.Size = new System.Drawing.Size(285, 21);
-            this.txtEntryPoint.TabIndex = 10;
-            this.txtEntryPoint.Text = "10";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(70, 380);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 12);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "尺寸小数点位数";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(192, 377);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(285, 21);
-            this.textBox1.TabIndex = 24;
-            this.textBox1.Text = "10";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(70, 334);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 23;
-            this.label2.Text = "尺寸字体";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(192, 331);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(285, 21);
-            this.textBox2.TabIndex = 22;
-            this.textBox2.Text = "3";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(70, 288);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 12);
-            this.label3.TabIndex = 21;
-            this.label3.Text = "字的粗细类型";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(192, 288);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(285, 21);
-            this.textBox3.TabIndex = 20;
-            this.textBox3.Text = "10";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(70, 243);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 12);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "中文字的纵横比";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(192, 243);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(285, 21);
-            this.textBox4.TabIndex = 18;
-            this.textBox4.Text = "10";
+            this.cbIsEDMFaceGetPoint.AutoSize = true;
+            this.cbIsEDMFaceGetPoint.Location = new System.Drawing.Point(72, 599);
+            this.cbIsEDMFaceGetPoint.Name = "cbIsEDMFaceGetPoint";
+            this.cbIsEDMFaceGetPoint.Size = new System.Drawing.Size(72, 16);
+            this.cbIsEDMFaceGetPoint.TabIndex = 34;
+            this.cbIsEDMFaceGetPoint.Text = "抑制尾零";
+            this.cbIsEDMFaceGetPoint.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -364,15 +228,179 @@
             this.textBox8.TabIndex = 26;
             this.textBox8.Text = "10";
             // 
-            // cbIsEDMFaceGetPoint
+            // label1
             // 
-            this.cbIsEDMFaceGetPoint.AutoSize = true;
-            this.cbIsEDMFaceGetPoint.Location = new System.Drawing.Point(72, 599);
-            this.cbIsEDMFaceGetPoint.Name = "cbIsEDMFaceGetPoint";
-            this.cbIsEDMFaceGetPoint.Size = new System.Drawing.Size(72, 16);
-            this.cbIsEDMFaceGetPoint.TabIndex = 34;
-            this.cbIsEDMFaceGetPoint.Text = "抑制尾零";
-            this.cbIsEDMFaceGetPoint.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(70, 380);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 12);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "尺寸小数点位数";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(192, 377);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(285, 21);
+            this.textBox1.TabIndex = 24;
+            this.textBox1.Text = "10";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(70, 334);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 23;
+            this.label2.Text = "尺寸字体";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(192, 331);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(285, 21);
+            this.textBox2.TabIndex = 22;
+            this.textBox2.Text = "3";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(70, 288);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "字的粗细类型";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(192, 288);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(285, 21);
+            this.textBox3.TabIndex = 20;
+            this.textBox3.Text = "10";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(70, 243);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(89, 12);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "中文字的纵横比";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(192, 243);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(285, 21);
+            this.textBox4.TabIndex = 18;
+            this.textBox4.Text = "10";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(70, 202);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(41, 12);
+            this.label16.TabIndex = 17;
+            this.label16.Text = "纵横比";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtSafeDistance
+            // 
+            this.txtSafeDistance.Location = new System.Drawing.Point(192, 199);
+            this.txtSafeDistance.Name = "txtSafeDistance";
+            this.txtSafeDistance.Size = new System.Drawing.Size(285, 21);
+            this.txtSafeDistance.TabIndex = 16;
+            this.txtSafeDistance.Text = "10";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(70, 156);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 12);
+            this.label15.TabIndex = 15;
+            this.label15.Text = "字间距";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtVerticalValue
+            // 
+            this.txtVerticalValue.Location = new System.Drawing.Point(192, 153);
+            this.txtVerticalValue.Name = "txtVerticalValue";
+            this.txtVerticalValue.Size = new System.Drawing.Size(285, 21);
+            this.txtVerticalValue.TabIndex = 14;
+            this.txtVerticalValue.Text = "3";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(70, 110);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(41, 12);
+            this.label14.TabIndex = 13;
+            this.label14.Text = "字大小";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtRetreatPoint
+            // 
+            this.txtRetreatPoint.Location = new System.Drawing.Point(192, 110);
+            this.txtRetreatPoint.Name = "txtRetreatPoint";
+            this.txtRetreatPoint.Size = new System.Drawing.Size(285, 21);
+            this.txtRetreatPoint.TabIndex = 12;
+            this.txtRetreatPoint.Text = "10";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(70, 68);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 12);
+            this.label13.TabIndex = 11;
+            this.label13.Text = "字体";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtEntryPoint
+            // 
+            this.txtEntryPoint.Location = new System.Drawing.Point(192, 68);
+            this.txtEntryPoint.Name = "txtEntryPoint";
+            this.txtEntryPoint.Size = new System.Drawing.Size(285, 21);
+            this.txtEntryPoint.TabIndex = 10;
+            this.txtEntryPoint.Text = "10";
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.cbbEdmTemplate);
+            this.tabPage2.Controls.Add(this.label18);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(924, 652);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "放电图纸基本设置";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // cbbEdmTemplate
+            // 
+            this.cbbEdmTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbEdmTemplate.FormattingEnabled = true;
+            this.cbbEdmTemplate.Location = new System.Drawing.Point(192, 33);
+            this.cbbEdmTemplate.Name = "cbbEdmTemplate";
+            this.cbbEdmTemplate.Size = new System.Drawing.Size(372, 20);
+            this.cbbEdmTemplate.TabIndex = 32;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(74, 36);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(53, 12);
+            this.label18.TabIndex = 31;
+            this.label18.Text = "图框模板";
             // 
             // tabPage3
             // 
@@ -386,23 +414,13 @@
             this.tabPage3.Text = "放电图纸视图设置";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // cbbFtpPathType
+            // panel2
             // 
-            this.cbbFtpPathType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbbFtpPathType.FormattingEnabled = true;
-            this.cbbFtpPathType.Location = new System.Drawing.Point(192, 33);
-            this.cbbFtpPathType.Name = "cbbFtpPathType";
-            this.cbbFtpPathType.Size = new System.Drawing.Size(372, 20);
-            this.cbbFtpPathType.TabIndex = 32;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(74, 36);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(53, 12);
-            this.label18.TabIndex = 31;
-            this.label18.Text = "图框模板";
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(3, 639);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(918, 10);
+            this.panel2.TabIndex = 1;
             // 
             // panel1
             // 
@@ -413,14 +431,6 @@
             this.panel1.Size = new System.Drawing.Size(918, 646);
             this.panel1.TabIndex = 0;
             // 
-            // panel2
-            // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(3, 639);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(918, 10);
-            this.panel2.TabIndex = 1;
-            // 
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -430,16 +440,6 @@
             this.dataGridView2.RowTemplate.Height = 23;
             this.dataGridView2.Size = new System.Drawing.Size(918, 646);
             this.dataGridView2.TabIndex = 5;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(72, 30);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 16);
-            this.checkBox1.TabIndex = 35;
-            this.checkBox1.Text = "使用系统参数";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
@@ -462,6 +462,15 @@
             this.panel3.Size = new System.Drawing.Size(918, 646);
             this.panel3.TabIndex = 0;
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.groupBox1);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel5.Location = new System.Drawing.Point(0, 206);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(918, 213);
+            this.panel5.TabIndex = 5;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dataGridView1);
@@ -472,6 +481,25 @@
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "表格";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 17);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(912, 193);
+            this.dataGridView1.TabIndex = 0;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.groupBox2);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(0, 0);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(918, 206);
+            this.panel4.TabIndex = 4;
             // 
             // groupBox2
             // 
@@ -484,16 +512,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "信息";
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 17);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(912, 193);
-            this.dataGridView1.TabIndex = 0;
-            // 
             // dataGridView3
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -503,24 +521,6 @@
             this.dataGridView3.RowTemplate.Height = 23;
             this.dataGridView3.Size = new System.Drawing.Size(912, 186);
             this.dataGridView3.TabIndex = 0;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.groupBox2);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(0, 0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(918, 206);
-            this.panel4.TabIndex = 4;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.groupBox1);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel5.Location = new System.Drawing.Point(0, 206);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(918, 213);
-            this.panel5.TabIndex = 5;
             // 
             // UCEdmConfig
             // 
@@ -539,12 +539,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -580,7 +580,7 @@
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.CheckBox cbIsEDMFaceGetPoint;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.ComboBox cbbFtpPathType;
+        private System.Windows.Forms.ComboBox cbbEdmTemplate;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;

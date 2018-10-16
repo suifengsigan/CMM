@@ -13,7 +13,9 @@ namespace EdmDraw
             configFrm.Width = 600;
             configFrm.Height = 600;
             configFrm.Text = "图纸设置";
-            configFrm.Controls.Add(new UCEdmConfig());
+            var uc = new UCEdmConfig();
+            uc.Dock = System.Windows.Forms.DockStyle.Fill;
+            configFrm.Controls.Add(uc);
             configFrm.ShowDialog();
             new EdmDrawUI().Show();
         }
