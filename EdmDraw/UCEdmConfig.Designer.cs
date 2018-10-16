@@ -1,4 +1,4 @@
-﻿namespace CMMTool
+﻿namespace EdmDraw
 {
     partial class UCEdmConfig
     {

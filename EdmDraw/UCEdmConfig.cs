@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace CMMTool
+namespace EdmDraw
 {
     public partial class UCEdmConfig : UserControl
     {
