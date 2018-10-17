@@ -268,6 +268,7 @@ namespace CMMTool
             result.SafeDistance = double.Parse(txtSafeDistance.Text);
             result.VerticalValue = double.Parse(txtVerticalValue.Text);
             result.IsInspectionPath = cbIsInspectionPath.Checked;
+            result.IsAutoCmmFtpDir = cbIsAutoCmmFtpDir.Checked;
             result.IsEDMFaceGetPoint = cbIsEDMFaceGetPoint.Checked;
             result.IsInitConfig = cbIsInitConfig.Checked;
             result.IsUploadDataBase = cbIsUploadDatabase.Checked;
@@ -350,6 +351,7 @@ namespace CMMTool
             txtSafeDistance.Text = result.SafeDistance.ToString();
             txtVerticalValue.Text = result.VerticalValue.ToString();
             cbIsInspectionPath.Checked = result.IsInspectionPath;
+            cbIsAutoCmmFtpDir.Checked = result.IsAutoCmmFtpDir;
             cbIsEDMFaceGetPoint.Checked = result.IsEDMFaceGetPoint;
             cbIsInitConfig.Checked = result.IsInitConfig;
             cbIsBaseRoundInt.Checked = result.IsBaseRoundInt;

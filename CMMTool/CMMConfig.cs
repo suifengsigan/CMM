@@ -68,6 +68,7 @@ namespace CMMTool
         /// AutoCMM路径
         /// </summary>
         public string AutoCmmDir { get; set; }
+        public bool IsAutoCmmFtpDir { get; set; }
         /// <summary>
         /// 是否启用干涉点检测
         /// </summary>

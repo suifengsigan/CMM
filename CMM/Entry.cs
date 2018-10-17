@@ -56,6 +56,8 @@ namespace CMM
                     return;
                 }
             }
+            var ConfigData = EactConfig.ConfigData.GetInstance();
+            EactTool.FileHelper.InitFileMode(cmmConfig.IsAutoCmmFtpDir ? 1 : 0, ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false);
             var path = cmmConfig.AutoCmmDir;
             var fileName = EactTool.FileHelper.FindFile(path);
             if (!string.IsNullOrEmpty(fileName))

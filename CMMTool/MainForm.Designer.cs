@@ -68,13 +68,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.txtGetTowPointArea = new System.Windows.Forms.TextBox();
+            this.txtMinGetPointArea = new System.Windows.Forms.TextBox();
+            this.cbIsGetTowPointArea = new System.Windows.Forms.CheckBox();
+            this.cbIsMinGetPointArea = new System.Windows.Forms.CheckBox();
             this.cbIsBaseRoundInt = new System.Windows.Forms.CheckBox();
             this.cbIsUploadDatabase = new System.Windows.Forms.CheckBox();
             this.cbIsInitConfig = new System.Windows.Forms.CheckBox();
             this.cbIsEDMFaceGetPoint = new System.Windows.Forms.CheckBox();
             this.cbIsInspectionPath = new System.Windows.Forms.CheckBox();
             this.btnSelAutoCmmDir = new System.Windows.Forms.Button();
-            this.label17 = new System.Windows.Forms.Label();
             this.txtAutoCmmDir = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtSafeDistance = new System.Windows.Forms.TextBox();
@@ -88,10 +91,7 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.cbIsGetTowPointArea = new System.Windows.Forms.CheckBox();
-            this.cbIsMinGetPointArea = new System.Windows.Forms.CheckBox();
-            this.txtMinGetPointArea = new System.Windows.Forms.TextBox();
-            this.txtGetTowPointArea = new System.Windows.Forms.TextBox();
+            this.cbIsAutoCmmFtpDir = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -483,6 +483,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.cbIsAutoCmmFtpDir);
             this.tabPage4.Controls.Add(this.txtGetTowPointArea);
             this.tabPage4.Controls.Add(this.txtMinGetPointArea);
             this.tabPage4.Controls.Add(this.cbIsGetTowPointArea);
@@ -493,7 +494,6 @@
             this.tabPage4.Controls.Add(this.cbIsEDMFaceGetPoint);
             this.tabPage4.Controls.Add(this.cbIsInspectionPath);
             this.tabPage4.Controls.Add(this.btnSelAutoCmmDir);
-            this.tabPage4.Controls.Add(this.label17);
             this.tabPage4.Controls.Add(this.txtAutoCmmDir);
             this.tabPage4.Controls.Add(this.label16);
             this.tabPage4.Controls.Add(this.txtSafeDistance);
@@ -510,6 +510,42 @@
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // txtGetTowPointArea
+            // 
+            this.txtGetTowPointArea.Location = new System.Drawing.Point(607, 455);
+            this.txtGetTowPointArea.Name = "txtGetTowPointArea";
+            this.txtGetTowPointArea.Size = new System.Drawing.Size(46, 21);
+            this.txtGetTowPointArea.TabIndex = 21;
+            this.txtGetTowPointArea.Text = "10";
+            // 
+            // txtMinGetPointArea
+            // 
+            this.txtMinGetPointArea.Location = new System.Drawing.Point(240, 422);
+            this.txtMinGetPointArea.Name = "txtMinGetPointArea";
+            this.txtMinGetPointArea.Size = new System.Drawing.Size(46, 21);
+            this.txtMinGetPointArea.TabIndex = 20;
+            this.txtMinGetPointArea.Text = "3";
+            // 
+            // cbIsGetTowPointArea
+            // 
+            this.cbIsGetTowPointArea.AutoSize = true;
+            this.cbIsGetTowPointArea.Location = new System.Drawing.Point(73, 460);
+            this.cbIsGetTowPointArea.Name = "cbIsGetTowPointArea";
+            this.cbIsGetTowPointArea.Size = new System.Drawing.Size(528, 16);
+            this.cbIsGetTowPointArea.TabIndex = 19;
+            this.cbIsGetTowPointArea.Text = "面积超过以上配置的某个值的，取靠近面的UV百分比为25%及75%的两个点（一个面最多两个点）";
+            this.cbIsGetTowPointArea.UseVisualStyleBackColor = true;
+            // 
+            // cbIsMinGetPointArea
+            // 
+            this.cbIsMinGetPointArea.AutoSize = true;
+            this.cbIsMinGetPointArea.Location = new System.Drawing.Point(73, 424);
+            this.cbIsMinGetPointArea.Name = "cbIsMinGetPointArea";
+            this.cbIsMinGetPointArea.Size = new System.Drawing.Size(144, 16);
+            this.cbIsMinGetPointArea.TabIndex = 18;
+            this.cbIsMinGetPointArea.Text = "面积小于某值的不取点";
+            this.cbIsMinGetPointArea.UseVisualStyleBackColor = true;
             // 
             // cbIsBaseRoundInt
             // 
@@ -570,17 +606,6 @@
             this.btnSelAutoCmmDir.TabIndex = 12;
             this.btnSelAutoCmmDir.Text = "选择目录";
             this.btnSelAutoCmmDir.UseVisualStyleBackColor = true;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Enabled = false;
-            this.label17.Location = new System.Drawing.Point(71, 32);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(29, 12);
-            this.label17.TabIndex = 11;
-            this.label17.Text = "目录";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // txtAutoCmmDir
             // 
@@ -703,41 +728,15 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // cbIsGetTowPointArea
+            // cbIsAutoCmmFtpDir
             // 
-            this.cbIsGetTowPointArea.AutoSize = true;
-            this.cbIsGetTowPointArea.Location = new System.Drawing.Point(73, 460);
-            this.cbIsGetTowPointArea.Name = "cbIsGetTowPointArea";
-            this.cbIsGetTowPointArea.Size = new System.Drawing.Size(528, 16);
-            this.cbIsGetTowPointArea.TabIndex = 19;
-            this.cbIsGetTowPointArea.Text = "面积超过以上配置的某个值的，取靠近面的UV百分比为25%及75%的两个点（一个面最多两个点）";
-            this.cbIsGetTowPointArea.UseVisualStyleBackColor = true;
-            // 
-            // cbIsMinGetPointArea
-            // 
-            this.cbIsMinGetPointArea.AutoSize = true;
-            this.cbIsMinGetPointArea.Location = new System.Drawing.Point(73, 424);
-            this.cbIsMinGetPointArea.Name = "cbIsMinGetPointArea";
-            this.cbIsMinGetPointArea.Size = new System.Drawing.Size(144, 16);
-            this.cbIsMinGetPointArea.TabIndex = 18;
-            this.cbIsMinGetPointArea.Text = "面积小于某值的不取点";
-            this.cbIsMinGetPointArea.UseVisualStyleBackColor = true;
-            // 
-            // txtMinGetPointArea
-            // 
-            this.txtMinGetPointArea.Location = new System.Drawing.Point(240, 422);
-            this.txtMinGetPointArea.Name = "txtMinGetPointArea";
-            this.txtMinGetPointArea.Size = new System.Drawing.Size(46, 21);
-            this.txtMinGetPointArea.TabIndex = 20;
-            this.txtMinGetPointArea.Text = "3";
-            // 
-            // txtGetTowPointArea
-            // 
-            this.txtGetTowPointArea.Location = new System.Drawing.Point(607, 455);
-            this.txtGetTowPointArea.Name = "txtGetTowPointArea";
-            this.txtGetTowPointArea.Size = new System.Drawing.Size(46, 21);
-            this.txtGetTowPointArea.TabIndex = 21;
-            this.txtGetTowPointArea.Text = "10";
+            this.cbIsAutoCmmFtpDir.AutoSize = true;
+            this.cbIsAutoCmmFtpDir.Location = new System.Drawing.Point(73, 31);
+            this.cbIsAutoCmmFtpDir.Name = "cbIsAutoCmmFtpDir";
+            this.cbIsAutoCmmFtpDir.Size = new System.Drawing.Size(42, 16);
+            this.cbIsAutoCmmFtpDir.TabIndex = 22;
+            this.cbIsAutoCmmFtpDir.Text = "FTP";
+            this.cbIsAutoCmmFtpDir.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -822,7 +821,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtSafeDistance;
         private System.Windows.Forms.Button btnSelAutoCmmDir;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox txtAutoCmmDir;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.Button btnAutoPrtToolDir;
@@ -840,6 +838,7 @@
         private System.Windows.Forms.CheckBox cbIsGetTowPointArea;
         private System.Windows.Forms.CheckBox cbIsMinGetPointArea;
         private System.Windows.Forms.TextBox txtGetTowPointArea;
+        private System.Windows.Forms.CheckBox cbIsAutoCmmFtpDir;
     }
 }
 
