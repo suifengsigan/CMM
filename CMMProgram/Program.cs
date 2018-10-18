@@ -16,7 +16,16 @@ namespace CMMProgram
         [STAThread]
         public static void Main()
         {
-            System.Environment.SetEnvironmentVariable("Path", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR"));
+            var path = System.Configuration.ConfigurationManager.AppSettings.Get("PATH");
+            if (!string.IsNullOrEmpty(path))
+            {
+                path += ";" + System.Environment.GetEnvironmentVariable("PATH");
+            }
+            else
+            {
+                path += System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR")+";" + System.Environment.GetEnvironmentVariable("PATH");
+            }
+            System.Environment.SetEnvironmentVariable("Path", path);
             System.Environment.SetEnvironmentVariable("UGII_ROOT_DIR", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR"));
             System.Environment.SetEnvironmentVariable("UGII_BASE_DIR", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_BASE_DIR"));
             #region 系统只运行一次
