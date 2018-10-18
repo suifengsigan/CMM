@@ -129,7 +129,7 @@ namespace CMMTool
                     requireAbBodies.AddRange(new List<Snap.NX.Body> { sphere, lengtheningRod, firstPedestal });
                     requireUnite.AddRange( new List<Snap.NX.Body> { lengtheningRod, firstPedestal, twoPedestal, threePedestal });
                     var trans=Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisX, ab.A);
-                    trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisZ, ab.B));
+                    trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisZ, -ab.B));
                     foreach (var rBody in requireAbBodies)
                     {
                         rBody.Move(trans);
