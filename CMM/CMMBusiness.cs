@@ -486,6 +486,19 @@ namespace CMM
 
                 var faces = electrode.ElecHeadFaces;
                 var face = faces.FirstOrDefault(u => Helper.AskPointContainment(p, u));
+                var pointType = PointType.HeadFace;
+                if (face == null&& Helper.AskPointContainment(p, electrode.BaseFace))
+                {
+                    face = electrode.BaseFace;
+                    pointType = PointType.HorizontalDatumFace;
+                }
+
+                if (face == null)
+                {
+                    faces = electrode.BaseSideFaces;
+                    face = faces.FirstOrDefault(u => Helper.AskPointContainment(p, u));
+                    pointType = PointType.VerticalDatumFace;
+                }
 
                 var vector = face.GetFaceDirection();
                 var edges = face.EdgeCurves.ToList();
@@ -499,7 +512,7 @@ namespace CMM
                     return null;
                 }
 
-                return IsIntervene(electrode, p, pointVector, edges, config, PointType.HeadFace);
+                return IsIntervene(electrode, p, pointVector, edges, config, pointType);
             }
             catch (Exception ex)
             {

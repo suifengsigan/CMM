@@ -320,7 +320,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                     data = CMMBusiness.IsInterveneBySelPoint(_electrode, selectionPoint.PickPoint, _config);
                 });
 
-                if (data != null && data.PointType == PointType.HeadFace)
+                if (data != null)
                 {
                     var points = GetPointDatasFromTree();
                     points.Add(data);
