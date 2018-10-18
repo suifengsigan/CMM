@@ -91,7 +91,7 @@ namespace CMM
                 u.Position = u.Position.Copy(trans);
                 pointInfo.pointname = u.PointName;
                 pointInfo.arrow = u.Arrow;
-                pointInfo.TIP = string.Format("A{0}B{0}", u.A, u.B);
+                pointInfo.TIP = string.Format("A{0}B{1}", u.A, u.B);
                 pointInfo.a = u.A;
                 pointInfo.b = u.B;
                 pointInfo.type = (int)u.PointType;
