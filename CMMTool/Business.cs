@@ -104,7 +104,7 @@ namespace CMMTool
                             }
                             else
                             {
-                                connect1 = Snap.Create.Cylinder(lengtheningRodMaxPosition, lengtheningRodMaxPosition + new Position(0, 0, h), h).Body;
+                                connect1 = Snap.Create.Cylinder(lengtheningRodMaxPosition, lengtheningRodMaxPosition + new Position(0, 0, h), ed).Body;
                             }
                            
                             lengtheningRodMaxPosition = lengtheningRodMaxPosition + new Position(0, 0, h);
