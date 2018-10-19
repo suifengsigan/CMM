@@ -375,7 +375,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     public override void DialogShown()
     {
         RefreshUI();
-        tree_control0.ShowHeader = true;
+        //tree_control0.ShowHeader = true;
         tree_control0.InsertColumn(0, "名称", 50);
         tree_control0.InsertColumn(1, "探针", 200);
         tree_control0.InsertColumn(2, "X", 200);
