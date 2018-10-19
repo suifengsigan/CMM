@@ -48,19 +48,19 @@ public partial class CMMProgramUI
     private static UI theUI = null;
     private string theDlxFileName;
     private NXOpen.BlockStyler.BlockDialog theDialog;
-    private NXOpen.BlockStyler.Group group0;// Block type: Group
-    private NXOpen.BlockStyler.SelectObject selectCuprum;// Block type: Selection
-    private NXOpen.BlockStyler.Enumeration enumSelectTool;// Block type: Enumeration
-    private NXOpen.BlockStyler.Group group;// Block type: Group
-    private NXOpen.BlockStyler.DrawingArea drawingArea0;// Block type: Drawing Area
-    private NXOpen.BlockStyler.Toggle toggle0;// Block type: Toggle
-    private NXOpen.BlockStyler.Button btnAutoSelectPoint;// Block type: Button
-    private NXOpen.BlockStyler.SelectObject selectionPoint;// Block type: Selection
+    private Snap.UI.Block.Group group0;// Block type: Group
+    private Snap.UI.Block.SelectObject selectCuprum;// Block type: Selection
+    private Snap.UI.Block.Enumeration enumSelectTool;// Block type: Enumeration
+    private Snap.UI.Block.Group group;// Block type: Group
+    private Snap.UI.Block.DrawingArea drawingArea0;// Block type: Drawing Area
+    private Snap.UI.Block.Toggle toggle0;// Block type: Toggle
+    private Snap.UI.Block.Button btnAutoSelectPoint;// Block type: Button
+    private Snap.UI.Block.SelectObject selectionPoint;// Block type: Selection
     private NXOpen.BlockStyler.Tree tree_control0;// Block type: Tree Control
-    private NXOpen.BlockStyler.Button btnUP;// Block type: Button
-    private NXOpen.BlockStyler.Button btnDown;// Block type: Button
-    private NXOpen.BlockStyler.Button btnRemove;// Block type: Button
-    private NXOpen.BlockStyler.Button btnExport;// Block type: Button
+    private Snap.UI.Block.Button btnUP;// Block type: Button
+    private Snap.UI.Block.Button btnDown;// Block type: Button
+    private Snap.UI.Block.Button btnRemove;// Block type: Button
+    private Snap.UI.Block.Button btnExport;// Block type: Button
     //------------------------------------------------------------------------------
     //Bit Option for Property: SnapPointTypesEnabled
     //------------------------------------------------------------------------------
@@ -245,19 +245,19 @@ public partial class CMMProgramUI
     {
         try
         {
-            group0 = (NXOpen.BlockStyler.Group)theDialog.TopBlock.FindBlock("group0");
-            selectCuprum = (NXOpen.BlockStyler.SelectObject)theDialog.TopBlock.FindBlock("selectCuprum");
-            enumSelectTool = (NXOpen.BlockStyler.Enumeration)theDialog.TopBlock.FindBlock("enumSelectTool");
-            group = (NXOpen.BlockStyler.Group)theDialog.TopBlock.FindBlock("group");
-            drawingArea0 = (NXOpen.BlockStyler.DrawingArea)theDialog.TopBlock.FindBlock("drawingArea0");
-            toggle0 = (NXOpen.BlockStyler.Toggle)theDialog.TopBlock.FindBlock("toggle0");
-            btnAutoSelectPoint = (NXOpen.BlockStyler.Button)theDialog.TopBlock.FindBlock("btnAutoSelectPoint");
-            selectionPoint = (NXOpen.BlockStyler.SelectObject)theDialog.TopBlock.FindBlock("selectionPoint");
+            group0 = Snap.UI.Block.Group.GetBlock(theDialog, "group0");
+            selectCuprum = Snap.UI.Block.SelectObject.GetBlock(theDialog, "selectCuprum");
+            enumSelectTool = Snap.UI.Block.Enumeration.GetBlock(theDialog, "enumSelectTool");
+            group = Snap.UI.Block.Group.GetBlock(theDialog, "group");
+            drawingArea0 = Snap.UI.Block.DrawingArea.GetBlock(theDialog, "drawingArea0");
+            toggle0 = Snap.UI.Block.Toggle.GetBlock(theDialog, "toggle0");
+            btnAutoSelectPoint = Snap.UI.Block.Button.GetBlock(theDialog, "btnAutoSelectPoint");
+            selectionPoint = Snap.UI.Block.SelectObject.GetBlock(theDialog, "selectionPoint");
             tree_control0 = (NXOpen.BlockStyler.Tree)theDialog.TopBlock.FindBlock("tree_control0");
-            btnUP = (NXOpen.BlockStyler.Button)theDialog.TopBlock.FindBlock("btnUP");
-            btnDown = (NXOpen.BlockStyler.Button)theDialog.TopBlock.FindBlock("btnDown");
-            btnRemove = (NXOpen.BlockStyler.Button)theDialog.TopBlock.FindBlock("btnRemove");
-            btnExport = (NXOpen.BlockStyler.Button)theDialog.TopBlock.FindBlock("btnExport");
+            btnUP = Snap.UI.Block.Button.GetBlock(theDialog, "btnUP");
+            btnDown = Snap.UI.Block.Button.GetBlock(theDialog, "btnDown");
+            btnRemove = Snap.UI.Block.Button.GetBlock(theDialog, "btnRemove");
+            btnExport = Snap.UI.Block.Button.GetBlock(theDialog, "btnExport");
             //------------------------------------------------------------------------------
             //Registration of Treelist specific callbacks
             //------------------------------------------------------------------------------
@@ -337,46 +337,46 @@ public partial class CMMProgramUI
     {
         try
         {
-            if (block == selectCuprum)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == enumSelectTool)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == drawingArea0)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == toggle0)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == btnAutoSelectPoint)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == selectionPoint)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == btnUP)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == btnDown)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == btnRemove)
-            {
-                //---------Enter your code here-----------
-            }
-            else if (block == btnExport)
-            {
-                //---------Enter your code here-----------
-            }
+            //if (block == selectCuprum)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == enumSelectTool)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == drawingArea0)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == toggle0)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == btnAutoSelectPoint)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == selectionPoint)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == btnUP)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == btnDown)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == btnRemove)
+            //{
+            //    //---------Enter your code here-----------
+            //}
+            //else if (block == btnExport)
+            //{
+            //    //---------Enter your code here-----------
+            //}
         }
         catch (Exception ex)
         {

@@ -190,7 +190,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
 
     void ComponentHelper(Action action) 
     {
-        var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
+        var body = selectCuprum.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
         if (body != null)
         {
             var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "ComponentHelper");
@@ -211,7 +211,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     void AutoSelectPoint() 
     {
         DeleteNodes();
-        var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
+        var body = selectCuprum.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
         var pointDatas = new List<PointData>();
         var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "ComponentHelperAutoSelectPoint");
         try
@@ -221,7 +221,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         catch (Exception ex)
         {
             pointDatas = new List<PointData>();
-            selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { });
+            selectCuprum.SelectedObjects = new Snap.NX.NXObject[] { };
             _electrode = null;
             NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage(ex.Message, 1);
         }
@@ -233,8 +233,8 @@ public partial class CMMProgramUI:SnapEx.BaseUI
     public override void Update(NXOpen.BlockStyler.UIBlock block)
     {
         RefreshUI();
-        var body = selectCuprum.GetSelectedObjects().FirstOrDefault() as NXOpen.Body;
-        if (block == btnAutoSelectPoint)
+        var body = selectCuprum.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
+        if (block == btnAutoSelectPoint.NXOpenBlock)
         {
             if (body != null)
             {
@@ -242,7 +242,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 RefreshUI();
             }
         }
-        else if (block == selectCuprum)
+        else if (block == selectCuprum.NXOpenBlock)
         {
             _electrode = null;
             if (body != null)
@@ -255,17 +255,17 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 }
                 else
                 {
-                    selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { });
+                    selectCuprum.SelectedObjects = new Snap.NX.NXObject[] { };
                     NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage("该电极无法识别",1);
                 }
             }
         }
-        else if (block == toggle0)
+        else if (block == toggle0.NXOpenBlock)
         {
             UFDisp();
             DeleteNodes();
         }
-        else if (block == btnDown)
+        else if (block == btnDown.NXOpenBlock)
         {
             var node = GetSelectNode();
             if (node != null)
@@ -278,7 +278,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 UFDisp(GetPointDatasFromTree(list));
             }
         }
-        else if (block == btnUP)
+        else if (block == btnUP.NXOpenBlock)
         {
             var node = GetSelectNode();
             if (node != null)
@@ -291,7 +291,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 UFDisp(GetPointDatasFromTree(list));
             }
         }
-        else if (block == btnRemove)
+        else if (block == btnRemove.NXOpenBlock)
         {
             var node = GetSelectNode();
             if (node != null)
@@ -310,9 +310,9 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 }
             }
         }
-        else if (block == selectionPoint)
+        else if (block == selectionPoint.NXOpenBlock)
         {
-            if (body != null && selectionPoint.GetSelectedObjects().Count() > 0)
+            if (body != null && selectionPoint.SelectedObjects.Count() > 0)
             {
                 PointData data = null;
                 ComponentHelper(() =>
@@ -332,10 +332,10 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 }
             }
 
-            selectionPoint.SetSelectedObjects(new NXOpen.TaggedObject[] { });
+            selectionPoint.SelectedObjects = new Snap.NX.NXObject[] { };
 
         }
-        else if (block == btnExport)
+        else if (block == btnExport.NXOpenBlock)
         {
             if (body != null)
             {
@@ -409,9 +409,9 @@ public partial class CMMProgramUI:SnapEx.BaseUI
         tree_control0.SetColumnSortable(9, false);
 
 
-        if (Snap.Globals.WorkPart.Bodies.Count() == 1) 
+        if (Snap.Globals.WorkPart.Bodies.Count() == 1)
         {
-            selectCuprum.SetSelectedObjects(new NXOpen.TaggedObject[] { Snap.Globals.WorkPart.Bodies.FirstOrDefault() });
+            selectCuprum.SelectedObjects = new Snap.NX.NXObject[] { Snap.Globals.WorkPart.Bodies.FirstOrDefault() };
         }
     }
 
