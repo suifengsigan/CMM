@@ -45,6 +45,13 @@ namespace CMMProgram
             Application.Run(new s());
         }
 
+        public static int GetUnloadOption(string arg)
+        {
+            //return System.Convert.ToInt32(Session.LibraryUnloadOption.Explicitly);
+            return System.Convert.ToInt32(1);
+            // return System.Convert.ToInt32(Session.LibraryUnloadOption.AtTermination);
+        }
+
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             var assemblyName = new AssemblyName(args.Name);
