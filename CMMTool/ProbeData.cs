@@ -78,7 +78,7 @@ namespace CMMTool
         /// </summary>
         public bool CheckInspectionPath(ProbeData.AB ab,List<Snap.Position> inspectionPath, params Snap.NX.NXObject[] inspectionBodies)
         {
-            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "CheckInspectionPath");
+            //var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "CheckInspectionPath");
             var reuslt = false;
             try
             {
@@ -117,7 +117,7 @@ namespace CMMTool
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                Snap.Globals.UndoToMark(mark, null);
+                //Snap.Globals.UndoToMark(mark, null);
             }
             return reuslt;
         }
