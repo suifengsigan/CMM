@@ -58,6 +58,10 @@ namespace CMMProgram
             if (assemblyName.Name == "CSharpProxy")
             {
                 var programPath = System.Configuration.ConfigurationManager.AppSettings.Get("ProgramPath");
+                if (programPath == null)
+                {
+                    programPath = "Application";
+                }
                 if (Directory.Exists(programPath))
                 {
                     DirectoryInfo info = new DirectoryInfo(programPath);
