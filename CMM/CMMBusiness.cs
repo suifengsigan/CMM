@@ -15,7 +15,7 @@ namespace CMM
     /// </summary>
     public class CMMBusiness
     {
-        static string _cmmFilePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "EACTCMMFILE");
+        static string _cmmFilePath = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"Temp\EACTCMMFILE");
         static EactConfig.ConfigData _EactConfigData = EactConfig.ConfigData.GetInstance();
         /// <summary>
         /// 循环变量值
