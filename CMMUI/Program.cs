@@ -44,5 +44,12 @@ namespace CMMUI
         {
             CMM.Entry.AutoSelPoint();
         }
+
+        public static int GetUnloadOption(string arg)
+        {
+            //return System.Convert.ToInt32(Session.LibraryUnloadOption.Explicitly);
+            return System.Convert.ToInt32(1);
+            // return System.Convert.ToInt32(Session.LibraryUnloadOption.AtTermination);
+        }
     }
 }
