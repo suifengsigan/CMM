@@ -88,6 +88,33 @@ namespace CMMProgram
         }
 
 
+        public object ExecuteMothod(string actionName, string baseDirectory, IntPtr hWnd, string methodName = "Main")
+        {
+            object result = null;
+            var setup = new AppDomainSetup();
+            setup.ApplicationBase = baseDirectory;
+            AppDomain _appDomain = AppDomain.CreateDomain(actionName, null, setup);
+            try
+            {
+                var args = new string[] { actionName, methodName };
+                var location = typeof(CSharpProxy.ProxyObject).Assembly.Location;
+                CSharpProxy.ProxyObject po = (CSharpProxy.ProxyObject)_appDomain.CreateInstanceFromAndUnwrap(location, typeof(CSharpProxy.ProxyObject).FullName);
+                po.WindowPH = hWnd;
+                result=_appDomain.ExecuteAssembly(Path.Combine(baseDirectory, "CSharpEntry.exe"), args);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                AppDomain.Unload(_appDomain);
+            }
+            return result;
+        }
+
+
+
         void InitEvent()
         {
             btnStart.Click += BtnStart_Click;
@@ -174,7 +201,7 @@ namespace CMMProgram
 
         private void BtnUserConfig_Click(object sender, EventArgs e)
         {
-            Excute("CMMTool.dll", "ShowEactConfig");
+            Excute("EactConfig.dll");
         }
 
         private void BtnConfig_Click(object sender, EventArgs e)
