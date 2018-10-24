@@ -13,19 +13,21 @@ namespace CMMUI
             Execute();
         }
 
-        public static void CMMInit()
+        public static int CMMInit()
         {
             AssemblyLoader.Entry.InitAssembly();
             Init();
+            return 0;
         }
 
-        public static void InitUG()
+        public static int InitUG()
         {
             AssemblyLoader.Entry.InitAssembly();
             _InitUG();
+            return 0;
         }
 
-        public static string[] Verification()
+        public static int Verification()
         {
             return CMM.Entry.Verification();
         }

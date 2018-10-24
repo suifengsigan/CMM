@@ -22,7 +22,7 @@ namespace CMM
             Helper.ShowMsg("UG完成初始化");
         }
 
-        public static string[] Verification()
+        public static int Verification()
         {
             Helper.ShowMsg("正在验证加密锁...");
             var result = new string[] { "1",""};
@@ -31,9 +31,13 @@ namespace CMM
             {
                 result[0] = "2";
                 result[1] = msg;
+                Helper.ShowMsg(msg);
             }
-            Helper.ShowMsg("验证加密锁完成");
-            return result;
+            else
+            {
+                Helper.ShowMsg("验证加密锁完成");
+            }
+            return int.Parse(result[0]);
         }
 
         /// <summary>

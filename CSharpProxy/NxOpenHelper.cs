@@ -38,36 +38,37 @@ namespace CSharpProxy
                 var loader = new ManagedLoader();
                 var assembly = loader.Load(arg);
                 string outArg = string.Empty;
-                //int result = 0;
-                //loader.Run(newMethodName, arg, out outArg, out result);
+                int result1 = 0;
+                loader.Run(newMethodName, arg, out outArg, out result1);
+                result = result1;
 
-                #region oldCode
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(u => u.Location == Path.Combine(AppDomain.CurrentDomain.BaseDirectory, arg));
-                Type[] types = assemblies.FirstOrDefault().GetTypes();
-                foreach (Type type in types)
-                {
-                    foreach (MethodInfo info in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
-                    {
-                        if (info.Name == newMethodName)
-                        {
-                            ParameterInfo[] parameters = info.GetParameters();
-                            if (parameters.Length == 1)
-                            {
-                                Type parameterType = parameters[0].ParameterType;
-                                Type returnType = info.ReturnType;
-                                if ((parameterType.IsArray && (parameterType.GetElementType() == typeof(string))) && (returnType.IsArray && (returnType.GetElementType() == typeof(string))))
-                                {
-                                    result = (string[])info.Invoke(null, new object[] { args });
-                                }
-                            }
-                            else if (parameters.Length == 0)
-                            {
-                                result = (string[])info.Invoke(null, null);
-                            }
-                        }
-                    }
-                }
-                #endregion
+                //#region oldCode
+                //var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(u => u.Location == Path.Combine(AppDomain.CurrentDomain.BaseDirectory, arg));
+                //Type[] types = assemblies.FirstOrDefault().GetTypes();
+                //foreach (Type type in types)
+                //{
+                //    foreach (MethodInfo info in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                //    {
+                //        if (info.Name == newMethodName)
+                //        {
+                //            ParameterInfo[] parameters = info.GetParameters();
+                //            if (parameters.Length == 1)
+                //            {
+                //                Type parameterType = parameters[0].ParameterType;
+                //                Type returnType = info.ReturnType;
+                //                if ((parameterType.IsArray && (parameterType.GetElementType() == typeof(string))) && (returnType.IsArray && (returnType.GetElementType() == typeof(string))))
+                //                {
+                //                    result = (string[])info.Invoke(null, new object[] { args });
+                //                }
+                //            }
+                //            else if (parameters.Length == 0)
+                //            {
+                //                result = (string[])info.Invoke(null, null);
+                //            }
+                //        }
+                //    }
+                //}
+                //#endregion
             }
             catch (Exception ex)
             {

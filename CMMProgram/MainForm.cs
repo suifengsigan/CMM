@@ -154,11 +154,11 @@ namespace CMMProgram
                         action();
                     }
                 };
-                string[] str = (string[])Excute("CMM.dll", "Verification");
-                if (str[0] == "2")
+                int str = (int)Excute("CMM.dll", "Verification");
+                if (str == 2)
                 {
                     invokeAction(() => {
-                        System.Windows.Forms.MessageBox.Show(str[1]);
+                        System.Windows.Forms.MessageBox.Show("加密锁验证失败");
                         Application.Exit();
                     });
 
