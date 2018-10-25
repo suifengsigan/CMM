@@ -77,6 +77,21 @@ namespace CMMProgram
                     return Assembly.LoadFile(UGMANAGEDPATH);
                 }
             }
+            else if (assemblyName.Name == "ManagedLoader")
+            {
+                var UGMANAGEDPATH = Path.Combine(System.Environment.GetEnvironmentVariable("UGII_BASE_DIR") ?? string.Empty, "UGII", "managed", assemblyName.Name + ".dll");
+
+
+                if (!File.Exists(UGMANAGEDPATH))
+                {
+                    UGMANAGEDPATH = Path.Combine(System.Environment.GetEnvironmentVariable("UGII_BASE_DIR") ?? string.Empty, "NXBIN", "managed", assemblyName.Name + ".dll");
+                }
+
+                if (File.Exists(UGMANAGEDPATH))
+                {
+                    return Assembly.LoadFile(UGMANAGEDPATH);
+                }
+            }
             return null; 
         }
 
