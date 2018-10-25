@@ -99,6 +99,27 @@ namespace CSharpProxy
             }
             return result;
         }
+
+        public static object ExecuteMothod(AppDomain _appDomain,string actionName, string baseDirectory, IntPtr hWnd, string methodName = "Main")
+        {
+            object result = null;
+            try
+            {
+                var args = new string[] { actionName };
+                var location = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                ProxyObject po = (ProxyObject)_appDomain.CreateInstanceFromAndUnwrap(location, typeof(ProxyObject).FullName);
+                //IntPtr hWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+                po.WindowPH = hWnd;
+                po.LoadAssembly(location);
+                result = po.Invoke(typeof(NxOpenHelper).FullName, "Main", methodName, args);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return result;
+        }
+
         public static object ExecuteMothod(string actionName, string baseDirectory, IntPtr hWnd, string methodName= "Main")
         {
             object result = null;

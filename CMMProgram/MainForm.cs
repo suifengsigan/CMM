@@ -94,20 +94,17 @@ namespace CMMProgram
             }
         }
 
+        AppDomain _appDomain;
         public object ExecuteMothod(string actionName, string baseDirectory, IntPtr hWnd, string methodName = "Main")
         {
             object result = null;
-            if (CSharpProxy.ProxyObject.Instance == null)
+            if (_appDomain == null)
             {
-                var po = new CSharpProxy.ProxyObject();
-                po.WindowPH = hWnd;
+                var setup = new AppDomainSetup();
+                setup.ApplicationBase = baseDirectory;
+                _appDomain = AppDomain.CreateDomain(actionName, null, setup);
             }
-            else
-            {
-                CSharpProxy.ProxyObject.Instance.WindowPH = hWnd;
-            }
-            var helper = new CSharpProxy.NxOpenHelper();
-            result = helper.Main(methodName, new string[] { actionName });
+            result = CSharpProxy.ProxyObject.ExecuteMothod(_appDomain, actionName, baseDirectory, hWnd, methodName);
             return result;
         }
 
