@@ -16,10 +16,11 @@ namespace CMMToolEx
         /// <summary>
         /// 显示用户配置
         /// </summary>
-        public static void ShowEactConfig()
+        public static int ShowEactConfig()
         {
             AssemblyLoader.Entry.InitAssembly();
             CMMTool.Program.ShowEactConfig();
+            return 0;
         }
         
         public static int GetUnloadOption(string arg)
