@@ -84,7 +84,14 @@ namespace CMMProgram
                 }
             }
             actionNameStr = Path.Combine(path, actionNameStr);
-            return CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, _windowPtr, methodName);
+            if (System.Configuration.ConfigurationManager.AppSettings.Get("IsAppDomain") == "0")
+            {
+                return ExecuteMothod(actionNameStr, path, _windowPtr, methodName);
+            }
+            else
+            {
+                return CSharpProxy.ProxyObject.ExecuteMothod(actionNameStr, path, _windowPtr, methodName);
+            }
         }
 
         public object ExecuteMothod(string actionName, string baseDirectory, IntPtr hWnd, string methodName = "Main")
