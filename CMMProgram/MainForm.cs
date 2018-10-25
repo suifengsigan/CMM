@@ -90,8 +90,15 @@ namespace CMMProgram
         public object ExecuteMothod(string actionName, string baseDirectory, IntPtr hWnd, string methodName = "Main")
         {
             object result = null;
-            var dd = new CSharpProxy.ProxyObject();
-            dd.WindowPH = hWnd;
+            if (CSharpProxy.ProxyObject.Instance == null)
+            {
+                var po = new CSharpProxy.ProxyObject();
+                po.WindowPH = hWnd;
+            }
+            else
+            {
+                CSharpProxy.ProxyObject.Instance.WindowPH = hWnd;
+            }
             var helper = new CSharpProxy.NxOpenHelper();
             result = helper.Main(methodName, new string[] { actionName });
             return result;
