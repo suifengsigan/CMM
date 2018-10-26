@@ -95,16 +95,22 @@ namespace CMMProgram
         }
 
         AppDomain _appDomain;
+        EactThread _eactThread = new EactThread();
         public object ExecuteMothod(string actionName, string baseDirectory, IntPtr hWnd, string methodName = "Main")
         {
             object result = null;
             if (_appDomain == null)
             {
-                var setup = new AppDomainSetup();
-                setup.ApplicationBase = baseDirectory;
-                _appDomain = AppDomain.CreateDomain(actionName, null, setup);
+                _appDomain = (AppDomain)_eactThread.Run(() => {
+                    var setup = new AppDomainSetup();
+                    setup.ApplicationBase = baseDirectory;
+                    var appDomain = AppDomain.CreateDomain(actionName, null, setup);
+                    return appDomain;
+                });
             }
-            result = CSharpProxy.ProxyObject.ExecuteMothod(_appDomain, actionName, baseDirectory, hWnd, methodName);
+            result = _eactThread.Run(() => {
+                return CSharpProxy.ProxyObject.ExecuteMothod(_appDomain, actionName, baseDirectory, hWnd, methodName);
+            });
             return result;
         }
 
