@@ -61,6 +61,12 @@ namespace AutoCAMUI
             ufSession.Ncgeom.Create(AUTOCAM_TYPE.mill_planar, AUTOCAM_SUBTYPE.WORKPIECE, out workGeometryGroupTag);
             ufSession.Obj.SetName(workGeometryGroupTag, AUTOCAM_ROOTNAME.WORKPIECE_EACT);
             ufSession.Ncgroup.AcceptMember(workMcsGroupTag, workGeometryGroupTag);
+
+            //TODO 创建程序
+            NXOpen.Tag programGroupTag;
+            ufSession.Ncprog.Create(AUTOCAM_TYPE.mill_planar, AUTOCAM_SUBTYPE.PROGRAM, out programGroupTag);
+            ufSession.Obj.SetName(programGroupTag, AUTOCAM_ROOTNAME.PROGRAM_EACT);
+            ufSession.Ncgroup.AcceptMember(orderGroupRootTag, programGroupTag);
         }
     }
 
@@ -73,11 +79,13 @@ namespace AutoCAMUI
     {
         public const string GEOM_EACT = "GEOM_EACT";
         public const string WORKPIECE_EACT = "WORKPIECE_EACT";
+        public const string PROGRAM_EACT = "PROGRAM_EACT";
     }
 
     public class AUTOCAM_SUBTYPE
     {
         public const string MCS = "MCS";
         public const string WORKPIECE = "WORKPIECE";
+        public const string PROGRAM = "PROGRAM";
     }
 }
