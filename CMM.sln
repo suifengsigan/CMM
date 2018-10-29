@@ -29,6 +29,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdmDraw", "EdmDrawUI\EdmDra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMProgramX86", "CMMProgramX86\CMMProgramX86.csproj", "{0CBAA42F-3B52-476A-87A8-3124053D0EA7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCAM", "AutoCAM\AutoCAM.csproj", "{7CE3E0D0-C086-49BF-A732-E2B169CDB984}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCAMUI", "AutoCAMUI\AutoCAMUI.csproj", "{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,14 @@ Global
 		{0CBAA42F-3B52-476A-87A8-3124053D0EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CBAA42F-3B52-476A-87A8-3124053D0EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CBAA42F-3B52-476A-87A8-3124053D0EA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CE3E0D0-C086-49BF-A732-E2B169CDB984}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CE3E0D0-C086-49BF-A732-E2B169CDB984}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CE3E0D0-C086-49BF-A732-E2B169CDB984}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE3E0D0-C086-49BF-A732-E2B169CDB984}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
