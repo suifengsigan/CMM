@@ -220,7 +220,7 @@ namespace CMMProgram
                         Console.WriteLine(ex.Message);
                     }
 
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                 }
 
             }));
@@ -260,7 +260,7 @@ namespace CMMProgram
                             Console.WriteLine(ex.Message);
                         }
 
-                        Thread.Sleep(1000);
+                        Thread.Sleep(2000);
                     }
                 }
                 catch (Exception ex)
