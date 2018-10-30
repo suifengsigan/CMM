@@ -79,9 +79,9 @@ namespace AutoCAMUI
         /// 创建刀具
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<CAMCutter, NXOpen.Tag> CreateCutter(List<CAMCutter> cutters, NXOpen.Tag cutterGroupRootTag)
+        public static List<CAMCutter> CreateCutter(List<CAMCutter> cutters, NXOpen.Tag cutterGroupRootTag)
         {
-            var result = new Dictionary<CAMCutter, NXOpen.Tag>();
+            var result = new List<CAMCutter>();
             foreach (var item in cutters)
             {
                 NXOpen.Tag cutterTag;
@@ -89,7 +89,8 @@ namespace AutoCAMUI
                 ufSession.Ncgroup.AcceptMember(cutterGroupRootTag, cutterTag);
                 ufSession.Obj.SetName(cutterTag, item.CutterName);
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_DIAMETER, item.TL_DIAMETER);
-                result.Add(item, cutterTag);
+                item.CutterTag = cutterTag;
+                result.Add(item);
             }
             return result;
         }
@@ -148,6 +149,31 @@ namespace AutoCAMUI
         public static void ShowCutterPath(NXOpen.Tag operTag)
         {
             ufSession.Param.ReplayPath(operTag);
+        }
+
+        /// <summary>
+        /// 设置参考刀具
+        /// </summary>
+        public static void SetReferenceCutter(NXOpen.Tag operTag,NXOpen.Tag refCutterTag)
+        {
+            ufSession.Oper.SetRefCutter(operTag, refCutterTag);
+        }
+
+
+        /// <summary>
+        /// 显示编辑的对话框
+        /// </summary>
+        public static void ShowEditDialog(NXOpen.Tag tag, Action action = null)
+        {
+            int dialogResponse;
+            ufSession.UiParam.EditObject(tag, out dialogResponse);
+            if (dialogResponse == NXOpen.UF.UFConstants.UF_UI_APPLY || dialogResponse == NXOpen.UF.UFConstants.UF_UI_OK)
+            {
+                if (action != null)
+                {
+                    action();
+                }
+            }
         }
 
         /// <summary>
