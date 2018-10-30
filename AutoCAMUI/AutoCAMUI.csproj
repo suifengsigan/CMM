@@ -65,7 +65,9 @@
   <ItemGroup>
     <Compile Include="CAMCutter.cs" />
     <Compile Include="CAMOper.cs" />
+    <Compile Include="EleAutoCamUI.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="UIBusiness.cs" />
     <Compile Include="Upload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

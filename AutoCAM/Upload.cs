@@ -9,7 +9,8 @@ namespace AutoCAM
     {
         public static void Main()
         {
-
+            AssemblyLoader.Entry.InitAssembly();
+            AutoCAMUI.Upload.Main();
         }
         public static int GetUnloadOption(string arg)
         {

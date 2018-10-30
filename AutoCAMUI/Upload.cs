@@ -9,7 +9,7 @@ namespace AutoCAMUI
     {
         public static void Main()
         {
-
+            new EleAutoCamUI().Show();
         }
         public static int GetUnloadOption(string arg)
         {
