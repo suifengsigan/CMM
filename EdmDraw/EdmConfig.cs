@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -122,22 +123,27 @@ namespace EdmDraw
             /// <summary>
             /// 视图类型
             /// </summary>
+            [DisplayName("视图类型")]
             public string ViewType { get; set; }
             /// <summary>
             /// 长
             /// </summary>
+            [DisplayName("长")]
             public double SizeX { get; set; }
             /// <summary>
             /// 宽
             /// </summary>
+            [DisplayName("宽")]
             public double SizeY { get; set; }
             /// <summary>
             /// 位置X
             /// </summary>
+            [DisplayName("位置X")]
             public double LocationX { get; set; }
             /// <summary>
             /// 位置Y
             /// </summary>
+            [DisplayName("位置Y")]
             public double LocationY { get; set; }
         }
 

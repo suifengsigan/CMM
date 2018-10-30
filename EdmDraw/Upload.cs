@@ -16,6 +16,9 @@ namespace EdmDraw
             var uc = new UCEdmConfig();
             uc.Dock = System.Windows.Forms.DockStyle.Fill;
             configFrm.Controls.Add(uc);
+            configFrm.FormClosing += (o, e) => {
+                uc.Save();
+            };
             configFrm.ShowDialog();
             new EdmDrawUI().Show();
         }
