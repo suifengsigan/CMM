@@ -71,6 +71,16 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtTableInfoX = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtTableInfoRowH = new System.Windows.Forms.TextBox();
+            this.txtTableInfoY = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtTableInfoColW = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -85,6 +95,7 @@
             this.panel4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -374,6 +385,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.cbbEdmTemplate);
             this.tabPage2.Controls.Add(this.label18);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -522,6 +534,106 @@
             this.dataGridView3.Size = new System.Drawing.Size(912, 186);
             this.dataGridView3.TabIndex = 0;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.txtTableInfoColW);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.txtTableInfoY);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.txtTableInfoRowH);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.txtTableInfoX);
+            this.groupBox3.Location = new System.Drawing.Point(76, 86);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(623, 164);
+            this.groupBox3.TabIndex = 33;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "表格";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(42, 36);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(29, 12);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "位置";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtTableInfoX
+            // 
+            this.txtTableInfoX.Location = new System.Drawing.Point(209, 33);
+            this.txtTableInfoX.Name = "txtTableInfoX";
+            this.txtTableInfoX.Size = new System.Drawing.Size(46, 21);
+            this.txtTableInfoX.TabIndex = 16;
+            this.txtTableInfoX.Text = "216";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(42, 80);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(29, 12);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "行高";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtTableInfoRowH
+            // 
+            this.txtTableInfoRowH.Location = new System.Drawing.Point(164, 77);
+            this.txtTableInfoRowH.Name = "txtTableInfoRowH";
+            this.txtTableInfoRowH.Size = new System.Drawing.Size(285, 21);
+            this.txtTableInfoRowH.TabIndex = 22;
+            this.txtTableInfoRowH.Text = "15";
+            // 
+            // txtTableInfoY
+            // 
+            this.txtTableInfoY.Location = new System.Drawing.Point(403, 33);
+            this.txtTableInfoY.Name = "txtTableInfoY";
+            this.txtTableInfoY.Size = new System.Drawing.Size(46, 21);
+            this.txtTableInfoY.TabIndex = 24;
+            this.txtTableInfoY.Text = "15";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(162, 36);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(11, 12);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "X";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(355, 36);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(11, 12);
+            this.label19.TabIndex = 26;
+            this.label19.Text = "Y";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(42, 122);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(29, 12);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "列宽";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtTableInfoColW
+            // 
+            this.txtTableInfoColW.Location = new System.Drawing.Point(164, 119);
+            this.txtTableInfoColW.Name = "txtTableInfoColW";
+            this.txtTableInfoColW.Size = new System.Drawing.Size(285, 21);
+            this.txtTableInfoColW.TabIndex = 27;
+            this.txtTableInfoColW.Text = "15";
+            // 
             // UCEdmConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -545,6 +657,8 @@
             this.panel4.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -594,5 +708,15 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox txtTableInfoX;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtTableInfoRowH;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox txtTableInfoColW;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtTableInfoY;
     }
 }

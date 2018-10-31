@@ -176,6 +176,24 @@ partial class EdmDrawUI : SnapEx.BaseUI
                     break;
             }
         }
+
+        CreateTable(edmConfig, new List<ElecManage.Electrode> { electrode });
+    }
+
+    /// <summary>
+    /// 创建表格
+    /// </summary>
+    void CreateTable(EdmDraw.EdmConfig edmConfig,List<ElecManage.Electrode> elecs)
+    {
+        //创建表格
+        var tableInfo = edmConfig.Table;
+        EdmDraw.DrawBusiness.CreateTabnot(
+            new Snap.Position(tableInfo.locationX, tableInfo.locationY),
+            elecs.Count + 1,
+            tableInfo.ColumnInfos.Count,
+            tableInfo.RowHeight,
+            tableInfo.ColumnWidth
+            );
     }
 
     void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)

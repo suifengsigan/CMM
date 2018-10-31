@@ -75,6 +75,10 @@ namespace EdmDraw
         /// 电极信息
         /// </summary>
         public List<PropertyInfo> PropertyInfos = new List<PropertyInfo>();
+        /// <summary>
+        /// 表格信息
+        /// </summary>
+        public TableInfo Table = new TableInfo();
 
         /// <summary>
         /// 表格信息
@@ -111,7 +115,9 @@ namespace EdmDraw
             /// <summary>
             /// 显示名称
             /// </summary>
+            [DisplayName("属性名称")]
             public string DisplayName { get;set; }
+            [DisplayName("类型")]
             public string Ex { get; set; }
         }
 

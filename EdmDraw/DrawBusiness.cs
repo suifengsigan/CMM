@@ -117,7 +117,7 @@ namespace EdmDraw
         /// <summary>
         /// 创建表格
         /// </summary>
-        public static void CreateTabnot(Snap.Position origin,int rowCount,int columnCount,double columnWidth,double rowHeight) 
+        public static void CreateTabnot(Snap.Position origin,int rowCount,int columnCount,double rowHeight,double columnWidth) 
         {
             var workPart = Snap.Globals.WorkPart.NXOpenPart;
             var theUFSession = NXOpen.UF.UFSession.GetUFSession();
