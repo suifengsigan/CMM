@@ -41,10 +41,10 @@ namespace EdmDraw
         /// <summary>
         /// 创建C角
         /// </summary>
-        public static void CreatePentagon(Snap.Position pos,QuadrantType type) 
+        public static void CreatePentagon(Snap.Position pos,QuadrantType type,double width=3,double height=2) 
         {
-            var temp = 1.5;
-            var temp2 = 1;
+            var temp = width / 2;
+            var temp2 = height / 2;
             var points = new List<Snap.Position>();
             var leftUP = new Snap.Position(pos.X - temp, pos.Y + temp);
             var rightUP = new Snap.Position(pos.X + temp, pos.Y + temp);

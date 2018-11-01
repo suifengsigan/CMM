@@ -187,6 +187,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
     {
         //创建表格
         var tableInfo = edmConfig.Table;
+        var columnInfos = tableInfo.ColumnInfos;
         EdmDraw.DrawBusiness.CreateTabnot(
             new Snap.Position(tableInfo.locationX, tableInfo.locationY),
             elecs.Count + 1,
@@ -194,6 +195,18 @@ partial class EdmDrawUI : SnapEx.BaseUI
             tableInfo.RowHeight,
             tableInfo.ColumnWidth
             );
+
+        foreach (var item in elecs)
+        {
+            foreach (var columnInfo in columnInfos)
+            {
+                var index = columnInfos.IndexOf(columnInfo);
+                if (columnInfo.Ex == "1")
+                {
+                    EdmDraw.DrawBusiness.CreatePentagon(new Snap.Position(),item.GetQuadrantType());
+                }
+            }
+        }
     }
 
     void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)
