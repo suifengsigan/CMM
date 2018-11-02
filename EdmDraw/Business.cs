@@ -198,12 +198,18 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
         foreach (var item in elecs)
         {
+            var elecIndex = elecs.IndexOf(item)+1;
             foreach (var columnInfo in columnInfos)
             {
                 var index = columnInfos.IndexOf(columnInfo);
                 if (columnInfo.Ex == "1")
                 {
-                    EdmDraw.DrawBusiness.CreatePentagon(new Snap.Position(),item.GetQuadrantType());
+                    EdmDraw.DrawBusiness.CreatePentagon(
+                        new Snap.Position(tableInfo.locationX+((index* tableInfo.ColumnWidth)+ tableInfo.ColumnWidth/2), tableInfo.locationY-((elecIndex * tableInfo.RowHeight) + tableInfo.RowHeight / 2))
+                        ,item.GetQuadrantType()
+                        , tableInfo.ColumnWidth * 2 / 3
+                        , tableInfo.RowHeight * 2 / 3
+                        );
                 }
             }
         }

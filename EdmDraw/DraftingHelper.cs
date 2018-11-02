@@ -8,9 +8,15 @@ namespace EdmDraw
     public class DraftingHelper
     {
         static NXOpen.UF.UFSession _ufSession = NXOpen.UF.UFSession.GetUFSession();
-        public static void SetTabularColumnWidth(int col,double width, NXOpen.Tag tag)
+        public static void SetTabularColumnWidth(int col, double width, NXOpen.Tag tag)
         {
-            _ufSession.Draw.WriteTabnotColWdt(tag, col+1, width);
+            _ufSession.Draw.WriteTabnotColWdt(tag, col + 1, width);
+        }
+
+
+        public static void SetTabularRowHeight(int row, double width, NXOpen.Tag tag)
+        {
+            _ufSession.Draw.WriteTabnotRowHgt(tag, row + 1, width);
         }
 
         public static void WriteTabularCell(int row, int column, string cellText, NXOpen.Tag tag)

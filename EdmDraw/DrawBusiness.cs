@@ -172,6 +172,12 @@ namespace EdmDraw
                 DraftingHelper.SetTabularColumnWidth(i, columnWidth, tabularNote);
             }
 
+            //设置行高
+            for (int i = 0; i < rowCount; i++)
+            {
+                DraftingHelper.SetTabularRowHeight(i, rowHeight, tabularNote);
+            }
+
             DraftingHelper.WriteTabularCell(0, 0, "N", tabularNote);
             DraftingHelper.WriteTabularCell(0, 1, "X", tabularNote);
             DraftingHelper.WriteTabularCell(0, 2, "Y", tabularNote);
