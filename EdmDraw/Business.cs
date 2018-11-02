@@ -124,7 +124,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             ds,
                             list,
                             new Snap.Position(item.LocationX, item.LocationY),
-                            new Snap.Position(item.SizeX, item.SizeY)
+                            new Snap.Position(item.SizeX, item.SizeY),
+                            electrode
                             );
                     }
                     break;
@@ -216,9 +217,46 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, selections, pos, size);
     }
 
-    void CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)
+    void CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode)
     {
-        var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, selections, pos, size);
+        var frontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, selections, pos, size);
+        var frontViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, frontView);
+        var tempMap = new double[] { 0, 0 };
+        var ufSession = NXOpen.UF.UFSession.GetUFSession();
+        var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, frontView.Tag);
+        var elecBasePoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(electrode.GetElecBasePos()); }, frontView.Tag);
+        ufSession.View.MapModelToDrawing(frontView.Tag, elecBasePoint.Position.Array, tempMap);
+        var basePointMTD = tempMap.ToArray();
+        ufSession.View.MapModelToDrawing(frontView.Tag, originPoint.Position.Array, tempMap);
+        var originPointMTD = tempMap.ToArray();
+        var distance = Snap.Compute.Distance(new Snap.Position(tempMap.First(), tempMap.Last()), frontViewTopMargin);
+        EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+            frontView.Tag,
+            originPoint.NXOpenTag,
+            frontViewTopMargin.NXOpenTag,
+            originPoint.NXOpenTag
+            );
+        //TODO 坐标尺寸位置问题
+        var configData = 8;
+        Snap.Vector v = new Snap.Vector(distance, 0);
+        Snap.Vector v1 = new Snap.Vector(distance, configData);
+        var angle = Snap.Vector.Angle(v, v1);
+        Snap.Position? origin = null;
+        if (basePointMTD.Last() > originPointMTD.Last())
+        {
+            var line = frontViewTopMargin as Snap.NX.Line;
+            origin = new Snap.Position(line.StartPoint.X, originPointMTD.Last() + (configData * 2));
+        }
+        var frontViewOrddimension = EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+            frontView.Tag,
+            originPoint.NXOpenTag,
+            frontViewTopMargin.NXOpenTag,
+            elecBasePoint.NXOpenTag,
+            angle,
+            origin
+            );
+
+        EdmDraw.DrawBusiness.SetToleranceType(frontViewOrddimension);
     }
 
     void CreateEACT_BOTTOM_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode)
