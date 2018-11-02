@@ -178,10 +178,10 @@ namespace EdmDraw
                 DraftingHelper.SetTabularRowHeight(i, rowHeight, tabularNote);
             }
 
-            DraftingHelper.WriteTabularCell(0, 0, "N", tabularNote);
-            DraftingHelper.WriteTabularCell(0, 1, "X", tabularNote);
-            DraftingHelper.WriteTabularCell(0, 2, "Y", tabularNote);
-            DraftingHelper.WriteTabularCell(0, 3, "Z", tabularNote);
+            DraftingHelper.WriteTabularCell(0, 0, "N", tabularNote, rowHeight / 2);
+            DraftingHelper.WriteTabularCell(0, 1, "X", tabularNote, rowHeight / 2);
+            DraftingHelper.WriteTabularCell(0, 2, "Y", tabularNote, rowHeight / 2);
+            DraftingHelper.WriteTabularCell(0, 3, "Z", tabularNote, rowHeight / 2);
 
 
             DraftingHelper.UpdateTabularNote(tabularNote);
