@@ -134,7 +134,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             ds,
                             new List<TaggedObject> { selectedObj },
                             new Snap.Position(item.LocationX, item.LocationY),
-                            new Snap.Position(item.SizeX, item.SizeY)
+                            new Snap.Position(item.SizeX, item.SizeY),
+                            electrode
                             );
                     }
                     break;
@@ -220,15 +221,29 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, selections, pos, size);
     }
 
-    void CreateEACT_BOTTOM_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)
+    void CreateEACT_BOTTOM_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode)
     {
-        var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_FRONT).Tag, selections, pos, size);
+        var bottomFrontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_FRONT).Tag, selections, pos, size);
+        var baseFace = electrode.BaseFace;
+        var bottomFrontViewBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomFrontView, electrode.ElecBody);
+
+        var bottomFrontViewTopPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomFrontViewBorderPoints[3]); }, bottomFrontView.Tag);
+        var bottomFrontViewBottomPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomFrontViewBorderPoints[2]); }, bottomFrontView.Tag);
+        //电极前视图
+        EdmDraw.DrawBusiness.CreateVerticalDim(
+            bottomFrontView.Tag,
+            bottomFrontViewTopPoint.NXOpenTag,
+            bottomFrontViewBottomPoint.NXOpenTag,
+            new Snap.Position(bottomFrontView.GetDrawingReferencePoint().X + (EdmDraw.DrawBusiness.GetBorderSize(bottomFrontView.Tag).X / 2), bottomFrontView.GetDrawingReferencePoint().Y));
+
+        EdmDraw.DrawBusiness.CreateVerticalDim(bottomFrontView.Tag, baseFace.NXOpenTag, bottomFrontViewBottomPoint.NXOpenTag,
+            new Snap.Position(bottomFrontView.GetDrawingReferencePoint().X - (EdmDraw.DrawBusiness.GetBorderSize(bottomFrontView.Tag).X / 2), bottomFrontView.GetDrawingReferencePoint().Y));
     }
 
     void CreateEACT_BOTTOMView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size,ElecManage.Electrode electrode)
     {
         var bottomView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM).Tag, selections, pos, size);
-        var bottomViewBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomView, selections.First() as NXOpen.Body);
+        var bottomViewBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomView, electrode.ElecBody);
 
         var yPlusSideFace = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomViewBorderPoints[1]); }, bottomView.Tag);
         var yMinusSideFace = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomViewBorderPoints[0]); }, bottomView.Tag);
