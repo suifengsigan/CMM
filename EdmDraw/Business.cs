@@ -276,23 +276,29 @@ partial class EdmDrawUI : SnapEx.BaseUI
             );
         });
 
-        var listY = new List<double>();
-        var listX = new List<double>();
-        var temPoints = borderPoints.ToList();
-        temPoints.Add(originPoint.Position);
-        borderPoints.OrderByDescending(u => u.Y).ToList().ForEach(u => {
-            listY.Add(u.Y);
-        });
-        borderPoints.OrderBy(u => u.X).ToList().ForEach(u => {
-            listX.Add(u.X);
-        });
-        listY = listY.Distinct().ToList();
-        listX = listX.Distinct().ToList();
-
         var tempMap = new double[] { 0, 0 };
         var ufSession = NXOpen.UF.UFSession.GetUFSession();
         ufSession.View.MapModelToDrawing(topView.Tag, originPoint.Position.Array, tempMap);
         var originPointMTD = tempMap.ToArray();
+
+        var listY = new List<double>();
+        var listX = new List<double>();
+        var temPoints = new List<Snap.Position>();
+        temPoints.Add(new Snap.Position(originPointMTD[0], originPointMTD[1]));
+        borderPoints.ForEach(u => {
+            ufSession.View.MapModelToDrawing(topView.Tag, u.Array, tempMap);
+            var borderPointMTD = tempMap.ToArray();
+            temPoints.Add(new Snap.Position(borderPointMTD[0], borderPointMTD[1]));
+        });
+        temPoints.OrderByDescending(u => u.Y).ToList().ForEach(u => {
+            listY.Add(u.Y);
+        });
+        temPoints.OrderBy(u => u.X).ToList().ForEach(u => {
+            listX.Add(u.X);
+        });
+        listY = listY.Distinct().ToList();
+        listX = listX.Distinct().ToList();
+       
 
         var tempDic = new Dictionary<ElecManage.PositioningInfo, Snap.NX.Point>();
         positionings.ForEach(p => {
