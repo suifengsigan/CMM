@@ -94,11 +94,30 @@ partial class EdmDrawUI : SnapEx.BaseUI
         EdmDraw.DrawBusiness.SetDrawSheetLayer(ds, 254);
 
         //获取电极信息
-        var electrode = ElecManage.Electrode.GetElectrode(selectedObj);
-        if (electrode == null)
+        var positionings = new List<ElecManage.PositioningInfo>();
+        ElecManage.Electrode electrode = null;
+        Snap.Globals.WorkPart.Bodies.Where(u => selectedObj.Layer == u.Layer && selectedObj.Name == u.Name).ToList().ForEach(u => {
+            var info = ElecManage.Electrode.GetElectrode(u);
+            if (info != null)
+            {
+                var positioning = new ElecManage.PositioningInfo();
+                positioning.Electrode = info;
+                var pos = info.GetElecBasePos();
+                pos = Snap.NX.CoordinateSystem.MapAcsToWcs(pos);
+                positioning.X = Math.Round(pos.X, 4);
+                positioning.Y = Math.Round(pos.Y, 4);
+                positioning.Z = Math.Round(pos.Z, 4);
+                positioning.QuadrantType = info.GetQuadrantType();
+                positionings.Add(positioning);
+            }
+        });
+        if (positionings.Count<=0)
         {
             throw new Exception("无法识别该电极！");
         }
+
+        electrode = positionings.FirstOrDefault().Electrode;
+        selectedObj = electrode.ElecBody;
         electrode.InitAllFace();
 
         var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
@@ -114,7 +133,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             ds,
                             list, 
                             new Snap.Position(item.LocationX,item.LocationY),
-                            new Snap.Position(item.SizeX,item.SizeY)
+                            new Snap.Position(item.SizeX,item.SizeY),
+                            positionings
                             );
                     }
                     break;
@@ -212,7 +232,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         }
     }
 
-    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)
+    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings)
     {
         var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, selections, pos, size);
     }
