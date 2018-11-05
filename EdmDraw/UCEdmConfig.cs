@@ -30,10 +30,11 @@ namespace EdmDraw
             var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EdmTemplate");
             if (System.IO.Directory.Exists(path))
             {
-                _paramFileList = System.IO.Directory.GetFiles(path).ToList();
-                _paramFileList.ForEach(u =>
+                System.IO.Directory.GetFiles(path).ToList().ForEach(u =>
                 {
-                    cbbEdmTemplate.Items.Add(System.IO.Path.GetFileNameWithoutExtension(u));
+                    var fileName = System.IO.Path.GetFileNameWithoutExtension(u);
+                    cbbEdmTemplate.Items.Add(fileName);
+                    _paramFileList.Add(fileName);
                 });
             }
 
@@ -47,6 +48,23 @@ namespace EdmDraw
             txtTableInfoY.Text = tableInfo.locationY.ToString();
             txtTableInfoColW.Text = tableInfo.ColumnWidth.ToString();
             txtTableInfoRowH.Text = tableInfo.RowHeight.ToString();
+
+            cbbEdmTemplate.SelectedIndex = _paramFileList.IndexOf(config.EdmTemplate);
+
+            cbIsUseSystemParam.Checked = config.IsUseSystemConfig;
+            TextMpi88.Text = config.TextMpi88;
+            TextMpr44.Text = config.TextMpr44.ToString();
+            TextMpr46.Text = config.TextMpr46.ToString();
+            TextMpr45.Text = config.TextMpr45.ToString();
+            TextMpi89.Text = config.TextMpi89.ToString();
+            DimensionMpi85.Text = config.DimensionMpi85;
+            DimensionMpi3.Text = config.DimensionMpi3.ToString();
+            DimensionMpr32.Text = config.DimensionMpr32.ToString();
+            DimensionMpr33.Text = config.DimensionMpr33.ToString();
+            DimensionMpr34.Text = config.DimensionMpr34.ToString();
+            DimensionMpi86.Text = config.DimensionMpi86.ToString();
+            cbDimensionMpi90.Checked = config.DimensionMpi90 == 1;
+            
         }
 
         /// <summary>
@@ -62,6 +80,24 @@ namespace EdmDraw
             config.Table.ColumnWidth = double.Parse(txtTableInfoColW.Text);
             config.Table.RowHeight = double.Parse(txtTableInfoRowH.Text);
             config.Table.ColumnInfos = dataGridView1.DataSource as List<EdmConfig.ColumnInfo> ?? new List<EdmConfig.ColumnInfo>();
+
+            config.IsUseSystemConfig = cbIsUseSystemParam.Checked;
+            config.TextMpi88 = TextMpi88.Text;
+            config.TextMpr44 = double.Parse(TextMpr44.Text);
+            config.TextMpr46 = double.Parse(TextMpr46.Text);
+            config.TextMpr45 = double.Parse(TextMpr45.Text);
+            config.TextMpi89 = int.Parse(TextMpi89.Text);
+
+            config.DimensionMpi85 = DimensionMpi85.Text;
+            config.DimensionMpi3 = int.Parse(DimensionMpi3.Text);
+            config.DimensionMpr32 = double.Parse(DimensionMpr32.Text);
+            config.DimensionMpr33 = double.Parse(DimensionMpr33.Text);
+            config.DimensionMpr34 = double.Parse(DimensionMpr34.Text);
+            config.DimensionMpi86 = int.Parse(DimensionMpi86.Text);
+            config.DimensionMpi90 = cbDimensionMpi90.Checked ? 1 : 0;
+
+            config.EdmTemplate = cbbEdmTemplate.SelectedItem.ToString();
+
             WriteConfig(config);
         }
 

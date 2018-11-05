@@ -30,33 +30,43 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.cbIsEDMFaceGetPoint = new System.Windows.Forms.CheckBox();
+            this.cbIsUseSystemParam = new System.Windows.Forms.CheckBox();
+            this.cbDimensionMpi90 = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.DimensionMpi86 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.DimensionMpr33 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.DimensionMpr34 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.DimensionMpr32 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.DimensionMpi3 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.DimensionMpi85 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.TextMpi89 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.txtSafeDistance = new System.Windows.Forms.TextBox();
+            this.TextMpr45 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.txtVerticalValue = new System.Windows.Forms.TextBox();
+            this.TextMpr46 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtRetreatPoint = new System.Windows.Forms.TextBox();
+            this.TextMpr44 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtEntryPoint = new System.Windows.Forms.TextBox();
+            this.TextMpi88 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.txtTableInfoColW = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtTableInfoY = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtTableInfoRowH = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtTableInfoX = new System.Windows.Forms.TextBox();
             this.cbbEdmTemplate = new System.Windows.Forms.ComboBox();
             this.label18 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -71,19 +81,10 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtTableInfoX = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtTableInfoRowH = new System.Windows.Forms.TextBox();
-            this.txtTableInfoY = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.txtTableInfoColW = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -95,7 +96,6 @@
             this.panel4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -113,32 +113,32 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.checkBox1);
-            this.tabPage1.Controls.Add(this.cbIsEDMFaceGetPoint);
+            this.tabPage1.Controls.Add(this.cbIsUseSystemParam);
+            this.tabPage1.Controls.Add(this.cbDimensionMpi90);
             this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.textBox5);
+            this.tabPage1.Controls.Add(this.DimensionMpi86);
             this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.textBox6);
+            this.tabPage1.Controls.Add(this.DimensionMpr33);
             this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.textBox7);
+            this.tabPage1.Controls.Add(this.DimensionMpr34);
             this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.textBox8);
+            this.tabPage1.Controls.Add(this.DimensionMpr32);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.DimensionMpi3);
             this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.textBox2);
+            this.tabPage1.Controls.Add(this.DimensionMpi85);
             this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.textBox3);
+            this.tabPage1.Controls.Add(this.TextMpi89);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.textBox4);
             this.tabPage1.Controls.Add(this.label16);
-            this.tabPage1.Controls.Add(this.txtSafeDistance);
+            this.tabPage1.Controls.Add(this.TextMpr45);
             this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Controls.Add(this.txtVerticalValue);
+            this.tabPage1.Controls.Add(this.TextMpr46);
             this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.txtRetreatPoint);
+            this.tabPage1.Controls.Add(this.TextMpr44);
             this.tabPage1.Controls.Add(this.label13);
-            this.tabPage1.Controls.Add(this.txtEntryPoint);
+            this.tabPage1.Controls.Add(this.TextMpi88);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -147,25 +147,25 @@
             this.tabPage1.Text = "图纸设置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // cbIsUseSystemParam
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(72, 30);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(96, 16);
-            this.checkBox1.TabIndex = 35;
-            this.checkBox1.Text = "使用系统参数";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbIsUseSystemParam.AutoSize = true;
+            this.cbIsUseSystemParam.Location = new System.Drawing.Point(72, 30);
+            this.cbIsUseSystemParam.Name = "cbIsUseSystemParam";
+            this.cbIsUseSystemParam.Size = new System.Drawing.Size(96, 16);
+            this.cbIsUseSystemParam.TabIndex = 35;
+            this.cbIsUseSystemParam.Text = "使用系统参数";
+            this.cbIsUseSystemParam.UseVisualStyleBackColor = true;
             // 
-            // cbIsEDMFaceGetPoint
+            // cbDimensionMpi90
             // 
-            this.cbIsEDMFaceGetPoint.AutoSize = true;
-            this.cbIsEDMFaceGetPoint.Location = new System.Drawing.Point(72, 599);
-            this.cbIsEDMFaceGetPoint.Name = "cbIsEDMFaceGetPoint";
-            this.cbIsEDMFaceGetPoint.Size = new System.Drawing.Size(72, 16);
-            this.cbIsEDMFaceGetPoint.TabIndex = 34;
-            this.cbIsEDMFaceGetPoint.Text = "抑制尾零";
-            this.cbIsEDMFaceGetPoint.UseVisualStyleBackColor = true;
+            this.cbDimensionMpi90.AutoSize = true;
+            this.cbDimensionMpi90.Location = new System.Drawing.Point(72, 599);
+            this.cbDimensionMpi90.Name = "cbDimensionMpi90";
+            this.cbDimensionMpi90.Size = new System.Drawing.Size(72, 16);
+            this.cbDimensionMpi90.TabIndex = 34;
+            this.cbDimensionMpi90.Text = "抑制尾零";
+            this.cbDimensionMpi90.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -177,13 +177,13 @@
             this.label5.Text = "尺寸粗细类型(0,1,2)";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textBox5
+            // DimensionMpi86
             // 
-            this.textBox5.Location = new System.Drawing.Point(192, 558);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(285, 21);
-            this.textBox5.TabIndex = 32;
-            this.textBox5.Text = "10";
+            this.DimensionMpi86.Location = new System.Drawing.Point(192, 558);
+            this.DimensionMpi86.Name = "DimensionMpi86";
+            this.DimensionMpi86.Size = new System.Drawing.Size(285, 21);
+            this.DimensionMpi86.TabIndex = 32;
+            this.DimensionMpi86.Text = "10";
             // 
             // label6
             // 
@@ -195,13 +195,13 @@
             this.label6.Text = "尺寸纵横比";
             this.label6.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textBox6
+            // DimensionMpr33
             // 
-            this.textBox6.Location = new System.Drawing.Point(192, 512);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(285, 21);
-            this.textBox6.TabIndex = 30;
-            this.textBox6.Text = "3";
+            this.DimensionMpr33.Location = new System.Drawing.Point(192, 512);
+            this.DimensionMpr33.Name = "DimensionMpr33";
+            this.DimensionMpr33.Size = new System.Drawing.Size(285, 21);
+            this.DimensionMpr33.TabIndex = 30;
+            this.DimensionMpr33.Text = "3";
             // 
             // label7
             // 
@@ -213,13 +213,13 @@
             this.label7.Text = "尺寸间距因子";
             this.label7.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textBox7
+            // DimensionMpr34
             // 
-            this.textBox7.Location = new System.Drawing.Point(192, 469);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(285, 21);
-            this.textBox7.TabIndex = 28;
-            this.textBox7.Text = "10";
+            this.DimensionMpr34.Location = new System.Drawing.Point(192, 469);
+            this.DimensionMpr34.Name = "DimensionMpr34";
+            this.DimensionMpr34.Size = new System.Drawing.Size(285, 21);
+            this.DimensionMpr34.TabIndex = 28;
+            this.DimensionMpr34.Text = "10";
             // 
             // label8
             // 
@@ -231,13 +231,13 @@
             this.label8.Text = "尺寸字大小";
             this.label8.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textBox8
+            // DimensionMpr32
             // 
-            this.textBox8.Location = new System.Drawing.Point(192, 424);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(285, 21);
-            this.textBox8.TabIndex = 26;
-            this.textBox8.Text = "10";
+            this.DimensionMpr32.Location = new System.Drawing.Point(192, 424);
+            this.DimensionMpr32.Name = "DimensionMpr32";
+            this.DimensionMpr32.Size = new System.Drawing.Size(285, 21);
+            this.DimensionMpr32.TabIndex = 26;
+            this.DimensionMpr32.Text = "10";
             // 
             // label1
             // 
@@ -249,13 +249,13 @@
             this.label1.Text = "尺寸小数点位数";
             this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textBox1
+            // DimensionMpi3
             // 
-            this.textBox1.Location = new System.Drawing.Point(192, 377);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(285, 21);
-            this.textBox1.TabIndex = 24;
-            this.textBox1.Text = "10";
+            this.DimensionMpi3.Location = new System.Drawing.Point(192, 377);
+            this.DimensionMpi3.Name = "DimensionMpi3";
+            this.DimensionMpi3.Size = new System.Drawing.Size(285, 21);
+            this.DimensionMpi3.TabIndex = 24;
+            this.DimensionMpi3.Text = "10";
             // 
             // label2
             // 
@@ -267,13 +267,13 @@
             this.label2.Text = "尺寸字体";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textBox2
+            // DimensionMpi85
             // 
-            this.textBox2.Location = new System.Drawing.Point(192, 331);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(285, 21);
-            this.textBox2.TabIndex = 22;
-            this.textBox2.Text = "3";
+            this.DimensionMpi85.Location = new System.Drawing.Point(192, 331);
+            this.DimensionMpi85.Name = "DimensionMpi85";
+            this.DimensionMpi85.Size = new System.Drawing.Size(285, 21);
+            this.DimensionMpi85.TabIndex = 22;
+            this.DimensionMpi85.Text = "3";
             // 
             // label3
             // 
@@ -285,13 +285,13 @@
             this.label3.Text = "字的粗细类型";
             this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // textBox3
+            // TextMpi89
             // 
-            this.textBox3.Location = new System.Drawing.Point(192, 288);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(285, 21);
-            this.textBox3.TabIndex = 20;
-            this.textBox3.Text = "10";
+            this.TextMpi89.Location = new System.Drawing.Point(192, 288);
+            this.TextMpi89.Name = "TextMpi89";
+            this.TextMpi89.Size = new System.Drawing.Size(285, 21);
+            this.TextMpi89.TabIndex = 20;
+            this.TextMpi89.Text = "10";
             // 
             // label4
             // 
@@ -321,13 +321,13 @@
             this.label16.Text = "纵横比";
             this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // txtSafeDistance
+            // TextMpr45
             // 
-            this.txtSafeDistance.Location = new System.Drawing.Point(192, 199);
-            this.txtSafeDistance.Name = "txtSafeDistance";
-            this.txtSafeDistance.Size = new System.Drawing.Size(285, 21);
-            this.txtSafeDistance.TabIndex = 16;
-            this.txtSafeDistance.Text = "10";
+            this.TextMpr45.Location = new System.Drawing.Point(192, 199);
+            this.TextMpr45.Name = "TextMpr45";
+            this.TextMpr45.Size = new System.Drawing.Size(285, 21);
+            this.TextMpr45.TabIndex = 16;
+            this.TextMpr45.Text = "10";
             // 
             // label15
             // 
@@ -339,13 +339,13 @@
             this.label15.Text = "字间距";
             this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // txtVerticalValue
+            // TextMpr46
             // 
-            this.txtVerticalValue.Location = new System.Drawing.Point(192, 153);
-            this.txtVerticalValue.Name = "txtVerticalValue";
-            this.txtVerticalValue.Size = new System.Drawing.Size(285, 21);
-            this.txtVerticalValue.TabIndex = 14;
-            this.txtVerticalValue.Text = "3";
+            this.TextMpr46.Location = new System.Drawing.Point(192, 153);
+            this.TextMpr46.Name = "TextMpr46";
+            this.TextMpr46.Size = new System.Drawing.Size(285, 21);
+            this.TextMpr46.TabIndex = 14;
+            this.TextMpr46.Text = "3";
             // 
             // label14
             // 
@@ -357,13 +357,13 @@
             this.label14.Text = "字大小";
             this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // txtRetreatPoint
+            // TextMpr44
             // 
-            this.txtRetreatPoint.Location = new System.Drawing.Point(192, 110);
-            this.txtRetreatPoint.Name = "txtRetreatPoint";
-            this.txtRetreatPoint.Size = new System.Drawing.Size(285, 21);
-            this.txtRetreatPoint.TabIndex = 12;
-            this.txtRetreatPoint.Text = "10";
+            this.TextMpr44.Location = new System.Drawing.Point(192, 110);
+            this.TextMpr44.Name = "TextMpr44";
+            this.TextMpr44.Size = new System.Drawing.Size(285, 21);
+            this.TextMpr44.TabIndex = 12;
+            this.TextMpr44.Text = "10";
             // 
             // label13
             // 
@@ -375,13 +375,13 @@
             this.label13.Text = "字体";
             this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // txtEntryPoint
+            // TextMpi88
             // 
-            this.txtEntryPoint.Location = new System.Drawing.Point(192, 68);
-            this.txtEntryPoint.Name = "txtEntryPoint";
-            this.txtEntryPoint.Size = new System.Drawing.Size(285, 21);
-            this.txtEntryPoint.TabIndex = 10;
-            this.txtEntryPoint.Text = "10";
+            this.TextMpi88.Location = new System.Drawing.Point(192, 68);
+            this.TextMpi88.Name = "TextMpi88";
+            this.TextMpi88.Size = new System.Drawing.Size(285, 21);
+            this.TextMpi88.TabIndex = 10;
+            this.TextMpi88.Text = "10";
             // 
             // tabPage2
             // 
@@ -395,6 +395,106 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "放电图纸基本设置";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label20);
+            this.groupBox3.Controls.Add(this.txtTableInfoColW);
+            this.groupBox3.Controls.Add(this.label19);
+            this.groupBox3.Controls.Add(this.label17);
+            this.groupBox3.Controls.Add(this.txtTableInfoY);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.txtTableInfoRowH);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.txtTableInfoX);
+            this.groupBox3.Location = new System.Drawing.Point(76, 86);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(623, 164);
+            this.groupBox3.TabIndex = 33;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "表格";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(42, 122);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(29, 12);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "列宽";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtTableInfoColW
+            // 
+            this.txtTableInfoColW.Location = new System.Drawing.Point(164, 119);
+            this.txtTableInfoColW.Name = "txtTableInfoColW";
+            this.txtTableInfoColW.Size = new System.Drawing.Size(285, 21);
+            this.txtTableInfoColW.TabIndex = 27;
+            this.txtTableInfoColW.Text = "15";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(355, 36);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(11, 12);
+            this.label19.TabIndex = 26;
+            this.label19.Text = "Y";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(162, 36);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(11, 12);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "X";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtTableInfoY
+            // 
+            this.txtTableInfoY.Location = new System.Drawing.Point(403, 33);
+            this.txtTableInfoY.Name = "txtTableInfoY";
+            this.txtTableInfoY.Size = new System.Drawing.Size(46, 21);
+            this.txtTableInfoY.TabIndex = 24;
+            this.txtTableInfoY.Text = "15";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(42, 80);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(29, 12);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "行高";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtTableInfoRowH
+            // 
+            this.txtTableInfoRowH.Location = new System.Drawing.Point(164, 77);
+            this.txtTableInfoRowH.Name = "txtTableInfoRowH";
+            this.txtTableInfoRowH.Size = new System.Drawing.Size(285, 21);
+            this.txtTableInfoRowH.TabIndex = 22;
+            this.txtTableInfoRowH.Text = "15";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(42, 36);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(29, 12);
+            this.label11.TabIndex = 17;
+            this.label11.Text = "位置";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtTableInfoX
+            // 
+            this.txtTableInfoX.Location = new System.Drawing.Point(209, 33);
+            this.txtTableInfoX.Name = "txtTableInfoX";
+            this.txtTableInfoX.Size = new System.Drawing.Size(46, 21);
+            this.txtTableInfoX.TabIndex = 16;
+            this.txtTableInfoX.Text = "216";
             // 
             // cbbEdmTemplate
             // 
@@ -534,106 +634,6 @@
             this.dataGridView3.Size = new System.Drawing.Size(912, 186);
             this.dataGridView3.TabIndex = 0;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label20);
-            this.groupBox3.Controls.Add(this.txtTableInfoColW);
-            this.groupBox3.Controls.Add(this.label19);
-            this.groupBox3.Controls.Add(this.label17);
-            this.groupBox3.Controls.Add(this.txtTableInfoY);
-            this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.txtTableInfoRowH);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.txtTableInfoX);
-            this.groupBox3.Location = new System.Drawing.Point(76, 86);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(623, 164);
-            this.groupBox3.TabIndex = 33;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "表格";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(42, 36);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(29, 12);
-            this.label11.TabIndex = 17;
-            this.label11.Text = "位置";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtTableInfoX
-            // 
-            this.txtTableInfoX.Location = new System.Drawing.Point(209, 33);
-            this.txtTableInfoX.Name = "txtTableInfoX";
-            this.txtTableInfoX.Size = new System.Drawing.Size(46, 21);
-            this.txtTableInfoX.TabIndex = 16;
-            this.txtTableInfoX.Text = "216";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(42, 80);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(29, 12);
-            this.label12.TabIndex = 23;
-            this.label12.Text = "行高";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtTableInfoRowH
-            // 
-            this.txtTableInfoRowH.Location = new System.Drawing.Point(164, 77);
-            this.txtTableInfoRowH.Name = "txtTableInfoRowH";
-            this.txtTableInfoRowH.Size = new System.Drawing.Size(285, 21);
-            this.txtTableInfoRowH.TabIndex = 22;
-            this.txtTableInfoRowH.Text = "15";
-            // 
-            // txtTableInfoY
-            // 
-            this.txtTableInfoY.Location = new System.Drawing.Point(403, 33);
-            this.txtTableInfoY.Name = "txtTableInfoY";
-            this.txtTableInfoY.Size = new System.Drawing.Size(46, 21);
-            this.txtTableInfoY.TabIndex = 24;
-            this.txtTableInfoY.Text = "15";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(162, 36);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(11, 12);
-            this.label17.TabIndex = 25;
-            this.label17.Text = "X";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(355, 36);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(11, 12);
-            this.label19.TabIndex = 26;
-            this.label19.Text = "Y";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(42, 122);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(29, 12);
-            this.label20.TabIndex = 28;
-            this.label20.Text = "列宽";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // txtTableInfoColW
-            // 
-            this.txtTableInfoColW.Location = new System.Drawing.Point(164, 119);
-            this.txtTableInfoColW.Name = "txtTableInfoColW";
-            this.txtTableInfoColW.Size = new System.Drawing.Size(285, 21);
-            this.txtTableInfoColW.TabIndex = 27;
-            this.txtTableInfoColW.Text = "15";
-            // 
             // UCEdmConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -646,6 +646,8 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
@@ -657,8 +659,6 @@
             this.panel4.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -669,37 +669,37 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox DimensionMpi3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox DimensionMpi85;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox TextMpi89;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtSafeDistance;
+        private System.Windows.Forms.TextBox TextMpr45;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox txtVerticalValue;
+        private System.Windows.Forms.TextBox TextMpr46;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txtRetreatPoint;
+        private System.Windows.Forms.TextBox TextMpr44;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox txtEntryPoint;
+        private System.Windows.Forms.TextBox TextMpi88;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox DimensionMpi86;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox DimensionMpr33;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox DimensionMpr34;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.CheckBox cbIsEDMFaceGetPoint;
+        private System.Windows.Forms.TextBox DimensionMpr32;
+        private System.Windows.Forms.CheckBox cbDimensionMpi90;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ComboBox cbbEdmTemplate;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbIsUseSystemParam;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel5;
