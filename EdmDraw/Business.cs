@@ -240,42 +240,11 @@ partial class EdmDrawUI : SnapEx.BaseUI
         });
 
         var topView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, selections, pos, size);
-        var topViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, topView);
-        var topViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Top, topView);
+        var topViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, topView) as Snap.NX.Line;
+        var topViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Top, topView) as Snap.NX.Line;
         var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, topView.Tag);
 
-        EdmDraw.DrawBusiness.CreateVerticalOrddimension(
-                topView.Tag,
-                originPoint.NXOpenTag,
-                topViewTopMargin.NXOpenTag,
-                originPoint.NXOpenTag
-                );
-
-        EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-               topView.Tag,
-               originPoint.NXOpenTag,
-               topViewRightMargin.NXOpenTag,
-               originPoint.NXOpenTag
-               );
-
         var borderPoints = EdmDraw.DrawBusiness.GetBorderPoint(topView, steel);
-        borderPoints.ForEach(u =>
-        {
-            var tempU = EdmDraw.DrawBusiness.CreateNxObject<Snap.NX.Point>(() => { return Snap.Create.Point(u); }, topView.Tag);
-            EdmDraw.DrawBusiness.CreateVerticalOrddimension(
-            topView.Tag,
-            originPoint.NXOpenTag,
-            topViewTopMargin.NXOpenTag,
-            tempU.NXOpenTag
-            );
-
-            EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-            topView.Tag,
-            originPoint.NXOpenTag,
-            topViewRightMargin.NXOpenTag,
-            tempU.NXOpenTag
-            );
-        });
 
         var tempMap = new double[] { 0, 0 };
         var ufSession = NXOpen.UF.UFSession.GetUFSession();
@@ -300,6 +269,48 @@ partial class EdmDrawUI : SnapEx.BaseUI
         listY = listY.Distinct().ToList();
         listX = listX.Distinct().ToList();
 
+        listX.ForEach(u =>
+        {
+            var tempModel = new double[] { 0, 0, 0 };
+            ufSession.View.MapDrawingToModel(topView.Tag, new double[] { u, listY.Max() }, tempModel);
+            var tempU = EdmDraw.DrawBusiness.CreateNxObject<Snap.NX.Point>(() => { return Snap.Create.Point(tempModel); }, topView.Tag);
+            EdmDraw.DrawBusiness.CreateVerticalOrddimension(
+            topView.Tag,
+            originPoint.NXOpenTag,
+            topViewTopMargin.NXOpenTag,
+            tempU.NXOpenTag
+            );
+
+            if (listX.IndexOf(u) == 0)
+            {
+                EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewRightMargin.NXOpenTag,
+                tempU.NXOpenTag
+                );
+            }
+
+        });
+
+        listY.ForEach(u =>
+        {
+            var tempModel = new double[] { 0, 0, 0 };
+            ufSession.View.MapDrawingToModel(topView.Tag, new double[] { listX.Max(), u }, tempModel);
+            var tempU = EdmDraw.DrawBusiness.CreateNxObject<Snap.NX.Point>(() => { return Snap.Create.Point(tempModel); }, topView.Tag);
+            EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+            topView.Tag,
+            originPoint.NXOpenTag,
+            topViewRightMargin.NXOpenTag,
+            tempU.NXOpenTag
+            );
+
+            if (listY.Min() == u)
+            {
+                EdmDraw.DrawBusiness.CreateVerticalOrddimension( topView.Tag, originPoint.NXOpenTag, topViewTopMargin.NXOpenTag, tempU.NXOpenTag
+            );
+            }
+        });
 
         var tempDic = new Dictionary<ElecManage.PositioningInfo, Snap.NX.Point>();
         var tempMTDDic = new Dictionary<ElecManage.PositioningInfo,Snap.Position>();
