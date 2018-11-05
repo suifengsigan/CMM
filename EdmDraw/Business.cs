@@ -229,7 +229,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         }
     }
 
-    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds,Snap.NX.Body steel , Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings, EdmDraw.EdmConfig edmConfig)
+    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, Snap.NX.Body steel, Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings, EdmDraw.EdmConfig edmConfig)
     {
         var selections = new List<TaggedObject>();
         selections.Add(steel);
@@ -276,10 +276,33 @@ partial class EdmDrawUI : SnapEx.BaseUI
             );
         });
 
+        var listY = new List<double>();
+        var listX = new List<double>();
+        var temPoints = borderPoints.ToList();
+        temPoints.Add(originPoint.Position);
+        borderPoints.OrderByDescending(u => u.Y).ToList().ForEach(u => {
+            listY.Add(u.Y);
+        });
+        borderPoints.OrderBy(u => u.X).ToList().ForEach(u => {
+            listX.Add(u.X);
+        });
+        listY = listY.Distinct().ToList();
+        listX = listX.Distinct().ToList();
+
+        var tempMap = new double[] { 0, 0 };
+        var ufSession = NXOpen.UF.UFSession.GetUFSession();
+        ufSession.View.MapModelToDrawing(topView.Tag, originPoint.Position.Array, tempMap);
+        var originPointMTD = tempMap.ToArray();
+
+        var tempDic = new Dictionary<ElecManage.PositioningInfo, Snap.NX.Point>();
         positionings.ForEach(p => {
             var electrode = p.Electrode;
-            var elecBasePoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(electrode.GetElecBasePos()); }, topView.Tag);
+            var elecBasePoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(p.X, p.Y, p.Z); }, topView.Tag);
+            tempDic.Add(p, elecBasePoint);
+        });
 
+        positionings.OrderByDescending(p => tempDic[p].Y).ToList().ForEach(p => {
+            var elecBasePoint = tempDic[p];
             var topViewRightElecBasePoint = EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
                 topView.Tag,
                 originPoint.NXOpenTag,
@@ -288,18 +311,24 @@ partial class EdmDrawUI : SnapEx.BaseUI
                 );
 
             EdmDraw.DrawBusiness.SetToleranceType(topViewRightElecBasePoint);
+        });
 
-           
-
+        positionings.OrderBy(p => tempDic[p].X).ToList().ForEach(p =>
+        {
+            var elecBasePoint = tempDic[p];
+            ufSession.View.MapModelToDrawing(topView.Tag, elecBasePoint.Position.Array, tempMap);
+            var basePointMTD = tempMap.ToArray();
             var topViewTopElecBasePoint = EdmDraw.DrawBusiness.CreateVerticalOrddimension(
                 topView.Tag,
                 originPoint.NXOpenTag,
                 topViewTopMargin.NXOpenTag,
                 elecBasePoint.NXOpenTag
                 );
-
             EdmDraw.DrawBusiness.SetToleranceType(topViewTopElecBasePoint);
+        });
 
+        positionings.ForEach(p => {
+            var elecBasePoint = tempDic[p];
             var borderSize = topView.GetBorderSize();
             var refPoint = topView.GetDrawingReferencePoint();
 
