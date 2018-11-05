@@ -691,7 +691,7 @@ namespace EdmDraw
 
             var dimensionStyle = new Snap.NX.TextStyle();
             dimensionStyle.SetFont(edmConfig.DimensionMpi85, Snap.NX.TextStyle.FontType.NX);
-            dimensionStyle.AlignmentPosition = Snap.NX.TextStyle.AlignmentPositions.MidCenter;
+            dimensionStyle.AlignmentPosition = Snap.NX.TextStyle.AlignmentPositions.TopCenter;
 
             //文字对齐位置 首选项→公共→文字→对齐位置
             mpi[30] = (int)textStyle.AlignmentPosition;
