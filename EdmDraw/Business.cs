@@ -127,7 +127,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
                     {
                         CreateEACT_TOPView(
                             ds,
-                            list, 
+                            steel, 
                             new Snap.Position(item.LocationX,item.LocationY),
                             new Snap.Position(item.SizeX,item.SizeY),
                             positionings
@@ -228,9 +228,79 @@ partial class EdmDrawUI : SnapEx.BaseUI
         }
     }
 
-    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings)
+    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds,Snap.NX.Body steel , Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings)
     {
-        var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, selections, pos, size);
+        var selections = new List<TaggedObject>();
+        selections.Add(steel);
+
+        positionings.ForEach(p => {
+            selections.Add(p.Electrode.ElecBody);
+        });
+
+        var topView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, selections, pos, size);
+        var topViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, topView);
+        var topViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Top, topView);
+        var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, topView.Tag);
+
+        positionings.ForEach(p => {
+            var electrode = p.Electrode;
+            var elecBasePoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(electrode.GetElecBasePos()); }, topView.Tag);
+
+            var topViewRightElecBasePoint = EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewRightMargin.NXOpenTag,
+                elecBasePoint.NXOpenTag
+                );
+
+            EdmDraw.DrawBusiness.SetToleranceType(topViewRightElecBasePoint);
+
+            EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewRightMargin.NXOpenTag,
+                originPoint.NXOpenTag
+                );
+
+            var topViewTopElecBasePoint = EdmDraw.DrawBusiness.CreateVerticalOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewTopMargin.NXOpenTag,
+                elecBasePoint.NXOpenTag
+                );
+
+            EdmDraw.DrawBusiness.SetToleranceType(topViewTopElecBasePoint);
+
+            EdmDraw.DrawBusiness.CreateVerticalOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewTopMargin.NXOpenTag,
+                originPoint.NXOpenTag
+                );
+
+            EdmDraw.DrawBusiness.GetBorderPoint(topView, steel).ForEach(u =>
+            {
+                var tempU = EdmDraw.DrawBusiness.CreateNxObject<Snap.NX.Point>(() => { return Snap.Create.Point(u); }, topView.Tag);
+                EdmDraw.DrawBusiness.CreateVerticalOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewTopMargin.NXOpenTag,
+                tempU.NXOpenTag
+                );
+
+                EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewRightMargin.NXOpenTag,
+                tempU.NXOpenTag
+                );
+            });
+
+            var borderSize = topView.GetBorderSize();
+            var refPoint = topView.GetDrawingReferencePoint();
+
+            EdmDraw.DrawBusiness.CreateIdSymbol("C1", new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
+        });
     }
 
     void CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode)
@@ -353,159 +423,6 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
     public void Test()
     {
-        //var topView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, list, new Snap.Position(56, 72), new Snap.Position(90, 90));
-        //var frontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, list, new Snap.Position(56, 155), new Snap.Position(90, 40));
-        //var bottomFrontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_FRONT).Tag, new List<TaggedObject> { selectedObj }, new Snap.Position(154, 155), new Snap.Position(40, 40));
-        //var bottomView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM).Tag, new List<TaggedObject> { selectedObj }, new Snap.Position(154, 100), new Snap.Position(60, 60));
-        //var bottomIsometricView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_ISOMETRIC).Tag, new List<TaggedObject> { selectedObj }, new Snap.Position(154, 50), new Snap.Position(60, 60));
-        //var isometricView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_ISOMETRIC).Tag, new List<NXOpen.TaggedObject> { steel }, new Snap.Position(220, 58), new Snap.Position(60, 60));
-        //var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, frontView.Tag);
-        //var elecBasePoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(electrode.GetElecBasePos()); }, frontView.Tag);
-
-
-        //var bottomFrontViewBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomFrontView, selectedObj);
-
-        //var bottomFrontViewTopPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomFrontViewBorderPoints[3]); }, bottomFrontView.Tag);
-        //var bottomFrontViewBottomPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomFrontViewBorderPoints[2]); }, bottomFrontView.Tag);
-
-        //var bottomViewBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomView, selectedObj);
-
-        //var yPlusSideFace = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomViewBorderPoints[1]); }, bottomFrontView.Tag);
-        //var yMinusSideFace = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomViewBorderPoints[0]); }, bottomFrontView.Tag);
-        //var xPlusSideFace = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Line(bottomViewBorderPoints[0], bottomViewBorderPoints[1]); }, bottomFrontView.Tag);
-        //var xMinusSideFace = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Line(bottomViewBorderPoints[2], bottomViewBorderPoints[3]); }, bottomFrontView.Tag);
-
-        //var bottomViewElecHeadBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomView, electrodeFaces);
-
-        //var yPlusElectrodeEdge = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomViewElecHeadBorderPoints[1]); }, bottomFrontView.Tag);
-        //var yMinusElectrodeEdge = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomViewElecHeadBorderPoints[0]); }, bottomFrontView.Tag);
-        //var xPlusElectrodeEdge = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Line(bottomViewElecHeadBorderPoints[0], bottomViewElecHeadBorderPoints[1]); }, bottomFrontView.Tag);
-        //var xMinusElectrodeEdge = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Line(bottomViewElecHeadBorderPoints[2], bottomViewElecHeadBorderPoints[3]); }, bottomFrontView.Tag);
-
-
-        ////电极前视图
-        //EdmDraw.DrawBusiness.CreateVerticalDim(
-        //    bottomFrontView.Tag,
-        //    bottomFrontViewTopPoint.NXOpenTag,
-        //    bottomFrontViewBottomPoint.NXOpenTag,
-        //    new Snap.Position(bottomFrontView.GetDrawingReferencePoint().X + (EdmDraw.DrawBusiness.GetBorderSize(bottomFrontView.Tag).X / 2), bottomFrontView.GetDrawingReferencePoint().Y));
-
-        //EdmDraw.DrawBusiness.CreateVerticalDim(bottomFrontView.Tag, baseFace.NXOpenTag, bottomFrontViewBottomPoint.NXOpenTag,
-        //    new Snap.Position(bottomFrontView.GetDrawingReferencePoint().X - (EdmDraw.DrawBusiness.GetBorderSize(bottomFrontView.Tag).X / 2), bottomFrontView.GetDrawingReferencePoint().Y));
-
-        ////电极仰视图
-        //EdmDraw.DrawBusiness.CreateVerticalDim(bottomView.Tag, yPlusSideFace.NXOpenTag, yMinusSideFace.NXOpenTag,
-        //    new Snap.Position(bottomView.GetDrawingReferencePoint().X + (EdmDraw.DrawBusiness.GetBorderSize(bottomView.Tag).X / 2), bottomView.GetDrawingReferencePoint().Y, 0));
-        //EdmDraw.DrawBusiness.CreatePerpendicularDim(bottomView.Tag, xPlusSideFace.NXOpenTag, xMinusSideFace.NXOpenTag,
-        //    new Snap.Position(bottomView.GetDrawingReferencePoint().X, bottomView.GetDrawingReferencePoint().Y + (EdmDraw.DrawBusiness.GetBorderSize(bottomView.Tag).Y / 2), 0));
-
-        //EdmDraw.DrawBusiness.CreateVerticalDim(bottomView.Tag, yPlusElectrodeEdge.NXOpenTag, yMinusElectrodeEdge.NXOpenTag,
-        //    new Snap.Position(bottomView.GetDrawingReferencePoint().X - (EdmDraw.DrawBusiness.GetBorderSize(bottomView.Tag).X / 2), bottomView.GetDrawingReferencePoint().Y, 0));
-        //EdmDraw.DrawBusiness.CreatePerpendicularDim(bottomView.Tag, xPlusElectrodeEdge.NXOpenTag, xMinusElectrodeEdge.NXOpenTag,
-        //   new Snap.Position(bottomView.GetDrawingReferencePoint().X, bottomView.GetDrawingReferencePoint().Y - (EdmDraw.DrawBusiness.GetBorderSize(bottomView.Tag).Y / 2), 0));
-
-        //var frontViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, frontView);
-        //var tempMap = new double[] { 0, 0 };
-        //var ufSession = NXOpen.UF.UFSession.GetUFSession();
-        //ufSession.View.MapModelToDrawing(frontView.Tag, elecBasePoint.Position.Array, tempMap);
-        //var basePointMTD = tempMap.ToArray();
-        //ufSession.View.MapModelToDrawing(frontView.Tag, originPoint.Position.Array, tempMap);
-        //var originPointMTD = tempMap.ToArray();
-        //var distance = Snap.Compute.Distance(new Snap.Position(tempMap.First(), tempMap.Last()), frontViewTopMargin);
-        //EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-        //    frontView.Tag,
-        //    originPoint.NXOpenTag,
-        //    frontViewTopMargin.NXOpenTag,
-        //    originPoint.NXOpenTag
-        //    );
-        ////TODO 坐标尺寸位置问题
-        //var configData = 8;
-        //Snap.Vector v = new Snap.Vector(distance, 0);
-        //Snap.Vector v1 = new Snap.Vector(distance, configData);
-        //var angle = Snap.Vector.Angle(v, v1);
-        //Snap.Position? origin = null;
-        //if (basePointMTD.Last() > originPointMTD.Last())
-        //{
-        //    var line = frontViewTopMargin as Snap.NX.Line;
-        //    origin = new Snap.Position(line.StartPoint.X, originPointMTD.Last() + (configData * 2));
-        //}
-        //var frontViewOrddimension = EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-        //    frontView.Tag,
-        //    originPoint.NXOpenTag,
-        //    frontViewTopMargin.NXOpenTag,
-        //    elecBasePoint.NXOpenTag,
-        //    angle,
-        //    origin
-        //    );
-
-        //EdmDraw.DrawBusiness.SetToleranceType(frontViewOrddimension);
-
-
-
-        //var topViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, topView);
-        //var topViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Top, topView);
-
-        //var topViewRightElecBasePoint = EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-        //    topView.Tag,
-        //    originPoint.NXOpenTag,
-        //    topViewRightMargin.NXOpenTag,
-        //    elecBasePoint.NXOpenTag
-        //    );
-
-        //EdmDraw.DrawBusiness.SetToleranceType(topViewRightElecBasePoint);
-
-        //EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-        //    topView.Tag,
-        //    originPoint.NXOpenTag,
-        //    topViewRightMargin.NXOpenTag,
-        //    originPoint.NXOpenTag
-        //    );
-
-        //var topViewTopElecBasePoint = EdmDraw.DrawBusiness.CreateVerticalOrddimension(
-        //    topView.Tag,
-        //    originPoint.NXOpenTag,
-        //    topViewTopMargin.NXOpenTag,
-        //    elecBasePoint.NXOpenTag
-        //    );
-
-        //EdmDraw.DrawBusiness.SetToleranceType(topViewTopElecBasePoint);
-
-        //EdmDraw.DrawBusiness.CreateVerticalOrddimension(
-        //    topView.Tag,
-        //    originPoint.NXOpenTag,
-        //    topViewTopMargin.NXOpenTag,
-        //    originPoint.NXOpenTag
-        //    );
-
-        //EdmDraw.DrawBusiness.GetBorderPoint(topView, steel).ForEach(u =>
-        //{
-        //    var tempU = EdmDraw.DrawBusiness.CreateNxObject<Snap.NX.Point>(() => { return Snap.Create.Point(u); }, topView.Tag);
-        //    EdmDraw.DrawBusiness.CreateVerticalOrddimension(
-        //    topView.Tag,
-        //    originPoint.NXOpenTag,
-        //    topViewTopMargin.NXOpenTag,
-        //    tempU.NXOpenTag
-        //    );
-
-        //    EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-        //    topView.Tag,
-        //    originPoint.NXOpenTag,
-        //    topViewRightMargin.NXOpenTag,
-        //    tempU.NXOpenTag
-        //    );
-        //});
-
-        //var borderSize = topView.GetBorderSize();
-        //var refPoint = topView.GetDrawingReferencePoint();
-
-        //EdmDraw.DrawBusiness.CreateIdSymbol("C1", new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
-
-        ////注释
-        //EdmDraw.DrawBusiness.CreateNode(selectedObj.Name, new Snap.Position(35, 19));
-
-        ////表格
-        //EdmDraw.DrawBusiness.CreateTabnot(new Snap.Position(216, ds.Height - 1.5), 2, 4, 15, 15);
-
         //EdmDraw.DrawBusiness.CreatePentagon(new Snap.Position(223, ds.Height - 1.5 - 2), QuadrantType.Four);
     }
 
