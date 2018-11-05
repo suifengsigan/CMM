@@ -130,7 +130,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             steel, 
                             new Snap.Position(item.LocationX,item.LocationY),
                             new Snap.Position(item.SizeX,item.SizeY),
-                            positionings
+                            positionings,
+                            edmConfig
                             );
                     }
                     break;
@@ -228,7 +229,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         }
     }
 
-    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds,Snap.NX.Body steel , Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings)
+    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds,Snap.NX.Body steel , Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings, EdmDraw.EdmConfig edmConfig)
     {
         var selections = new List<TaggedObject>();
         selections.Add(steel);
@@ -241,6 +242,39 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var topViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, topView);
         var topViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Top, topView);
         var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, topView.Tag);
+
+        EdmDraw.DrawBusiness.CreateVerticalOrddimension(
+                topView.Tag,
+                originPoint.NXOpenTag,
+                topViewTopMargin.NXOpenTag,
+                originPoint.NXOpenTag
+                );
+
+        EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+               topView.Tag,
+               originPoint.NXOpenTag,
+               topViewRightMargin.NXOpenTag,
+               originPoint.NXOpenTag
+               );
+
+        var borderPoints = EdmDraw.DrawBusiness.GetBorderPoint(topView, steel);
+        borderPoints.ForEach(u =>
+        {
+            var tempU = EdmDraw.DrawBusiness.CreateNxObject<Snap.NX.Point>(() => { return Snap.Create.Point(u); }, topView.Tag);
+            EdmDraw.DrawBusiness.CreateVerticalOrddimension(
+            topView.Tag,
+            originPoint.NXOpenTag,
+            topViewTopMargin.NXOpenTag,
+            tempU.NXOpenTag
+            );
+
+            EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
+            topView.Tag,
+            originPoint.NXOpenTag,
+            topViewRightMargin.NXOpenTag,
+            tempU.NXOpenTag
+            );
+        });
 
         positionings.ForEach(p => {
             var electrode = p.Electrode;
@@ -255,12 +289,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
             EdmDraw.DrawBusiness.SetToleranceType(topViewRightElecBasePoint);
 
-            EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-                topView.Tag,
-                originPoint.NXOpenTag,
-                topViewRightMargin.NXOpenTag,
-                originPoint.NXOpenTag
-                );
+           
 
             var topViewTopElecBasePoint = EdmDraw.DrawBusiness.CreateVerticalOrddimension(
                 topView.Tag,
@@ -270,31 +299,6 @@ partial class EdmDrawUI : SnapEx.BaseUI
                 );
 
             EdmDraw.DrawBusiness.SetToleranceType(topViewTopElecBasePoint);
-
-            EdmDraw.DrawBusiness.CreateVerticalOrddimension(
-                topView.Tag,
-                originPoint.NXOpenTag,
-                topViewTopMargin.NXOpenTag,
-                originPoint.NXOpenTag
-                );
-
-            EdmDraw.DrawBusiness.GetBorderPoint(topView, steel).ForEach(u =>
-            {
-                var tempU = EdmDraw.DrawBusiness.CreateNxObject<Snap.NX.Point>(() => { return Snap.Create.Point(u); }, topView.Tag);
-                EdmDraw.DrawBusiness.CreateVerticalOrddimension(
-                topView.Tag,
-                originPoint.NXOpenTag,
-                topViewTopMargin.NXOpenTag,
-                tempU.NXOpenTag
-                );
-
-                EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-                topView.Tag,
-                originPoint.NXOpenTag,
-                topViewRightMargin.NXOpenTag,
-                tempU.NXOpenTag
-                );
-            });
 
             var borderSize = topView.GetBorderSize();
             var refPoint = topView.GetDrawingReferencePoint();
