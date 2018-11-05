@@ -298,16 +298,23 @@ partial class EdmDrawUI : SnapEx.BaseUI
         });
         listY = listY.Distinct().ToList();
         listX = listX.Distinct().ToList();
-       
+
 
         var tempDic = new Dictionary<ElecManage.PositioningInfo, Snap.NX.Point>();
+        var tempMTDDic = new Dictionary<ElecManage.PositioningInfo,Snap.Position>();
         positionings.ForEach(p => {
             var electrode = p.Electrode;
             var elecBasePoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(p.X, p.Y, p.Z); }, topView.Tag);
             tempDic.Add(p, elecBasePoint);
         });
 
-        positionings.OrderByDescending(p => tempDic[p].Y).ToList().ForEach(p => {
+        positionings.ForEach(p => {
+            ufSession.View.MapModelToDrawing(topView.Tag, tempDic[p].Position.Array, tempMap);
+            var positioningMTD = tempMap.ToArray();
+            tempMTDDic.Add(p, new Snap.Position(positioningMTD[0], positioningMTD[1]));
+        });
+
+        positionings.OrderByDescending(p => tempMTDDic[p].Y).ToList().ForEach(p => {
             var elecBasePoint = tempDic[p];
             var topViewRightElecBasePoint = EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
                 topView.Tag,
@@ -319,16 +326,29 @@ partial class EdmDrawUI : SnapEx.BaseUI
             EdmDraw.DrawBusiness.SetToleranceType(topViewRightElecBasePoint);
         });
 
-        positionings.OrderBy(p => tempDic[p].X).ToList().ForEach(p =>
+        positionings.OrderBy(p => tempMTDDic[p].X).ToList().ForEach(p =>
         {
+            var index = positionings.IndexOf(p);
             var elecBasePoint = tempDic[p];
+            var elecBasePointMTD = tempMTDDic[p];
             ufSession.View.MapModelToDrawing(topView.Tag, elecBasePoint.Position.Array, tempMap);
             var basePointMTD = tempMap.ToArray();
+
+            var line = topViewTopMargin as Snap.NX.Line;
+            var distance = Snap.Compute.Distance(elecBasePointMTD, topViewTopMargin);
+            var maxP = new Snap.Position(listX.Min() + edmConfig.DimensionMpr32 * 2 * (index + 1), line.StartPoint.Y);
+            var minP = new Snap.Position(elecBasePointMTD.X,line.StartPoint.Y);
+            var angle = Snap.Vector.Angle(elecBasePointMTD - minP, elecBasePointMTD - maxP);
+            Snap.Position? origin = null;
+            origin = new Snap.Position(maxP.X, line.StartPoint.Y);
+
             var topViewTopElecBasePoint = EdmDraw.DrawBusiness.CreateVerticalOrddimension(
                 topView.Tag,
                 originPoint.NXOpenTag,
                 topViewTopMargin.NXOpenTag,
-                elecBasePoint.NXOpenTag
+                elecBasePoint.NXOpenTag,
+                angle,
+                origin
                 );
             EdmDraw.DrawBusiness.SetToleranceType(topViewTopElecBasePoint);
         });
