@@ -677,7 +677,7 @@ namespace EdmDraw
         /// <summary>
         /// 制图首选项初始化
         /// </summary>
-        public static void InitPreferences(string fontName, double size, double aspectRatio, double nxTextCharacterSpaceFactor) 
+        public static void InitPreferences(EdmConfig edmConfig) 
         {
             var ufSession = NXOpen.UF.UFSession.GetUFSession();
             int[] mpi=new int[100];
@@ -686,44 +686,53 @@ namespace EdmDraw
             string diameter_value=string.Empty;
             ufSession.Drf.AskPreferences(mpi,mpr,out radius_value,out diameter_value);
             var textStyle = new Snap.NX.TextStyle();
-            textStyle.SetFont(fontName, Snap.NX.TextStyle.FontType.NX);
+            textStyle.SetFont(edmConfig.TextMpi88, Snap.NX.TextStyle.FontType.NX);
             textStyle.AlignmentPosition = Snap.NX.TextStyle.AlignmentPositions.MidCenter;
+
+            var dimensionStyle = new Snap.NX.TextStyle();
+            dimensionStyle.SetFont(edmConfig.DimensionMpi85, Snap.NX.TextStyle.FontType.NX);
+            dimensionStyle.AlignmentPosition = Snap.NX.TextStyle.AlignmentPositions.MidCenter;
 
             //文字对齐位置 首选项→公共→文字→对齐位置
             mpi[30] = (int)textStyle.AlignmentPosition;
             //文字样式 首选项→公共→文字→文本参数→字体(将字体设置为blockfont)
             mpi[88] = textStyle.FontIndex;
             //文字样式 首选项→公共→文字→文本参数→设置字宽(粗细)
-            mpi[89] = 0;
-            //首选项→尺寸→文本→单位→显示后置零(默认显示尾零)
-            mpi[90] = 0;
+            mpi[89] = edmConfig.TextMpi89;
 
             //字大小
-            mpr[44] = 3.5;
+            mpr[44] = edmConfig.TextMpr44;
             //文本长宽比
-            mpr[45] = 0.6;
+            mpr[45] = edmConfig.TextMpr45;
             //字体间距
-            mpr[46] = 1.0;
+            mpr[46] = edmConfig.TextMpr46;
 
             //尺寸小数位数 首选项→尺寸→文本→单位→小数位数
-            mpi[3] = 3;
+            mpi[3] = edmConfig.DimensionMpi3;
+
             //设置公差类型 首选项→尺寸→公差→类型
-            mpi[6] =0;
+            //mpi[6] = edmConfig.DimensionMpi3;
+
             //设置尺寸文本方向 首选项→尺寸→文本→方向和位置→方向
-            mpi[9] = 2;
+            mpi[9] = (int)dimensionStyle.AlignmentPosition; ;
+
             //小数点样式 首选项→尺寸→文本→单位→小数分隔符
-            mpi[16] = 1;
+            //mpi[16] = 1;
+
             //首选项→尺寸→文本→附加文件→设置字体
-            mpi[85] = textStyle.FontIndex;
+            mpi[85] = dimensionStyle.FontIndex;
             //首选项→尺寸→文本→附加文件→设置字宽(粗细)
-            mpi[86] = 0;
+            mpi[86] = edmConfig.DimensionMpi86;
             
             //尺寸字大小
-            mpr[32] = 3.175;
+            mpr[32] = edmConfig.DimensionMpr32;
             //尺寸长宽比
-            mpr[33] = 0.6;
+            mpr[33] = edmConfig.DimensionMpr33;
             //尺寸间距
-            mpr[34] = 1.0;
+            mpr[34] = edmConfig.DimensionMpr34;
+
+            //首选项→尺寸→文本→单位→显示后置零(默认显示尾零)
+            mpi[90] = edmConfig.DimensionMpi90;
 
             ufSession.Drf.SetPreferences(mpi, mpr, radius_value, diameter_value);  
         }

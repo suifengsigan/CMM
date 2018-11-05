@@ -49,9 +49,6 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
         InitModelingView();
 
-        //EdmDraw.DrawBusiness.InitPreferences(3, 2, .8, .1);
-        EdmDraw.DrawBusiness.InitPreferences("blockfont", 2, .8, .1);
-
         CreateDrawingSheet(selectedObj, steel, templateName);
     }
 
@@ -70,14 +67,14 @@ partial class EdmDrawUI : SnapEx.BaseUI
         }
         InitModelingView();
 
-        EdmDraw.DrawBusiness.InitPreferences("blockfont", 2, .8, .1);
-
         CreateDrawingSheet(elecBody, steel,_paramFileList.First());
     }
 
 
     void CreateDrawingSheet(Snap.NX.Body selectedObj, Snap.NX.Body steel, string templateName) 
     {
+        var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
+        EdmDraw.DrawBusiness.InitPreferences(edmConfig);
         var workPart = Snap.Globals.WorkPart;
         var dsName = selectedObj.Name;
         var list = new List<NXOpen.TaggedObject>();
@@ -119,8 +116,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         electrode = positionings.FirstOrDefault().Electrode;
         selectedObj = electrode.ElecBody;
         electrode.InitAllFace();
-
-        var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
+        
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
         foreach (var item in draftViewLocations)
         {
