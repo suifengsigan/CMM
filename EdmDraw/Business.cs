@@ -113,6 +113,11 @@ partial class EdmDrawUI : SnapEx.BaseUI
             throw new Exception("无法识别该电极！");
         }
 
+        foreach (var item in positionings)
+        {
+            item.N = string.Format("C{0}", positionings.IndexOf(item) + 1);
+        }
+
         electrode = positionings.FirstOrDefault().Electrode;
         selectedObj = electrode.ElecBody;
         electrode.InitAllFace();
@@ -208,8 +213,11 @@ partial class EdmDrawUI : SnapEx.BaseUI
             elecs.Count + 1,
             tableInfo.ColumnInfos.Count,
             tableInfo.RowHeight,
-            tableInfo.ColumnWidth
+            tableInfo.ColumnWidth,
+            edmConfig
             );
+
+        
 
         foreach (var item in elecs)
         {
@@ -368,7 +376,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
             var borderSize = topView.GetBorderSize();
             var refPoint = topView.GetDrawingReferencePoint();
 
-            EdmDraw.DrawBusiness.CreateIdSymbol("C1", new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
+            EdmDraw.DrawBusiness.CreateIdSymbol(p.N, new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
         });
     }
 

@@ -117,7 +117,7 @@ namespace EdmDraw
         /// <summary>
         /// 创建表格
         /// </summary>
-        public static void CreateTabnot(Snap.Position origin,int rowCount,int columnCount,double rowHeight,double columnWidth) 
+        public static NXOpen.Tag CreateTabnot(Snap.Position origin,int rowCount,int columnCount,double rowHeight,double columnWidth,EdmConfig edmConfig) 
         {
             var workPart = Snap.Globals.WorkPart.NXOpenPart;
             var theUFSession = NXOpen.UF.UFSession.GetUFSession();
@@ -178,13 +178,14 @@ namespace EdmDraw
                 DraftingHelper.SetTabularRowHeight(i, rowHeight, tabularNote);
             }
 
-            DraftingHelper.WriteTabularCell(0, 0, "N", tabularNote, rowHeight / 2);
-            DraftingHelper.WriteTabularCell(0, 1, "X", tabularNote, rowHeight / 2);
-            DraftingHelper.WriteTabularCell(0, 2, "Y", tabularNote, rowHeight / 2);
-            DraftingHelper.WriteTabularCell(0, 3, "Z", tabularNote, rowHeight / 2);
-
-
+            var columnInfos = edmConfig.Table.ColumnInfos;
+            columnInfos.ForEach(u => {
+                DraftingHelper.WriteTabularCell(0, columnInfos.IndexOf(u), u.DisplayName, tabularNote, rowHeight / 2);
+            });
+            
             DraftingHelper.UpdateTabularNote(tabularNote);
+
+            return tabularNote;
 
             //var tabnot=theUFSession.Tabnot;
             //var section_prefs = new NXOpen.UF.UFTabnot.SectionPrefs();
