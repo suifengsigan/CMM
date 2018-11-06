@@ -460,6 +460,10 @@ namespace EdmDraw
             NXOpen.Tag result;
             theUFSession.Drf.CreateVerticalDim(ref object1, ref object2, ref text, new double[] { origin.X, origin.Y, 0 }, out result);
 
+            var environmentData = new DraftingEnvironmentData();
+            theUFSession.Drf.AskObjectPreferences(result, environmentData.mpi, environmentData.mpr, out environmentData.radiusValue, out environmentData.diameterValue);
+            environmentData.mpi[9] = 3;
+            theUFSession.Drf.SetObjectPreferences(result, environmentData.mpi, environmentData.mpr, environmentData.radiusValue, environmentData.diameterValue);
             return result;
         }
 
@@ -487,7 +491,10 @@ namespace EdmDraw
 
             NXOpen.Tag result;
             theUFSession.Drf.CreatePerpendicularDim(ref object1, ref object2, ref text, new double[] { origin.X, origin.Y, 0 }, out result);
-
+            var environmentData = new DraftingEnvironmentData();
+            theUFSession.Drf.AskObjectPreferences(result, environmentData.mpi, environmentData.mpr, out environmentData.radiusValue, out environmentData.diameterValue);
+            environmentData.mpi[9] = 3;
+            theUFSession.Drf.SetObjectPreferences(result, environmentData.mpi, environmentData.mpr, environmentData.radiusValue, environmentData.diameterValue);
             return result;
         }
 
