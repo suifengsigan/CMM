@@ -183,8 +183,6 @@ namespace EdmDraw
                 DraftingHelper.WriteTabularCell(0, columnInfos.IndexOf(u), u.DisplayName, tabularNote, rowHeight / 2);
             });
             
-            DraftingHelper.UpdateTabularNote(tabularNote);
-
             return tabularNote;
 
             //var tabnot=theUFSession.Tabnot;

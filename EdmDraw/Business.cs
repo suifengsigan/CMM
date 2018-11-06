@@ -197,18 +197,18 @@ partial class EdmDrawUI : SnapEx.BaseUI
             }
         }
 
-        CreateTable(edmConfig, new List<ElecManage.Electrode> { electrode });
+        CreateTable(edmConfig, positionings);
     }
 
     /// <summary>
     /// 创建表格
     /// </summary>
-    void CreateTable(EdmDraw.EdmConfig edmConfig,List<ElecManage.Electrode> elecs)
+    void CreateTable(EdmDraw.EdmConfig edmConfig,List<ElecManage.PositioningInfo> elecs)
     {
         //创建表格
         var tableInfo = edmConfig.Table;
         var columnInfos = tableInfo.ColumnInfos;
-        EdmDraw.DrawBusiness.CreateTabnot(
+        var tabularNote = EdmDraw.DrawBusiness.CreateTabnot(
             new Snap.Position(tableInfo.locationX, tableInfo.locationY),
             elecs.Count + 1,
             tableInfo.ColumnInfos.Count,
@@ -228,14 +228,20 @@ partial class EdmDrawUI : SnapEx.BaseUI
                 if (columnInfo.Ex == "1")
                 {
                     EdmDraw.DrawBusiness.CreatePentagon(
-                        new Snap.Position(tableInfo.locationX+((index* tableInfo.ColumnWidth)+ tableInfo.ColumnWidth/2), tableInfo.locationY-((elecIndex * tableInfo.RowHeight) + tableInfo.RowHeight / 2))
-                        ,item.GetQuadrantType()
+                        new Snap.Position(tableInfo.locationX + ((index * tableInfo.ColumnWidth) + tableInfo.ColumnWidth / 2), tableInfo.locationY - ((elecIndex * tableInfo.RowHeight) + tableInfo.RowHeight / 2))
+                        , item.QuadrantType
                         , tableInfo.ColumnWidth * 2 / 3
                         , tableInfo.RowHeight * 2 / 3
                         );
                 }
+                else
+                {
+                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(item, columnInfo.DisplayName).ToString(), tabularNote, tableInfo.RowHeight / 2);
+                }
             }
         }
+
+        EdmDraw.DraftingHelper.UpdateTabularNote(tabularNote);
     }
 
     void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, Snap.NX.Body steel, Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings, EdmDraw.EdmConfig edmConfig)
