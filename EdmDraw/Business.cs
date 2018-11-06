@@ -113,6 +113,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
             throw new Exception("无法识别该电极！");
         }
 
+        positionings = positionings.OrderBy(u => u.C).ToList();
+
         foreach (var item in positionings)
         {
             item.N = string.Format("C{0}", positionings.IndexOf(item) + 1);
