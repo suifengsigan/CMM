@@ -205,6 +205,20 @@ partial class EdmDrawUI : SnapEx.BaseUI
     /// <summary>
     /// 创建表格
     /// </summary>
+    void CreateNodeInfo(ElecManage.Electrode elec, EdmDraw.EdmConfig edmConfig)
+    {
+        var properties = edmConfig.PropertyInfos ?? new List<EdmDraw.EdmConfig.PropertyInfo>();
+        var elecInfo = elec.GetElectrodeInfo();
+        properties.ForEach(u => {
+            var displayName = u.DisplayName;
+            var pValue = EdmDraw.Helper.GetPropertyValue(elec, displayName) ?? string.Empty;
+            EdmDraw.DrawBusiness.CreateNode(pValue.ToString(), new Snap.Position(u.LocationX, u.LocationY));
+        });
+    }
+
+    /// <summary>
+    /// 创建表格
+    /// </summary>
     void CreateTable(EdmDraw.EdmConfig edmConfig,List<ElecManage.PositioningInfo> elecs)
     {
         //创建表格
