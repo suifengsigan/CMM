@@ -161,18 +161,22 @@ namespace EdmDraw
             /// <summary>
             /// 显示名称(特性)
             /// </summary>
+            [DisplayName("名称")]
             public string DisplayName { get; set; }
             /// <summary>
             /// 位置X
             /// </summary>
+            [DisplayName("位置X")]
             public double LocationX { get; set; }
             /// <summary>
             /// 位置Y
             /// </summary>
+            [DisplayName("位置Y")]
             public double LocationY { get; set; }
             /// <summary>
             /// 拓展字段（用于判断是否是勾选）
             /// </summary>
+            [DisplayName("类型")]
             public string Ex { get; set; }
         }
     }

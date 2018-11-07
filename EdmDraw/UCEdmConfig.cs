@@ -24,6 +24,7 @@ namespace EdmDraw
         {
             InitDgv(dataGridView2);
             InitDgv(dataGridView1);
+            InitDgv(dataGridView3);
 
             List<string> _paramFileList = new List<string>();
             var members = new List<string>();
@@ -42,6 +43,7 @@ namespace EdmDraw
             var config = GetInstance();
 
             dataGridView2.DataSource = config.DraftViewLocations ?? new List<EdmConfig.DraftViewLocation>();
+            dataGridView3.DataSource = config.PropertyInfos ?? new List<EdmConfig.PropertyInfo>();
             var tableInfo = config.Table ?? new EdmConfig.TableInfo();
             dataGridView1.DataSource = tableInfo.ColumnInfos;
             txtTableInfoX.Text = tableInfo.locationX.ToString();
@@ -73,6 +75,7 @@ namespace EdmDraw
         public void Save()
         {
             var config = GetInstance();
+            config.PropertyInfos= dataGridView3.DataSource as List<EdmConfig.PropertyInfo> ?? new List<EdmConfig.PropertyInfo>();
             config.DraftViewLocations = dataGridView2.DataSource as List<EdmConfig.DraftViewLocation> ?? new List<EdmConfig.DraftViewLocation>();
             config.Table = config.Table ?? new EdmConfig.TableInfo();
             config.Table.locationX = double.Parse(txtTableInfoX.Text);
@@ -139,6 +142,28 @@ namespace EdmDraw
         {
             dataGridView2.MouseDown += DataGridView2_MouseDown;
             dataGridView1.MouseDown += DataGridView1_MouseDown;
+            dataGridView3.MouseDown += DataGridView3_MouseDown;
+        }
+
+        private void DataGridView3_MouseDown(object sender, MouseEventArgs e)
+        {
+            var dataGridViewPSelection = dataGridView3;
+            if (e.Button == MouseButtons.Right)
+            {
+                _cms = new ContextMenuStrip();
+                _cms.Items.Add("新增属性");
+                var list = dataGridViewPSelection.DataSource as List<EdmConfig.PropertyInfo> ?? new List<EdmConfig.PropertyInfo>();
+                bool temp = dataGridViewPSelection.CurrentRow != null && dataGridViewPSelection.CurrentRow.Index >= 0 && dataGridViewPSelection.CurrentRow.Index < list.Count;
+                if (temp)
+                {
+                    //_cms.Items.Add("修改加长杆");
+                    _cms.Items.Add("删除属性");
+                }
+
+                _cms.ItemClicked += _cms_ItemClicked;
+                //弹出操作菜单
+                _cms.Show(MousePosition.X, MousePosition.Y);
+            }
         }
 
         private void DataGridView1_MouseDown(object sender, MouseEventArgs e)
@@ -193,10 +218,31 @@ namespace EdmDraw
 
             var dataGridViewPSelection1 = dataGridView1;
             var datasource1= dataGridViewPSelection1.DataSource as List<EdmConfig.ColumnInfo> ?? new List<EdmConfig.ColumnInfo>();
+
+            var dataGridViewPSelection2 = dataGridView3;
+            var datasource2 = dataGridViewPSelection2.DataSource as List<EdmConfig.PropertyInfo> ?? new List<EdmConfig.PropertyInfo>();
             if (e.ClickedItem.Text == "新增")
             {
                 datasource.Add(new EdmConfig.DraftViewLocation { });
                 dataGridViewPSelection.DataSource = datasource.ToList();
+            }
+            else if (e.ClickedItem.Text == "新增属性")
+            {
+                datasource2.Add(new EdmConfig.PropertyInfo { });
+                dataGridViewPSelection2.DataSource = datasource2.ToList();
+            }
+            else if (e.ClickedItem.Text == "删除属性")
+            {
+                if (dataGridViewPSelection2.CurrentRow != null)
+                {
+                    var obj = dataGridViewPSelection2.CurrentRow.DataBoundItem as EdmConfig.PropertyInfo;
+                    if (obj != null)
+                    {
+                        datasource2.Remove(obj);
+                        dataGridViewPSelection2.DataSource = datasource2.ToList();
+                    }
+                }
+
             }
             else if (e.ClickedItem.Text == "新增列信息")
             {
