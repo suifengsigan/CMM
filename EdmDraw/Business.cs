@@ -200,6 +200,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
         }
 
         CreateTable(edmConfig, positionings);
+
+        CreateNodeInfo(electrode, edmConfig);
     }
 
     /// <summary>
@@ -211,7 +213,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var elecInfo = elec.GetElectrodeInfo();
         properties.ForEach(u => {
             var displayName = u.DisplayName;
-            var pValue = EdmDraw.Helper.GetPropertyValue(elec, displayName) ?? string.Empty;
+            var pValue = EdmDraw.Helper.GetPropertyValue(elecInfo, displayName) ?? string.Empty;
             EdmDraw.DrawBusiness.CreateNode(pValue.ToString(), new Snap.Position(u.LocationX, u.LocationY));
         });
     }
