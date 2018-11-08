@@ -205,7 +205,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
     }
 
     /// <summary>
-    /// 创建表格
+    /// 创建注释
     /// </summary>
     void CreateNodeInfo(ElecManage.Electrode elec, EdmDraw.EdmConfig edmConfig)
     {
@@ -214,7 +214,14 @@ partial class EdmDrawUI : SnapEx.BaseUI
         properties.ForEach(u => {
             var displayName = u.DisplayName;
             var pValue = EdmDraw.Helper.GetPropertyValue(elecInfo, displayName) ?? string.Empty;
-            EdmDraw.DrawBusiness.CreateNode(pValue.ToString(), new Snap.Position(u.LocationX, u.LocationY));
+            if (u.Ex == "1")
+            {
+                EdmDraw.DrawBusiness.CreateTick(new Snap.Position(u.LocationX, u.LocationY));
+            }
+            else
+            {
+                EdmDraw.DrawBusiness.CreateNode(pValue.ToString(), new Snap.Position(u.LocationX, u.LocationY));
+            }
         });
     }
 

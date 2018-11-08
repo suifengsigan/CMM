@@ -39,6 +39,18 @@ namespace EdmDraw
         }
 
         /// <summary>
+        /// 创建对勾
+        /// </summary>
+        public static void CreateTick(Snap.Position pos)
+        {
+            var dis = 3;
+            var vector1 = Snap.Vector.Unit(new Snap.Vector(-1, 1, 0));
+            var vector2 = Snap.Vector.Unit(new Snap.Vector(1, 1, 0));
+            CreateNxObject(() => { return Snap.Create.Line(pos, pos + dis * vector1); }, NXOpen.Tag.Null, false).IsHidden = false;
+            CreateNxObject(() => { return Snap.Create.Line(pos, pos + (dis*1.5) * vector2); }, NXOpen.Tag.Null, false).IsHidden = false;
+        }
+
+        /// <summary>
         /// 创建C角
         /// </summary>
         public static void CreatePentagon(Snap.Position pos,QuadrantType type,double width=3,double height=2) 
