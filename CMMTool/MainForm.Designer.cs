@@ -68,6 +68,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.cbIsAutoCmmFtpDir = new System.Windows.Forms.CheckBox();
             this.txtGetTowPointArea = new System.Windows.Forms.TextBox();
             this.txtMinGetPointArea = new System.Windows.Forms.TextBox();
             this.cbIsGetTowPointArea = new System.Windows.Forms.CheckBox();
@@ -91,7 +92,10 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.cbIsAutoCmmFtpDir = new System.Windows.Forms.CheckBox();
+            this.txtGetPointFilePath = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.cbIsSelGetPointFilePath = new System.Windows.Forms.CheckBox();
+            this.btnSelGetPointFilePath = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -483,6 +487,10 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.btnSelGetPointFilePath);
+            this.tabPage4.Controls.Add(this.cbIsSelGetPointFilePath);
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.txtGetPointFilePath);
             this.tabPage4.Controls.Add(this.cbIsAutoCmmFtpDir);
             this.tabPage4.Controls.Add(this.txtGetTowPointArea);
             this.tabPage4.Controls.Add(this.txtMinGetPointArea);
@@ -510,6 +518,16 @@
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // cbIsAutoCmmFtpDir
+            // 
+            this.cbIsAutoCmmFtpDir.AutoSize = true;
+            this.cbIsAutoCmmFtpDir.Location = new System.Drawing.Point(145, 31);
+            this.cbIsAutoCmmFtpDir.Name = "cbIsAutoCmmFtpDir";
+            this.cbIsAutoCmmFtpDir.Size = new System.Drawing.Size(42, 16);
+            this.cbIsAutoCmmFtpDir.TabIndex = 22;
+            this.cbIsAutoCmmFtpDir.Text = "FTP";
+            this.cbIsAutoCmmFtpDir.UseVisualStyleBackColor = true;
             // 
             // txtGetTowPointArea
             // 
@@ -618,7 +636,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(71, 228);
+            this.label16.Location = new System.Drawing.Point(71, 240);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(53, 12);
             this.label16.TabIndex = 9;
@@ -627,7 +645,7 @@
             // 
             // txtSafeDistance
             // 
-            this.txtSafeDistance.Location = new System.Drawing.Point(193, 225);
+            this.txtSafeDistance.Location = new System.Drawing.Point(193, 237);
             this.txtSafeDistance.Name = "txtSafeDistance";
             this.txtSafeDistance.Size = new System.Drawing.Size(285, 21);
             this.txtSafeDistance.TabIndex = 8;
@@ -636,7 +654,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(71, 182);
+            this.label15.Location = new System.Drawing.Point(71, 197);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(101, 12);
             this.label15.TabIndex = 7;
@@ -645,7 +663,7 @@
             // 
             // txtVerticalValue
             // 
-            this.txtVerticalValue.Location = new System.Drawing.Point(193, 179);
+            this.txtVerticalValue.Location = new System.Drawing.Point(193, 194);
             this.txtVerticalValue.Name = "txtVerticalValue";
             this.txtVerticalValue.Size = new System.Drawing.Size(285, 21);
             this.txtVerticalValue.TabIndex = 6;
@@ -654,7 +672,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(71, 136);
+            this.label14.Location = new System.Drawing.Point(71, 151);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(29, 12);
             this.label14.TabIndex = 5;
@@ -663,7 +681,7 @@
             // 
             // txtRetreatPoint
             // 
-            this.txtRetreatPoint.Location = new System.Drawing.Point(193, 136);
+            this.txtRetreatPoint.Location = new System.Drawing.Point(193, 151);
             this.txtRetreatPoint.Name = "txtRetreatPoint";
             this.txtRetreatPoint.Size = new System.Drawing.Size(285, 21);
             this.txtRetreatPoint.TabIndex = 4;
@@ -672,7 +690,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(71, 83);
+            this.label13.Location = new System.Drawing.Point(71, 108);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(29, 12);
             this.label13.TabIndex = 3;
@@ -681,7 +699,7 @@
             // 
             // txtEntryPoint
             // 
-            this.txtEntryPoint.Location = new System.Drawing.Point(193, 83);
+            this.txtEntryPoint.Location = new System.Drawing.Point(193, 108);
             this.txtEntryPoint.Name = "txtEntryPoint";
             this.txtEntryPoint.Size = new System.Drawing.Size(285, 21);
             this.txtEntryPoint.TabIndex = 2;
@@ -728,15 +746,42 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // cbIsAutoCmmFtpDir
+            // txtGetPointFilePath
             // 
-            this.cbIsAutoCmmFtpDir.AutoSize = true;
-            this.cbIsAutoCmmFtpDir.Location = new System.Drawing.Point(73, 31);
-            this.cbIsAutoCmmFtpDir.Name = "cbIsAutoCmmFtpDir";
-            this.cbIsAutoCmmFtpDir.Size = new System.Drawing.Size(42, 16);
-            this.cbIsAutoCmmFtpDir.TabIndex = 22;
-            this.cbIsAutoCmmFtpDir.Text = "FTP";
-            this.cbIsAutoCmmFtpDir.UseVisualStyleBackColor = true;
+            this.txtGetPointFilePath.Location = new System.Drawing.Point(193, 69);
+            this.txtGetPointFilePath.Name = "txtGetPointFilePath";
+            this.txtGetPointFilePath.ReadOnly = true;
+            this.txtGetPointFilePath.Size = new System.Drawing.Size(285, 21);
+            this.txtGetPointFilePath.TabIndex = 23;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(71, 32);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 12);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "图档路径";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // cbIsSelGetPointFilePath
+            // 
+            this.cbIsSelGetPointFilePath.AutoSize = true;
+            this.cbIsSelGetPointFilePath.Location = new System.Drawing.Point(73, 69);
+            this.cbIsSelGetPointFilePath.Name = "cbIsSelGetPointFilePath";
+            this.cbIsSelGetPointFilePath.Size = new System.Drawing.Size(96, 16);
+            this.cbIsSelGetPointFilePath.TabIndex = 25;
+            this.cbIsSelGetPointFilePath.Text = "本地存储路径";
+            this.cbIsSelGetPointFilePath.UseVisualStyleBackColor = true;
+            // 
+            // btnSelGetPointFilePath
+            // 
+            this.btnSelGetPointFilePath.Location = new System.Drawing.Point(484, 67);
+            this.btnSelGetPointFilePath.Name = "btnSelGetPointFilePath";
+            this.btnSelGetPointFilePath.Size = new System.Drawing.Size(75, 23);
+            this.btnSelGetPointFilePath.TabIndex = 26;
+            this.btnSelGetPointFilePath.Text = "选择目录";
+            this.btnSelGetPointFilePath.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -839,6 +884,10 @@
         private System.Windows.Forms.CheckBox cbIsMinGetPointArea;
         private System.Windows.Forms.TextBox txtGetTowPointArea;
         private System.Windows.Forms.CheckBox cbIsAutoCmmFtpDir;
+        private System.Windows.Forms.Button btnSelGetPointFilePath;
+        private System.Windows.Forms.CheckBox cbIsSelGetPointFilePath;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtGetPointFilePath;
     }
 }
 

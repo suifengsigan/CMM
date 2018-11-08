@@ -347,7 +347,7 @@ public partial class CMMProgramUI:SnapEx.BaseUI
                 if (list.Count > 0)
                 {
                     //导出
-                    CMMBusiness.WriteCMMFileByPointData(_electrode, list);
+                    CMMBusiness.WriteCMMFileByPointData(_electrode, list,_config);
                     NXOpen.UF.UFSession.GetUFSession().Ui.DisplayMessage("导出成功", 1);
                 }
             }

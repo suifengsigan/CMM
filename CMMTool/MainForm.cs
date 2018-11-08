@@ -30,9 +30,19 @@ namespace CMMTool
             dataGridViewExtensionBar.MouseDown += DataGridViewExtensionBar_MouseDown;
             //dataGridViewExtensionBar.SelectionChanged += DataGridViewExtensionBar_SelectionChanged;
             btnSelAutoCmmDir.Click += BtnSelAutoCmmDir_Click;
+            btnSelGetPointFilePath.Click += BtnSelGetPointFilePath_Click;
             btnAutoPrtToolDir.Click += BtnAutoPrtToolDir_Click;
             dataGridView1.CellMouseDown += DataGridView1_CellMouseDown;
             dataGridView1.CellPainting += DataGridView1_CellPainting;
+        }
+
+        private void BtnSelGetPointFilePath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowser = new FolderBrowserDialog();
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                txtGetPointFilePath.Text = folderBrowser.SelectedPath;
+            }
         }
 
         private void DataGridViewExtensionBar_SelectionChanged(object sender, EventArgs e)
@@ -269,6 +279,8 @@ namespace CMMTool
             result.VerticalValue = double.Parse(txtVerticalValue.Text);
             result.IsInspectionPath = cbIsInspectionPath.Checked;
             result.IsAutoCmmFtpDir = cbIsAutoCmmFtpDir.Checked;
+            result.IsSelGetPointFilePath = cbIsSelGetPointFilePath.Checked;
+            result.GetPointFilePath = txtGetPointFilePath.Text;
             result.IsEDMFaceGetPoint = cbIsEDMFaceGetPoint.Checked;
             result.IsInitConfig = cbIsInitConfig.Checked;
             result.IsUploadDataBase = cbIsUploadDatabase.Checked;
@@ -359,6 +371,8 @@ namespace CMMTool
             cbIsMinGetPointArea.Checked = result.IsMinGetPointArea;
             txtGetTowPointArea.Text = result.GetTowPointArea.ToString();
             txtMinGetPointArea.Text = result.MinGetPointArea.ToString();
+            txtGetPointFilePath.Text = result.GetPointFilePath;
+            cbIsSelGetPointFilePath.Checked = result.IsSelGetPointFilePath;
             dataGridView1.DataSource = data;
         }
 

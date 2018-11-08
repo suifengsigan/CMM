@@ -25,15 +25,15 @@ namespace CMM
         /// <summary>
         /// 上传CMM文件
         /// </summary>
-        public static void WriteCMMFileByPointData(ElecManage.Electrode elec, List<PointData> pointData)
+        public static void WriteCMMFileByPointData(ElecManage.Electrode elec, List<PointData> pointData,CMMConfig cmmconfig)
         {
-            WriteCMMFile(elec, GetPointInfo.GetCMMPointInfo(pointData, elec, _EactConfigData));
+            WriteCMMFile(elec, GetPointInfo.GetCMMPointInfo(pointData, elec, _EactConfigData),cmmconfig);
         }
 
         /// <summary>
         /// 上传CMM文件
         /// </summary>
-        public static void WriteCMMFile(ElecManage.Electrode elec, object data)
+        public static void WriteCMMFile(ElecManage.Electrode elec, object data,CMMConfig cmmConfig)
         {
             var info = elec.GetElectrodeInfo();
             var elecName = info.Elec_Name;
@@ -48,6 +48,16 @@ namespace CMM
             Directory.CreateDirectory(_cmmFilePath);
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
             File.WriteAllText(result, json);
+            if (cmmConfig.IsSelGetPointFilePath && !string.IsNullOrEmpty(cmmConfig.GetPointFilePath))
+            {
+                var path = Path.Combine(cmmConfig.GetPointFilePath, string.Format(@"{0}\{1}", info.EACT_MODELNO, elecName));
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                File.WriteAllText(Path.Combine(path, fileName), json);
+            }
             FtpUpload("CMM", new ElecManage.MouldInfo { MODEL_NUMBER = MODEL_NUMBER }, result, elecName);
             Helper.ShowMsg(string.Format("{0}取点文件上传成功", elecName));
         }
@@ -123,7 +133,7 @@ namespace CMM
 
             if (isUploadFile)
             {
-                WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode, _EactConfigData));
+                WriteCMMFile(electrode, GetPointInfo.GetCMMPointInfo(positions, electrode, _EactConfigData), config);
             }
             return positions;
         }

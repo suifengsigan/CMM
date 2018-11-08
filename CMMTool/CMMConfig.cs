@@ -68,6 +68,14 @@ namespace CMMTool
         /// AutoCMM路径
         /// </summary>
         public string AutoCmmDir { get; set; }
+        /// <summary>
+        /// 本地存储路径
+        /// </summary>
+        public bool IsSelGetPointFilePath { get; set; }
+        /// <summary>
+        /// 取点文件本地存储路径
+        /// </summary>
+        public string GetPointFilePath { get; set; }
         public bool IsAutoCmmFtpDir { get; set; }
         /// <summary>
         /// 是否启用干涉点检测
