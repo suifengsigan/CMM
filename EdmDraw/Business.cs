@@ -202,6 +202,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
         CreateTable(edmConfig, positionings);
 
         CreateNodeInfo(electrode, edmConfig);
+
+        EdmDraw.Helper.ExportPDF(ds);
     }
 
     /// <summary>
