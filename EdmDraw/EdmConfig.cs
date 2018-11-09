@@ -16,6 +16,10 @@ namespace EdmDraw
         /// </summary>
         public bool IsUseSystemConfig = false;
         /// <summary>
+        /// 图纸放置层
+        /// </summary>
+        public int EdmDrfLayer = 254;
+        /// <summary>
         /// 字体
         /// </summary>
         public string TextMpi88;

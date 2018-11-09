@@ -65,6 +65,7 @@ namespace EdmDraw
             DimensionMpr33.Text = config.DimensionMpr33.ToString();
             DimensionMpr34.Text = config.DimensionMpr34.ToString();
             DimensionMpi86.Text = config.DimensionMpi86.ToString();
+            txtEdmDrfLayer.Text = config.EdmDrfLayer.ToString();
             cbDimensionMpi90.Checked = config.DimensionMpi90 == 1;
             
         }
@@ -98,6 +99,8 @@ namespace EdmDraw
             config.DimensionMpr34 = double.Parse(DimensionMpr34.Text);
             config.DimensionMpi86 = int.Parse(DimensionMpi86.Text);
             config.DimensionMpi90 = cbDimensionMpi90.Checked ? 1 : 0;
+
+            config.EdmDrfLayer = int.Parse(txtEdmDrfLayer.Text);
 
             config.EdmTemplate = cbbEdmTemplate.SelectedItem.ToString();
 

@@ -88,7 +88,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
         //新建图纸页
         var ds = SnapEx.Create.DrawingSheet(selectedObj.Name, templateName);
-        EdmDraw.DrawBusiness.SetDrawSheetLayer(ds, 254);
+        EdmDraw.DrawBusiness.SetDrawSheetLayer(ds, edmConfig.EdmDrfLayer);
 
         //获取电极信息
         var positionings = new List<ElecManage.PositioningInfo>();

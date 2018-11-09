@@ -81,6 +81,8 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.txtEdmDrfLayer = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -385,6 +387,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label9);
+            this.tabPage2.Controls.Add(this.txtEdmDrfLayer);
             this.tabPage2.Controls.Add(this.groupBox3);
             this.tabPage2.Controls.Add(this.cbbEdmTemplate);
             this.tabPage2.Controls.Add(this.label18);
@@ -634,6 +638,24 @@
             this.dataGridView3.Size = new System.Drawing.Size(912, 186);
             this.dataGridView3.TabIndex = 0;
             // 
+            // txtEdmDrfLayer
+            // 
+            this.txtEdmDrfLayer.Location = new System.Drawing.Point(192, 291);
+            this.txtEdmDrfLayer.Name = "txtEdmDrfLayer";
+            this.txtEdmDrfLayer.Size = new System.Drawing.Size(372, 21);
+            this.txtEdmDrfLayer.TabIndex = 34;
+            this.txtEdmDrfLayer.Text = "254";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(74, 294);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 12);
+            this.label9.TabIndex = 35;
+            this.label9.Text = "图纸放置层";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // UCEdmConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -718,5 +740,7 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox txtTableInfoY;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox txtEdmDrfLayer;
     }
 }
