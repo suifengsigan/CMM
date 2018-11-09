@@ -210,10 +210,33 @@ partial class EdmDrawUI : SnapEx.BaseUI
     void CreateNodeInfo(ElecManage.Electrode elec, EdmDraw.EdmConfig edmConfig)
     {
         var properties = edmConfig.PropertyInfos ?? new List<EdmDraw.EdmConfig.PropertyInfo>();
-        var elecInfo = elec.GetElectrodeInfo();
+        var propertiesDic = new Dictionary<string, List<EdmDraw.EdmConfig.PropertyInfo>>();
+
         properties.ForEach(u => {
             var displayName = u.DisplayName;
+            var dValue = string.Empty;
+            if (displayName.Contains("-"))
+            {
+                var splits = displayName.Split('-');
+                displayName = splits.FirstOrDefault();
+                dValue = splits.LastOrDefault();
+            }
+            if (!propertiesDic.ContainsKey(displayName))
+            {
+                propertiesDic.Add(displayName, new List<EdmDraw.EdmConfig.PropertyInfo> { u });
+            }
+            else
+            {
+                propertiesDic[displayName].Add(u);
+            }
+        });
+
+        var elecInfo = elec.GetElectrodeInfo();
+        foreach (var item in propertiesDic)
+        {
+            var displayName = item.Key;
             var pValue = EdmDraw.Helper.GetPropertyValue(elecInfo, displayName) ?? string.Empty;
+            var u = item.Value.FirstOrDefault(p => (p.DisplayName.Contains(displayName)&&p.DisplayName.Contains(pValue.ToString()))|| p.DisplayName == displayName);
             if (u.Ex == "1")
             {
                 EdmDraw.DrawBusiness.CreateTick(new Snap.Position(u.LocationX, u.LocationY));
@@ -222,7 +245,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
             {
                 EdmDraw.DrawBusiness.CreateNode(pValue.ToString(), new Snap.Position(u.LocationX, u.LocationY));
             }
-        });
+        }
     }
 
     /// <summary>
