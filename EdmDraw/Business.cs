@@ -400,7 +400,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
             EdmDraw.DrawBusiness.SetToleranceType(topViewRightElecBasePoint);
         });
 
-        positionings.OrderBy(p => tempMTDDic[p].X).ToList().ForEach(p =>
+        positionings.OrderByDescending(p => tempMTDDic[p].X).ToList().ForEach(p =>
         {
             var index = positionings.IndexOf(p);
             var elecBasePoint = tempDic[p];
@@ -410,7 +410,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
             var line = topViewTopMargin as Snap.NX.Line;
             var distance = Snap.Compute.Distance(elecBasePointMTD, topViewTopMargin);
-            Snap.Position origin = new Snap.Position(listX.Min() + edmConfig.DimensionMpr32 * 2 * (index + 1), line.StartPoint.Y);
+            Snap.Position origin = new Snap.Position(listX.Max() - edmConfig.DimensionMpr32 * 2 * (index + 1), line.StartPoint.Y);
             var minP = new Snap.Position(elecBasePointMTD.X,line.StartPoint.Y);
             var angle = Snap.Vector.Angle(elecBasePointMTD - minP, elecBasePointMTD - origin);
 
