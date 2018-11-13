@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(s));
             this.btnStart = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnAutoPrt = new System.Windows.Forms.Button();
@@ -53,6 +54,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.listBox2);
             this.panel2.Controls.Add(this.listBox1);
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -61,15 +63,27 @@
             this.panel2.Size = new System.Drawing.Size(814, 525);
             this.panel2.TabIndex = 8;
             // 
+            // listBox2
+            // 
+            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold);
+            this.listBox2.ForeColor = System.Drawing.Color.Red;
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 22;
+            this.listBox2.Location = new System.Drawing.Point(185, 344);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(629, 181);
+            this.listBox2.TabIndex = 4;
+            // 
             // listBox1
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.listBox1.Font = new System.Drawing.Font("微软雅黑", 9F);
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 17;
             this.listBox1.Location = new System.Drawing.Point(185, 0);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(629, 525);
+            this.listBox1.Size = new System.Drawing.Size(629, 344);
             this.listBox1.TabIndex = 3;
             // 
             // panel4
@@ -142,6 +156,7 @@
         private System.Windows.Forms.Button btnCMMConfig;
         private System.Windows.Forms.Button btnAutoPrt;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ListBox listBox2;
     }
 }
 

@@ -180,13 +180,18 @@ namespace CMM
                 }
             }
 
+            var info = electrode.GetElectrodeInfo();
+            if (!CMMResult)
+            {
+                Helper.ShowMsg(string.Format("{0}【{1}】", info.Elec_Name, CMMInfo), 1);
+            }
+          
             if (config.IsUploadDataBase)
             {
                 DataAccess.Model.EACT_AUTOCMM_RECORD record= new DataAccess.Model.EACT_AUTOCMM_RECORD();
                 record.CMMDATE = DateTime.Now;
                 record.CMMINFO = CMMInfo;
                 record.CMMRESULT = CMMResult ? 1 : 2;
-                var info = electrode.GetElectrodeInfo();
                 record.MODELNO = info.EACT_MODELNO;
                 record.PARTNO = info.EACT_PARTNO;
                 record.PARTNAME = info.Elec_Name;

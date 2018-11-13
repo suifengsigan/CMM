@@ -31,7 +31,15 @@ namespace CMMProgram
                     byte[] bytData = new byte[cds.cbData];
                     Marshal.Copy(cds.lpData, bytData, 0, bytData.Length);
                     var msg = Encoding.Default.GetString(bytData);
-                    DispMsg(msg);
+                    var msgInfo=CSharpProxy.EactMsgInfo.DeserializeObject(msg);
+                    if (msgInfo.Type == 0)
+                    {
+                        DispMsg(msgInfo.Msg);
+                    }
+                    else
+                    {
+                        DispMsg(msgInfo.Msg, listBox2);
+                    }
                     break;
 
                 default:
@@ -48,21 +56,26 @@ namespace CMMProgram
 
         private void DispMsg(string strMsg)
         {
+            DispMsg(strMsg, listBox1);
+        }
+
+        private void DispMsg(string strMsg,ListBox box)
+        {
             Action action = () => {
-                listBox1.Items.Insert(0, string.Format("{0}:{1}", DateTime.Now.ToString(), strMsg));
+                box.Items.Insert(0, string.Format("{0}:{1}", DateTime.Now.ToString(), strMsg));
                 var maxItem = 1000;
-                if (listBox1.Items.Count > maxItem)
+                if (box.Items.Count > maxItem)
                 {
-                    listBox1.Items.RemoveAt(maxItem);
+                    box.Items.RemoveAt(maxItem);
                 }
             };
-            if (this.listBox1.InvokeRequired == false)
+            if (box.InvokeRequired == false)
             {
                 action();
             }
             else
             {
-                this.listBox1.Invoke(action);
+                box.Invoke(action);
             }
         }
 

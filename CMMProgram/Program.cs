@@ -55,7 +55,7 @@ namespace CMMProgram
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             var assemblyName = new AssemblyName(args.Name);
-            if (assemblyName.Name == "CSharpProxy")
+            if (assemblyName.Name == "CSharpProxy"|| assemblyName.Name == "Newtonsoft.Json")
             {
                 var programPath = System.Configuration.ConfigurationManager.AppSettings.Get("ProgramPath");
                 if (programPath == null)

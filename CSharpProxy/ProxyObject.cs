@@ -63,7 +63,7 @@ namespace CSharpProxy
         {
             if (WindowPH != IntPtr.Zero)
             {
-                String strSent = msg;
+                String strSent = new EactMsgInfo {Msg=msg,Type=type }.SerializeObject();
                 byte[] arr = System.Text.Encoding.Default.GetBytes(strSent);
                 int len = arr.Length;
                 COPYDATASTRUCT cdata;
