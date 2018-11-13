@@ -107,5 +107,6 @@ namespace CMMTool
         public double MinGetPointArea = 3;
         public bool IsGetTowPointArea = false;
         public double GetTowPointArea = 10;
+        public double MinEdgeDistance = 0.8;
     }
 }

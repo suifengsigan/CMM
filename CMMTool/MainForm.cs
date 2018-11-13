@@ -289,6 +289,7 @@ namespace CMMTool
             result.IsMinGetPointArea = cbIsMinGetPointArea.Checked;
             result.GetTowPointArea = double.Parse(txtGetTowPointArea.Text);
             result.MinGetPointArea = double.Parse(txtMinGetPointArea.Text);
+            result.MinEdgeDistance = double.Parse(txtMinEdgeDistance.Text);
             CMMConfig.WriteConfig(result);
             if (result.IsInitConfig)
             {
@@ -374,6 +375,7 @@ namespace CMMTool
             txtGetPointFilePath.Text = result.GetPointFilePath;
             cbIsSelGetPointFilePath.Checked = result.IsSelGetPointFilePath;
             dataGridView1.DataSource = data;
+            txtMinEdgeDistance.Text = result.MinEdgeDistance.ToString();
         }
 
         void InitDgv(DataGridView view)

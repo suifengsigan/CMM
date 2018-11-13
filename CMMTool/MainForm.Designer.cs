@@ -68,6 +68,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.btnSelGetPointFilePath = new System.Windows.Forms.Button();
+            this.cbIsSelGetPointFilePath = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtGetPointFilePath = new System.Windows.Forms.TextBox();
             this.cbIsAutoCmmFtpDir = new System.Windows.Forms.CheckBox();
             this.txtGetTowPointArea = new System.Windows.Forms.TextBox();
             this.txtMinGetPointArea = new System.Windows.Forms.TextBox();
@@ -92,10 +96,8 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.txtGetPointFilePath = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.cbIsSelGetPointFilePath = new System.Windows.Forms.CheckBox();
-            this.btnSelGetPointFilePath = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtMinEdgeDistance = new System.Windows.Forms.TextBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -487,6 +489,8 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label12);
+            this.tabPage4.Controls.Add(this.txtMinEdgeDistance);
             this.tabPage4.Controls.Add(this.btnSelGetPointFilePath);
             this.tabPage4.Controls.Add(this.cbIsSelGetPointFilePath);
             this.tabPage4.Controls.Add(this.label9);
@@ -518,6 +522,43 @@
             this.tabPage4.TabIndex = 2;
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // btnSelGetPointFilePath
+            // 
+            this.btnSelGetPointFilePath.Location = new System.Drawing.Point(484, 67);
+            this.btnSelGetPointFilePath.Name = "btnSelGetPointFilePath";
+            this.btnSelGetPointFilePath.Size = new System.Drawing.Size(75, 23);
+            this.btnSelGetPointFilePath.TabIndex = 26;
+            this.btnSelGetPointFilePath.Text = "选择目录";
+            this.btnSelGetPointFilePath.UseVisualStyleBackColor = true;
+            // 
+            // cbIsSelGetPointFilePath
+            // 
+            this.cbIsSelGetPointFilePath.AutoSize = true;
+            this.cbIsSelGetPointFilePath.Location = new System.Drawing.Point(73, 69);
+            this.cbIsSelGetPointFilePath.Name = "cbIsSelGetPointFilePath";
+            this.cbIsSelGetPointFilePath.Size = new System.Drawing.Size(96, 16);
+            this.cbIsSelGetPointFilePath.TabIndex = 25;
+            this.cbIsSelGetPointFilePath.Text = "本地存储路径";
+            this.cbIsSelGetPointFilePath.UseVisualStyleBackColor = true;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(71, 32);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 12);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "图档路径";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtGetPointFilePath
+            // 
+            this.txtGetPointFilePath.Location = new System.Drawing.Point(193, 69);
+            this.txtGetPointFilePath.Name = "txtGetPointFilePath";
+            this.txtGetPointFilePath.ReadOnly = true;
+            this.txtGetPointFilePath.Size = new System.Drawing.Size(285, 21);
+            this.txtGetPointFilePath.TabIndex = 23;
             // 
             // cbIsAutoCmmFtpDir
             // 
@@ -746,42 +787,23 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // txtGetPointFilePath
+            // label12
             // 
-            this.txtGetPointFilePath.Location = new System.Drawing.Point(193, 69);
-            this.txtGetPointFilePath.Name = "txtGetPointFilePath";
-            this.txtGetPointFilePath.ReadOnly = true;
-            this.txtGetPointFilePath.Size = new System.Drawing.Size(285, 21);
-            this.txtGetPointFilePath.TabIndex = 23;
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(71, 499);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 28;
+            this.label12.Text = "最小边距";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // label9
+            // txtMinEdgeDistance
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(71, 32);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 12);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "图档路径";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // cbIsSelGetPointFilePath
-            // 
-            this.cbIsSelGetPointFilePath.AutoSize = true;
-            this.cbIsSelGetPointFilePath.Location = new System.Drawing.Point(73, 69);
-            this.cbIsSelGetPointFilePath.Name = "cbIsSelGetPointFilePath";
-            this.cbIsSelGetPointFilePath.Size = new System.Drawing.Size(96, 16);
-            this.cbIsSelGetPointFilePath.TabIndex = 25;
-            this.cbIsSelGetPointFilePath.Text = "本地存储路径";
-            this.cbIsSelGetPointFilePath.UseVisualStyleBackColor = true;
-            // 
-            // btnSelGetPointFilePath
-            // 
-            this.btnSelGetPointFilePath.Location = new System.Drawing.Point(484, 67);
-            this.btnSelGetPointFilePath.Name = "btnSelGetPointFilePath";
-            this.btnSelGetPointFilePath.Size = new System.Drawing.Size(75, 23);
-            this.btnSelGetPointFilePath.TabIndex = 26;
-            this.btnSelGetPointFilePath.Text = "选择目录";
-            this.btnSelGetPointFilePath.UseVisualStyleBackColor = true;
+            this.txtMinEdgeDistance.Location = new System.Drawing.Point(193, 496);
+            this.txtMinEdgeDistance.Name = "txtMinEdgeDistance";
+            this.txtMinEdgeDistance.Size = new System.Drawing.Size(285, 21);
+            this.txtMinEdgeDistance.TabIndex = 27;
+            this.txtMinEdgeDistance.Text = "0.8";
             // 
             // MainForm
             // 
@@ -888,6 +910,8 @@
         private System.Windows.Forms.CheckBox cbIsSelGetPointFilePath;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtGetPointFilePath;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtMinEdgeDistance;
     }
 }
 

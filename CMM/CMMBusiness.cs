@@ -573,7 +573,7 @@ namespace CMM
                     break;
                 }
                 //过滤探球半径的点
-                if (minDistance < data.D)
+                if (minDistance < config.MinEdgeDistance)
                 {
                     continue;
                 }
