@@ -391,6 +391,11 @@ namespace EdmDraw
             var theUFSession = NXOpen.UF.UFSession.GetUFSession();
             NXOpen.UF.UFDraw.ViewInfo view_info;
             theUFSession.Draw.InitializeViewInfo(out view_info);
+            view_info.view_status = NXOpen.UF.UFDraw.ViewStatus.ActiveView;//UF_DRAW_ACTIVE_VIEW;
+            view_info.anchor_point = Tag.Null;
+            view_info.view_scale = 1;
+            view_info.use_ref_pt = false;
+            view_info.inherit_boundary = false;
             double[] dwg_point = { pos.X, pos.Y };
             Tag draw_view_tag;
             theUFSession.Draw.ImportView(ds.Tag, modelViewTag, dwg_point, ref view_info, out draw_view_tag);
