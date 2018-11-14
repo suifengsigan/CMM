@@ -397,8 +397,6 @@ namespace EdmDraw
             string viewName;
             theUFSession.Obj.AskName(draw_view_tag, out viewName);
 
-            theUFSession.Draw.SetViewScale(draw_view_tag, 0.1);
-
             var allObj = new List<NXOpen.NXObject>();
             allObj.AddRange(Enumerable.Select(workPart.Bodies.ToArray().Where(u => sList.Contains(u.Layer)),m=>m as NXObject));
             allObj.AddRange(Enumerable.Select(workPart.Points.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
@@ -415,14 +413,8 @@ namespace EdmDraw
                     SnapEx.Ex.UC6400(viewName, u.Tag);
                 }
             });
-
             theUFSession.Draw.DefineBoundByObjects(draw_view_tag, selections.Count, Enumerable.Select(selections, u => u.Tag).ToArray());
 
-            theUFSession.Draw.UpdateOneView(ds.Tag, draw_view_tag);
-
-            theUFSession.Draw.SetViewScale(draw_view_tag, 1);
-
-            //更新视图
             theUFSession.Draw.UpdateOneView(ds.Tag, draw_view_tag);
 
             var borderSize = GetBorderSize(draw_view_tag);
