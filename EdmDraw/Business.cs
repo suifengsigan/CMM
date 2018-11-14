@@ -238,7 +238,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         {
             var displayName = item.Key;
             var pValue = EdmDraw.Helper.GetPropertyValue(elecInfo, displayName) ?? string.Empty;
-            var u = item.Value.FirstOrDefault(p => (p.DisplayName.Contains(displayName)&&p.DisplayName.Contains(pValue.ToString()))|| p.DisplayName == displayName);
+            var u = item.Value.FirstOrDefault(p => (p.DisplayName.Contains(displayName)&&p.DisplayName.Contains(pValue.ToString()))|| p.DisplayName.Contains(displayName));
             if (u.Ex == "1")
             {
                 EdmDraw.DrawBusiness.CreateTick(new Snap.Position(u.LocationX, u.LocationY));
