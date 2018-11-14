@@ -513,10 +513,22 @@ namespace EdmDraw
 
             var modelingView = workPart.ModelingViews.ToArray().FirstOrDefault(u => u.Name == viewName);
 
+            if (modelingView != null)
+            {
+                Snap.NX.NXObject.Wrap(modelingView.Tag).Delete();
+                modelingView = null;
+            }
+
             if (modelingView == null) 
             {
                 var ufSession = NXOpen.UF.UFSession.GetUFSession();
-                SnapEx.Ex.UC6434("", 4, NXOpen.Tag.Null, martrix);
+                var or = new Snap.Orientation(
+                        new Snap.Vector(martrix[0], martrix[1], martrix[2])
+                        , new Snap.Vector(martrix[3], martrix[4], martrix[5]));
+                var ds = new List<double>();
+                ds.AddRange(or.AxisX.Array);
+                ds.AddRange(or.AxisY.Array);
+                SnapEx.Ex.UC6434("", 4, NXOpen.Tag.Null, ds.ToArray());
                 //ufSession.View.SetViewMatrix("", 4, NXOpen.Tag.Null, martrix);
 
                 #region createCamera Code
