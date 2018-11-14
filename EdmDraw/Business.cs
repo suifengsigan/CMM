@@ -161,7 +161,8 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             new List<TaggedObject> { selectedObj },
                             new Snap.Position(item.LocationX, item.LocationY),
                             new Snap.Position(item.SizeX, item.SizeY),
-                            electrode
+                            electrode,
+                            edmConfig
                             );
                     }
                     break;
@@ -172,7 +173,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             new List<TaggedObject> { selectedObj },
                             new Snap.Position(item.LocationX, item.LocationY),
                             new Snap.Position(item.SizeX, item.SizeY),
-                            electrode
+                            electrode, edmConfig
                             );
                     }
                     break;
@@ -183,6 +184,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             new List<TaggedObject> { selectedObj },
                             new Snap.Position(item.LocationX, item.LocationY),
                             new Snap.Position(item.SizeX, item.SizeY)
+                            , edmConfig
                             );
                     }
                     break;
@@ -193,6 +195,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
                             new List<TaggedObject> { steel },
                             new Snap.Position(item.LocationX, item.LocationY),
                             new Snap.Position(item.SizeX, item.SizeY)
+                            , edmConfig
                             );
                     }
                     break;
@@ -303,7 +306,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
             selections.Add(p.Electrode.ElecBody);
         });
 
-        var topView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, selections, pos, size);
+        var topView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_TOP).Tag, selections, pos, size,edmConfig);
         var topViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, topView) as Snap.NX.Line;
         var topViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Top, topView) as Snap.NX.Line;
         var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, topView.Tag);
@@ -438,7 +441,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
     void CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)
     {
-        var frontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, selections, pos, size);
+        var frontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, selections, pos, size,edmConfig);
         var frontViewTopMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, frontView);
         var tempMap = new double[] { 0, 0 };
         var ufSession = NXOpen.UF.UFSession.GetUFSession();
@@ -473,9 +476,9 @@ partial class EdmDrawUI : SnapEx.BaseUI
         EdmDraw.DrawBusiness.SetToleranceType(frontViewOrddimension);
     }
 
-    void CreateEACT_BOTTOM_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode)
+    void CreateEACT_BOTTOM_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)
     {
-        var bottomFrontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_FRONT).Tag, selections, pos, size);
+        var bottomFrontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_FRONT).Tag, selections, pos, size, edmConfig);
         var baseFace = electrode.BaseFace;
         var bottomFrontViewBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomFrontView, electrode.ElecBody);
 
@@ -492,9 +495,9 @@ partial class EdmDrawUI : SnapEx.BaseUI
             new Snap.Position(bottomFrontView.GetDrawingReferencePoint().X - (EdmDraw.DrawBusiness.GetBorderSize(bottomFrontView.Tag).X / 2), bottomFrontView.GetDrawingReferencePoint().Y));
     }
 
-    void CreateEACT_BOTTOMView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size,ElecManage.Electrode electrode)
+    void CreateEACT_BOTTOMView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size,ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)
     {
-        var bottomView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM).Tag, selections, pos, size);
+        var bottomView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM).Tag, selections, pos, size,edmConfig);
         var bottomViewBorderPoints = EdmDraw.DrawBusiness.GetBorderPoint(bottomView, electrode.ElecBody);
 
         var yPlusSideFace = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(bottomViewBorderPoints[1]); }, bottomView.Tag);
@@ -521,14 +524,14 @@ partial class EdmDrawUI : SnapEx.BaseUI
 
     }
 
-    void CreateEACT_BOTTOM_ISOMETRICView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)
+    void CreateEACT_BOTTOM_ISOMETRICView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, EdmDraw.EdmConfig edmConfig)
     {
-        var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_ISOMETRIC).Tag, selections, pos, size);
+        var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_BOTTOM_ISOMETRIC).Tag, selections, pos, size,edmConfig);
     }
 
-    void CreateEACT_ISOMETRICView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)
+    void CreateEACT_ISOMETRICView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, EdmDraw.EdmConfig edmConfig)
     {
-        var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_ISOMETRIC).Tag, selections, pos, size);
+        var view = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_ISOMETRIC).Tag, selections, pos, size,edmConfig);
     }
 
     ModelingView GetModelingView(EdmDraw.ViewType viewType) 

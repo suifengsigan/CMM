@@ -381,11 +381,11 @@ namespace EdmDraw
         /// <summary>
         /// 创建基本视图
         /// </summary>
-        public static NXOpen.Drawings.BaseView CreateBaseView(NXOpen.Drawings.DrawingSheet ds, NXOpen.Tag modelViewTag, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size)
+        public static NXOpen.Drawings.BaseView CreateBaseView(NXOpen.Drawings.DrawingSheet ds, NXOpen.Tag modelViewTag, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size,EdmConfig config)
         {
             var sList = Enumerable.Select(selections, u => Snap.NX.NXObject.Wrap(u.Tag).Layer).ToList();
-            SetShowLayers(sList, 254);
-            sList.Add(254);
+            SetShowLayers(sList, config.EdmDrfLayer);
+            sList.Add(config.EdmDrfLayer);
             var workPart = NXOpen.Session.GetSession().Parts.Work;
             Snap.NX.Part snapWorkPart = workPart;
             var theUFSession = NXOpen.UF.UFSession.GetUFSession();
