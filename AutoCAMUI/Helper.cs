@@ -94,20 +94,6 @@ namespace AutoCAMUI
             }
             return result;
         }
-
-        /// <summary>
-        /// 创建工序
-        /// </summary>
-        public static void CreateOper(CAMOper oper)
-        {
-            //TODO 创建工序
-            NXOpen.Tag operTag;
-            ufSession.Oper.Create(oper.AUTOCAM_TYPE, oper.AUTOCAM_SUBTYPE, out operTag);
-            ufSession.Ncgroup.AcceptMember(oper.WorkGeometryGroup, operTag);
-            ufSession.Ncgroup.AcceptMember(oper.ProgramGroup, operTag);
-            ufSession.Ncgroup.AcceptMember(oper.MethodGroupRoot, operTag);
-            ufSession.Ncgroup.AcceptMember(oper.CAMCutter, operTag);
-        }
         
         /// <summary>
         /// 设置区域
