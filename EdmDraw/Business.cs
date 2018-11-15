@@ -8,15 +8,7 @@ using NXOpen;
 
 partial class EdmDrawUI : SnapEx.BaseUI
 {
-    const double _tolerance = 0.0001;
     List<string> _paramFileList = new List<string>();
-    double[] _frontViewMatrix = new double[]{1.000000000,0.000000000,0.000000000,0.000000000,  0.000000000,1.000000000};
-    double[] _topViewMatrix = new double[] { 1.000000000,0.000000000,0.000000000,0.000000000,  1.000000000,0.000000000 };
-    double[] _bottomViewMatrix = new double[] {-1.000000000,0.000000000,0.000000000,0.000000000,  1.000000000,0.000000000 };
-    double[] _bottomFrontViewMatrix = new double[] { -1.000000000,0.000000000,0.000000000,0.000000000,  0.000000000,-1.000000000 };
-    double[] _isometricViewMatrix = new double[] { 0.7071067,0.7071067,0.000000000,-0.4082482,  0.4082482,0.8164965 };
-    double[] _bottomIsometricViewMatrix = new double[] {0.7071067,-0.7071067,0.000000000,-0.5, -0.5,-0.7 };
-
     public override void Init()
     {
         var snapSelectSteel = Snap.UI.Block.SelectObject.GetBlock(theDialog, selectSteel.Name);
