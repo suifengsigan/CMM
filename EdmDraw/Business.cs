@@ -430,13 +430,13 @@ partial class EdmDrawUI : SnapEx.BaseUI
             EdmDraw.DrawBusiness.SetToleranceType(topViewTopElecBasePoint);
         });
 
-        positionings.ForEach(p => {
-            var elecBasePoint = tempDic[p];
-            var borderSize = topView.GetBorderSize();
-            var refPoint = topView.GetDrawingReferencePoint();
+        //positionings.ForEach(p => {
+        //    var elecBasePoint = tempDic[p];
+        //    var borderSize = topView.GetBorderSize();
+        //    var refPoint = topView.GetDrawingReferencePoint();
 
-            EdmDraw.DrawBusiness.CreateIdSymbol(p.N, new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
-        });
+        //    EdmDraw.DrawBusiness.CreateIdSymbol(p.N, new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
+        //});
     }
 
     void CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)

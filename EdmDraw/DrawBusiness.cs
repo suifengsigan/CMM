@@ -389,6 +389,10 @@ namespace EdmDraw
             var workPart = NXOpen.Session.GetSession().Parts.Work;
             Snap.NX.Part snapWorkPart = workPart;
             var theUFSession = NXOpen.UF.UFSession.GetUFSession();
+
+            //抑制视图的边界显示
+            theUFSession.Draw.SetBorderDisplay(false);
+
             NXOpen.UF.UFDraw.ViewInfo view_info;
             theUFSession.Draw.InitializeViewInfo(out view_info);
             view_info.view_status = NXOpen.UF.UFDraw.ViewStatus.ActiveView;//UF_DRAW_ACTIVE_VIEW;
