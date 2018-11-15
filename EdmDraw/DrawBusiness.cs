@@ -4,21 +4,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SnapEx;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace EdmDraw
 {
     public enum ViewType 
     {
+        Unknown,
+        [Description("工件俯视图")]
         EACT_TOP,
+        [Description("电极|工件前视图")]
         EACT_FRONT,
+        [Description("电极仰视图")]
         EACT_BOTTOM,
+        [Description("工件轴测视图")]
         EACT_ISOMETRIC,
+        [Description("电极前视图")]
         EACT_BOTTOM_FRONT,
+        [Description("电极轴测视图")]
         EACT_BOTTOM_ISOMETRIC,
+        [Description("工件|电极左视图")]
         EACT_ELEFT,
+        [Description("电极右视图")]
         EACT_ERIGHT,
+        [Description("电极后视图")]
         EACT_EREAL
     }
+
+   
 
     public enum ViewBorderType 
     {
@@ -26,8 +40,48 @@ namespace EdmDraw
         Right
     }
 
-    public class DrawBusiness
+    public static class DrawBusiness
     {
+        public static ViewType GetEumnViewType(string description)
+        {
+            Type type = typeof(ViewType);
+            var fds = type.GetFields();
+            foreach (var fd in fds)
+            {
+                object[] attrs = fd.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                if (fd.Name == description)
+                {
+                    return (EdmDraw.ViewType)Enum.Parse(typeof(EdmDraw.ViewType), fd.Name);
+                }
+                else
+                {
+                    foreach (DescriptionAttribute attr in attrs)
+                    {
+                        if (description == attr.Description)
+                        {
+                            return (EdmDraw.ViewType)Enum.Parse(typeof(EdmDraw.ViewType), fd.Name);
+                        }
+                    }
+                }
+            }
+
+            return ViewType.Unknown;
+        }
+        public static string GetDescription(this Enum em)
+        {
+            Type type = em.GetType();
+            FieldInfo fd = type.GetField(em.ToString());
+            if (fd == null)
+                return string.Empty;
+            object[] attrs = fd.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            string name = string.Empty;
+            foreach (DescriptionAttribute attr in attrs)
+            {
+                name = attr.Description;
+            }
+            return name;
+        }
         /// <summary>
         /// 创建投影视图(AddOrthographicView)
         /// </summary>

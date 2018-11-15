@@ -127,7 +127,7 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
         foreach (var item in draftViewLocations)
         {
-            var viewType = (EdmDraw.ViewType)Enum.Parse(typeof(EdmDraw.ViewType), item.ViewType);
+            var viewType = EdmDraw.DrawBusiness.GetEumnViewType( item.ViewType);
             switch (viewType)
             {
                 case EdmDraw.ViewType.EACT_TOP:
