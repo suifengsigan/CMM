@@ -28,7 +28,7 @@ namespace EdmDraw
 
             List<string> _paramFileList = new List<string>();
             var members = new List<string>();
-            var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EdmTemplate");
+            var path = EdmConfig.GetEdmTemplatePath();
             if (System.IO.Directory.Exists(path))
             {
                 System.IO.Directory.GetFiles(path).ToList().ForEach(u =>

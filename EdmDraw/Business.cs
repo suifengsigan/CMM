@@ -8,7 +8,11 @@ using NXOpen;
 
 partial class EdmDrawUI : SnapEx.BaseUI
 {
-    List<string> _paramFileList = new List<string>();
+    public override void DialogShown()
+    {
+        selectTemplate0.Show = false;
+        txtDrfLayer.Show = false;
+    }
     public override void Init()
     {
         var snapSelectSteel = Snap.UI.Block.SelectObject.GetBlock(theDialog, selectSteel.Name);
@@ -18,56 +22,30 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var snapSelectCuprum = Snap.UI.Block.SelectObject.GetBlock(theDialog, selectCuprum.Name);
         snapSelectCuprum.AllowMultiple = false;
         snapSelectCuprum.SetFilter(Snap.NX.ObjectTypes.Type.Body, Snap.NX.ObjectTypes.SubType.BodySolid);
-
-        var members = new List<string>();
-        var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EdmTemplate");
-        if (System.IO.Directory.Exists(path))
-        {
-            _paramFileList = System.IO.Directory.GetFiles(path).ToList();
-            _paramFileList.ForEach(u =>
-            {
-                members.Add(System.IO.Path.GetFileNameWithoutExtension(u));
-            });
-        }
-
-        selectTemplate0.Items= members.ToArray();
     }
     public override void Apply()
     {
         Snap.NX.Body selectedObj = selectCuprum.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
         var steel = selectSteel.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
         var workPart = Snap.Globals.WorkPart;
-        var templateName = _paramFileList.Where(u => u.Contains(selectTemplate0.SelectedItem)).FirstOrDefault();
-        CreateDrawingSheet(selectedObj, steel, templateName);
+        CreateDrawingSheet(selectedObj, steel);
     }
 
     public void CreateEdmDraw(Snap.NX.Body elecBody,Snap.NX.Body steel) 
     {
-        var workPart = Snap.Globals.WorkPart;
-        var members = new List<string>();
-        var path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template");
-        if (System.IO.Directory.Exists(path))
-        {
-            _paramFileList = System.IO.Directory.GetFiles(path).ToList();
-            _paramFileList.ForEach(u =>
-            {
-                members.Add(System.IO.Path.GetFileNameWithoutExtension(u));
-            });
-        }
-        
-        CreateDrawingSheet(elecBody, steel,_paramFileList.First());
+        CreateDrawingSheet(elecBody, steel);
     }
 
 
-    void CreateDrawingSheet(Snap.NX.Body selectedObj, Snap.NX.Body steel, string templateName) 
+    void CreateDrawingSheet(Snap.NX.Body selectedObj, Snap.NX.Body steel) 
     {
+        var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
+        var templateName = edmConfig.GetEdmTemplate();
         if (string.IsNullOrEmpty(templateName))
         {
             return;
         }
-        var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
         InitModelingView(edmConfig);
-
         EdmDraw.DrawBusiness.InitPreferences(edmConfig);
         var workPart = Snap.Globals.WorkPart;
         var dsName = selectedObj.Name;

@@ -11,6 +11,14 @@ namespace EdmDraw
     /// </summary>
     public class EdmConfig
     {
+        public string GetEdmTemplate()
+        {
+            return System.IO.Path.Combine(GetEdmTemplatePath(), string.Format("{0}{1}",EdmTemplate,".prt"));
+        }
+        public static string GetEdmTemplatePath()
+        {
+            return System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EdmTemplate");
+        }
         /// <summary>
         ///  是否使用系统参数
         /// </summary>
