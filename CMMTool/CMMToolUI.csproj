@@ -39,6 +39,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\PHEact\Application\EactConfig.dll</HintPath>
     </Reference>
+    <Reference Include="ElecManage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\ElecManage.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\BLL\UG\Newtonsoft.Json.dll</HintPath>
@@ -80,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Business.cs" />
     <Compile Include="CMMConfig.cs" />
+    <Compile Include="EdmConfig.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

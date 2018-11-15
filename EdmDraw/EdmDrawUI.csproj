@@ -75,22 +75,16 @@
     <Compile Include="DraftingEnvironmentData.cs" />
     <Compile Include="DraftingHelper.cs" />
     <Compile Include="DrawBusiness.cs" />
-    <Compile Include="EdmConfig.cs" />
     <Compile Include="EdmDrawUI.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UCEdmConfig.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UCEdmConfig.Designer.cs">
-      <DependentUpon>UCEdmConfig.cs</DependentUpon>
-    </Compile>
     <Compile Include="Upload.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UCEdmConfig.resx">
-      <DependentUpon>UCEdmConfig.cs</DependentUpon>
-    </EmbeddedResource>
+    <ProjectReference Include="..\CMMTool\CMMToolUI.csproj">
+      <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
+      <Name>CMMToolUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

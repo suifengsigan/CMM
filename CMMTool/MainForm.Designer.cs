@@ -68,6 +68,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtProbeName = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtMinEdgeDistance = new System.Windows.Forms.TextBox();
             this.btnSelGetPointFilePath = new System.Windows.Forms.Button();
             this.cbIsSelGetPointFilePath = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -96,8 +98,8 @@
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtMinEdgeDistance = new System.Windows.Forms.TextBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.ucEdmConfig1 = new EdmDraw.UCEdmConfig();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -116,6 +118,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -160,6 +163,7 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -523,6 +527,24 @@
             this.tabPage4.Text = "CMM基本配置";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(71, 499);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 28;
+            this.label12.Text = "最小边距";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtMinEdgeDistance
+            // 
+            this.txtMinEdgeDistance.Location = new System.Drawing.Point(193, 496);
+            this.txtMinEdgeDistance.Name = "txtMinEdgeDistance";
+            this.txtMinEdgeDistance.Size = new System.Drawing.Size(285, 21);
+            this.txtMinEdgeDistance.TabIndex = 27;
+            this.txtMinEdgeDistance.Text = "0.8";
+            // 
             // btnSelGetPointFilePath
             // 
             this.btnSelGetPointFilePath.Location = new System.Drawing.Point(484, 67);
@@ -787,23 +809,24 @@
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
             // 
-            // label12
+            // tabPage6
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(71, 499);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 28;
-            this.label12.Text = "最小边距";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.tabPage6.Controls.Add(this.ucEdmConfig1);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(802, 591);
+            this.tabPage6.TabIndex = 4;
+            this.tabPage6.Text = "EDM图配置";
+            this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // txtMinEdgeDistance
+            // ucEdmConfig1
             // 
-            this.txtMinEdgeDistance.Location = new System.Drawing.Point(193, 496);
-            this.txtMinEdgeDistance.Name = "txtMinEdgeDistance";
-            this.txtMinEdgeDistance.Size = new System.Drawing.Size(285, 21);
-            this.txtMinEdgeDistance.TabIndex = 27;
-            this.txtMinEdgeDistance.Text = "0.8";
+            this.ucEdmConfig1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ucEdmConfig1.Location = new System.Drawing.Point(3, 3);
+            this.ucEdmConfig1.Name = "ucEdmConfig1";
+            this.ucEdmConfig1.Size = new System.Drawing.Size(796, 585);
+            this.ucEdmConfig1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -838,6 +861,7 @@
             this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -912,6 +936,8 @@
         private System.Windows.Forms.TextBox txtGetPointFilePath;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtMinEdgeDistance;
+        private System.Windows.Forms.TabPage tabPage6;
+        private EdmDraw.UCEdmConfig ucEdmConfig1;
     }
 }
 

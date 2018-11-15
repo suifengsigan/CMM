@@ -295,6 +295,8 @@ namespace CMMTool
             {
                 CMMTool.Business.InitConfig();
             }
+
+            ucEdmConfig1.Save();
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)
