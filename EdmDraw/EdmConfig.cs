@@ -155,6 +155,18 @@ namespace EdmDraw
             /// </summary>
             [DisplayName("位置Y")]
             public double LocationY { get; set; }
+            [DisplayName("矩阵Xx")]
+            public double Xx { get; set; }
+            [DisplayName("矩阵Xy")]
+            public double Xy { get; set; }
+            [DisplayName("矩阵Xz")]
+            public double Xz { get; set; }
+            [DisplayName("矩阵Yx")]
+            public double Yx { get; set; }
+            [DisplayName("矩阵Yy")]
+            public double Yy { get; set; }
+            [DisplayName("矩阵Yz")]
+            public double Yz { get; set; }
         }
 
         /// <summary>

@@ -46,9 +46,6 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var steel = selectSteel.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
         var workPart = Snap.Globals.WorkPart;
         var templateName = _paramFileList.Where(u => u.Contains(selectTemplate0.SelectedItem)).FirstOrDefault();
-
-        InitModelingView();
-
         CreateDrawingSheet(selectedObj, steel, templateName);
     }
 
@@ -65,15 +62,20 @@ partial class EdmDrawUI : SnapEx.BaseUI
                 members.Add(System.IO.Path.GetFileNameWithoutExtension(u));
             });
         }
-        InitModelingView();
-
+        
         CreateDrawingSheet(elecBody, steel,_paramFileList.First());
     }
 
 
     void CreateDrawingSheet(Snap.NX.Body selectedObj, Snap.NX.Body steel, string templateName) 
     {
+        if (string.IsNullOrEmpty(templateName))
+        {
+            return;
+        }
         var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
+        InitModelingView(edmConfig);
+
         EdmDraw.DrawBusiness.InitPreferences(edmConfig);
         var workPart = Snap.Globals.WorkPart;
         var dsName = selectedObj.Name;
@@ -540,21 +542,15 @@ partial class EdmDrawUI : SnapEx.BaseUI
         var result= Snap.Globals.WorkPart.NXOpenPart.ModelingViews.ToArray().FirstOrDefault(u => u.Name == name);
         return result;
     }
-    
-    void InitModelingView() 
+
+    void InitModelingView(EdmDraw.EdmConfig edmConfig)
     {
         SnapEx.Create.ApplicationSwitchRequest(SnapEx.ApplicationType.MODELING);
-        EdmDraw.DrawBusiness.CreateCamera(EdmDraw.ViewType.EACT_BOTTOM, _bottomViewMatrix);
-        EdmDraw.DrawBusiness.CreateCamera(EdmDraw.ViewType.EACT_TOP, _topViewMatrix);
-        EdmDraw.DrawBusiness.CreateCamera(EdmDraw.ViewType.EACT_FRONT, _frontViewMatrix);
-        EdmDraw.DrawBusiness.CreateCamera(EdmDraw.ViewType.EACT_BOTTOM_FRONT, _bottomFrontViewMatrix);
-        EdmDraw.DrawBusiness.CreateCamera(EdmDraw.ViewType.EACT_BOTTOM_ISOMETRIC, _bottomIsometricViewMatrix);
-        EdmDraw.DrawBusiness.CreateCamera(EdmDraw.ViewType.EACT_ISOMETRIC, _isometricViewMatrix);
+        var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
+        foreach (var item in draftViewLocations)
+        {
+            var viewType = EdmDraw.DrawBusiness.GetEumnViewType(item.ViewType);
+            EdmDraw.DrawBusiness.CreateCamera(viewType, new double[] { item.Xx, item.Xy, item.Xz, item.Yx, item.Yy, item.Yz });
+        }
     }
-
-    public void Test()
-    {
-        //EdmDraw.DrawBusiness.CreatePentagon(new Snap.Position(223, ds.Height - 1.5 - 2), QuadrantType.Four);
-    }
-
 }
