@@ -28,6 +28,24 @@ namespace EdmDraw
 
     public class DrawBusiness
     {
+        /// <summary>
+        /// 创建投影视图(AddOrthographicView)
+        /// </summary>
+        public static NXOpen.Drawings.ProjectedView CreateProjectedView(NXOpen.Tag ds, NXOpen.Tag parentView, Snap.Position pos)
+        {
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            NXOpen.Tag orthographicView;
+            ufSession.Draw.AddOrthographicView(
+                ds,
+                parentView,
+                NXOpen.UF.UFDraw.ProjDir.ProjectAbove,
+                new double[] { pos.X, pos.Y },
+                out orthographicView
+                );
+
+            return NXOpen.Utilities.NXObjectManager.Get(orthographicView) as NXOpen.Drawings.ProjectedView;
+        }
+
         public static NXOpen.Tag CreateVerticalOrddimension(NXOpen.Tag baseView, NXOpen.Tag originObj, NXOpen.Tag marginObj, NXOpen.Tag dimensionObj, double dAngle = 0, Snap.Position? origin = null, double dDistance = 0)
         {
             return CreateOrddimension(1, baseView, originObj, marginObj, dimensionObj,dAngle,dDistance,origin);
