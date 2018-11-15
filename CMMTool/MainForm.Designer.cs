@@ -817,7 +817,7 @@
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage6.Size = new System.Drawing.Size(802, 591);
             this.tabPage6.TabIndex = 4;
-            this.tabPage6.Text = "EDM图配置";
+            this.tabPage6.Text = "EDM配置";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // ucEdmConfig1
