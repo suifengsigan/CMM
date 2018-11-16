@@ -594,43 +594,34 @@ namespace EdmDraw
 
             var modelingView = workPart.ModelingViews.ToArray().FirstOrDefault(u => u.Name == viewName);
 
-            if (modelingView != null)
-            {
-                Snap.NX.NXObject.Wrap(modelingView.Tag).Delete();
-                modelingView = null;
-            }
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            var or = new Snap.Orientation(
+                    new Snap.Vector(martrix[0], martrix[1], martrix[2])
+                    , new Snap.Vector(martrix[3], martrix[4], martrix[5]));
+            var ds = new List<double>();
+            ds.AddRange(or.AxisX.Array);
+            ds.AddRange(or.AxisY.Array);
+            SnapEx.Ex.UC6434("", 4, NXOpen.Tag.Null, ds.ToArray());
+            //ufSession.View.SetViewMatrix("", 4, NXOpen.Tag.Null, martrix);
 
-            if (modelingView == null) 
-            {
-                var ufSession = NXOpen.UF.UFSession.GetUFSession();
-                var or = new Snap.Orientation(
-                        new Snap.Vector(martrix[0], martrix[1], martrix[2])
-                        , new Snap.Vector(martrix[3], martrix[4], martrix[5]));
-                var ds = new List<double>();
-                ds.AddRange(or.AxisX.Array);
-                ds.AddRange(or.AxisY.Array);
-                SnapEx.Ex.UC6434("", 4, NXOpen.Tag.Null, ds.ToArray());
-                //ufSession.View.SetViewMatrix("", 4, NXOpen.Tag.Null, martrix);
+            #region createCamera Code
+            NXOpen.Tag workView;
+            ufSession.View.AskWorkView(out workView);
+            string workViewName;
+            ufSession.Obj.AskName(workView, out workViewName);
 
-                #region createCamera Code
-                NXOpen.Tag workView;
-                ufSession.View.AskWorkView(out workView);
-                string workViewName;
-                ufSession.Obj.AskName(workView, out workViewName);
+            SnapEx.Ex.UC6450(workViewName, viewName, 0, 0);
+            SnapEx.Ex.UC6449(workViewName);
 
-                SnapEx.Ex.UC6450(workViewName, viewName, 0, 0);
-                SnapEx.Ex.UC6449(workViewName);
-
-                //NXOpen.Display.Camera nullDisplay_Camera = null;
-                //NXOpen.Display.CameraBuilder cameraBuilder1;
-                //cameraBuilder1 = workPart.Cameras.CreateCameraBuilder(nullDisplay_Camera);
-                //cameraBuilder1.Commit();
-                //cameraBuilder1.CameraName = viewName;
-                //cameraBuilder1.CameraNameChar = viewName;
-                //cameraBuilder1.Commit();
-                //cameraBuilder1.Destroy();
-                #endregion
-            }
+            //NXOpen.Display.Camera nullDisplay_Camera = null;
+            //NXOpen.Display.CameraBuilder cameraBuilder1;
+            //cameraBuilder1 = workPart.Cameras.CreateCameraBuilder(nullDisplay_Camera);
+            //cameraBuilder1.Commit();
+            //cameraBuilder1.CameraName = viewName;
+            //cameraBuilder1.CameraNameChar = viewName;
+            //cameraBuilder1.Commit();
+            //cameraBuilder1.Destroy();
+            #endregion
 
             modelingView = workPart.ModelingViews.ToArray().FirstOrDefault(u => u.Name == viewName);
 
