@@ -182,6 +182,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
       
 
         var result=EdmDraw.Helper.ExportPDF(ds);
+        Snap.NX.NXObject.Wrap(ds.Tag).Delete();
         var info = electrode.GetElectrodeInfo();
         CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
     }
