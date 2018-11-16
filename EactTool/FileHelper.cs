@@ -18,7 +18,10 @@ namespace EactTool
         private static string _FtpUserID;
         private static string _FtpPassword;
         private static bool _SSL;
-        public static void InitFileMode(int mode, string FtpServerIP, string FtpRemotePath, string FtpUserID, string FtpPassword, bool SSL)
+        public static void InitFileMode(int mode, string FtpServerIP, string FtpRemotePath, string FtpUserID, string FtpPassword, bool SSL,
+            string Eact_FTPPATH = "/Eact_AutoCMM", 
+            string tempPath = @"Temp\Eact_AutoCMM",
+            string errorPath = @"Temp\Eact_AutoCMM_Error")
         {
             _mode = mode;
             _FtpServerIP = FtpServerIP;
@@ -26,6 +29,9 @@ namespace EactTool
             _FtpUserID = FtpUserID;
             _FtpPassword = FtpPassword;
             _SSL = SSL;
+            _Eact_FTPPATH = Eact_FTPPATH;
+            _tempPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, tempPath);
+            _errorPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, errorPath);
         }
 
         public static string FindFile(string path)

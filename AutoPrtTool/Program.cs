@@ -16,7 +16,11 @@ namespace AutoPrtTool
         static void Excute()
         {
             ShowMsg("正在匹配图档...");
+            var cmmConfig = CMMTool.CMMConfig.GetInstance();
             var path = CMMTool.CMMConfig.GetInstance().AutoPrtToolDir;
+            var ConfigData = EactConfig.ConfigData.GetInstance();
+            EactTool.FileHelper.InitFileMode(cmmConfig.IsAutoPrtFtpDir ? 1 : 0, ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false
+                , "/Eact_AutoPrtTool", @"Temp\Eact_AutoPrtTool", @"Temp\Eact_AutoPrtTool_Error");
             var fileName=EactTool.FileHelper.FindFile(path);
             if (!string.IsNullOrEmpty(fileName))
             {
@@ -25,17 +29,24 @@ namespace AutoPrtTool
                     EactBomUI.AutoPartBusiness.Start(fileName, ShowMsg);
                     EactTool.FileHelper.DeleteFile(path, fileName);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     EactTool.FileHelper.WriteErrorFile(path, fileName, ex.Message);
                 }
             }
-            
+            else
+            {
+                System.Threading.Thread.Sleep(5000);
+            }
         }
 
         static void ShowMsg(string msg)
         {
-            CSharpProxy.ProxyObject.Instance.ShowMsg(msg);
+           ShowMsg(msg,0);
+        }
+        static void ShowMsg(string msg, int type)
+        {
+            CSharpProxy.ProxyObject.Instance.ShowMsg(msg, type);
         }
     }
 }

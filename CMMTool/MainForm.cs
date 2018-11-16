@@ -271,6 +271,7 @@ namespace CMMTool
         {
             var datasource = dataGridView1.DataSource as List<ProbeData>;
             var result = new CMMConfig { ProbeDatas = datasource };
+            result.IsAutoPrtFtpDir = cbIsAutoPrtFtpDir.Checked;
             result.AutoCmmDir = txtAutoCmmDir.Text;
             result.AutoPrtToolDir = txtAutoPrtToolDir.Text;
             result.EntryPoint = double.Parse(txtEntryPoint.Text);
@@ -358,6 +359,7 @@ namespace CMMTool
         {
             var result = CMMConfig.GetInstance();
             var data = result.ProbeDatas ?? new List<ProbeData>();
+            cbIsAutoPrtFtpDir.Checked = result.IsAutoPrtFtpDir;
             cbIsUploadDatabase.Checked = result.IsUploadDataBase;
             txtAutoCmmDir.Text = result.AutoCmmDir;
             txtAutoPrtToolDir.Text = result.AutoPrtToolDir;

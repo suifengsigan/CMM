@@ -100,6 +100,8 @@
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.ucEdmConfig1 = new EdmDraw.UCEdmConfig();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cbIsAutoPrtFtpDir = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -770,6 +772,8 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.label17);
+            this.tabPage5.Controls.Add(this.cbIsAutoPrtFtpDir);
             this.tabPage5.Controls.Add(this.btnAutoPrtToolDir);
             this.tabPage5.Controls.Add(this.label18);
             this.tabPage5.Controls.Add(this.txtAutoPrtToolDir);
@@ -783,7 +787,7 @@
             // 
             // btnAutoPrtToolDir
             // 
-            this.btnAutoPrtToolDir.Location = new System.Drawing.Point(439, 41);
+            this.btnAutoPrtToolDir.Location = new System.Drawing.Point(515, 45);
             this.btnAutoPrtToolDir.Name = "btnAutoPrtToolDir";
             this.btnAutoPrtToolDir.Size = new System.Drawing.Size(75, 23);
             this.btnAutoPrtToolDir.TabIndex = 15;
@@ -794,7 +798,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Enabled = false;
-            this.label18.Location = new System.Drawing.Point(107, 46);
+            this.label18.Location = new System.Drawing.Point(183, 50);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(29, 12);
             this.label18.TabIndex = 14;
@@ -804,7 +808,7 @@
             // txtAutoPrtToolDir
             // 
             this.txtAutoPrtToolDir.Enabled = false;
-            this.txtAutoPrtToolDir.Location = new System.Drawing.Point(168, 43);
+            this.txtAutoPrtToolDir.Location = new System.Drawing.Point(244, 47);
             this.txtAutoPrtToolDir.Name = "txtAutoPrtToolDir";
             this.txtAutoPrtToolDir.Size = new System.Drawing.Size(265, 21);
             this.txtAutoPrtToolDir.TabIndex = 13;
@@ -827,6 +831,26 @@
             this.ucEdmConfig1.Name = "ucEdmConfig1";
             this.ucEdmConfig1.Size = new System.Drawing.Size(796, 585);
             this.ucEdmConfig1.TabIndex = 0;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(51, 50);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(53, 12);
+            this.label17.TabIndex = 26;
+            this.label17.Text = "图档路径";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // cbIsAutoPrtFtpDir
+            // 
+            this.cbIsAutoPrtFtpDir.AutoSize = true;
+            this.cbIsAutoPrtFtpDir.Location = new System.Drawing.Point(125, 49);
+            this.cbIsAutoPrtFtpDir.Name = "cbIsAutoPrtFtpDir";
+            this.cbIsAutoPrtFtpDir.Size = new System.Drawing.Size(42, 16);
+            this.cbIsAutoPrtFtpDir.TabIndex = 25;
+            this.cbIsAutoPrtFtpDir.Text = "FTP";
+            this.cbIsAutoPrtFtpDir.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -938,6 +962,8 @@
         private System.Windows.Forms.TextBox txtMinEdgeDistance;
         private System.Windows.Forms.TabPage tabPage6;
         private EdmDraw.UCEdmConfig ucEdmConfig1;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.CheckBox cbIsAutoPrtFtpDir;
     }
 }
 

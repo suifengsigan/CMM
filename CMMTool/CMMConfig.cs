@@ -77,6 +77,7 @@ namespace CMMTool
         /// </summary>
         public string GetPointFilePath { get; set; }
         public bool IsAutoCmmFtpDir { get; set; }
+        public bool IsAutoPrtFtpDir { get; set; }
         /// <summary>
         /// 是否启用干涉点检测
         /// </summary>
