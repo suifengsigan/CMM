@@ -5,8 +5,10 @@ using System.Text;
 using SnapEx;
 using NXOpen.Drawings;
 using NXOpen;
+using ElecManage;
+using Snap.NX;
 
-partial class EdmDrawUI : SnapEx.BaseUI
+partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 {
     public override void DialogShown()
     {
@@ -31,13 +33,42 @@ partial class EdmDrawUI : SnapEx.BaseUI
         CreateDrawingSheet(selectedObj, steel);
     }
 
-    public void CreateEdmDraw(Snap.NX.Body elecBody,Snap.NX.Body steel) 
+    void CreateDrawingSheet(Snap.NX.Body selectedObj, Snap.NX.Body steel)
     {
-        CreateDrawingSheet(elecBody, steel);
+        //获取电极信息
+        var positionings = new List<ElecManage.PositioningInfo>();
+        Snap.Globals.WorkPart.Bodies.Where(u => selectedObj.Layer == u.Layer && selectedObj.Name == u.Name).ToList().ForEach(u => {
+            var info = ElecManage.Electrode.GetElectrode(u);
+            if (info != null)
+            {
+                var positioning = new ElecManage.PositioningInfo();
+                positioning.Electrode = info;
+                var pos = info.GetElecBasePos();
+                pos = Snap.NX.CoordinateSystem.MapAcsToWcs(pos);
+                positioning.X = Math.Round(pos.X, 4);
+                positioning.Y = Math.Round(pos.Y, 4);
+                positioning.Z = Math.Round(pos.Z, 4);
+                positioning.QuadrantType = info.GetQuadrantType();
+                positionings.Add(positioning);
+            }
+        });
+
+        if (positionings.Count <= 0)
+        {
+            throw new Exception("无法识别该电极！");
+        }
+
+        positionings = positionings.OrderBy(u => u.C).ToList();
+
+        foreach (var item in positionings)
+        {
+            item.N = string.Format("C{0}", positionings.IndexOf(item) + 1);
+        }
+
+        CreateDrawingSheet(positionings, steel);
     }
 
-
-    void CreateDrawingSheet(Snap.NX.Body selectedObj, Snap.NX.Body steel) 
+    public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel)
     {
         var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
         var templateName = edmConfig.GetEdmTemplate();
@@ -45,6 +76,9 @@ partial class EdmDrawUI : SnapEx.BaseUI
         {
             return;
         }
+        ElecManage.Electrode electrode = positionings.FirstOrDefault().Electrode;
+        var selectedObj = electrode.ElecBody;
+        electrode.InitAllFace();
         InitModelingView(edmConfig);
         EdmDraw.DrawBusiness.InitPreferences(edmConfig);
         var workPart = Snap.Globals.WorkPart;
@@ -61,40 +95,6 @@ partial class EdmDrawUI : SnapEx.BaseUI
         //新建图纸页
         var ds = SnapEx.Create.DrawingSheet(selectedObj.Name, templateName);
         EdmDraw.DrawBusiness.SetDrawSheetLayer(ds, edmConfig.EdmDrfLayer);
-
-        //获取电极信息
-        var positionings = new List<ElecManage.PositioningInfo>();
-        ElecManage.Electrode electrode = null;
-        Snap.Globals.WorkPart.Bodies.Where(u => selectedObj.Layer == u.Layer && selectedObj.Name == u.Name).ToList().ForEach(u => {
-            var info = ElecManage.Electrode.GetElectrode(u);
-            if (info != null)
-            {
-                var positioning = new ElecManage.PositioningInfo();
-                positioning.Electrode = info;
-                var pos = info.GetElecBasePos();
-                pos = Snap.NX.CoordinateSystem.MapAcsToWcs(pos);
-                positioning.X = Math.Round(pos.X, 4);
-                positioning.Y = Math.Round(pos.Y, 4);
-                positioning.Z = Math.Round(pos.Z, 4);
-                positioning.QuadrantType = info.GetQuadrantType();
-                positionings.Add(positioning);
-            }
-        });
-        if (positionings.Count<=0)
-        {
-            throw new Exception("无法识别该电极！");
-        }
-
-        positionings = positionings.OrderBy(u => u.C).ToList();
-
-        foreach (var item in positionings)
-        {
-            item.N = string.Format("C{0}", positionings.IndexOf(item) + 1);
-        }
-
-        electrode = positionings.FirstOrDefault().Electrode;
-        selectedObj = electrode.ElecBody;
-        electrode.InitAllFace();
         
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
         foreach (var item in draftViewLocations)
