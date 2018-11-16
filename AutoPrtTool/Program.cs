@@ -31,6 +31,7 @@ namespace AutoPrtTool
                 }
                 catch (Exception ex)
                 {
+                    ShowMsg(string.Format("【{0}】{1}   {2}", fileName, ex.Message, ex.StackTrace), 1);
                     EactTool.FileHelper.WriteErrorFile(path, fileName, ex.Message);
                 }
             }
