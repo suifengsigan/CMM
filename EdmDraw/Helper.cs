@@ -10,7 +10,7 @@ namespace EdmDraw
     public static class Helper
     {
         static string _pdfFilePath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"Temp\EACTPDF");
-        public static void ExportPDF(NXOpen.Drawings.DrawingSheet ds)
+        public static string ExportPDF(NXOpen.Drawings.DrawingSheet ds)
         {
             if (Directory.Exists(_pdfFilePath))
             {
@@ -29,12 +29,15 @@ namespace EdmDraw
             sheets1[0] = drawingSheet1;
             printPDFBuilder1.SourceBuilder.SetSheets(sheets1);
             var fileName = string.Format("{0}{1}", ds.Name, ".pdf");
-            printPDFBuilder1.Filename = System.IO.Path.Combine(_pdfFilePath, fileName);
+            var result = System.IO.Path.Combine(_pdfFilePath, fileName);
+            printPDFBuilder1.Filename = result;
 
             NXObject nXObject1;
             nXObject1 = printPDFBuilder1.Commit();
 
             printPDFBuilder1.Destroy();
+
+            return result;
         }
 
         /// <summary>

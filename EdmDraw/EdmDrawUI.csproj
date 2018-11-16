@@ -30,6 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\CommonInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="EactConfig, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\EactConfig.dll</HintPath>
+    </Reference>
     <Reference Include="ElecManage">
       <HintPath>..\..\..\..\PHEact\Application\ElecManage.dll</HintPath>
     </Reference>

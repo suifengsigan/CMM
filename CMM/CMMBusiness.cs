@@ -65,36 +65,7 @@ namespace CMM
         static void FtpUpload(string type, ElecManage.MouldInfo steelInfo, string fileName, string partName)
         {
             var ConfigData = _EactConfigData;
-            var EACTFTP = FlieFTP.Entry.GetFtp(ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false);
-            string sToPath = string.Format("{0}/{1}/{2}", type, steelInfo.MODEL_NUMBER, partName);
-            switch (ConfigData.FtpPathType)
-            {
-                case 1:
-                    {
-                        var extension = Path.GetExtension(fileName).ToUpper();
-                        if (extension.Contains("STP") || extension.Contains("TXT"))
-                        {
-
-                        }
-                        else
-                        {
-                            sToPath = string.Format("{0}/{1}", type, steelInfo.MODEL_NUMBER, partName);
-                        }
-                        break;
-                    }
-                case 2:
-                    {
-                        sToPath = string.Format("{0}/{1}", type, steelInfo.MODEL_NUMBER, partName);
-                        break;
-                    }
-            }
-            if (!EACTFTP.DirectoryExist(sToPath))
-            {
-                EACTFTP.MakeDirPath(sToPath);
-            }
-
-            EACTFTP.NextDirectory(sToPath);
-            EACTFTP.UpLoadFile(fileName);
+            CommonInterface.FtpHelper.FtpUpload(type, steelInfo, fileName, partName, ConfigData);
         }
 
         /// <summary>

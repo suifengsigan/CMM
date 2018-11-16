@@ -10,6 +10,7 @@ using Snap.NX;
 
 partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 {
+    EactConfig.ConfigData _ConfigData = EactConfig.ConfigData.GetInstance();
     public override void DialogShown()
     {
         selectTemplate0.Show = false;
@@ -178,7 +179,11 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 
         CreateNodeInfo(electrode, edmConfig);
 
-        EdmDraw.Helper.ExportPDF(ds);
+      
+
+        var result=EdmDraw.Helper.ExportPDF(ds);
+        var info = electrode.GetElectrodeInfo();
+        CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
     }
 
     /// <summary>
