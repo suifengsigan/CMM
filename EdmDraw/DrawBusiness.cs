@@ -465,7 +465,7 @@ namespace EdmDraw
             stViewDispParam.smooth_edge_gap = NXOpen.UF.UFDraw.Gap.GapOff; //UF_DRAW_gap_off;
             stViewDispParam.virtual_intersect = NXOpen.UF.UFDraw.VirtualIntersect.VirtualIntersectOff; //UF_DRAW_virtual_intersect_off;
             ufSession.Draw.SetViewDisplay(view, ref stViewDispParam);
-            ufSession.Draw.UpdateOneView(ds, view);
+            //ufSession.Draw.UpdateOneView(ds, view);
         }
 
         public static void SetViewDisplayEx(NXOpen.Tag ds, NXOpen.Tag view)
@@ -484,7 +484,7 @@ namespace EdmDraw
             stViewDispParam.smooth_edge_gap = NXOpen.UF.UFDraw.Gap.GapOff;// UF_DRAW_gap_off;
             stViewDispParam.virtual_intersect = NXOpen.UF.UFDraw.VirtualIntersect.VirtualIntersectOff;// UF_DRAW_virtual_intersect_off;
             ufSession.Draw.SetViewDisplay(view, ref stViewDispParam);
-            ufSession.Draw.UpdateOneView(ds, view);
+            //ufSession.Draw.UpdateOneView(ds, view);
         }
 
         /// <summary>
