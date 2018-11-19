@@ -450,6 +450,43 @@ namespace EdmDraw
             }
         }
 
+        public static void SetViewDisplay(NXOpen.Tag ds, NXOpen.Tag view)
+        {
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            NXOpen.UF.UFDraw.ViewPrfs stViewDispParam;
+            ufSession.Draw.AskViewDisplay(view, out stViewDispParam);
+            stViewDispParam.hidden_line = NXOpen.UF.UFDraw.HiddenLine.HiddenLineRemovalOn;// UF_DRAW_hidden_line_removal_on;//只有设置这项后才能设置hidden_line_font
+            stViewDispParam.hidden_line_font = NXOpen.UF.UFConstants.UF_OBJ_FONT_DASHED;
+            stViewDispParam.visible_line_font = NXOpen.UF.UFConstants.UF_OBJ_FONT_SOLID;
+            stViewDispParam.visible_line_width = NXOpen.UF.UFConstants.UF_OBJ_WIDTH_THIN;
+            stViewDispParam.hidden_line_width = NXOpen.UF.UFConstants.UF_OBJ_WIDTH_THIN;
+            stViewDispParam.edges_hidden_by_own_solid = false;
+            stViewDispParam.smooth = NXOpen.UF.UFDraw.Smooth.SmoothOn;// UF_DRAW_smooth_on;
+            stViewDispParam.smooth_edge_gap = NXOpen.UF.UFDraw.Gap.GapOff; //UF_DRAW_gap_off;
+            stViewDispParam.virtual_intersect = NXOpen.UF.UFDraw.VirtualIntersect.VirtualIntersectOff; //UF_DRAW_virtual_intersect_off;
+            ufSession.Draw.SetViewDisplay(view, ref stViewDispParam);
+            ufSession.Draw.UpdateOneView(ds, view);
+        }
+
+        public static void SetViewDisplayEx(NXOpen.Tag ds, NXOpen.Tag view)
+        {
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            NXOpen.UF.UFDraw.ViewPrfs stViewDispParam;
+            ufSession.Draw.AskViewDisplay(view, out stViewDispParam);
+            stViewDispParam.hidden_line = NXOpen.UF.UFDraw.HiddenLine.HiddenLineRemovalOn;// UF_DRAW_hidden_line_removal_on;//只有设置这项后才能设置hidden_line_font
+            stViewDispParam.hidden_line_font = NXOpen.UF.UFConstants.UF_OBJ_FONT_INVISIBLE;
+            stViewDispParam.visible_line_font = NXOpen.UF.UFConstants.UF_OBJ_FONT_SOLID;
+            stViewDispParam.visible_line_width = NXOpen.UF.UFConstants.UF_OBJ_WIDTH_THIN;
+            stViewDispParam.hidden_line_width = NXOpen.UF.UFConstants.UF_OBJ_WIDTH_THIN;
+            stViewDispParam.edges_hidden_by_own_solid = false;
+            stViewDispParam.referenced_edges_only = false;
+            stViewDispParam.smooth = NXOpen.UF.UFDraw.Smooth.SmoothOn;// UF_DRAW_smooth_on;
+            stViewDispParam.smooth_edge_gap = NXOpen.UF.UFDraw.Gap.GapOff;// UF_DRAW_gap_off;
+            stViewDispParam.virtual_intersect = NXOpen.UF.UFDraw.VirtualIntersect.VirtualIntersectOff;// UF_DRAW_virtual_intersect_off;
+            ufSession.Draw.SetViewDisplay(view, ref stViewDispParam);
+            ufSession.Draw.UpdateOneView(ds, view);
+        }
+
         /// <summary>
         /// 创建基本视图
         /// </summary>
