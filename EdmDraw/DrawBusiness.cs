@@ -515,6 +515,8 @@ namespace EdmDraw
             string viewName;
             theUFSession.Obj.AskName(draw_view_tag, out viewName);
 
+            SetViewDisplayEx(ds.Tag, draw_view_tag);
+
             var allObj = new List<NXOpen.NXObject>();
             allObj.AddRange(Enumerable.Select(workPart.Bodies.ToArray().Where(u => sList.Contains(u.Layer)),m=>m as NXObject));
             allObj.AddRange(Enumerable.Select(workPart.Points.ToArray().Where(u => sList.Contains(u.Layer)), m => m as NXObject));
