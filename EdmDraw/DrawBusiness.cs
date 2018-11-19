@@ -630,39 +630,45 @@ namespace EdmDraw
             Session theSession = Session.GetSession();
             Part workPart = theSession.Parts.Work;
             Part displayPart = theSession.Parts.Display;
+            var or = new Snap.Orientation(
+                       new Snap.Vector(martrix[0], martrix[1], martrix[2])
+                       , new Snap.Vector(martrix[3], martrix[4], martrix[5]));
 
             var modelingView = workPart.ModelingViews.ToArray().FirstOrDefault(u => u.Name == viewName);
+            var camera= workPart.Cameras.ToArray().FirstOrDefault(u => u.Name == viewName);
 
-            var ufSession = NXOpen.UF.UFSession.GetUFSession();
-            var or = new Snap.Orientation(
-                    new Snap.Vector(martrix[0], martrix[1], martrix[2])
-                    , new Snap.Vector(martrix[3], martrix[4], martrix[5]));
-            var ds = new List<double>();
-            ds.AddRange(or.AxisX.Array);
-            ds.AddRange(or.AxisY.Array);
-            SnapEx.Ex.UC6434("", 4, NXOpen.Tag.Null, ds.ToArray());
-            //ufSession.View.SetViewMatrix("", 4, NXOpen.Tag.Null, martrix);
+            if (modelingView != null&& camera!=null)
+            {
+                NXOpen.Display.CameraBuilder cameraBuilder1;
+                cameraBuilder1 = workPart.Cameras.CreateCameraBuilder(camera);
+                cameraBuilder1.TargetMatrix = Snap.Orientation.Identity;
+                cameraBuilder1.CameraMatrix = or;
+                cameraBuilder1.Commit();
+                cameraBuilder1.Destroy();
+            }
+            else
+            {
+                var ufSession = NXOpen.UF.UFSession.GetUFSession();
+                var ds = new List<double>();
+                ds.AddRange(or.AxisX.Array);
+                ds.AddRange(or.AxisY.Array);
+                SnapEx.Ex.UC6434("", 4, NXOpen.Tag.Null, ds.ToArray());
+                //ufSession.View.SetViewMatrix("", 4, NXOpen.Tag.Null, martrix);
 
-            #region createCamera Code
-            NXOpen.Tag workView;
-            ufSession.View.AskWorkView(out workView);
-            string workViewName;
-            ufSession.Obj.AskName(workView, out workViewName);
+                #region createCamera Code
+                NXOpen.Tag workView;
+                ufSession.View.AskWorkView(out workView);
+                string workViewName;
+                ufSession.Obj.AskName(workView, out workViewName);
 
-            SnapEx.Ex.UC6450(workViewName, viewName, 0, 0);
-            SnapEx.Ex.UC6449(workViewName);
+                SnapEx.Ex.UC6450(workViewName, viewName, 0, 0);
+                SnapEx.Ex.UC6449(workViewName);
+                #endregion
 
-            //NXOpen.Display.Camera nullDisplay_Camera = null;
-            //NXOpen.Display.CameraBuilder cameraBuilder1;
-            //cameraBuilder1 = workPart.Cameras.CreateCameraBuilder(nullDisplay_Camera);
-            //cameraBuilder1.Commit();
-            //cameraBuilder1.CameraName = viewName;
-            //cameraBuilder1.CameraNameChar = viewName;
-            //cameraBuilder1.Commit();
-            //cameraBuilder1.Destroy();
-            #endregion
+                modelingView = workPart.ModelingViews.ToArray().FirstOrDefault(u => u.Name == viewName);
+            }
 
-            modelingView = workPart.ModelingViews.ToArray().FirstOrDefault(u => u.Name == viewName);
+            
 
             return modelingView;
         }
