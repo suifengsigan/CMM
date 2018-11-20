@@ -158,7 +158,7 @@ namespace CMMProgram
         void InitEvent()
         {
             btnStart.Click += BtnStart_Click;
-            btnCMMConfig.Click += BtnConfig_Click;
+            //btnCMMConfig.Click += BtnConfig_Click;
             btnUserConfig.Click += BtnUserConfig_Click;
             btnAutoPrt.Click += BtnAutoPrt_Click;
             this.Shown += S_Shown;

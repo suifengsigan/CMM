@@ -36,7 +36,7 @@ namespace CMMTool
                 {
                     basePart = NXOpen.Session.GetSession().Parts.Work;
                 }
-                EactConfig.Unload.Main();
+                Main();
             }
             catch (Exception ex)
             {

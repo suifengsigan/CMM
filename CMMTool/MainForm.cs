@@ -12,9 +12,12 @@ namespace CMMTool
 {
     public partial class MainForm : Form
     {
+        EactConfig.ConfigUserControl _eactConfigContrl = new EactConfig.ConfigUserControl();
         public MainForm()
         {
             InitializeComponent();
+            _eactConfigContrl.Dock = DockStyle.Fill;
+            tabEactConfig.Controls.Add(_eactConfigContrl);
             InitDgv(dataGridView1);
             InitDgv(dataGridView2);
             dataGridView2.ReadOnly = false;
@@ -298,6 +301,7 @@ namespace CMMTool
             }
 
             ucEdmConfig1.Save();
+            _eactConfigContrl.Save();
         }
 
         private void DataGridView1_SelectionChanged(object sender, EventArgs e)

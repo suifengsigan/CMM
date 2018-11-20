@@ -36,7 +36,6 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.btnAutoPrt = new System.Windows.Forms.Button();
-            this.btnCMMConfig = new System.Windows.Forms.Button();
             this.btnUserConfig = new System.Windows.Forms.Button();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.panel2.SuspendLayout();
@@ -45,7 +44,7 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(29, 43);
+            this.btnStart.Location = new System.Drawing.Point(29, 49);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(109, 79);
             this.btnStart.TabIndex = 0;
@@ -89,7 +88,6 @@
             // panel4
             // 
             this.panel4.Controls.Add(this.btnAutoPrt);
-            this.panel4.Controls.Add(this.btnCMMConfig);
             this.panel4.Controls.Add(this.btnUserConfig);
             this.panel4.Controls.Add(this.btnStart);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
@@ -100,29 +98,20 @@
             // 
             // btnAutoPrt
             // 
-            this.btnAutoPrt.Location = new System.Drawing.Point(29, 162);
+            this.btnAutoPrt.Location = new System.Drawing.Point(29, 218);
             this.btnAutoPrt.Name = "btnAutoPrt";
             this.btnAutoPrt.Size = new System.Drawing.Size(109, 79);
             this.btnAutoPrt.TabIndex = 9;
             this.btnAutoPrt.Text = "图档工具";
             this.btnAutoPrt.UseVisualStyleBackColor = true;
             // 
-            // btnCMMConfig
-            // 
-            this.btnCMMConfig.Location = new System.Drawing.Point(29, 405);
-            this.btnCMMConfig.Name = "btnCMMConfig";
-            this.btnCMMConfig.Size = new System.Drawing.Size(109, 79);
-            this.btnCMMConfig.TabIndex = 7;
-            this.btnCMMConfig.Text = "EACT配置";
-            this.btnCMMConfig.UseVisualStyleBackColor = true;
-            // 
             // btnUserConfig
             // 
-            this.btnUserConfig.Location = new System.Drawing.Point(29, 282);
+            this.btnUserConfig.Location = new System.Drawing.Point(29, 382);
             this.btnUserConfig.Name = "btnUserConfig";
             this.btnUserConfig.Size = new System.Drawing.Size(109, 79);
             this.btnUserConfig.TabIndex = 8;
-            this.btnUserConfig.Text = "用户配置";
+            this.btnUserConfig.Text = "配置工具";
             this.btnUserConfig.UseVisualStyleBackColor = true;
             // 
             // notifyIcon1
@@ -153,7 +142,6 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Button btnUserConfig;
-        private System.Windows.Forms.Button btnCMMConfig;
         private System.Windows.Forms.Button btnAutoPrt;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ListBox listBox2;

@@ -95,13 +95,14 @@
             this.label13 = new System.Windows.Forms.Label();
             this.txtEntryPoint = new System.Windows.Forms.TextBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label17 = new System.Windows.Forms.Label();
+            this.cbIsAutoPrtFtpDir = new System.Windows.Forms.CheckBox();
             this.btnAutoPrtToolDir = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtAutoPrtToolDir = new System.Windows.Forms.TextBox();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabEactConfig = new System.Windows.Forms.TabPage();
             this.ucEdmConfig1 = new EdmDraw.UCEdmConfig();
-            this.label17 = new System.Windows.Forms.Label();
-            this.cbIsAutoPrtFtpDir = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -162,6 +163,7 @@
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabEactConfig);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
@@ -785,6 +787,26 @@
             this.tabPage5.Text = "图档工具配置";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(51, 50);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(53, 12);
+            this.label17.TabIndex = 26;
+            this.label17.Text = "图档路径";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // cbIsAutoPrtFtpDir
+            // 
+            this.cbIsAutoPrtFtpDir.AutoSize = true;
+            this.cbIsAutoPrtFtpDir.Location = new System.Drawing.Point(125, 49);
+            this.cbIsAutoPrtFtpDir.Name = "cbIsAutoPrtFtpDir";
+            this.cbIsAutoPrtFtpDir.Size = new System.Drawing.Size(42, 16);
+            this.cbIsAutoPrtFtpDir.TabIndex = 25;
+            this.cbIsAutoPrtFtpDir.Text = "FTP";
+            this.cbIsAutoPrtFtpDir.UseVisualStyleBackColor = true;
+            // 
             // btnAutoPrtToolDir
             // 
             this.btnAutoPrtToolDir.Location = new System.Drawing.Point(515, 45);
@@ -824,6 +846,16 @@
             this.tabPage6.Text = "EDM配置";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // tabEactConfig
+            // 
+            this.tabEactConfig.Location = new System.Drawing.Point(4, 22);
+            this.tabEactConfig.Name = "tabEactConfig";
+            this.tabEactConfig.Padding = new System.Windows.Forms.Padding(3);
+            this.tabEactConfig.Size = new System.Drawing.Size(802, 591);
+            this.tabEactConfig.TabIndex = 5;
+            this.tabEactConfig.Text = "配置工具";
+            this.tabEactConfig.UseVisualStyleBackColor = true;
+            // 
             // ucEdmConfig1
             // 
             this.ucEdmConfig1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -831,26 +863,6 @@
             this.ucEdmConfig1.Name = "ucEdmConfig1";
             this.ucEdmConfig1.Size = new System.Drawing.Size(796, 585);
             this.ucEdmConfig1.TabIndex = 0;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(51, 50);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(53, 12);
-            this.label17.TabIndex = 26;
-            this.label17.Text = "图档路径";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // cbIsAutoPrtFtpDir
-            // 
-            this.cbIsAutoPrtFtpDir.AutoSize = true;
-            this.cbIsAutoPrtFtpDir.Location = new System.Drawing.Point(125, 49);
-            this.cbIsAutoPrtFtpDir.Name = "cbIsAutoPrtFtpDir";
-            this.cbIsAutoPrtFtpDir.Size = new System.Drawing.Size(42, 16);
-            this.cbIsAutoPrtFtpDir.TabIndex = 25;
-            this.cbIsAutoPrtFtpDir.Text = "FTP";
-            this.cbIsAutoPrtFtpDir.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -964,6 +976,7 @@
         private EdmDraw.UCEdmConfig ucEdmConfig1;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.CheckBox cbIsAutoPrtFtpDir;
+        private System.Windows.Forms.TabPage tabEactConfig;
     }
 }
 
