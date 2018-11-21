@@ -37,7 +37,9 @@ namespace EdmDraw
     public enum ViewBorderType 
     {
         Top,
-        Right
+        Right,
+        Left,
+        Bottom
     }
 
     public static class DrawBusiness
@@ -702,6 +704,29 @@ namespace EdmDraw
                         result = CreateNxObject<Snap.NX.Line>(() => { return Snap.Create.Line(xLeft, xRight); }, view.Tag, false);
                         break;
                     }
+
+                case EdmDraw.ViewBorderType.Left:
+                    {
+                        Snap.Position xLeft = viewCenterPoint;
+                        xLeft.X -= viewBorderSize.X / 2;
+                        xLeft.Y += viewBorderSize.Y / 2;
+                        Snap.Position xRight = viewCenterPoint;
+                        xRight.X -= viewBorderSize.X / 2;
+                        xRight.Y -= viewBorderSize.Y / 2;
+                        result = CreateNxObject<Snap.NX.Line>(() => { return Snap.Create.Line(xLeft, xRight); }, view.Tag, false);
+                        break;
+                    }
+                case EdmDraw.ViewBorderType.Bottom:
+                    {
+                        Snap.Position xLeft = viewCenterPoint;
+                        xLeft.X -= viewBorderSize.X / 2;
+                        xLeft.Y -= viewBorderSize.Y / 2;
+                        Snap.Position xRight = viewCenterPoint;
+                        xRight.X += viewBorderSize.X / 2;
+                        xRight.Y -= viewBorderSize.Y / 2;
+                        result = CreateNxObject<Snap.NX.Line>(() => { return Snap.Create.Line(xLeft, xRight); }, view.Tag, false);
+                        break;
+                    }
             }
             return result;
         }
@@ -714,6 +739,23 @@ namespace EdmDraw
                 list.AddRange(u.Box.Corners.Distinct());
             });
             return GetBorderPoint(view, list);
+        }
+
+        /// <summary>
+        /// 获取工程图中的边框
+        /// </summary>
+        public static List<Snap.Position> GetDrawBorderPoint(NXOpen.Drawings.DraftingView view, Snap.NX.Body steel)
+        {
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            var borderPoints = GetBorderPoint(view, steel);
+            var tempMap = new double[] { 0, 0 };
+            var temPoints = new List<Snap.Position>();
+            borderPoints.ForEach(u => {
+                ufSession.View.MapModelToDrawing(view.Tag, u.Array, tempMap);
+                var borderPointMTD = tempMap.ToArray();
+                temPoints.Add(new Snap.Position(borderPointMTD[0], borderPointMTD[1]));
+            });
+            return temPoints;
         }
 
         public static List<Snap.Position> GetBorderPoint(NXOpen.Drawings.DraftingView view, Snap.NX.Body steel)
