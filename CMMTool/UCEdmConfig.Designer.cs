@@ -83,6 +83,8 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtPageCount = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -387,6 +389,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label10);
+            this.tabPage2.Controls.Add(this.txtPageCount);
             this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.txtEdmDrfLayer);
             this.tabPage2.Controls.Add(this.groupBox3);
@@ -656,6 +660,24 @@
             this.dataGridView3.Size = new System.Drawing.Size(912, 186);
             this.dataGridView3.TabIndex = 0;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(74, 334);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(29, 12);
+            this.label10.TabIndex = 37;
+            this.label10.Text = "分页";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtPageCount
+            // 
+            this.txtPageCount.Location = new System.Drawing.Point(192, 331);
+            this.txtPageCount.Name = "txtPageCount";
+            this.txtPageCount.Size = new System.Drawing.Size(372, 21);
+            this.txtPageCount.TabIndex = 36;
+            this.txtPageCount.Text = "1";
+            // 
             // UCEdmConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -742,5 +764,7 @@
         private System.Windows.Forms.TextBox txtTableInfoY;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtEdmDrfLayer;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox txtPageCount;
     }
 }

@@ -54,6 +54,7 @@ namespace EdmDraw
             cbbEdmTemplate.SelectedIndex = _paramFileList.IndexOf(config.EdmTemplate);
 
             cbIsUseSystemParam.Checked = config.IsUseSystemConfig;
+            txtPageCount.Text = config.PageCount.ToString();
             TextMpi88.Text = config.TextMpi88;
             TextMpr44.Text = config.TextMpr44.ToString();
             TextMpr46.Text = config.TextMpr46.ToString();
@@ -86,6 +87,7 @@ namespace EdmDraw
             config.Table.ColumnInfos = dataGridView1.DataSource as List<EdmConfig.ColumnInfo> ?? new List<EdmConfig.ColumnInfo>();
 
             config.IsUseSystemConfig = cbIsUseSystemParam.Checked;
+            config.PageCount = int.Parse(txtPageCount.Text);
             config.TextMpi88 = TextMpi88.Text;
             config.TextMpr44 = double.Parse(TextMpr44.Text);
             config.TextMpr46 = double.Parse(TextMpr46.Text);

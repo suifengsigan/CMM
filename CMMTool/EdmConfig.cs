@@ -80,6 +80,10 @@ namespace EdmDraw
         /// </summary>
         public string EdmTemplate;
         /// <summary>
+        /// 分页数
+        /// </summary>
+        public int PageCount = 1;
+        /// <summary>
         /// 放电图纸视图
         /// </summary>
         public List<DraftViewLocation> DraftViewLocations = new List<DraftViewLocation>();
