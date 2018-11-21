@@ -837,6 +837,15 @@ namespace EdmDraw
             //}
         }
 
+        public static Snap.Position MapModelToDrawing(NXOpen.Tag viewTag, Snap.Position pos)
+        {
+            var tempMap = new double[] { 0, 0 };
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            ufSession.View.MapModelToDrawing(viewTag, pos.Array, tempMap);
+            var originPointMTD = tempMap.ToArray();
+            return new Snap.Position(originPointMTD[0], originPointMTD[1]);
+        }
+
         public static T CreateNxObject<T>(Func<T> action, NXOpen.Tag viewTag, bool isExpandView = true) where T : Snap.NX.NXObject
         {
             var ufSession = NXOpen.UF.UFSession.GetUFSession();

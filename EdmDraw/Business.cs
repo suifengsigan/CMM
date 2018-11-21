@@ -280,6 +280,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 
     void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, Snap.NX.Body steel, Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings, EdmDraw.EdmConfig edmConfig)
     {
+        var ufSession = NXOpen.UF.UFSession.GetUFSession();
         var selections = new List<TaggedObject>();
         selections.Add(steel);
 
@@ -295,16 +296,12 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, topView.Tag);
 
         var drawBorderPoints = EdmDraw.DrawBusiness.GetDrawBorderPoint(topView, steel);
-
-        var tempMap = new double[] { 0, 0 };
-        var ufSession = NXOpen.UF.UFSession.GetUFSession();
-        ufSession.View.MapModelToDrawing(topView.Tag, originPoint.Position.Array, tempMap);
-        var originPointMTD = tempMap.ToArray();
+        var originPointMTD = EdmDraw.DrawBusiness.MapModelToDrawing(topView.Tag, originPoint.Position);
 
         var listY = new List<double>();
         var listX = new List<double>();
         var temPoints = new List<Snap.Position>();
-        temPoints.Add(new Snap.Position(originPointMTD[0], originPointMTD[1]));
+        temPoints.Add(originPointMTD);
         temPoints.AddRange(drawBorderPoints);
         temPoints.OrderByDescending(u => u.Y).ToList().ForEach(u => {
             listY.Add(u.Y);
@@ -327,16 +324,6 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             tempU.NXOpenTag
             );
 
-            //if (listX.IndexOf(u) == 0)
-            //{
-            //    EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
-            //    topView.Tag,
-            //    originPoint.NXOpenTag,
-            //    topViewRightMargin.NXOpenTag,
-            //    tempU.NXOpenTag
-            //    );
-            //}
-
         });
 
         listY.ForEach(u =>
@@ -350,12 +337,6 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             topViewLeftMargin.NXOpenTag,
             tempU.NXOpenTag
             );
-
-            //if (listY.Min() == u)
-            //{
-            //    EdmDraw.DrawBusiness.CreateVerticalOrddimension( topView.Tag, originPoint.NXOpenTag, topViewTopMargin.NXOpenTag, tempU.NXOpenTag
-            //);
-            //}
         });
 
         var tempDic = new Dictionary<ElecManage.PositioningInfo, Snap.NX.Point>();
@@ -367,9 +348,8 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         });
 
         positionings.ForEach(p => {
-            ufSession.View.MapModelToDrawing(topView.Tag, tempDic[p].Position.Array, tempMap);
-            var positioningMTD = tempMap.ToArray();
-            tempMTDDic.Add(p, new Snap.Position(positioningMTD[0], positioningMTD[1]));
+            var positioningMTD = EdmDraw.DrawBusiness.MapModelToDrawing(topView.Tag, tempDic[p].Position.Array);
+            tempMTDDic.Add(p, positioningMTD);
         });
 
         positionings.OrderByDescending(p => tempMTDDic[p].Y).ToList().ForEach(p => {
@@ -389,8 +369,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             var index = positionings.IndexOf(p);
             var elecBasePoint = tempDic[p];
             var elecBasePointMTD = tempMTDDic[p];
-            ufSession.View.MapModelToDrawing(topView.Tag, elecBasePoint.Position.Array, tempMap);
-            var basePointMTD = tempMap.ToArray();
+            var basePointMTD = EdmDraw.DrawBusiness.MapModelToDrawing(topView.Tag, elecBasePoint.Position.Array);
 
             var line = topViewTopMargin as Snap.NX.Line;
             var distance = Snap.Compute.Distance(elecBasePointMTD, topViewTopMargin);
@@ -423,19 +402,16 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         var frontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, selections, pos, size,edmConfig);
         var frontViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, frontView);
         var frontViewLeftMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Left, frontView);
-        var tempMap = new double[] { 0, 0 };
+
+
         var ufSession = NXOpen.UF.UFSession.GetUFSession();
         var originPoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(Snap.Globals.Wcs.Origin); }, frontView.Tag);
         var elecBasePoint = EdmDraw.DrawBusiness.CreateNxObject(() => { return Snap.Create.Point(electrode.GetElecBasePos()); }, frontView.Tag);
-        ufSession.View.MapModelToDrawing(frontView.Tag, elecBasePoint.Position.Array, tempMap);
-        var basePointMTD = new Snap.Position(tempMap.First(), tempMap.Last());
-        ufSession.View.MapModelToDrawing(frontView.Tag, originPoint.Position.Array, tempMap);
-        var originPointMTD = new Snap.Position(tempMap.First(), tempMap.Last());
-        var distance = Snap.Compute.Distance(new Snap.Position(tempMap.First(), tempMap.Last()), frontViewRightMargin);
 
-        var drawBorderPoints = EdmDraw.DrawBusiness.GetDrawBorderPoint(frontView,Snap.NX.Body.Wrap(selections.First().Tag));
-        var listY = Enumerable.Select(drawBorderPoints, u => u.Y);
-        var listX = Enumerable.Select(drawBorderPoints, u => u.X);
+        var drawBorderPoints = EdmDraw.DrawBusiness.GetDrawBorderPoint(frontView, Snap.NX.Body.Wrap(selections.First().Tag));
+        var listY = Enumerable.Select(drawBorderPoints, u => u.Y).ToList();
+        var listX = Enumerable.Select(drawBorderPoints, u => u.X).ToList();
+        listY.Add(EdmDraw.DrawBusiness.MapModelToDrawing(frontView.Tag, originPoint.Position).Y);
         listY.Distinct().ToList().ForEach(u => {
             var tempModel = new double[] { 0, 0, 0 };
             ufSession.View.MapDrawingToModel(frontView.Tag, new double[] { listX.Min(), u }, tempModel);
@@ -447,19 +423,12 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                 tempU.NXOpenTag
                 );
         });
-        //TODO 坐标尺寸位置问题
-        var line = frontViewRightMargin as Snap.NX.Line;
-        var origin = new Snap.Position(line.StartPoint.X, originPointMTD.Y + (edmConfig.DimensionMpr32 * 2));
-        var minP = new Snap.Position(line.StartPoint.X, basePointMTD.Y);
-        var angle = Snap.Vector.Angle(basePointMTD - minP, basePointMTD - origin);
 
         var frontViewOrddimension = EdmDraw.DrawBusiness.CreatePerpendicularOrddimension(
             frontView.Tag,
             originPoint.NXOpenTag,
             frontViewRightMargin.NXOpenTag,
-            elecBasePoint.NXOpenTag,
-            angle,
-            origin
+            elecBasePoint.NXOpenTag
             );
 
         EdmDraw.DrawBusiness.SetToleranceType(frontViewOrddimension);
