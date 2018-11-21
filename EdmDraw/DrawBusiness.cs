@@ -127,8 +127,9 @@ namespace EdmDraw
         /// <summary>
         /// 创建C角
         /// </summary>
-        public static void CreatePentagon(Snap.Position pos,QuadrantType type,double width=3,double height=2) 
+        public static List<NXOpen.Tag> CreatePentagon(Snap.Position pos,QuadrantType type,double width=3,double height=2) 
         {
+            var result = new List<NXOpen.Tag>();
             var temp = width / 2;
             var temp2 = height / 2;
             var points = new List<Snap.Position>();
@@ -196,8 +197,12 @@ namespace EdmDraw
                     twoPos = points[i + 1];
                 }
 
-                CreateNxObject(() => { return Snap.Create.Line(firstPos, twoPos); }, NXOpen.Tag.Null, false).IsHidden = false;
+                var line=CreateNxObject(() => { return Snap.Create.Line(firstPos, twoPos); }, NXOpen.Tag.Null, false);
+                line.IsHidden = false;
+                result.Add(line.NXOpenTag);
             }
+
+            return result;
         }
 
         /// <summary>

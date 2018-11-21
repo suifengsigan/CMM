@@ -101,6 +101,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         EdmDraw.DrawBusiness.SetDrawSheetLayer(ds, edmConfig.EdmDrfLayer);
         
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
+        EdmDraw.EdmConfig.DraftViewLocation ViewTypeEACT_TOP = null;
         foreach (var item in draftViewLocations)
         {
             var viewType = EdmDraw.DrawBusiness.GetEumnViewType( item.ViewType);
@@ -108,14 +109,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             {
                 case EdmDraw.ViewType.EACT_TOP:
                     {
-                        CreateEACT_TOPView(
-                            ds,
-                            steel, 
-                            new Snap.Position(item.LocationX,item.LocationY),
-                            new Snap.Position(item.SizeX,item.SizeY),
-                            positionings,
-                            edmConfig
-                            );
+                        ViewTypeEACT_TOP = item;
                     }
                     break;
                 case EdmDraw.ViewType.EACT_FRONT:
@@ -178,16 +172,60 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             }
         }
 
-        CreateTable(edmConfig, positionings);
-
         CreateNodeInfo(electrode, edmConfig);
 
-      
+        var ps = new List<List<PositioningInfo>>();
+        if (edmConfig.PageCount <= 0)
+        {
+            ps.Add(positionings);
+        }
+        else
+        {
+            var ceiling = Math.Ceiling((double)(positionings.Count * 1.0 / edmConfig.PageCount));
+            var tempV = positionings.Count % edmConfig.PageCount;
+            for (int i = 0; i < ceiling; i++)
+            {
+                ps.Add(positionings.Skip(i * edmConfig.PageCount).Take(
+                    i == ceiling - 1 && tempV != 0 ? tempV : edmConfig.PageCount
+                    ).ToList());
+            }
+        }
 
-        var result=EdmDraw.Helper.ExportPDF(ds);
+        foreach (var item in ps)
+        {
+            var pdfName = ds.Name;
+            if (ps.Count > 1)
+            {
+                pdfName += "_" + (ps.IndexOf(item) + 1);
+            }
+            var deleteObj = new List<NXOpen.Tag>();
+            if (ViewTypeEACT_TOP != null)
+            {
+                var topView = CreateEACT_TOPView(
+                                ds,
+                                steel,
+                                new Snap.Position(ViewTypeEACT_TOP.LocationX, ViewTypeEACT_TOP.LocationY),
+                                new Snap.Position(ViewTypeEACT_TOP.SizeX, ViewTypeEACT_TOP.SizeY),
+                                item,
+                                edmConfig
+                                );
+
+                deleteObj.Add(topView.Tag);
+            }
+
+            deleteObj.AddRange(CreateTable(edmConfig, item));
+
+            var result = EdmDraw.Helper.ExportPDF(ds, pdfName);
+            var info = electrode.GetElectrodeInfo();
+            CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
+
+            deleteObj.ForEach(u => {
+                Snap.NX.NXObject.Wrap(u).Delete();
+            });
+        }
+
         Snap.NX.NXObject.Wrap(ds.Tag).Delete();
-        var info = electrode.GetElectrodeInfo();
-        CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
+
     }
 
     /// <summary>
@@ -237,8 +275,9 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
     /// <summary>
     /// 创建表格
     /// </summary>
-    void CreateTable(EdmDraw.EdmConfig edmConfig,List<ElecManage.PositioningInfo> elecs)
+    List<NXOpen.Tag> CreateTable(EdmDraw.EdmConfig edmConfig,List<ElecManage.PositioningInfo> elecs)
     {
+        var result = new List<NXOpen.Tag>();
         //创建表格
         var tableInfo = edmConfig.Table;
         var columnInfos = tableInfo.ColumnInfos;
@@ -251,7 +290,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             edmConfig
             );
 
-        
+        result.Add(tabularNote);
 
         foreach (var item in elecs)
         {
@@ -261,12 +300,13 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                 var index = columnInfos.IndexOf(columnInfo);
                 if (columnInfo.Ex == "1")
                 {
-                    EdmDraw.DrawBusiness.CreatePentagon(
+                    var lines=EdmDraw.DrawBusiness.CreatePentagon(
                         new Snap.Position(tableInfo.locationX + ((index * tableInfo.ColumnWidth) + tableInfo.ColumnWidth / 2), tableInfo.locationY - ((elecIndex * tableInfo.RowHeight) + tableInfo.RowHeight / 2))
                         , item.QuadrantType
                         , tableInfo.ColumnWidth * 2 / 3
                         , tableInfo.RowHeight * 2 / 3
                         );
+                    result.AddRange(lines);
                 }
                 else
                 {
@@ -276,9 +316,10 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         }
 
         EdmDraw.DraftingHelper.UpdateTabularNote(tabularNote);
+        return result;
     }
 
-    void CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, Snap.NX.Body steel, Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings, EdmDraw.EdmConfig edmConfig)
+    BaseView CreateEACT_TOPView(NXOpen.Drawings.DrawingSheet ds, Snap.NX.Body steel, Snap.Position pos, Snap.Position size, List<ElecManage.PositioningInfo> positionings, EdmDraw.EdmConfig edmConfig)
     {
         var ufSession = NXOpen.UF.UFSession.GetUFSession();
         var selections = new List<TaggedObject>();
@@ -395,6 +436,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 
         //    EdmDraw.DrawBusiness.CreateIdSymbol(p.N, new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
         //});
+        return topView;
     }
 
     void CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)
