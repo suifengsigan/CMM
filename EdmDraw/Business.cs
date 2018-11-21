@@ -217,7 +217,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 
             var result = EdmDraw.Helper.ExportPDF(ds, pdfName);
             var info = electrode.GetElectrodeInfo();
-            CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
+            CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = string.IsNullOrEmpty(info.EACT_MODELNO)? "UNKOWN_MODELNO" : info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
 
             deleteObj.ForEach(u => {
                 Snap.NX.NXObject.Wrap(u).Delete();
