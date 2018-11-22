@@ -267,10 +267,27 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         });
 
         var elecInfo = elec.GetElectrodeInfo();
+        var edmNodeInfo = new EdmDraw.EDMNodeInfo();
+        edmNodeInfo.电极材质 = elecInfo.MAT_NAME;
+        edmNodeInfo.电极类型 = elecInfo.UNIT;
+        edmNodeInfo.电极层 = elec.ElecBody.Layer.ToString();
+        edmNodeInfo.电极名称 = elecInfo.Elec_Name;
+        edmNodeInfo.模号 = elecInfo.EACT_MODELNO;
+        edmNodeInfo.工件名称 = elecInfo.EACT_PARTNO;
+
+        edmNodeInfo.精公数量 = elecInfo.FINISH_NUMBER.ToString();
+        edmNodeInfo.中公数量 = elecInfo.MIDDLE_NUMBER.ToString();
+        edmNodeInfo.粗公数量 = elecInfo.ROUGH_NUMBER.ToString();
+        edmNodeInfo.精公火花位 = elecInfo.FINISH_SPACE.ToString();
+        edmNodeInfo.中公火花位 = elecInfo.MIDDLE_SPACE.ToString();
+        edmNodeInfo.粗公火花位 = elecInfo.ROUGH_SPACE.ToString();
+        edmNodeInfo.制图 = "EACT";
+        edmNodeInfo.日期 = DateTime.Now.ToShortDateString();
+
         foreach (var item in propertiesDic)
         {
             var displayName = item.Key;
-            var pValue = EdmDraw.Helper.GetPropertyValue(elecInfo, displayName) ?? string.Empty;
+            var pValue = EdmDraw.Helper.GetPropertyValue(edmNodeInfo, displayName) ?? string.Empty;
             var u = item.Value.FirstOrDefault(p => (p.DisplayName.Contains(displayName)&&p.DisplayName.Contains(pValue.ToString()))|| p.DisplayName.Contains(displayName));
             if (u.Ex == "1")
             {

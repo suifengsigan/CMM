@@ -84,6 +84,7 @@
     <Compile Include="DraftingHelper.cs" />
     <Compile Include="DrawBusiness.cs" />
     <Compile Include="EdmDrawUI.cs" />
+    <Compile Include="EDMNodeInfo.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Upload.cs" />
