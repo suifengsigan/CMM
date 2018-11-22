@@ -495,7 +495,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                 var borderSize = topView.GetBorderSize();
                 var refPoint = topView.GetDrawingReferencePoint();
 
-                EdmDraw.DrawBusiness.CreateIdSymbol(p.N, new Snap.Position(elecBasePointMTD.X- bpX, elecBasePointMTD.Y - bpY), elecBasePointMTD, topView.Tag, elecBasePoint.NXOpenTag);
+                //EdmDraw.DrawBusiness.CreateLabel(p.N, new Snap.Position(elecBasePointMTD.X- bpX, elecBasePointMTD.Y - bpY), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
             });
         }
 

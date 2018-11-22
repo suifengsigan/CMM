@@ -294,7 +294,27 @@ namespace EdmDraw
             //tableSectionBuilder1.Destroy();
         }
 
+        /// <summary>
+        /// 创建标签
+        /// </summary>
+        public static NXOpen.Tag CreateLabel(string text, Snap.Position origin, Snap.Position pos, NXOpen.Tag view, NXOpen.Tag objectTag)
+        {
+            NXOpen.Tag result = NXOpen.Tag.Null;
+            var theUFSession = NXOpen.UF.UFSession.GetUFSession();
 
+            NXOpen.UF.UFDrf.Object object1 = new NXOpen.UF.UFDrf.Object();
+            object1.object_tag = objectTag;
+            object1.object_view_tag = view;
+            object1.object_assoc_type = NXOpen.UF.UFDrf.AssocType.EndPoint;
+            object1.object_assoc_modifier = NXOpen.UF.UFConstants.UF_DRF_first_end_point;
+
+            theUFSession.Drf.CreateLabel(1, new string[] { text }, origin.Array, NXOpen.UF.UFDrf.LeaderAttachType.LeaderAttachObject,
+                ref object1,
+                pos.Array,
+                out result);
+            return result;
+        }
+        
 
         /// <summary>
         /// 创建ID符号
