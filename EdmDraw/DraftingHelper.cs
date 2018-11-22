@@ -19,7 +19,7 @@ namespace EdmDraw
             _ufSession.Draw.WriteTabnotRowHgt(tag, row + 1, width);
         }
 
-        public static void WriteTabularCell(int row, int column, string cellText, NXOpen.Tag tag,double text_Height=3.5)
+        public static void WriteTabularCell(int row, int column, string cellText, NXOpen.Tag tag,double text_Height=3.5,string ugFont= "helios")
         {
             row += 1;
             column += 1;
@@ -30,7 +30,7 @@ namespace EdmDraw
             cellParams.horiz_just = NXOpen.UF.UFDraw.TabnotJust.TabnotJustCenter;// UF_DRAW_tabnot_just_center;
             cellParams.vert_just = NXOpen.UF.UFDraw.TabnotJust.TabnotJustMiddle; //UF_DRAW_tabnot_just_middle;
             cellParams.ug_text_height = text_Height;
-            cellParams.ug_font = "helios";
+            cellParams.ug_font = ugFont;
             _ufSession.Draw.WriteTabnotCell(tag, row, column, ref cellParams);
         }
 

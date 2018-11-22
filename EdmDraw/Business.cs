@@ -335,10 +335,11 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                         , tableInfo.RowHeight * 2 / 3
                         );
                     result.AddRange(lines);
+                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(item, columnInfo.DisplayName).ToString(), tabularNote, tableInfo.RowHeight / 2, edmConfig.TextMpi88);
                 }
                 else
                 {
-                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(item, columnInfo.DisplayName).ToString(), tabularNote, tableInfo.RowHeight / 2);
+                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(item, columnInfo.DisplayName).ToString(), tabularNote,edmConfig.TextMpr44,edmConfig.TextMpi88);
                 }
             }
         }
