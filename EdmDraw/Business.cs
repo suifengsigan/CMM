@@ -66,10 +66,14 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             item.N = string.Format("C{0}", positionings.IndexOf(item) + 1);
         }
 
-        CreateDrawingSheet(positionings, steel);
+        CreateDrawingSheet(positionings, steel,false);
     }
 
     public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel)
+    {
+        CreateDrawingSheet(positionings, steel,true);
+    }
+    public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel,bool isDeleteDs)
     {
         var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
         var templateName = edmConfig.GetEdmTemplate();
@@ -219,12 +223,19 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             var info = electrode.GetElectrodeInfo();
             CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = string.IsNullOrEmpty(info.EACT_MODELNO)? "UNKOWN_MODELNO" : info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
 
-            deleteObj.ForEach(u => {
-                Snap.NX.NXObject.Wrap(u).Delete();
-            });
+            if (ps.Count > 1)
+            {
+                deleteObj.ForEach(u => {
+                    Snap.NX.NXObject.Wrap(u).Delete();
+                });
+            }  
         }
 
-        Snap.NX.NXObject.Wrap(ds.Tag).Delete();
+        if (isDeleteDs)
+        {
+            Snap.NX.NXObject.Wrap(ds.Tag).Delete();
+        }
+
 
     }
 
@@ -405,7 +416,9 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             EdmDraw.DrawBusiness.SetToleranceType(topViewRightElecBasePoint);
         });
 
-        positionings.OrderByDescending(p => tempMTDDic[p].X).ToList().ForEach(p =>
+        var psX = positionings.OrderByDescending(p => tempMTDDic[p].X).ToList();
+        double tempX = psX.Count > 0 ? tempMTDDic[psX.First()].X : 0;
+        psX.ForEach(p =>
         {
             var index = positionings.IndexOf(p);
             var elecBasePoint = tempDic[p];
@@ -422,9 +435,9 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                 topView.Tag,
                 originPoint.NXOpenTag,
                 topViewTopMargin.NXOpenTag,
-                elecBasePoint.NXOpenTag,
-                angle,
-                origin
+                elecBasePoint.NXOpenTag
+                //,angle,
+                //new Snap.Position(elecBasePointMTD.X+10, line.StartPoint.Y)
                 );
             EdmDraw.DrawBusiness.SetToleranceType(topViewTopElecBasePoint);
         });
