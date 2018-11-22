@@ -481,13 +481,24 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             tempX -= edmConfig.DimensionMpr32 * 2;
         });
 
-        //positionings.ForEach(p => {
-        //    var elecBasePoint = tempDic[p];
-        //    var borderSize = topView.GetBorderSize();
-        //    var refPoint = topView.GetDrawingReferencePoint();
+        if (positionings.Count > 0)
+        {
+            positionings.ForEach(p =>
+            {
+                var elecBasePoint = tempDic[p];
+                var bps=EdmDraw.DrawBusiness.GetDrawBorderPoint(topView, p.Electrode.ElecBody);
+                var bpXs = Enumerable.Select(bps, u => u.X);
+                var bpYs = Enumerable.Select(bps, u => u.Y);
+                var bpX = Math.Abs(bpXs.Max() - bpXs.Min());
+                var bpY = Math.Abs(bpYs.Max() - bpYs.Min());
+                var elecBasePointMTD = tempMTDDic[p];
+                var borderSize = topView.GetBorderSize();
+                var refPoint = topView.GetDrawingReferencePoint();
 
-        //    EdmDraw.DrawBusiness.CreateIdSymbol(p.N, new Snap.Position(refPoint.X - (borderSize.X / 2), refPoint.Y), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
-        //});
+                EdmDraw.DrawBusiness.CreateIdSymbol(p.N, new Snap.Position(elecBasePointMTD.X- bpX, elecBasePointMTD.Y - bpY), elecBasePointMTD, topView.Tag, elecBasePoint.NXOpenTag);
+            });
+        }
+
         return topView;
     }
 
