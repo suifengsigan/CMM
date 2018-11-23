@@ -268,11 +268,6 @@ namespace EdmDraw
             {
                 DraftingHelper.SetTabularRowHeight(i, rowHeight, tabularNote);
             }
-
-            var columnInfos = edmConfig.Table.ColumnInfos;
-            columnInfos.ForEach(u => {
-                DraftingHelper.WriteTabularCell(0, columnInfos.IndexOf(u), u.DisplayName, tabularNote, rowHeight / 2);
-            });
             
             return tabularNote;
 

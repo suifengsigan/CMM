@@ -317,12 +317,25 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             tableInfo.ColumnWidth,
             edmConfig
             );
+        
+        columnInfos.ForEach(u => {
+            EdmDraw.DraftingHelper.WriteTabularCell(0, columnInfos.IndexOf(u), EdmDraw.EDMTableInfo.ChineseHandle(u.DisplayName), tabularNote, tableInfo.RowHeight / 2);
+        });
 
         result.Add(tabularNote);
 
         foreach (var item in elecs)
         {
             var elecIndex = elecs.IndexOf(item)+1;
+            var info = item.Electrode.GetElectrodeInfo();
+            var edmTableInfo = new EdmDraw.EDMTableInfo();
+            edmTableInfo.ZTOP = System.Math.Round(info.HEADPULLUPH, 2).ToString();
+            edmTableInfo.N = item.N;
+            edmTableInfo.X = item.X.ToString();
+            edmTableInfo.Y = item.Y.ToString();
+            edmTableInfo.Z = item.Z.ToString();
+            edmTableInfo.C = item.C.ToString();
+            edmTableInfo.ROCDIRECTION = info.EDMPROCDIRECTION;
             foreach (var columnInfo in columnInfos)
             {
                 var index = columnInfos.IndexOf(columnInfo);
@@ -335,11 +348,11 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                         , tableInfo.RowHeight * 2 / 3
                         );
                     result.AddRange(lines);
-                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(item, columnInfo.DisplayName).ToString(), tabularNote, tableInfo.RowHeight / 2, edmConfig.TextMpi88);
+                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(edmTableInfo, columnInfo.DisplayName).ToString(), tabularNote, tableInfo.RowHeight / 2, edmConfig.TextMpi88);
                 }
                 else
                 {
-                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(item, columnInfo.DisplayName).ToString(), tabularNote,edmConfig.TextMpr44,edmConfig.TextMpi88);
+                    EdmDraw.DraftingHelper.WriteTabularCell(elecIndex, index, EdmDraw.Helper.GetPropertyValue(edmTableInfo, columnInfo.DisplayName).ToString(), tabularNote,edmConfig.TextMpr44,edmConfig.TextMpi88);
                 }
             }
         }
