@@ -319,7 +319,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             );
         
         columnInfos.ForEach(u => {
-            EdmDraw.DraftingHelper.WriteTabularCell(0, columnInfos.IndexOf(u), EdmDraw.EDMTableInfo.ChineseHandle(u.DisplayName), tabularNote, tableInfo.RowHeight / 2);
+            EdmDraw.DraftingHelper.WriteTabularCell(0, columnInfos.IndexOf(u), EdmDraw.EDMTableInfo.ChineseHandle(u.DisplayName), tabularNote, tableInfo.RowHeight / 2, edmConfig.TextMpi88);
         });
 
         result.Add(tabularNote);
