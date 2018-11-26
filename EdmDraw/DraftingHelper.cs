@@ -32,6 +32,17 @@ namespace EdmDraw
             cellParams.ug_text_height = text_Height;
             cellParams.ug_font = ugFont;
             _ufSession.Draw.WriteTabnotCell(tag, row, column, ref cellParams);
+
+            if (EDMTableInfo.IsHasChinese(cellText))
+            {
+                NXOpen.Tag columnTag;
+                _ufSession.Tabnot.AskNthColumn(tag, column - 1, out columnTag);
+                NXOpen.Tag rowTag;
+                _ufSession.Tabnot.AskNthRow(tag, row - 1, out rowTag);
+                NXOpen.Tag cellTag;
+                _ufSession.Tabnot.AskCellAtRowCol(rowTag, columnTag, out cellTag);
+                _ufSession.Tabnot.SetCellText(cellTag, EdmDraw.EDMTableInfo.ChineseHandle(cellText));
+            }
         }
 
         public static void UpdateTabularNote(NXOpen.Tag tag)
