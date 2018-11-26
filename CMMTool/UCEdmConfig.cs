@@ -50,6 +50,7 @@ namespace EdmDraw
             txtTableInfoY.Text = tableInfo.locationY.ToString();
             txtTableInfoColW.Text = tableInfo.ColumnWidth.ToString();
             txtTableInfoRowH.Text = tableInfo.RowHeight.ToString();
+            txtTableHeadFont.Text = tableInfo.TableHeadFont;
 
             cbbEdmTemplate.SelectedIndex = _paramFileList.IndexOf(config.EdmTemplate);
 
@@ -84,6 +85,7 @@ namespace EdmDraw
             config.Table.locationY = double.Parse(txtTableInfoY.Text);
             config.Table.ColumnWidth = double.Parse(txtTableInfoColW.Text);
             config.Table.RowHeight = double.Parse(txtTableInfoRowH.Text);
+            config.Table.TableHeadFont = txtTableHeadFont.Text;
             config.Table.ColumnInfos = dataGridView1.DataSource as List<EdmConfig.ColumnInfo> ?? new List<EdmConfig.ColumnInfo>();
 
             config.IsUseSystemConfig = cbIsUseSystemParam.Checked;

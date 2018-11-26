@@ -101,6 +101,7 @@ namespace EdmDraw
         /// </summary>
         public class TableInfo
         {
+            public string TableHeadFont = "helios";
             /// <summary>
             /// 位置X
             /// </summary>

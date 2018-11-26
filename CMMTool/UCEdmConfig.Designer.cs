@@ -57,6 +57,8 @@
             this.label13 = new System.Windows.Forms.Label();
             this.TextMpi88 = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtPageCount = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtEdmDrfLayer = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -83,8 +85,8 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtPageCount = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.txtTableHeadFont = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -389,6 +391,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label21);
+            this.tabPage2.Controls.Add(this.txtTableHeadFont);
             this.tabPage2.Controls.Add(this.label10);
             this.tabPage2.Controls.Add(this.txtPageCount);
             this.tabPage2.Controls.Add(this.label9);
@@ -403,6 +407,24 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "放电图纸基本设置";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(74, 334);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(29, 12);
+            this.label10.TabIndex = 37;
+            this.label10.Text = "分页";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // txtPageCount
+            // 
+            this.txtPageCount.Location = new System.Drawing.Point(192, 331);
+            this.txtPageCount.Name = "txtPageCount";
+            this.txtPageCount.Size = new System.Drawing.Size(372, 21);
+            this.txtPageCount.TabIndex = 36;
+            this.txtPageCount.Text = "1";
             // 
             // label9
             // 
@@ -660,23 +682,23 @@
             this.dataGridView3.Size = new System.Drawing.Size(912, 186);
             this.dataGridView3.TabIndex = 0;
             // 
-            // label10
+            // label21
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(74, 334);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(29, 12);
-            this.label10.TabIndex = 37;
-            this.label10.Text = "分页";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(74, 374);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(53, 12);
+            this.label21.TabIndex = 39;
+            this.label21.Text = "表头字体";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // txtPageCount
+            // txtTableHeadFont
             // 
-            this.txtPageCount.Location = new System.Drawing.Point(192, 331);
-            this.txtPageCount.Name = "txtPageCount";
-            this.txtPageCount.Size = new System.Drawing.Size(372, 21);
-            this.txtPageCount.TabIndex = 36;
-            this.txtPageCount.Text = "1";
+            this.txtTableHeadFont.Location = new System.Drawing.Point(192, 371);
+            this.txtTableHeadFont.Name = "txtTableHeadFont";
+            this.txtTableHeadFont.Size = new System.Drawing.Size(372, 21);
+            this.txtTableHeadFont.TabIndex = 38;
+            this.txtTableHeadFont.Text = "helios";
             // 
             // UCEdmConfig
             // 
@@ -766,5 +788,7 @@
         private System.Windows.Forms.TextBox txtEdmDrfLayer;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtPageCount;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox txtTableHeadFont;
     }
 }
