@@ -626,11 +626,16 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
     void InitModelingView(EdmDraw.EdmConfig edmConfig)
     {
         SnapEx.Create.ApplicationSwitchRequest(SnapEx.ApplicationType.MODELING);
+        var wcsOrientation = Electrode.GetStandardOrientation(Snap.Globals.WcsOrientation);
+        var acsOrientation = Snap.Orientation.Identity;
+        var transR = Snap.Geom.Transform.CreateRotation(acsOrientation, wcsOrientation);
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
         foreach (var item in draftViewLocations)
         {
             var viewType = EdmDraw.DrawBusiness.GetEumnViewType(item.ViewType);
-            EdmDraw.DrawBusiness.CreateCamera(viewType, new double[] { item.Xx, item.Xy, item.Xz, item.Yx, item.Yy, item.Yz });
+            var X = new Snap.Vector(item.Xx, item.Xy, item.Xz).Copy(transR);
+            var Y = new Snap.Vector(item.Yx, item.Yy, item.Yz).Copy(transR);
+            EdmDraw.DrawBusiness.CreateCamera(viewType, new double[] { X.X, X.Y, X.Z, Y.X, Y.Y, Y.Z });
         }
     }
 }
