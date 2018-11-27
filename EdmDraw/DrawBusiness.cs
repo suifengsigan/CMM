@@ -102,14 +102,14 @@ namespace EdmDraw
             return NXOpen.Utilities.NXObjectManager.Get(orthographicView) as NXOpen.Drawings.ProjectedView;
         }
 
-        public static NXOpen.Tag CreateVerticalOrddimension(NXOpen.Tag baseView, NXOpen.Tag originObj, NXOpen.Tag marginObj, NXOpen.Tag dimensionObj, double dAngle = 0, Snap.Position? origin = null, double dDistance = 0)
+        public static NXOpen.Tag CreateVerticalOrddimension(NXOpen.Tag baseView, NXOpen.Tag originObj, NXOpen.Tag marginObj, NXOpen.Tag dimensionObj, double dAngle = 0, Snap.Position? origin = null, double dDistance = 0, double offsetDistance = 0)
         {
-            return CreateOrddimension(1, baseView, originObj, marginObj, dimensionObj,dAngle,dDistance,origin);
+            return CreateOrddimension(1, baseView, originObj, marginObj, dimensionObj,dAngle,dDistance,origin,offsetDistance);
         }
 
-        public static NXOpen.Tag CreatePerpendicularOrddimension(NXOpen.Tag baseView, NXOpen.Tag originObj, NXOpen.Tag marginObj, NXOpen.Tag dimensionObj, double dAngle = 0, Snap.Position? origin = null, double dDistance = 0)
+        public static NXOpen.Tag CreatePerpendicularOrddimension(NXOpen.Tag baseView, NXOpen.Tag originObj, NXOpen.Tag marginObj, NXOpen.Tag dimensionObj, double dAngle = 0, Snap.Position? origin = null, double dDistance = 0, double offsetDistance = 0)
         {
-            return CreateOrddimension(2, baseView, originObj, marginObj, dimensionObj, dAngle, dDistance,origin);
+            return CreateOrddimension(2, baseView, originObj, marginObj, dimensionObj, dAngle, dDistance,origin, offsetDistance);
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace EdmDraw
         /// <summary>
         /// 创建坐标尺寸
         /// </summary>
-        static NXOpen.Tag CreateOrddimension(int type, NXOpen.Tag baseView, NXOpen.Tag originObj, NXOpen.Tag marginObj, NXOpen.Tag dimensionObj, double dAngle = 0, double dDistance = 50, Snap.Position? origin = null) 
+        static NXOpen.Tag CreateOrddimension(int type, NXOpen.Tag baseView, NXOpen.Tag originObj, NXOpen.Tag marginObj, NXOpen.Tag dimensionObj, double dAngle = 0, double dDistance = 50, Snap.Position? origin = null,double offsetDistance=0) 
         {
             var theUFSession = NXOpen.UF.UFSession.GetUFSession();
             //创建坐标标注的原点
@@ -396,7 +396,7 @@ namespace EdmDraw
             object2.object_assoc_modifier = NXOpen.UF.UFConstants.UF_DRF_first_end_point;
 
             var marginTag = NXOpen.Tag.Null;
-            theUFSession.Drf.CreateOrdmargin(type, orginTag, ref object2, null, null, 0, out marginTag);
+            theUFSession.Drf.CreateOrdmargin(type, orginTag, ref object2, null, null, offsetDistance, out marginTag);
 
 
             NXOpen.UF.UFDrf.Object object3 = new NXOpen.UF.UFDrf.Object();
