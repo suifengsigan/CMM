@@ -84,7 +84,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         ElecManage.Electrode electrode = positionings.FirstOrDefault().Electrode;
         var selectedObj = electrode.ElecBody;
         electrode.InitAllFace();
-        InitModelingView(edmConfig);
+        InitModelingView(edmConfig, electrode);
         EdmDraw.DrawBusiness.InitPreferences(edmConfig);
         var workPart = Snap.Globals.WorkPart;
         var dsName = selectedObj.Name;
@@ -623,18 +623,28 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         return result;
     }
 
-    void InitModelingView(EdmDraw.EdmConfig edmConfig)
+    void InitModelingView(EdmDraw.EdmConfig edmConfig, ElecManage.Electrode elec)
     {
         SnapEx.Create.ApplicationSwitchRequest(SnapEx.ApplicationType.MODELING);
         var wcsOrientation = Electrode.GetStandardOrientation(Snap.Globals.WcsOrientation);
         var acsOrientation = Snap.Orientation.Identity;
+        var baseDirOrientation = Electrode.GetStandardOrientation(new Snap.Orientation(-elec.BaseFace.GetFaceDirection()));
         var transR = Snap.Geom.Transform.CreateRotation(acsOrientation, wcsOrientation);
+        var transR1 = Snap.Geom.Transform.CreateRotation(baseDirOrientation, wcsOrientation);
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
         foreach (var item in draftViewLocations)
         {
             var viewType = EdmDraw.DrawBusiness.GetEumnViewType(item.ViewType);
             var X = new Snap.Vector(item.Xx, item.Xy, item.Xz).Copy(transR);
             var Y = new Snap.Vector(item.Yx, item.Yy, item.Yz).Copy(transR);
+            if (viewType == EdmDraw.ViewType.EACT_BOTTOM
+                || viewType == EdmDraw.ViewType.EACT_BOTTOM_FRONT
+                || viewType == EdmDraw.ViewType.EACT_BOTTOM_ISOMETRIC
+                )
+            {
+                X = X.Copy(transR1);
+                Y = Y.Copy(transR1);
+            }
             EdmDraw.DrawBusiness.CreateCamera(viewType, new double[] { X.X, X.Y, X.Z, Y.X, Y.Y, Y.Z });
         }
     }
