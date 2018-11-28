@@ -73,6 +73,17 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
     {
         CreateDrawingSheet(positionings, steel,true);
     }
+
+    /// <summary>
+    /// 设置钢件电极隐藏（优化出图速度）
+    /// </summary>
+    void SetIsHidden(List<PositioningInfo> positionings, Snap.NX.Body steel,bool IsHidden=true)
+    {
+        steel.IsHidden = IsHidden;
+        //positionings.ForEach(u => {
+        //    u.Electrode.ElecBody.IsHidden = IsHidden;
+        //});
+    }
     public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel,bool isDeleteDs)
     {
         var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
@@ -81,10 +92,12 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         {
             return;
         }
+        
         ElecManage.Electrode electrode = positionings.FirstOrDefault().Electrode;
         var selectedObj = electrode.ElecBody;
         electrode.InitAllFace();
         InitModelingView(edmConfig, electrode);
+        SetIsHidden(positionings, steel);
         EdmDraw.DrawBusiness.InitPreferences(edmConfig);
         var workPart = Snap.Globals.WorkPart;
         var dsName = selectedObj.Name;
@@ -197,6 +210,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 
         foreach (var item in ps)
         {
+            SetIsHidden(positionings, steel);
             var pdfName = ds.Name;
             if (ps.Count > 1)
             {
@@ -218,7 +232,12 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             }
 
             deleteObj.AddRange(CreateTable(edmConfig, item));
+            SetIsHidden(positionings, steel,false);
 
+            ds.GetDraftingViews().ToList().ForEach(u => {
+                var ufSession = NXOpen.UF.UFSession.GetUFSession();
+                ufSession.Draw.UpdateOneView(ds.Tag, u.Tag);
+            });
             var result = EdmDraw.Helper.ExportPDF(ds, pdfName);
             var info = electrode.GetElectrodeInfo();
             CommonInterface.FtpHelper.FtpUpload("EDM", new ElecManage.MouldInfo { MODEL_NUMBER = string.IsNullOrEmpty(info.EACT_MODELNO)? "UNKOWN_MODELNO" : info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
