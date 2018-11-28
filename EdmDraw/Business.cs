@@ -354,7 +354,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             edmTableInfo.Y = item.Y.ToString();
             edmTableInfo.Z = item.Z.ToString();
             edmTableInfo.C = item.C.ToString();
-            edmTableInfo.ROCDIRECTION = info.EDMPROCDIRECTION;
+            edmTableInfo.DIRECTION = info.EDMPROCDIRECTION;
             foreach (var columnInfo in columnInfos)
             {
                 var index = columnInfos.IndexOf(columnInfo);

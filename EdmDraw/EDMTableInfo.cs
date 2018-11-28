@@ -18,7 +18,7 @@ namespace EdmDraw
         [DisplayName("旋转")]
         public string C { get; set; }
         [DisplayName("方向")]
-        public string ROCDIRECTION { get; set; }
+        public string DIRECTION { get; set; }
 
         /// <summary>
         /// 中文处理
