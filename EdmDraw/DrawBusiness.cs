@@ -680,14 +680,10 @@ namespace EdmDraw
 
             if (modelingView != null&& camera!=null)
             {
-                NXOpen.Display.CameraBuilder cameraBuilder1;
-                cameraBuilder1 = workPart.Cameras.CreateCameraBuilder(camera);
-                cameraBuilder1.TargetMatrix = Snap.Orientation.Identity;
-                cameraBuilder1.CameraMatrix = or;
-                cameraBuilder1.Commit();
-                cameraBuilder1.Destroy();
+                Snap.NX.NXObject.Wrap(camera.Tag).Delete();
+                Snap.NX.NXObject.Wrap(modelingView.Tag).Delete();
             }
-            else
+           
             {
                 var ufSession = NXOpen.UF.UFSession.GetUFSession();
                 var ds = new List<double>();
