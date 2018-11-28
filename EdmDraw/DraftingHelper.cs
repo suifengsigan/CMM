@@ -26,7 +26,7 @@ namespace EdmDraw
             var cellParams = new NXOpen.UF.UFDraw.TabnotCellParams();
             var eval_data = new NXOpen.UF.UFDraw.TabnotCellEvalData();
             _ufSession.Draw.ReadTabnotCell(tag, row, column, out cellParams, out eval_data);
-            cellParams.cell_text = cellText;
+            cellParams.cell_text = EdmDraw.EDMTableInfo.ChineseHandle(cellText);
             cellParams.horiz_just = NXOpen.UF.UFDraw.TabnotJust.TabnotJustCenter;// UF_DRAW_tabnot_just_center;
             cellParams.vert_just = NXOpen.UF.UFDraw.TabnotJust.TabnotJustMiddle; //UF_DRAW_tabnot_just_middle;
             cellParams.ug_text_height = text_Height;
@@ -41,7 +41,18 @@ namespace EdmDraw
                 _ufSession.Tabnot.AskNthRow(tag, row - 1, out rowTag);
                 NXOpen.Tag cellTag;
                 _ufSession.Tabnot.AskCellAtRowCol(rowTag, columnTag, out cellTag);
-                _ufSession.Tabnot.SetCellText(cellTag, EdmDraw.EDMTableInfo.ChineseHandle(cellText));
+
+                var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "WriteTabularCell");
+                try
+                {
+                    _ufSession.Tabnot.SetCellText(cellTag, EdmDraw.EDMTableInfo.ChineseHandle(cellText));
+                    Snap.Globals.DeleteUndoMark(mark, null);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("WriteTabularCell {0}  {1}", ex.Message, ex.StackTrace);
+                    Snap.Globals.UndoToMark(mark, null);
+                }
             }
         }
 
