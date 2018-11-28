@@ -119,6 +119,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
         EdmDraw.EdmConfig.DraftViewLocation ViewTypeEACT_TOP = null;
+        EdmDraw.EdmConfig.DraftViewLocation ViewTypeEACT_FRONT = null;
         foreach (var item in draftViewLocations)
         {
             var viewType = EdmDraw.DrawBusiness.GetEumnViewType( item.ViewType);
@@ -131,14 +132,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                     break;
                 case EdmDraw.ViewType.EACT_FRONT:
                     {
-                        CreateEACT_FRONTView(
-                            ds,
-                            list,
-                            new Snap.Position(item.LocationX, item.LocationY),
-                            new Snap.Position(item.SizeX, item.SizeY),
-                            electrode,
-                            edmConfig
-                            );
+                        ViewTypeEACT_FRONT = item;
                     }
                     break;
                 case EdmDraw.ViewType.EACT_BOTTOM_FRONT:
@@ -229,6 +223,21 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                                 );
 
                 deleteObj.Add(topView.Tag);
+            }
+
+            if (ViewTypeEACT_FRONT != null)
+            {
+                var itemE = item.First().Electrode;
+                var frontView = CreateEACT_FRONTView(
+                            ds,
+                            new List<NXOpen.TaggedObject> { steel, itemE.ElecBody },
+                            new Snap.Position(ViewTypeEACT_FRONT.LocationX, ViewTypeEACT_FRONT.LocationY),
+                            new Snap.Position(ViewTypeEACT_FRONT.SizeX, ViewTypeEACT_FRONT.SizeY),
+                            itemE,
+                            edmConfig
+                            );
+
+                deleteObj.Add(frontView.Tag);
             }
 
             deleteObj.AddRange(CreateTable(edmConfig, item));
@@ -540,7 +549,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         return topView;
     }
 
-    void CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)
+    BaseView CreateEACT_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)
     {
         var frontView = EdmDraw.DrawBusiness.CreateBaseView(ds, GetModelingView(EdmDraw.ViewType.EACT_FRONT).Tag, selections, pos, size,edmConfig);
         var frontViewRightMargin = EdmDraw.DrawBusiness.GetViewBorder(EdmDraw.ViewBorderType.Right, frontView);
@@ -575,6 +584,8 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             );
 
         EdmDraw.DrawBusiness.SetToleranceType(frontViewOrddimension);
+
+        return frontView;
     }
 
     void CreateEACT_BOTTOM_FRONTView(NXOpen.Drawings.DrawingSheet ds, List<NXOpen.TaggedObject> selections, Snap.Position pos, Snap.Position size, ElecManage.Electrode electrode,EdmDraw.EdmConfig edmConfig)
