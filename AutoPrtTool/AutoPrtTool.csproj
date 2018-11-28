@@ -34,6 +34,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\PHEact\Application\AssemblyLoader.dll</HintPath>
     </Reference>
+    <Reference Include="CommonInterface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\CommonInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="DataAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="EactBomUI, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\PHEact\Application\EactBomUI.dll</HintPath>

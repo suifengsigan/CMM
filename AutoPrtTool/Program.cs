@@ -13,12 +13,28 @@ namespace AutoPrtTool
             Excute();
         }
 
+        static void InitDatabase(EactConfig.ConfigData data)
+        {
+            var connStr = CommonInterface.DatabaseHelper.GetConnStr(data);
+            DataAccess.Entry.Instance.Init(connStr);
+        }
+
         static void Excute()
         {
             ShowMsg("正在匹配图档...");
             var cmmConfig = CMMTool.CMMConfig.GetInstance();
             var path = CMMTool.CMMConfig.GetInstance().AutoPrtToolDir;
             var ConfigData = EactConfig.ConfigData.GetInstance();
+            try
+            {
+                InitDatabase(ConfigData);
+                DataAccess.BOM.IsConnect();
+            }
+            catch (Exception ex)
+            {
+                ShowMsg("数据库连接异常：" + ex.Message);
+                return;
+            }
             EactTool.FileHelper.InitFileMode(cmmConfig.IsAutoPrtFtpDir ? 1 : 0, ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false
                 , "/Eact_AutoPrtTool", @"Temp\Eact_AutoPrtTool", @"Temp\Eact_AutoPrtTool_Error");
             var fileName=EactTool.FileHelper.FindFile(path);

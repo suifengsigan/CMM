@@ -178,7 +178,7 @@ namespace CMM
         public static void InitDatabase()
         {
             var data = _EactConfigData;
-            var connStr = string.Format("Data Source={0};Initial Catalog={1};User ID={2};Password={3}", data.DataBaseInfo.IP, data.DataBaseInfo.Name, data.DataBaseInfo.User, data.DataBaseInfo.Pass);
+            var connStr = CommonInterface.DatabaseHelper.GetConnStr(data);
             DataAccess.Entry.Instance.Init(connStr);
         }
 
