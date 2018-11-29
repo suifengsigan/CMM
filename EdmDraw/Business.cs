@@ -658,7 +658,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         SnapEx.Create.ApplicationSwitchRequest(SnapEx.ApplicationType.MODELING);
         var wcsOrientation = Electrode.GetStandardOrientation(Snap.Globals.WcsOrientation);
         var acsOrientation = Snap.Orientation.Identity;
-        var baseDirOrientation = Electrode.GetStandardOrientation(new Snap.Orientation(-elec.BaseFace.GetFaceDirection()));
+        var baseDirOrientation = Electrode.GetSidelongOrientation(new Snap.Orientation(-elec.BaseFace.GetFaceDirection()));
         var transR = Snap.Geom.Transform.CreateRotation(wcsOrientation, acsOrientation);
         var transR1 = Snap.Geom.Transform.CreateRotation(baseDirOrientation, wcsOrientation);
         var draftViewLocations = edmConfig.DraftViewLocations ?? new List<EdmDraw.EdmConfig.DraftViewLocation>();
