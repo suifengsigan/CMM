@@ -307,6 +307,20 @@ namespace EdmDraw
                 ref object1,
                 pos.Array,
                 out result);
+            var eData = new DraftingEnvironmentData();
+            var mpi = eData.mpi;
+            var mpr = eData.mpr;
+            theUFSession.Drf.AskObjectPreferences(result, eData.mpi,eData.mpr,out eData.radiusValue,out eData.diameterValue);
+            mpi[1] = 1;
+            mpi[9] = 1;
+            mpi[10] = 2;
+            mpi[11] = 4;
+            mpi[29] = 1;
+            mpi[39] = 1;
+            mpi[94] = 0;
+            mpr[9] = 3.0;
+            mpr[10] = 0.001;
+            theUFSession.Drf.SetObjectPreferences(result, eData.mpi, eData.mpr, eData.radiusValue, eData.diameterValue);
             return result;
         }
         

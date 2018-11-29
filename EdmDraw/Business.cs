@@ -528,7 +528,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             tempX -= edmConfig.DimensionMpr32 * 2;
         });
 
-        if (positionings.Count > 0)
+        if (positionings.Count > 1)
         {
             positionings.ForEach(p =>
             {
@@ -536,13 +536,13 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
                 var bps=EdmDraw.DrawBusiness.GetDrawBorderPoint(topView, p.Electrode.ElecBody);
                 var bpXs = Enumerable.Select(bps, u => u.X);
                 var bpYs = Enumerable.Select(bps, u => u.Y);
-                var bpX = Math.Abs(bpXs.Max() - bpXs.Min());
-                var bpY = Math.Abs(bpYs.Max() - bpYs.Min());
+                var bpX = Math.Abs(bpXs.Max() - bpXs.Min()) * 2 / 3;
+                var bpY = Math.Abs(bpYs.Max() - bpYs.Min()) * 2 / 3;
                 var elecBasePointMTD = tempMTDDic[p];
                 var borderSize = topView.GetBorderSize();
                 var refPoint = topView.GetDrawingReferencePoint();
 
-                //EdmDraw.DrawBusiness.CreateLabel(p.N, new Snap.Position(elecBasePointMTD.X- bpX, elecBasePointMTD.Y - bpY), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
+                EdmDraw.DrawBusiness.CreateLabel(p.N, new Snap.Position(elecBasePointMTD.X- bpX, elecBasePointMTD.Y - bpY), new Snap.Position(), topView.Tag, elecBasePoint.NXOpenTag);
             });
         }
 
