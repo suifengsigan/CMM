@@ -72,7 +72,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
     public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel)
     {
         var workPart = Snap.Globals.WorkPart;
-        if (_ConfigData.Edition == 4)
+        if (_ConfigData.Edition == 4|| _ConfigData.Edition==2)
         {
             var electrode = positionings.First().Electrode;
             workPart.NXOpenPart.DrawingSheets.ToArray().Where(u => u.Name.ToUpper().Contains(electrode.ElecBody.Name.ToUpper())).ToList().ForEach(u =>
