@@ -9,35 +9,9 @@ namespace EdmDraw
 {
     public static class Helper
     {
-        static string _pdfFilePath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"Temp\EACTPDF");
         public static string ExportPDF(NXOpen.Drawings.DrawingSheet ds,string dsName)
         {
-            if (Directory.Exists(_pdfFilePath))
-            {
-                Directory.Delete(_pdfFilePath, true);
-            }
-            Directory.CreateDirectory(_pdfFilePath);
-
-            Session theSession = Session.GetSession();
-            Part workPart = theSession.Parts.Work;
-            Part displayPart = theSession.Parts.Display;
-            PrintPDFBuilder printPDFBuilder1;
-            printPDFBuilder1 = workPart.PlotManager.CreatePrintPdfbuilder();
-
-            NXObject[] sheets1 = new NXObject[1];
-            NXOpen.Drawings.DrawingSheet drawingSheet1 = ds;
-            sheets1[0] = drawingSheet1;
-            printPDFBuilder1.SourceBuilder.SetSheets(sheets1);
-            var fileName = string.Format("{0}{1}", dsName, ".pdf");
-            var result = System.IO.Path.Combine(_pdfFilePath, fileName);
-            printPDFBuilder1.Filename = result;
-
-            NXObject nXObject1;
-            nXObject1 = printPDFBuilder1.Commit();
-
-            printPDFBuilder1.Destroy();
-
-            return result;
+            return SnapEx.Create.ExportPDF(ds, dsName);
         }
 
         /// <summary>
