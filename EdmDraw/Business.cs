@@ -71,7 +71,21 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 
     public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel)
     {
-        CreateDrawingSheet(positionings, steel,true);
+        var workPart = Snap.Globals.WorkPart;
+        if (_ConfigData.Edition == 4)
+        {
+            var electrode = positionings.First().Electrode;
+            workPart.NXOpenPart.DrawingSheets.ToArray().Where(u => u.Name.ToUpper().Contains(electrode.ElecBody.Name.ToUpper())).ToList().ForEach(u =>
+            {
+                var result = EdmDraw.Helper.ExportPDF(u, electrode.ElecBody.Name);
+                var info = electrode.GetElectrodeInfo();
+                CommonInterface.FtpHelper.FtpUpload("EDM2D", new ElecManage.MouldInfo { MODEL_NUMBER = string.IsNullOrEmpty(info.EACT_MODELNO) ? "UNKOWN_MODELNO" : info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
+            });
+        }
+        else
+        {
+            CreateDrawingSheet(positionings, steel, true);
+        }
     }
 
     /// <summary>
