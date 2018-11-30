@@ -309,6 +309,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         edmNodeInfo.精公火花位 = elecInfo.FINISH_SPACE.ToString();
         edmNodeInfo.中公火花位 = elecInfo.MIDDLE_SPACE.ToString();
         edmNodeInfo.粗公火花位 = elecInfo.ROUGH_SPACE.ToString();
+        edmNodeInfo.摇摆方式 = elecInfo.EDMROCK;
         edmNodeInfo.制图 = "EACT";
         edmNodeInfo.日期 = DateTime.Now.ToShortDateString();
 

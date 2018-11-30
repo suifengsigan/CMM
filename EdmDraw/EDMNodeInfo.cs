@@ -22,6 +22,7 @@ namespace EdmDraw
         public string 电极材质 { get; set; }
         public string 制图 { get; set; }
         public string 日期 { get; set; }
+        public string 摇摆方式 { get; set; }
 
 
     }
