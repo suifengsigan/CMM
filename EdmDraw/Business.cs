@@ -77,6 +77,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             var electrode = positionings.First().Electrode;
             workPart.NXOpenPart.DrawingSheets.ToArray().Where(u => u.Name.ToUpper().Contains(electrode.ElecBody.Name.ToUpper())).ToList().ForEach(u =>
             {
+                u.Open();
                 var result = EdmDraw.Helper.ExportPDF(u, electrode.ElecBody.Name);
                 var info = electrode.GetElectrodeInfo();
                 CommonInterface.FtpHelper.FtpUpload("EDM2D", new ElecManage.MouldInfo { MODEL_NUMBER = string.IsNullOrEmpty(info.EACT_MODELNO) ? "UNKOWN_MODELNO" : info.EACT_MODELNO }, result, info.Elec_Name, _ConfigData);
