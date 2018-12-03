@@ -548,7 +548,8 @@ namespace CMM
                 {
                     continue;
                 }
-                foreach (var ab in data.GetABList())
+                var abs = data.GetABList(p, pV);
+                foreach (var ab in abs)
                 {
                     var toolBody = data.GetBody(ab);
                     var lstTrans = new List<Snap.Geom.Transform>();

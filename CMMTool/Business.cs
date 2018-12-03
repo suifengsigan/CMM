@@ -45,7 +45,25 @@ namespace CMMTool
                 }
             }
         }
-        
+
+        public static List<ProbeData.AB> OrderProbeDataAB(List<ProbeData.AB> abs, Snap.Position p, Snap.Vector pV)
+        {
+            var axisZ = Snap.Orientation.Identity.AxisZ;
+            Func<ProbeData.AB, double> getAngleAction = (ab) => {
+                var angle = Snap.Vector.Angle(pV, axisZ.Copy(GetTrans(p, ab)));
+                return angle;
+            };
+            var result = abs.OrderBy(u => getAngleAction(u)).ToList();
+            return result;
+        }
+
+        private static Snap.Geom.Transform GetTrans(Snap.Position pos, ProbeData.AB ab)
+        {
+            var trans = Snap.Geom.Transform.CreateRotation(pos, -Snap.Orientation.Identity.AxisX, ab.A);
+            trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(pos, -Snap.Orientation.Identity.AxisZ, -ab.B));
+            return trans;
+        }
+
 
         /// <summary>
         /// 创建探针模型
@@ -128,8 +146,7 @@ namespace CMMTool
                     //AB旋转
                     requireAbBodies.AddRange(new List<Snap.NX.Body> { sphere, lengtheningRod, firstPedestal });
                     requireUnite.AddRange( new List<Snap.NX.Body> { lengtheningRod, firstPedestal, twoPedestal, threePedestal });
-                    var trans=Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisX, ab.A);
-                    trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateRotation(twoPedestalPosition, -Snap.Orientation.Identity.AxisZ, -ab.B));
+                    var trans = GetTrans(twoPedestalPosition, ab);
                     foreach (var rBody in requireAbBodies)
                     {
                         rBody.Move(trans);

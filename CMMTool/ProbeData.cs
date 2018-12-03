@@ -39,6 +39,13 @@ namespace CMMTool
           /// 探针角度
           /// </summary>
         public List<AB> ABList = new List<AB>();
+
+        public List<AB> GetABList(Snap.Position p, Snap.Vector pV)
+        {
+            var list =  GetABList();
+            list = Business.OrderProbeDataAB(list,p,pV);
+            return list;
+        }
         public List<AB> GetABList()
         {
             var list = ABList ?? new List<AB>();
