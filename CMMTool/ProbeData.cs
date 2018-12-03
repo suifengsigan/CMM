@@ -44,6 +44,13 @@ namespace CMMTool
         {
             var list =  GetABList();
             list = Business.OrderProbeDataAB(list,p,pV);
+            var tempList = list.Where(u => u.A == 0 && u.B == 0).ToList();
+            tempList.ForEach(u => {
+                list.Remove(u);
+            });
+            tempList.ForEach(u => {
+                list.Insert(0, u);
+            });
             return list;
         }
         public List<AB> GetABList()
