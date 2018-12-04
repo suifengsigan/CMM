@@ -595,7 +595,7 @@ namespace EdmDraw
             var borderSize = GetBorderSize(draw_view_tag);
             theUFSession.Draw.SetViewScale(draw_view_tag, new double[] { size.X / borderSize.X, size.Y / borderSize.Y }.Min());
             theUFSession.Draw.MoveView(draw_view_tag, dwg_point);
-            theUFSession.Draw.UpdateOneView(ds.Tag, draw_view_tag);
+            //theUFSession.Draw.UpdateOneView(ds.Tag, draw_view_tag);
             
             return NXOpen.Utilities.NXObjectManager.Get(draw_view_tag) as NXOpen.Drawings.BaseView;
         }
