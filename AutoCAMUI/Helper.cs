@@ -8,6 +8,17 @@ namespace AutoCAMUI
     public static class Helper
     {
         private static NXOpen.UF.UFSession ufSession = NXOpen.UF.UFSession.GetUFSession();
+
+        /// <summary>
+        /// 过切检查
+        /// </summary>
+        public static bool IsPathGouged(NXOpen.Tag oper)
+        {
+            var result = true;
+            ufSession.Oper.IsPathGouged(oper, out result);
+            return result;
+        }
+
         /// <summary>
         /// 获取拔模角度
         /// </summary>
