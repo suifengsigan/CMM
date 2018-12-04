@@ -566,7 +566,7 @@ namespace EdmDraw
             view_info.inherit_boundary = false;
             double[] dwg_point = { pos.X, pos.Y };
             Tag draw_view_tag;
-            theUFSession.Draw.ImportView(ds.Tag, modelViewTag, dwg_point, ref view_info, out draw_view_tag);
+            theUFSession.Draw.ImportView(ds.Tag, modelViewTag, new double[] {ds.Length/2,ds.Height/2 }, ref view_info, out draw_view_tag);
             string viewName;
             theUFSession.Obj.AskName(draw_view_tag, out viewName);
 
