@@ -51,6 +51,7 @@ public partial class EdmDrawUI
     private Snap.UI.Block.SelectObject selectCuprum;// Block type: Selection
     private Snap.UI.Block.SelectObject selectSteel;// Block type: Selection
     private Snap.UI.Block.Integer txtDrfLayer;// Block type: Integer
+    private Snap.UI.Block.Integer txtDrfEndLayer;// Block type: Integer
     private Snap.UI.Block.Enumeration selectTemplate0;// Block type: Enumeration
     //------------------------------------------------------------------------------
     //Bit Option for Property: SnapPointTypesEnabled
@@ -238,8 +239,10 @@ public partial class EdmDrawUI
         {
             
             selectCuprum = Snap.UI.Block.SelectObject.GetBlock(theDialog, "selectCuprum"); 
-            selectSteel = Snap.UI.Block.SelectObject.GetBlock(theDialog, "selectSteel"); 
-            txtDrfLayer = Snap.UI.Block.Integer.GetBlock(theDialog, "txtDrfLayer"); 
+            selectSteel = Snap.UI.Block.SelectObject.GetBlock(theDialog, "selectSteel");
+            //txtDrfEndLayer
+            txtDrfLayer = Snap.UI.Block.Integer.GetBlock(theDialog, "txtDrfLayer");
+            txtDrfEndLayer = Snap.UI.Block.Integer.GetBlock(theDialog, "txtDrfEndLayer");
             selectTemplate0 = Snap.UI.Block.Enumeration.GetBlock(theDialog, "selectTemplate0");
         }
         catch (Exception ex)

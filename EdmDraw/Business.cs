@@ -7,15 +7,43 @@ using NXOpen.Drawings;
 using NXOpen;
 using ElecManage;
 using Snap.NX;
+using NXOpen.BlockStyler;
 
 partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
 {
     EactConfig.ConfigData _ConfigData = EactConfig.ConfigData.GetInstance();
+
+    void RefreshUI()
+    {
+        switch (selectTemplate0.Value)
+        {
+            case 0:
+                {
+                    txtDrfLayer.Show = true;
+                    txtDrfEndLayer.Show = true;
+                    selectCuprum.Show = false;
+                    
+                }
+                break;
+            default:
+                {
+                    txtDrfLayer.Show = false;
+                    txtDrfEndLayer.Show = false;
+                    selectCuprum.Show = true;
+                }
+                break;
+        }
+    }
     public override void DialogShown()
     {
-        selectTemplate0.Show = false;
-        txtDrfLayer.Show = false;
+        RefreshUI();
     }
+
+    public override void Update(UIBlock block)
+    {
+        RefreshUI();
+    }
+
     public override void Init()
     {
         var snapSelectSteel = Snap.UI.Block.SelectObject.GetBlock(theDialog, selectSteel.Name);
@@ -28,10 +56,32 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
     }
     public override void Apply()
     {
-        Snap.NX.Body selectedObj = selectCuprum.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
+       
         var steel = selectSteel.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
-        var workPart = Snap.Globals.WorkPart;
-        CreateDrawingSheet(selectedObj, steel);
+        switch (selectTemplate0.Value)
+        {
+            case 0:
+                {
+                    for (int i = txtDrfLayer.Value; i <= txtDrfEndLayer.Value;i++)
+                    {
+                        var selectedObj = Snap.Globals.WorkPart.Bodies.Where(u => i == u.Layer && !string.IsNullOrEmpty(u.Name)).FirstOrDefault();
+                        if (selectedObj != null)
+                        {
+                            CreateDrawingSheet(selectedObj, steel);
+                        }
+                        
+                    }
+                }
+                break;
+            default:
+                {
+                    Snap.NX.Body selectedObj = selectCuprum.SelectedObjects.FirstOrDefault() as Snap.NX.Body;
+                    CreateDrawingSheet(selectedObj, steel);
+                }
+                break;
+        }
+       
+       
     }
 
     void CreateDrawingSheet(Snap.NX.Body selectedObj, Snap.NX.Body steel)
