@@ -144,6 +144,17 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
     /// </summary>
     void SetIsHidden(List<PositioningInfo> positionings, Snap.NX.Body steel,bool IsHidden=true)
     {
+        if (IsHidden)
+        {
+            foreach (var item in positionings)
+            {
+                if (item.Electrode.ElecBody.NXOpenTag == steel.NXOpenTag)
+                {
+                    IsHidden = false;
+                    break;
+                }
+            }
+        }
         steel.IsHidden = IsHidden;
         //positionings.ForEach(u => {
         //    u.Electrode.ElecBody.IsHidden = IsHidden;
