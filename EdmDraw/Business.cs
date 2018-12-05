@@ -160,7 +160,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         //    u.Electrode.ElecBody.IsHidden = IsHidden;
         //});
     }
-    public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel,bool isDeleteDs)
+    public void CreateDrawingSheet(List<PositioningInfo> positionings, Snap.NX.Body steel,bool isAutoMode)
     {
         var edmConfig = EdmDraw.UCEdmConfig.GetInstance();
         var templateName = edmConfig.GetEdmTemplate();
@@ -172,7 +172,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         ElecManage.Electrode electrode = positionings.FirstOrDefault().Electrode;
         var selectedObj = electrode.ElecBody;
         electrode.InitAllFace();
-        InitModelingView(edmConfig, electrode);
+        InitModelingView(edmConfig, electrode,isAutoMode);
         SetIsHidden(positionings, steel);
         EdmDraw.DrawBusiness.InitPreferences(edmConfig);
         var workPart = Snap.Globals.WorkPart;
@@ -335,7 +335,7 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             }  
         }
 
-        if (isDeleteDs)
+        if (isAutoMode)
         {
             Snap.NX.NXObject.Wrap(ds.Tag).Delete();
         }
@@ -730,8 +730,13 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         return result;
     }
 
-    void InitModelingView(EdmDraw.EdmConfig edmConfig, ElecManage.Electrode elec)
+    public static bool IsInitModelingView = false;
+    void InitModelingView(EdmDraw.EdmConfig edmConfig, ElecManage.Electrode elec,bool isAutoMode=true)
     {
+        if (IsInitModelingView && !isAutoMode)
+        {
+            return;
+        }
         SnapEx.Create.ApplicationSwitchRequest(SnapEx.ApplicationType.MODELING);
         var wcsOrientation = Electrode.GetStandardOrientation(Snap.Globals.WcsOrientation);
         var acsOrientation = Snap.Orientation.Identity;
@@ -754,5 +759,6 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             }
             EdmDraw.DrawBusiness.CreateCamera(viewType, new double[] { X.X, X.Y, X.Z, Y.X, Y.Y, Y.Z });
         }
+        IsInitModelingView = true;
     }
 }
