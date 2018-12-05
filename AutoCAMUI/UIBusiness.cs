@@ -12,6 +12,11 @@ public partial class EleAutoCamUI:SnapEx.BaseUI
     /// </summary>
     string templateTypeName;
 
+    public override void DialogShown()
+    {
+        AutoCAMUI.Helper.ReinitOpt();
+    }
+
     public override void Update(NXOpen.BlockStyler.UIBlock block)
     {
         
@@ -19,6 +24,7 @@ public partial class EleAutoCamUI:SnapEx.BaseUI
 
     public override void Apply()
     {
+        
     }
 
 }

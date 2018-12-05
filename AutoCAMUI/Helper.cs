@@ -10,6 +10,42 @@ namespace AutoCAMUI
         private static NXOpen.UF.UFSession ufSession = NXOpen.UF.UFSession.GetUFSession();
 
         /// <summary>
+        /// 加载模板
+        /// </summary>
+        public static void ReinitOpt()
+        {
+            var ufSession = NXOpen.UF.UFSession.GetUFSession();
+            var curBaseDir = new System.IO.DirectoryInfo(System.AppDomain.CurrentDomain.BaseDirectory).Parent.FullName;
+            var curTemplatePrtDir = System.IO.Path.Combine(curBaseDir
+                , @"MACH\resource\template_part\metric\");
+            var curTemplateSetDir = System.IO.Path.Combine(curBaseDir
+                , @"MACH\resource\template_set\");
+            string UGII_CAM_TEMPLATE_SET_DIR = string.Empty;
+            ufSession.UF.TranslateVariable("UGII_CAM_TEMPLATE_SET_DIR", out UGII_CAM_TEMPLATE_SET_DIR);
+            var optFile = System.IO.Path.Combine(UGII_CAM_TEMPLATE_SET_DIR, "cam_general.opt");
+            ufSession.UF.SetVariable("EACT_AUTOCAM_ELE_TEMPLATEPRT_DIR", curTemplatePrtDir);
+            var eact_cam_general_optFile = System.IO.Path.Combine(curTemplateSetDir, "eact_cam_general.opt");
+            if (System.IO.File.Exists(optFile))
+            {
+                var optFileInfo = System.IO.File.ReadAllText(optFile);
+                StringBuilder str = new StringBuilder();
+                str.Append(optFileInfo);
+                System.IO.Directory.GetFiles(curTemplatePrtDir).ToList().ForEach(u => {
+                    string tempV = "${EACT_AUTOCAM_ELE_TEMPLATEPRT_DIR}" + System.IO.Path.GetFileName(u);
+                    if (!optFileInfo.Contains(tempV))
+                    {
+                        str.AppendLine();
+                        str.AppendLine(tempV);
+                    }
+                });
+
+                System.IO.File.WriteAllText(eact_cam_general_optFile, str.ToString());
+            }
+
+            ufSession.Cam.ReinitOpt(eact_cam_general_optFile);
+        }
+
+        /// <summary>
         /// 过切检查
         /// </summary>
         public static bool IsPathGouged(NXOpen.Tag oper)
