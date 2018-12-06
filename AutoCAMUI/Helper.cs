@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SnapEx;
 
 namespace AutoCAMUI
 {
@@ -96,6 +97,7 @@ namespace AutoCAMUI
             var basePos = ele.GetElecBasePos();
             var eleInfo = ele.GetElectrodeInfo();
             var bodyBox = eleInfo.GetBox3d();
+            var safeDistance = 10;
             //几何组根节点
             NXOpen.Tag geometryGroupRootTag;
 
@@ -129,7 +131,7 @@ namespace AutoCAMUI
 
             //TODO 设置安全平面
             var normal = new Snap.Vector(0, 0, 1);
-            var origin = new Snap.Position();
+            var origin = new Snap.Position(basePos.X, basePos.Y, bodyBox.MaxZ + safeDistance);
             ufSession.Cam.SetClearPlaneData(workMcsGroupTag, origin.Array, normal.Array);
 
             //TODO 创建几何体
@@ -158,19 +160,62 @@ namespace AutoCAMUI
             cutters.Add(cutter1);
             CreateCutter(cutters, cutterGroupRootTag);
 
-            //杀顶程序
+            var camOpers = new List<AutoCAMUI.CAMOper>();
+
+            //电极头部开粗
             var camOper = new AutoCAMUI.CAMOper();
-            camOper.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            camOper.AUTOCAM_SUBTYPE = "FACE_MILLING";
+            camOper.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper.AUTOCAM_SUBTYPE = "CAVITY_MILL";
             camOper.CAMCutter = cutter1.CutterTag;
             camOper.WorkGeometryGroup = workGeometryGroupTag;
             camOper.ProgramGroup = programGroupTag;
             camOper.MethodGroupRoot = methodGroupRootTag;
             camOper.CreateOper();
-           
-            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            ufSession.Param.SetDoubleValue(camOper.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH, 0.4);
+            SetCutLevels(camOper.OperTag, ele.BaseFace.NXOpenTag);
+            camOpers.Add(camOper);
 
-            PathGenerate(new List<Tag> { camOper.OperTag });
+            //杀顶程序
+            var camOper1 = new AutoCAMUI.CAMOper();
+            camOper1.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            camOper1.AUTOCAM_SUBTYPE = "FACE_MILLING";
+            camOper1.CAMCutter = cutter1.CutterTag;
+            camOper1.WorkGeometryGroup = workGeometryGroupTag;
+            camOper1.ProgramGroup = programGroupTag;
+            camOper1.MethodGroupRoot = methodGroupRootTag;
+            camOper1.CreateOper();
+            camOpers.Add(camOper1);
+
+            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
+        }
+
+        public static void SetCutLevels(NXOpen.Tag operTag,NXOpen.Tag faceTag , int levelsPosition = 1)
+        {
+            double zLevels = Snap.NX.Face.Wrap(faceTag).BoxEx().MaxZ;
+            var cut_levels = new NXOpen.UF.UFCutLevels.CutLevelsStruct();
+            ufSession.CutLevels.SetRangeType(operTag, NXOpen.UF.ParamClvRangeType.ParamClvRangeUserDefined, out cut_levels);
+            var cut_levels_ptr_addr = new NXOpen.UF.UFCutLevels.CutLevelsStruct[] { cut_levels };
+            ufSession.CutLevels.Load(operTag, out cut_levels_ptr_addr);
+            foreach (var item in cut_levels_ptr_addr)
+            {
+                int num_levels = item.num_levels;
+                var num = 0;
+                switch (levelsPosition)
+                {
+                    case 1: //BottomLevel
+                        {
+                            num = num_levels - 1;
+                            break;
+                        }
+                    default: //TopLevel
+                        {
+                            break;
+                        }
+                }
+                ufSession.CutLevels.EditLevelUsingZ(operTag, num, zLevels, item.cut_levels[num].local_cut_depth, out cut_levels);
+            }
+
         }
 
         /// <summary>
