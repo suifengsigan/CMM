@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ElecManage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\ElecManage.dll</HintPath>
+    </Reference>
     <Reference Include="NXOpen">
       <HintPath>..\..\..\BLL\UG\NXOpen.dll</HintPath>
       <Private>False</Private>

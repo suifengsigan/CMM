@@ -26,9 +26,9 @@ namespace AutoCAMUI
             {
                 //进入CAM模块
                 theSession.CreateCamSession();
-
-                var cAMSetup1 = workPart.CreateCamSetup("mill_planar");
             }
+
+            var cAMSetup1 = workPart.CreateCamSetup(AUTOCAM_TYPE.mill_planar);
 
             ReinitOpt();
         }
@@ -90,8 +90,12 @@ namespace AutoCAMUI
             var draftAngle = 90 - angle;
             return draftAngle;
         }
-        public static void AutoCAM(Snap.NX.Body body)
+        public static void AutoCAM(ElecManage.Electrode ele)
         {
+            var body = ele.ElecBody;
+            var basePos = ele.GetElecBasePos();
+            var eleInfo = ele.GetElectrodeInfo();
+            var bodyBox = eleInfo.GetBox3d();
             //几何组根节点
             NXOpen.Tag geometryGroupRootTag;
 
@@ -144,6 +148,29 @@ namespace AutoCAMUI
 
             //TODO 设置毛坯为自动块
             ufSession.Cam.SetAutoBlank(workGeometryGroupTag, NXOpen.UF.UFCam.BlankGeomType.AutoBlockType, new double[] { 0, 0, 0, 0, 0, 0 });
+
+            //TODO 创建刀具
+            var cutters = new List<CAMCutter>();
+            var cutter1 = new CAMCutter();
+            cutter1.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            cutter1.AUTOCAM_SUBTYPE = "D10";
+            cutter1.TL_DIAMETER = 10;
+            cutters.Add(cutter1);
+            CreateCutter(cutters, cutterGroupRootTag);
+
+            //杀顶程序
+            var camOper = new AutoCAMUI.CAMOper();
+            camOper.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            camOper.AUTOCAM_SUBTYPE = "FACE_MILLING";
+            camOper.CAMCutter = cutter1.CutterTag;
+            camOper.WorkGeometryGroup = workGeometryGroupTag;
+            camOper.ProgramGroup = programGroupTag;
+            camOper.MethodGroupRoot = methodGroupRootTag;
+            camOper.CreateOper();
+           
+            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+
+            PathGenerate(new List<Tag> { camOper.OperTag });
         }
 
         /// <summary>
@@ -234,9 +261,28 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 设置边界
+        /// </summary>
+        public static void SetBoundary(Snap.Position origin, NXOpen.Tag faceTag, NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, NXOpen.UF.CamMaterialSide materialSide)
+        {
+            SetBoundaryByFace(faceTag, camGeomType, operTag, materialSide);
+            IntPtr[] Boundaries;
+            int count;
+            ufSession.Cambnd.AskBoundaries(operTag, camGeomType, out count, out Boundaries);
+            for (int i = 0; i < count; i++)
+            {
+                NXOpen.Matrix3x3 identity = Snap.Orientation.Identity;
+                ufSession.Cambnd.SetBoundaryPlane(Boundaries[i], origin.Array, new double[]{
+                    identity.Xx, identity.Xy, identity.Xz
+                    , identity.Yx, identity.Yy, identity.Yz
+                    , identity.Zx, identity.Zy, identity.Zz });
+            }   
+        }
+
+        /// <summary>
         /// 设置面边界
         /// </summary>
-        public static void SetBoundaryByFace(NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, NXOpen.Tag faceTag, NXOpen.UF.CamMaterialSide materialSide)
+        public static void SetBoundaryByFace(NXOpen.Tag faceTag,NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, NXOpen.UF.CamMaterialSide materialSide)
         {
             var boundary_data = new NXOpen.UF.UFCambnd.BoundaryData();
             boundary_data.boundary_type = NXOpen.UF.CamBoundaryType.CamBoundaryTypeClosed;

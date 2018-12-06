@@ -16,6 +16,7 @@ namespace AutoCAMUI
         public NXOpen.Tag WorkGeometryGroup { get; set; }
         public NXOpen.Tag ProgramGroup { get; set; }
         public NXOpen.Tag MethodGroupRoot { get; set; }
+        public NXOpen.Tag OperTag { get; protected set; }
 
         /// <summary>
         /// 创建工序
@@ -30,6 +31,7 @@ namespace AutoCAMUI
             ufSession.Ncgroup.AcceptMember(ProgramGroup, operTag);
             ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
             ufSession.Ncgroup.AcceptMember(CAMCutter, operTag);
+            OperTag = operTag;
         }
     }
 }

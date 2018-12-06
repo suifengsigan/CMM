@@ -18,7 +18,13 @@ public partial class EleAutoCamUI:SnapEx.BaseUI
 
     public override void Apply()
     {
-        
+        var body = Snap.Globals.WorkPart.Bodies.FirstOrDefault();
+        var ele = ElecManage.Electrode.GetElectrode(body);
+        if (ele != null)
+        {
+            ele.InitAllFace();
+            AutoCAMUI.Helper.AutoCAM(ele);
+        }
     }
 
 }
