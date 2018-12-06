@@ -36,6 +36,8 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
     }
     public override void DialogShown()
     {
+        selectTemplate0.Show = false;
+        selectTemplate0.Value = 1;
         RefreshUI();
     }
 
