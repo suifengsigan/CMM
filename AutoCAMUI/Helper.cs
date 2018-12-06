@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NXOpen;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,29 @@ namespace AutoCAMUI
     public static class Helper
     {
         private static NXOpen.UF.UFSession ufSession = NXOpen.UF.UFSession.GetUFSession();
+        /// <summary>
+        /// 电极编程模板
+        /// </summary>
+        private static string ELECTRODETEMPLATETYPENAME = "EACT_AUTOCAM";
+
+        /// <summary>
+        /// 初始化CAM会话
+        /// </summary>
+        public static void InitCAMSession(string templateTypeName = "EACT_AUTOCAM")
+        {
+            ELECTRODETEMPLATETYPENAME = templateTypeName;
+            Session theSession = Session.GetSession();
+            Part workPart = theSession.Parts.Work;
+            if (!theSession.IsCamSessionInitialized())
+            {
+                //进入CAM模块
+                theSession.CreateCamSession();
+
+                var cAMSetup1 = workPart.CreateCamSetup("mill_planar");
+            }
+
+            ReinitOpt();
+        }
 
         /// <summary>
         /// 加载模板
