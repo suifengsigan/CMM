@@ -135,7 +135,19 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
         }
         else
         {
-            CreateDrawingSheet(positionings, steel, true);
+            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "CreateDrawingSheet");
+            try
+            {
+                CreateDrawingSheet(positionings, steel, true);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                Snap.Globals.UndoToMark(mark, "CreateDrawingSheet");
+            }
         }
     }
 
@@ -335,11 +347,10 @@ partial class EdmDrawUI : SnapEx.BaseUI,CommonInterface.IEDM
             }  
         }
 
-        if (isAutoMode)
-        {
-            Snap.NX.NXObject.Wrap(ds.Tag).Delete();
-        }
-
+        //if (isAutoMode)
+        //{
+        //    Snap.NX.NXObject.Wrap(ds.Tag).Delete();
+        //}
 
     }
 
