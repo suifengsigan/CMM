@@ -196,17 +196,17 @@ namespace AutoCAMUI
             ufSession.Obj.SetName(camOper0.OperTag, camOper.AUTOCAM_SUBTYPE + "_1");
             camOpers.Add(camOper0);
 
-            //杀顶程序
-            //var camOper1 = new AutoCAMUI.CAMOper();
-            //camOper1.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            //camOper1.AUTOCAM_SUBTYPE = "FACE_MILLING";
-            //camOper1.CAMCutter = cutter.CutterTag;
-            //camOper1.WorkGeometryGroup = workGeometryGroupTag;
-            //camOper1.ProgramGroup = programGroupTag;
-            //camOper1.MethodGroupRoot = methodGroupRootTag;
-            //camOper1.CreateOper();
-            //SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
-            //camOpers.Add(camOper1);
+            //基准平面
+            var camOper1 = new AutoCAMUI.CAMOper();
+            camOper1.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper1.AUTOCAM_SUBTYPE = "FACE_MILLING_BASE";
+            camOper1.CAMCutter = cutter.CutterTag;
+            camOper1.WorkGeometryGroup = workGeometryGroupTag;
+            camOper1.ProgramGroup = programGroupTag;
+            camOper1.MethodGroupRoot = methodGroupRootTag;
+            camOper1.CreateOper();
+            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            camOpers.Add(camOper1);
 
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
         }
