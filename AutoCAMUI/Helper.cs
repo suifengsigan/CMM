@@ -184,9 +184,9 @@ namespace AutoCAMUI
             camOper1.ProgramGroup = programGroupTag;
             camOper1.MethodGroupRoot = methodGroupRootTag;
             camOper1.CreateOper();
+            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             camOpers.Add(camOper1);
 
-            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
         }
 
@@ -196,7 +196,7 @@ namespace AutoCAMUI
             var cut_levels = new NXOpen.UF.UFCutLevels.CutLevelsStruct();
             ufSession.CutLevels.SetRangeType(operTag, NXOpen.UF.ParamClvRangeType.ParamClvRangeUserDefined, out cut_levels);
             var cut_levels_ptr_addr = new NXOpen.UF.UFCutLevels.CutLevelsStruct[] { cut_levels };
-            ufSession.CutLevels.Load(operTag, out cut_levels_ptr_addr);
+            //ufSession.CutLevels.Load(operTag, out cut_levels_ptr_addr);
             foreach (var item in cut_levels_ptr_addr)
             {
                 int num_levels = item.num_levels;
