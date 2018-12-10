@@ -205,7 +205,7 @@ namespace AutoCAMUI
             camOper1.ProgramGroup = programGroupTag;
             camOper1.MethodGroupRoot = methodGroupRootTag;
             camOper1.CreateOper();
-            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            SetBoundaryByFace(ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             camOpers.Add(camOper1);
 
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
