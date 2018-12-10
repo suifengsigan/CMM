@@ -96,8 +96,9 @@ namespace AutoCAMUI
             var body = ele.ElecBody;
             var basePos = ele.GetElecBasePos();
             var eleInfo = ele.GetElectrodeInfo();
-            var bodyBox = eleInfo.GetBox3d();
+            var bodyBox = eleInfo.GetBox3d(ele.BaseFace.GetFaceDirection());
             var safeDistance = 10;
+            var safeXDistance = 3;
             //几何组根节点
             NXOpen.Tag geometryGroupRootTag;
 
@@ -131,7 +132,7 @@ namespace AutoCAMUI
 
             //TODO 设置安全平面
             var normal = new Snap.Vector(0, 0, 1);
-            var origin = new Snap.Position(basePos.X, basePos.Y, bodyBox.MaxZ + safeDistance);
+            var origin = new Snap.Position(basePos.X- safeXDistance - (Math.Abs(bodyBox.MinX- bodyBox.MaxX)), basePos.Y, bodyBox.MaxZ + safeDistance);
             ufSession.Cam.SetClearPlaneData(workMcsGroupTag, origin.Array, normal.Array);
 
             //TODO 创建几何体
@@ -196,16 +197,16 @@ namespace AutoCAMUI
             camOpers.Add(camOper0);
 
             //杀顶程序
-            var camOper1 = new AutoCAMUI.CAMOper();
-            camOper1.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            camOper1.AUTOCAM_SUBTYPE = "FACE_MILLING";
-            camOper1.CAMCutter = cutter.CutterTag;
-            camOper1.WorkGeometryGroup = workGeometryGroupTag;
-            camOper1.ProgramGroup = programGroupTag;
-            camOper1.MethodGroupRoot = methodGroupRootTag;
-            camOper1.CreateOper();
-            SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
-            camOpers.Add(camOper1);
+            //var camOper1 = new AutoCAMUI.CAMOper();
+            //camOper1.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            //camOper1.AUTOCAM_SUBTYPE = "FACE_MILLING";
+            //camOper1.CAMCutter = cutter.CutterTag;
+            //camOper1.WorkGeometryGroup = workGeometryGroupTag;
+            //camOper1.ProgramGroup = programGroupTag;
+            //camOper1.MethodGroupRoot = methodGroupRootTag;
+            //camOper1.CreateOper();
+            //SetBoundary(new Snap.Position(basePos.X, basePos.Y, basePos.Z), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            //camOpers.Add(camOper1);
 
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
         }
