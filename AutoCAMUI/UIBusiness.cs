@@ -8,7 +8,7 @@ public partial class EleAutoCamUI:SnapEx.BaseUI
 {
     public override void DialogShown()
     {
-        AutoCAMUI.Helper.InitCAMSession();
+        AutoCAMUI.Helper.InitCAMSession("WsqAutoCAM");
     }
 
     public override void Update(NXOpen.BlockStyler.UIBlock block)
