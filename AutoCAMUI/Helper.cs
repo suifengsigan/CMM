@@ -233,6 +233,26 @@ namespace AutoCAMUI
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
         }
 
+        /// <summary>
+        /// 设置部件余量和底部余量
+        /// </summary>
+        public static void SetPartStockAndFloorStock(NXOpen.Tag operTag, double sideStock, double floorStock)
+        {
+            ufSession.Param.SetDoubleValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_STOCK_PART, sideStock);
+            if (Math.Abs(sideStock - floorStock) < SnapEx.Helper.Tolerance)
+            {
+                ufSession.Param.SetIntValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_STOCK_PART_USE, 1);
+            }
+            else
+            {
+                ufSession.Param.SetIntValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_STOCK_PART_USE, 0);
+                ufSession.Param.SetDoubleValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_STOCK_FLOOR, floorStock);
+            }
+        }
+
+        /// <summary>
+        /// //通过Z轴偏置值设置加工层
+        /// </summary>
         public static void SetCutLevels(NXOpen.Tag operTag,NXOpen.Tag faceTag , int levelsPosition = 1)
         {
             double zLevels = Snap.NX.Face.Wrap(faceTag).BoxEx().MaxZ;
