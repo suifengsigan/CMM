@@ -193,7 +193,7 @@ namespace AutoCAMUI
             camOper0.MethodGroupRoot = methodGroupRootTag;
             camOper0.CreateOper();
             ufSession.Param.SetDoubleValue(camOper0.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH, 0.3);
-            SetCutLevels(camOper0.OperTag, ele.BaseFace.NXOpenTag,0);
+            SetCutLevels(camOper0.OperTag, ele.BaseFace.NXOpenTag, 0);
             ufSession.Obj.SetName(camOper0.OperTag, camOper.AUTOCAM_SUBTYPE + "_1");
             camOpers.Add(camOper0);
 
@@ -230,7 +230,59 @@ namespace AutoCAMUI
             SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, camOper2.OperTag, Enumerable.Select(faces, u => u.NXOpenTag).ToList());
             camOpers.Add(camOper2);
 
+            //铣基准台侧壁
+            var camOper3 = new AutoCAMUI.CAMOper();
+            camOper3.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper3.AUTOCAM_SUBTYPE = "PLANAR_MILL_BASE";
+            var cutter3 = new CAMCutter();
+            cutter3.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            cutter3.AUTOCAM_SUBTYPE = "D10";
+            cutter3.TL_DIAMETER = 10;
+            CreateCutter(new List<CAMCutter> { cutter3 }, cutterGroupRootTag);
+            cutters.Add(cutter3);
+            camOper3.CAMCutter = cutter3.CutterTag;
+            camOper3.WorkGeometryGroup = workGeometryGroupTag;
+            camOper3.ProgramGroup = programGroupTag;
+            camOper3.MethodGroupRoot = methodGroupRootTag;
+            camOper3.CreateOper();
+            //SetPartStockAndFloorStock(camOper3.OperTag, 0, 0);
+            SetBoundary(ele.BaseFace.GetCenterPointEx(), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamPart, camOper3.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            SetCutFloor(camOper3.OperTag, ele.TopFace.GetCenterPointEx());
+            ufSession.Param.SetIntValue(camOper3.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUT_METHOD,5);//UF_PARAM_cut_method_profile
+            ufSession.Param.SetDoubleValue(camOper3.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_MAX_DEPTH, 0.3);
+            ufSession.Obj.SetName(camOper3.OperTag, camOper3.AUTOCAM_SUBTYPE + "_0");
+            camOpers.Add(camOper3);
+
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
+        }
+
+        /// <summary>
+        /// 设置加工底面
+        /// </summary>
+        public static void SetCutFloor(NXOpen.Tag operTag, NXOpen.Tag faceTag)
+        {
+            SetCutFloor(operTag, new Snap.Position(), faceTag);
+        }
+
+        /// <summary>
+        /// 设置加工底面
+        /// </summary>
+        public static void SetCutFloor(NXOpen.Tag operTag, Snap.Position origin, NXOpen.Tag faceTag = NXOpen.Tag.Null)
+        {
+            NXOpen.Tag result;
+            if (NXOpen.Tag.Null == faceTag)
+            {
+                var identity = Snap.Orientation.Identity;
+                NXOpen.Tag xforms;
+                ufSession.So.CreateXformDoubles(Snap.Globals.WorkPart.NXOpenTag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, origin.Array, identity.AxisX.Array, identity.AxisY.Array, 1, out xforms);
+                result = xforms;
+            }
+            else
+            {
+                result = faceTag;
+            }
+
+            ufSession.Param.SetTagValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_FLOOR, result);
         }
 
         /// <summary>
