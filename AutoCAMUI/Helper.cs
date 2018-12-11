@@ -186,6 +186,7 @@ namespace AutoCAMUI
             cutter0.AUTOCAM_SUBTYPE = "D10_R";
             cutter0.TL_DIAMETER = 10;
             CreateCutter(new List<CAMCutter> { cutter0 }, cutterGroupRootTag);
+            cutters.Add(cutter0);
             camOper0.CAMCutter = cutter0.CutterTag;
             camOper0.WorkGeometryGroup = workGeometryGroupTag;
             camOper0.ProgramGroup = programGroupTag;
@@ -207,6 +208,27 @@ namespace AutoCAMUI
             camOper1.CreateOper();
             SetBoundaryByFace(ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             camOpers.Add(camOper1);
+
+            //等宽精铣曲面
+            var camOper2 = new AutoCAMUI.CAMOper();
+            camOper2.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper2.AUTOCAM_SUBTYPE = "CONTOUR_AREA";
+            var cutter2 = new CAMCutter();
+            cutter2.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            cutter2.AUTOCAM_SUBTYPE = "R3";
+            cutter2.TL_DIAMETER = 3;
+            CreateCutter(new List<CAMCutter> { cutter2 }, cutterGroupRootTag);
+            cutters.Add(cutter2);
+            camOper2.CAMCutter = cutter2.CutterTag;
+            camOper2.WorkGeometryGroup = workGeometryGroupTag;
+            camOper2.ProgramGroup = programGroupTag;
+            camOper2.MethodGroupRoot = methodGroupRootTag;
+            camOper2.CreateOper();
+            ufSession.Param.SetIntValue(camOper2.OperTag, NXOpen.UF.UFConstants.UF_PARAM_STEPOVER_TYPE, 1);
+            ufSession.Param.SetDoubleValue(camOper2.OperTag, NXOpen.UF.UFConstants.UF_PARAM_STEPOVER_DIST, 0.1);
+            var faces = ele.ElecHeadFaces.Where(u => u.ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
+            SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, camOper2.OperTag, Enumerable.Select(faces, u => u.NXOpenTag).ToList());
+            camOpers.Add(camOper2);
 
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
         }
