@@ -97,6 +97,7 @@ namespace AutoCAMUI
             var basePos = ele.GetElecBasePos();
             var eleInfo = ele.GetElectrodeInfo();
             var bodyBox = eleInfo.GetBox3d(ele.BaseFace.GetFaceDirection());
+            var autoBlankOffset = new double[] { 2, 2, 2, 2, 2, 0 };
             var safeDistance = 10;
             var safeXDistance = 3;
             //几何组根节点
@@ -150,7 +151,7 @@ namespace AutoCAMUI
             SetMillArea(NXOpen.UF.CamGeomType.CamPart, workGeometryGroupTag, new List<NXOpen.Tag> { body.NXOpenTag });
 
             //TODO 设置毛坯为自动块
-            ufSession.Cam.SetAutoBlank(workGeometryGroupTag, NXOpen.UF.UFCam.BlankGeomType.AutoBlockType, new double[] { 0, 0, 0, 0, 0, 0 });
+            ufSession.Cam.SetAutoBlank(workGeometryGroupTag, NXOpen.UF.UFCam.BlankGeomType.AutoBlockType, autoBlankOffset);
 
             //TODO 创建刀具
             var cutters = new List<CAMCutter>();
