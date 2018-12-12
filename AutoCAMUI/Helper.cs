@@ -248,10 +248,29 @@ namespace AutoCAMUI
             //SetPartStockAndFloorStock(camOper3.OperTag, 0, 0);
             SetBoundary(ele.BaseFace.GetCenterPointEx(), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamPart, camOper3.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             SetCutFloor(camOper3.OperTag, ele.TopFace.GetCenterPointEx());
-            ufSession.Param.SetIntValue(camOper3.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUT_METHOD,5);//UF_PARAM_cut_method_profile
+            ufSession.Param.SetIntValue(camOper3.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUT_METHOD, 5);//UF_PARAM_cut_method_profile
             ufSession.Param.SetDoubleValue(camOper3.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_MAX_DEPTH, 0.3);
             ufSession.Obj.SetName(camOper3.OperTag, camOper3.AUTOCAM_SUBTYPE + "_0");
             camOpers.Add(camOper3);
+
+            //等高角度
+            var camOper4 = new AutoCAMUI.CAMOper();
+            camOper4.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper4.AUTOCAM_SUBTYPE = "ZLEVEL_PROFILE_STEEP";
+            var cutter4 = new CAMCutter();
+            cutter4.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            cutter4.AUTOCAM_SUBTYPE = "D8R0.5";
+            cutter4.TL_DIAMETER = 8;
+            CreateCutter(new List<CAMCutter> { cutter4 }, cutterGroupRootTag);
+            cutters.Add(cutter4);
+            camOper4.CAMCutter = cutter4.CutterTag;
+            camOper4.WorkGeometryGroup = workGeometryGroupTag;
+            camOper4.ProgramGroup = programGroupTag;
+            camOper4.MethodGroupRoot = methodGroupRootTag;
+            camOper4.CreateOper();
+            ufSession.Param.SetDoubleValue(camOper4.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH, 0.4);
+            ufSession.Obj.SetName(camOper4.OperTag, camOper4.AUTOCAM_SUBTYPE + "_0");
+            camOpers.Add(camOper4);
 
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
         }
