@@ -133,7 +133,7 @@ namespace AutoCAMUI
 
             //TODO 设置安全平面
             var normal = new Snap.Vector(0, 0, 1);
-            var origin = new Snap.Position(basePos.X- safeXDistance - (Math.Abs(bodyBox.MinX- bodyBox.MaxX)), basePos.Y, bodyBox.MaxZ + safeDistance);
+            var origin = new Snap.Position((bodyBox.MinX+bodyBox.MaxX)/2, (bodyBox.MinY + bodyBox.MaxY) / 2, bodyBox.MaxZ + safeDistance);
             ufSession.Cam.SetClearPlaneData(workMcsGroupTag, origin.Array, normal.Array);
 
             //TODO 创建几何体
