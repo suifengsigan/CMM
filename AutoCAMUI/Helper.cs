@@ -268,6 +268,7 @@ namespace AutoCAMUI
             camOper4.ProgramGroup = programGroupTag;
             camOper4.MethodGroupRoot = methodGroupRootTag;
             camOper4.CreateOper();
+            SetPartStockAndFloorStock(camOper4.OperTag, 0, 0);
             ufSession.Param.SetDoubleValue(camOper4.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH, 0.4);
             ufSession.Obj.SetName(camOper4.OperTag, camOper4.AUTOCAM_SUBTYPE + "_0");
             camOpers.Add(camOper4);
