@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCAM", "AutoCAM\AutoCAM.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoCAMUI", "AutoCAMUI\AutoCAMUI.csproj", "{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckRegions", "CheckRegions\CheckRegions.csproj", "{A2E25A3B-370F-4081-8D8D-462839BD98FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D71CC89-2A3E-4B0E-AA1B-5B05C6133762}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E25A3B-370F-4081-8D8D-462839BD98FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E25A3B-370F-4081-8D8D-462839BD98FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E25A3B-370F-4081-8D8D-462839BD98FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E25A3B-370F-4081-8D8D-462839BD98FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
