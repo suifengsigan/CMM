@@ -121,7 +121,7 @@ namespace CMM
             var positions = new List<Snap.Position>();
             try
             {
-                positions = SnapEx.Create.GetFacePoints(face,isRoundInt, max_facet_size);
+                positions = SnapEx.Create.GetFacePoints(face, max_facet_size);
                 ////所有边上的点都不取
                 //var minD = double.MaxValue;
                 //var probeDatas = config.ProbeDatas ?? new List<CMMTool.ProbeData>();
