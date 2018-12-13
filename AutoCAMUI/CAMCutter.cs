@@ -21,16 +21,20 @@ namespace AutoCAMUI
         /// </summary>
         public string CutterName { get; set; }
         /// <summary>
-        /// 刀具直径
+        /// 刀具直径(D 直径)
         /// </summary>
         public double TL_DIAMETER { get; set; }
         /// <summary>
-        /// 刀具直径
+        /// 刀具半径（R1 下半径）
         /// </summary>
         public double TL_COR1_RAD { get; set; }
         /// <summary>
-        /// 刀具的首下长
+        /// 刀具的首下长(L 长度)
         /// </summary>
         public double TL_HEIGHT { get; set; }
+        /// <summary>
+        /// 刀刃长度(FL 刀刃长度)
+        /// </summary>
+        public double TL_FLUTE_LN { get; set; }
     }
 }

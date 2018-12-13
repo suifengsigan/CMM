@@ -162,9 +162,13 @@ namespace AutoCAMUI
             camOper.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
             camOper.AUTOCAM_SUBTYPE = "CAVITY_MILL_C";
             var cutter = new CAMCutter();
-            cutter.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
-            cutter.AUTOCAM_SUBTYPE = "D10_R";
+            cutter.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            cutter.AUTOCAM_SUBTYPE = "MILL";//D10_R
             cutter.TL_DIAMETER = 10;
+            cutter.TL_COR1_RAD = 0;
+            cutter.TL_HEIGHT = 70;
+            cutter.TL_FLUTE_LN = 45;
+            cutter.CutterName = "D10_R";
             CreateCutter(new List<CAMCutter> { cutter }, cutterGroupRootTag);
             cutters.Add(cutter);
             camOper.CAMCutter = cutter.CutterTag;
@@ -368,6 +372,9 @@ namespace AutoCAMUI
                 ufSession.Ncgroup.AcceptMember(cutterGroupRootTag, cutterTag);
                 ufSession.Obj.SetName(cutterTag, item.CutterName);
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_DIAMETER, item.TL_DIAMETER);
+                ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_COR1_RAD, item.TL_COR1_RAD);
+                ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_HEIGHT, item.TL_HEIGHT);
+                //ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_FLUTE_LN,item.TL_FLUTE_LN);
                 item.CutterTag = cutterTag;
                 result.Add(item);
             }
