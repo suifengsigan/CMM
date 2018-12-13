@@ -163,12 +163,12 @@ namespace AutoCAMUI
             camOper.AUTOCAM_SUBTYPE = "CAVITY_MILL_C";
             var cutter = new CAMCutter();
             cutter.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            cutter.AUTOCAM_SUBTYPE = "MILL";//D10_R
+            cutter.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL ;
+            cutter.CutterName = "D10_R";
             cutter.TL_DIAMETER = 10;
             cutter.TL_COR1_RAD = 0;
             cutter.TL_HEIGHT = 70;
             cutter.TL_FLUTE_LN = 45;
-            cutter.CutterName = "D10_R";
             CreateCutter(new List<CAMCutter> { cutter }, cutterGroupRootTag);
             cutters.Add(cutter);
             camOper.CAMCutter = cutter.CutterTag;
@@ -186,13 +186,7 @@ namespace AutoCAMUI
             var camOper0 = new AutoCAMUI.CAMOper();
             camOper0.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
             camOper0.AUTOCAM_SUBTYPE = "CAVITY_MILL_C";
-            var cutter0 = new CAMCutter();
-            cutter0.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
-            cutter0.AUTOCAM_SUBTYPE = "D10_R";
-            cutter0.TL_DIAMETER = 10;
-            CreateCutter(new List<CAMCutter> { cutter0 }, cutterGroupRootTag);
-            cutters.Add(cutter0);
-            camOper0.CAMCutter = cutter0.CutterTag;
+            camOper0.CAMCutter = cutter.CutterTag;
             camOper0.WorkGeometryGroup = workGeometryGroupTag;
             camOper0.ProgramGroup = programGroupTag;
             camOper0.MethodGroupRoot = methodGroupRootTag;
@@ -219,9 +213,13 @@ namespace AutoCAMUI
             camOper2.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
             camOper2.AUTOCAM_SUBTYPE = "CONTOUR_AREA";
             var cutter2 = new CAMCutter();
-            cutter2.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
-            cutter2.AUTOCAM_SUBTYPE = "R3";
-            cutter2.TL_DIAMETER = 3;
+            cutter2.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            cutter2.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+            cutter2.CutterName = "R3";
+            cutter2.TL_DIAMETER = 6;
+            cutter2.TL_COR1_RAD = 3;
+            cutter2.TL_HEIGHT = 50;
+            cutter2.TL_FLUTE_LN = 35;
             CreateCutter(new List<CAMCutter> { cutter2 }, cutterGroupRootTag);
             cutters.Add(cutter2);
             camOper2.CAMCutter = cutter2.CutterTag;
@@ -240,9 +238,13 @@ namespace AutoCAMUI
             camOper3.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
             camOper3.AUTOCAM_SUBTYPE = "PLANAR_MILL_BASE";
             var cutter3 = new CAMCutter();
-            cutter3.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
-            cutter3.AUTOCAM_SUBTYPE = "D10";
+            cutter3.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            cutter3.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+            cutter3.CutterName = "D10";
             cutter3.TL_DIAMETER = 10;
+            cutter3.TL_COR1_RAD = 0;
+            cutter3.TL_HEIGHT = 70;
+            cutter3.TL_FLUTE_LN = 50;
             CreateCutter(new List<CAMCutter> { cutter3 }, cutterGroupRootTag);
             cutters.Add(cutter3);
             camOper3.CAMCutter = cutter3.CutterTag;
@@ -263,9 +265,13 @@ namespace AutoCAMUI
             camOper4.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
             camOper4.AUTOCAM_SUBTYPE = "ZLEVEL_PROFILE_STEEP";
             var cutter4 = new CAMCutter();
-            cutter4.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
-            cutter4.AUTOCAM_SUBTYPE = "D8R0.5";
+            cutter4.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            cutter4.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+            cutter4.CutterName = "D8R0.5";
             cutter4.TL_DIAMETER = 8;
+            cutter4.TL_COR1_RAD = 0.5;
+            cutter4.TL_HEIGHT = 70;
+            cutter4.TL_FLUTE_LN = 50;
             CreateCutter(new List<CAMCutter> { cutter4 }, cutterGroupRootTag);
             cutters.Add(cutter4);
             camOper4.CAMCutter = cutter4.CutterTag;
@@ -374,7 +380,7 @@ namespace AutoCAMUI
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_DIAMETER, item.TL_DIAMETER);
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_COR1_RAD, item.TL_COR1_RAD);
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_HEIGHT, item.TL_HEIGHT);
-                //ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_FLUTE_LN,item.TL_FLUTE_LN);
+                ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_FLUTE_LN,item.TL_FLUTE_LN);
                 item.CutterTag = cutterTag;
                 result.Add(item);
             }
@@ -501,5 +507,6 @@ namespace AutoCAMUI
         public const string MCS = "MCS";
         public const string WORKPIECE = "WORKPIECE";
         public const string PROGRAM = "PROGRAM";
+        public const string MILL = "MILL";
     }
 }
