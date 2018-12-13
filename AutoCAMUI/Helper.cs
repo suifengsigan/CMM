@@ -287,6 +287,15 @@ namespace AutoCAMUI
             PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
         }
 
+
+        /// <summary>
+        /// 设置主轴转速
+        /// </summary>
+        public static void SetSpeedValue(NXOpen.Tag operTag,double speedValue)
+        {
+            ufSession.Param.SetDoubleValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_SPINDLE_RPM, speedValue);
+        }
+
         /// <summary>
         /// 设置加工底面
         /// </summary>
