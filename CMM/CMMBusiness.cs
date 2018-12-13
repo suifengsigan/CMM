@@ -199,8 +199,7 @@ namespace CMM
                         continue;
                     }
                 }
-                var vector = face.GetFaceDirection();
-                
+
                 var edges = face.EdgeCurves.ToList();
                 var positions = Helper.GetFacePoints(face, config, edges);
                 var faceMidPoint = face.GetCenterPointEx();
@@ -227,11 +226,7 @@ namespace CMM
                         if (i < LoopVarValue)
                         {
                             var item = p[i];
-                            var pointVector = vector;
-                            if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
-                            {
-                                pointVector = face.GetFaceDirectionByPoint(item);
-                            }
+                            var pointVector = face.GetFaceDirectionByPoint(item); 
                             if (double.IsNaN(pointVector.X) || double.IsNaN(pointVector.Y) || double.IsNaN(pointVector.Z))
                             {
                                 continue;
