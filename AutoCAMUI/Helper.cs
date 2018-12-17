@@ -196,6 +196,32 @@ namespace AutoCAMUI
             ufSession.Obj.SetName(camOper0.OperTag, camOper.AUTOCAM_SUBTYPE + "_1");
             camOpers.Add(camOper0);
 
+            //残料开粗
+            var camOper01 = new AutoCAMUI.CAMOper();
+            camOper01.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper01.AUTOCAM_SUBTYPE = "CAVITY_MILL_REF";
+            var cutter01 = new CAMCutter();
+            cutter01.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            cutter01.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+            cutter01.CutterName = "D2";
+            cutter01.TL_DIAMETER = 2;
+            cutter01.TL_COR1_RAD = 0;
+            cutter01.TL_HEIGHT = 50;
+            cutter01.TL_FLUTE_LN = 12;
+            CreateCutter(new List<CAMCutter> { cutter01 }, cutterGroupRootTag);
+            cutters.Add(cutter01);
+            camOper01.CAMCutter = cutter01.CutterTag;
+            camOper01.WorkGeometryGroup = workGeometryGroupTag;
+            camOper01.ProgramGroup = programGroupTag;
+            camOper01.MethodGroupRoot = methodGroupRootTag;
+            camOper01.CreateOper();
+            //TODO 设置参考刀具
+            SetReferenceCutter(camOper01.OperTag, cutter.CutterTag);
+            ufSession.Param.SetDoubleValue(camOper01.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH, 0.04);
+            SetCutLevels(camOper01.OperTag, ele.BaseFace.NXOpenTag);
+            ufSession.Obj.SetName(camOper01.OperTag, camOper01.AUTOCAM_SUBTYPE + "_1");
+            camOpers.Add(camOper01);
+
             //基准平面
             var camOper1 = new AutoCAMUI.CAMOper();
             camOper1.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
