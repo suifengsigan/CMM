@@ -374,6 +374,16 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 获取刀具
+        /// </summary>
+        public static NXOpen.Tag GetCutter(string cutterName, NXOpen.Tag cutterGroupRootTag)
+        {
+            NXOpen.Tag result = NXOpen.Tag.Null;
+            ufSession.Ncgroup.AskObjectOfName(cutterGroupRootTag, cutterName, out result);
+            return result;
+        }
+
+        /// <summary>
         /// 创建刀具
         /// </summary>
         /// <returns></returns>
