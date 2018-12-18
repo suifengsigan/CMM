@@ -248,6 +248,33 @@ namespace AutoCAMUI
             SetBoundaryByFace(ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamBlank, camOper1.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             camOpers.Add(camOper1);
 
+            //平面
+            var camOper9 = new AutoCAMUI.CAMOper();
+            camOper9.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper9.AUTOCAM_SUBTYPE = "FACE_MILLING";
+            var cutter9 = new CAMCutter();
+            cutter9.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            cutter9.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+            cutter9.CutterName = "D0.5";
+            cutter9.TL_DIAMETER = 0.5;
+            cutter9.TL_COR1_RAD = 0;
+            cutter9.TL_HEIGHT = 50;
+            cutter9.TL_FLUTE_LN = 4;
+            CreateCutter(new List<CAMCutter> { cutter9 }, cutterGroupRootTag);
+            cutters.Add(cutter9);
+            camOper9.CAMCutter = cutter9.CutterTag;
+            camOper9.WorkGeometryGroup = workGeometryGroupTag;
+            camOper9.ProgramGroup = programGroupTag;
+            camOper9.MethodGroupRoot = methodGroupRootTag;
+            camOper9.CreateOper();
+            //SetPartStockAndFloorStock(camOper8.OperTag, 0, 0);
+            verticalFaces.ForEach(u => {
+                SetBoundaryByFace(u.FaceTag, NXOpen.UF.CamGeomType.CamBlank, camOper9.OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            });
+            ufSession.Param.SetDoubleValue(camOper9.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT, 0.1);
+            ufSession.Obj.SetName(camOper9.OperTag, camOper9.AUTOCAM_SUBTYPE + "_0");
+            camOpers.Add(camOper9);
+
             //基准侧面
             var camOper3 = new AutoCAMUI.CAMOper();
             camOper3.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
@@ -415,8 +442,16 @@ namespace AutoCAMUI
             SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, camOper2.OperTag, Enumerable.Select(tempfaces, u => u.NXOpenTag).ToList());
             camOpers.Add(camOper2);
 
-            PathGenerate(Enumerable.Select(camOpers, u => u.OperTag).ToList());
+
             Snap.InfoWindow.Clear();
+            camOpers.ForEach(u => {
+                var exMsg = PathGenerate(u.OperTag);
+                if (!string.IsNullOrEmpty(exMsg))
+                {
+                    Snap.InfoWindow.WriteLine(exMsg);
+                }
+            });
+           
             camOpers.ForEach(u => {
                 string name;
                 ufSession.Obj.AskName(u.OperTag, out name);
@@ -587,6 +622,26 @@ namespace AutoCAMUI
             });
             ufSession.Camgeom.DeleteGeometry(operTag, camGeomType);
             ufSession.Camgeom.AppendItems(operTag, camGeomType, cutAreaGeometryTags.Count, cutAreaGeometryTags.ToArray(), appDatas.ToArray());
+        }
+
+        /// <summary>
+        /// 路径生成
+        /// </summary>
+        public static string PathGenerate(NXOpen.Tag operTag)
+        {
+            string generated = string.Empty;
+            var mark = Snap.Globals.SetUndoMark(Snap.Globals.MarkVisibility.Invisible, "PathGenerate");
+            try
+            {
+                PathGenerate(new List<NXOpen.Tag> { operTag });
+            }
+            catch(Exception ex)
+            {
+                ufSession.Obj.AskName(operTag, out generated);
+                generated = string.Format("{0}:{1}", generated, ex.Message);
+            }
+            Snap.Globals.DeleteUndoMark(mark, "PathGenerate");
+            return generated;
         }
 
         /// <summary>
