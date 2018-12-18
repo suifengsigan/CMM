@@ -320,6 +320,30 @@ namespace AutoCAMUI
             });
         }
 
+        [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_ask_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+        internal static extern int _AskFeedRate(Tag param_tag, int param_index, out int value);
+
+        [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_set_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+        internal static extern int _SetFeedRate(Tag param_tag, int param_index, int value);
+
+        /// <summary>
+        /// 获取进给率
+        /// </summary>
+        public static int AskFeedRate(NXOpen.Tag operTag, int param_index)
+        {
+            int result;
+            _AskFeedRate(operTag, param_index, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// 设置进给率
+        /// </summary>
+        public static void SetFeedRate(NXOpen.Tag operTag, int param_index, int value)
+        {
+            _SetFeedRate(operTag, param_index, value);
+        }
+
 
         /// <summary>
         /// 设置主轴转速
