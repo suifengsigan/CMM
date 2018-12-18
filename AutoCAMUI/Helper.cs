@@ -281,10 +281,37 @@ namespace AutoCAMUI
             camOper4.MethodGroupRoot = methodGroupRootTag;
             camOper4.CreateOper();
             SetPartStockAndFloorStock(camOper4.OperTag, 0, 0);
-            SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, camOper4.OperTag, Enumerable.Select(ele.ElecHeadFaces,u=>u.NXOpenTag).ToList());
+            SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, camOper4.OperTag, Enumerable.Select(ele.ElecHeadFaces, u => u.NXOpenTag).ToList());
             ufSession.Param.SetDoubleValue(camOper4.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH, 0.15);
             ufSession.Obj.SetName(camOper4.OperTag, camOper4.AUTOCAM_SUBTYPE + "_0");
             camOpers.Add(camOper4);
+
+            //等高清角
+            var camOper5 = new AutoCAMUI.CAMOper();
+            camOper5.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
+            camOper5.AUTOCAM_SUBTYPE = "ZLEVEL_CORNER";
+            var cutter5 = new CAMCutter();
+            cutter5.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            cutter5.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+            cutter5.CutterName = "D4";
+            cutter5.TL_DIAMETER = 4;
+            cutter5.TL_COR1_RAD = 0;
+            cutter5.TL_HEIGHT = 50;
+            cutter5.TL_FLUTE_LN = 30;
+            CreateCutter(new List<CAMCutter> { cutter5 }, cutterGroupRootTag);
+            cutters.Add(cutter5);
+            camOper5.CAMCutter = cutter5.CutterTag;
+            camOper5.WorkGeometryGroup = workGeometryGroupTag;
+            camOper5.ProgramGroup = programGroupTag;
+            camOper5.MethodGroupRoot = methodGroupRootTag;
+            camOper5.CreateOper();
+            //TODO 设置参考刀具
+            SetReferenceCutter(camOper5.OperTag, cutter.CutterTag);
+            SetPartStockAndFloorStock(camOper5.OperTag, 0, 0);
+            SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, camOper5.OperTag, Enumerable.Select(ele.ElecHeadFaces, u => u.NXOpenTag).ToList());
+            ufSession.Param.SetDoubleValue(camOper5.OperTag, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH, 0.06);
+            ufSession.Obj.SetName(camOper5.OperTag, camOper5.AUTOCAM_SUBTYPE + "_0");
+            camOpers.Add(camOper5);
 
             //等宽精铣曲面
             var camOper2 = new AutoCAMUI.CAMOper();
