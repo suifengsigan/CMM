@@ -311,9 +311,13 @@ namespace AutoCAMUI
             ufSession.Obj.SetName(camOper3.OperTag, camOper3.AUTOCAM_SUBTYPE + "_0");
             camOpers.Add(camOper3);
 
-           
-
-            PathGenerate(Enumerable.Select(camOpers,u=>u.OperTag).ToList());
+            PathGenerate(Enumerable.Select(camOpers, u => u.OperTag).ToList());
+            Snap.InfoWindow.Clear();
+            camOpers.ForEach(u => {
+                string name;
+                ufSession.Obj.AskName(u.OperTag, out name);
+                Snap.InfoWindow.WriteLine(string.Format("{0}:{1}", name, IsPathGouged(u.OperTag) ? "过切" : "未过切"));
+            });
         }
 
 
