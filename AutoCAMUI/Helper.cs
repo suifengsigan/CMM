@@ -324,8 +324,8 @@ namespace AutoCAMUI
             var cutter5 = new CAMCutter();
             cutter5.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
             cutter5.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            cutter5.CutterName = "D4";
-            cutter5.TL_DIAMETER = 4;
+            cutter5.CutterName = "D0.3";
+            cutter5.TL_DIAMETER = 0.3;
             cutter5.TL_COR1_RAD = 0;
             cutter5.TL_HEIGHT = 50;
             cutter5.TL_FLUTE_LN = 30;
