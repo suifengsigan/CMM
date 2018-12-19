@@ -189,6 +189,7 @@ namespace CMM
         {
             var result = new List<PointData>();
             var faces = elec.ElecHeadFaces;
+            int faceIndex = 0;
             foreach (var face in faces)
             {
                 if (config.IsEDMFaceGetPoint)
@@ -218,6 +219,9 @@ namespace CMM
                         continue;
                     }
                 }
+
+                Helper.ShowMsg(string.Format("{0}第{1}个电极头部面取点", elec.ElecBody.Name, faceIndex + 1));
+                faceIndex++;
 
                 Action<List<Position>> action = (p) =>
                 {
