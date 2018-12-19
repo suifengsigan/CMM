@@ -11,6 +11,7 @@ namespace CMM
     {
         public static bool AskPointContainment(Snap.Position position, Snap.NX.Face face)
         {
+            return Snap.Compute.Distance(position, face) <= SnapEx.Helper.Tolerance;
             var ufSession = NXOpen.UF.UFSession.GetUFSession();
             int pt_status = 0;
             ufSession.Modl.AskPointContainment(position.Array, face.NXOpenTag, out pt_status);
