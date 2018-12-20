@@ -85,7 +85,7 @@ namespace AutoCAMUI
             var body = ele.ElecBody;
             var basePos = ele.GetElecBasePos();
             var eleInfo = ele.GetElectrodeInfo();
-            var bodyBox = eleInfo.GetBox3d(ele.BaseFace.GetFaceDirection());
+            var bodyBox = body.AcsToWcsBox3d(new Snap.Orientation(-ele.BaseFace.GetFaceDirection()));
             var autoBlankOffset = new double[] { 2, 2, 2, 2, 2, 0 };
             var safeDistance = 10;
 
