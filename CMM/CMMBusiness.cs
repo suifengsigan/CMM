@@ -190,17 +190,27 @@ namespace CMM
             var result = new List<PointData>();
             var faces = elec.ElecHeadFaces;
             int faceIndex = 0;
-            foreach (var face in faces)
+
+            if (config.IsEDMFaceGetPoint)
             {
-                if (config.IsEDMFaceGetPoint)
+                LoopVarValue = 100;
+                var EDMFaces = new List<Snap.NX.Face>();
+                foreach (var face in faces)
                 {
-                    LoopVarValue = 100;
-                    if (Snap.Color.ColorIndex(face.Color) != _EactConfigData.EDMColor)
+                    if (Snap.Color.ColorIndex(face.Color) == _EactConfigData.EDMColor)
                     {
-                        continue;
+                        EDMFaces.Add(face);
                     }
                 }
 
+                if (EDMFaces.Count > 0)
+                {
+                    faces = EDMFaces.ToList();
+                }
+            }
+
+            foreach (var face in faces)
+            {
                 var edges = face.EdgeCurves.ToList();
                 var positions = Helper.GetFacePoints(face, config, edges);
                 var faceMidPoint = face.GetCenterPointEx();
