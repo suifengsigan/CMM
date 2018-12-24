@@ -175,7 +175,7 @@ namespace AutoCAMUI
             cutter.TL_FLUTE_LN = 45;
             CreateCutter(new List<CAMCutter> { cutter }, cutterGroupRootTag);
             cutters.Add(cutter);
-            camOper.CAMCutter = cutter.CutterTag;
+            camOper.CAMCutter = cutter;
             camOper.WorkGeometryGroup = workGeometryGroupTag;
             camOper.ProgramGroup = programGroupTag;
             camOper.MethodGroupRoot = methodGroupRootTag;
@@ -190,7 +190,7 @@ namespace AutoCAMUI
             var camOper0 = new AutoCAMUI.CAMOper();
             camOper0.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
             camOper0.AUTOCAM_SUBTYPE = "CAVITY_MILL_C";
-            camOper0.CAMCutter = cutter.CutterTag;
+            camOper0.CAMCutter = cutter;
             camOper0.WorkGeometryGroup = workGeometryGroupTag;
             camOper0.ProgramGroup = programGroupTag;
             camOper0.MethodGroupRoot = methodGroupRootTag;
@@ -214,7 +214,7 @@ namespace AutoCAMUI
             cutter01.TL_FLUTE_LN = 12;
             CreateCutter(new List<CAMCutter> { cutter01 }, cutterGroupRootTag);
             cutters.Add(cutter01);
-            camOper01.CAMCutter = cutter01.CutterTag;
+            camOper01.CAMCutter = cutter01;
             camOper01.WorkGeometryGroup = workGeometryGroupTag;
             camOper01.ProgramGroup = programGroupTag;
             camOper01.MethodGroupRoot = methodGroupRootTag;
@@ -240,7 +240,7 @@ namespace AutoCAMUI
             cutter3.TL_FLUTE_LN = 50;
             CreateCutter(new List<CAMCutter> { cutter3 }, cutterGroupRootTag);
             cutters.Add(cutter3);
-            camOper1.CAMCutter = cutter3.CutterTag;
+            camOper1.CAMCutter = cutter3;
             camOper1.WorkGeometryGroup = workGeometryGroupTag;
             camOper1.ProgramGroup = programGroupTag;
             camOper1.MethodGroupRoot = methodGroupRootTag;
@@ -262,7 +262,7 @@ namespace AutoCAMUI
             cutter9.TL_FLUTE_LN = 4;
             CreateCutter(new List<CAMCutter> { cutter9 }, cutterGroupRootTag);
             cutters.Add(cutter9);
-            camOper9.CAMCutter = cutter9.CutterTag;
+            camOper9.CAMCutter = cutter9;
             camOper9.WorkGeometryGroup = workGeometryGroupTag;
             camOper9.ProgramGroup = programGroupTag;
             camOper9.MethodGroupRoot = methodGroupRootTag;
@@ -279,7 +279,7 @@ namespace AutoCAMUI
             var camOper3 = new AutoCAMUI.CAMOper();
             camOper3.AUTOCAM_TYPE = ELECTRODETEMPLATETYPENAME;
             camOper3.AUTOCAM_SUBTYPE = "PLANAR_MILL_BASE";
-            camOper3.CAMCutter = cutter3.CutterTag;
+            camOper3.CAMCutter = cutter3;
             camOper3.WorkGeometryGroup = workGeometryGroupTag;
             camOper3.ProgramGroup = programGroupTag;
             camOper3.MethodGroupRoot = methodGroupRootTag;
@@ -306,7 +306,7 @@ namespace AutoCAMUI
             cutter4.TL_FLUTE_LN = 50;
             CreateCutter(new List<CAMCutter> { cutter4 }, cutterGroupRootTag);
             cutters.Add(cutter4);
-            camOper4.CAMCutter = cutter4.CutterTag;
+            camOper4.CAMCutter = cutter4;
             camOper4.WorkGeometryGroup = workGeometryGroupTag;
             camOper4.ProgramGroup = programGroupTag;
             camOper4.MethodGroupRoot = methodGroupRootTag;
@@ -331,7 +331,7 @@ namespace AutoCAMUI
             cutter5.TL_FLUTE_LN = 30;
             CreateCutter(new List<CAMCutter> { cutter5 }, cutterGroupRootTag);
             cutters.Add(cutter5);
-            camOper5.CAMCutter = cutter5.CutterTag;
+            camOper5.CAMCutter = cutter5;
             camOper5.WorkGeometryGroup = workGeometryGroupTag;
             camOper5.ProgramGroup = programGroupTag;
             camOper5.MethodGroupRoot = methodGroupRootTag;
@@ -356,7 +356,7 @@ namespace AutoCAMUI
             cutter6.TL_FLUTE_LN = 30;
             CreateCutter(new List<CAMCutter> { cutter6 }, cutterGroupRootTag);
             cutters.Add(cutter6);
-            camOper6.CAMCutter = cutter6.CutterTag;
+            camOper6.CAMCutter = cutter6;
             camOper6.WorkGeometryGroup = workGeometryGroupTag;
             camOper6.ProgramGroup = programGroupTag;
             camOper6.MethodGroupRoot = methodGroupRootTag;
@@ -381,7 +381,7 @@ namespace AutoCAMUI
             cutter7.TL_FLUTE_LN = 12;
             CreateCutter(new List<CAMCutter> { cutter7 }, cutterGroupRootTag);
             cutters.Add(cutter7);
-            camOper7.CAMCutter = cutter7.CutterTag;
+            camOper7.CAMCutter = cutter7;
             camOper7.WorkGeometryGroup = workGeometryGroupTag;
             camOper7.ProgramGroup = programGroupTag;
             camOper7.MethodGroupRoot = methodGroupRootTag;
@@ -406,7 +406,7 @@ namespace AutoCAMUI
             cutter8.TL_FLUTE_LN = 4;
             CreateCutter(new List<CAMCutter> { cutter8 }, cutterGroupRootTag);
             cutters.Add(cutter8);
-            camOper8.CAMCutter = cutter8.CutterTag;
+            camOper8.CAMCutter = cutter8;
             camOper8.WorkGeometryGroup = workGeometryGroupTag;
             camOper8.ProgramGroup = programGroupTag;
             camOper8.MethodGroupRoot = methodGroupRootTag;
@@ -431,7 +431,7 @@ namespace AutoCAMUI
             cutter2.TL_FLUTE_LN = 35;
             CreateCutter(new List<CAMCutter> { cutter2 }, cutterGroupRootTag);
             cutters.Add(cutter2);
-            camOper2.CAMCutter = cutter2.CutterTag;
+            camOper2.CAMCutter = cutter2;
             camOper2.WorkGeometryGroup = workGeometryGroupTag;
             camOper2.ProgramGroup = programGroupTag;
             camOper2.MethodGroupRoot = methodGroupRootTag;

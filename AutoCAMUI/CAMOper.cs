@@ -10,13 +10,30 @@ namespace AutoCAMUI
     /// </summary>
     public class CAMOper
     {
+        protected NXOpen.UF.UFSession ufSession = NXOpen.UF.UFSession.GetUFSession();
         public string AUTOCAM_TYPE { get; set; }
         public string AUTOCAM_SUBTYPE { get; set; }
-        public NXOpen.Tag CAMCutter { get; set; }
+        public CAMCutter CAMCutter { get; set; }
         public NXOpen.Tag WorkGeometryGroup { get; set; }
         public NXOpen.Tag ProgramGroup { get; set; }
         public NXOpen.Tag MethodGroupRoot { get; set; }
         public NXOpen.Tag OperTag { get; protected set; }
+
+        public void CreateOper(NXOpen.Tag WorkGeometryGroup, NXOpen.Tag ProgramGroup, NXOpen.Tag MethodGroupRoot, CAMCutter CAMCutter)
+        {
+            this.WorkGeometryGroup = WorkGeometryGroup;
+            this.ProgramGroup = ProgramGroup;
+            this.MethodGroupRoot = MethodGroupRoot;
+            this.CAMCutter = CAMCutter;
+            //TODO 创建工序
+            NXOpen.Tag operTag;
+            ufSession.Oper.Create(AUTOCAM_TYPE, AUTOCAM_SUBTYPE, out operTag);
+            ufSession.Ncgroup.AcceptMember(WorkGeometryGroup, operTag);
+            ufSession.Ncgroup.AcceptMember(ProgramGroup, operTag);
+            ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
+            ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
+            OperTag = operTag;
+        }
 
         /// <summary>
         /// 创建工序
@@ -30,7 +47,7 @@ namespace AutoCAMUI
             ufSession.Ncgroup.AcceptMember(WorkGeometryGroup, operTag);
             ufSession.Ncgroup.AcceptMember(ProgramGroup, operTag);
             ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
-            ufSession.Ncgroup.AcceptMember(CAMCutter, operTag);
+            ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
             OperTag = operTag;
         }
     }
