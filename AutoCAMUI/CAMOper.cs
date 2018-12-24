@@ -5,6 +5,11 @@ using System.Text;
 
 namespace AutoCAMUI
 {
+    public enum levelsPosition
+    {
+        TopLevel,
+        BottomLevel
+    }
     /// <summary>
     /// 加工工序类
     /// </summary>
@@ -49,6 +54,32 @@ namespace AutoCAMUI
             ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
             ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
             OperTag = operTag;
+        }
+
+        /// <summary>
+        /// 设置切深/步距
+        /// </summary>
+        /// <param name="depth"></param>
+        public virtual void SetCutDepth(double depth)
+        {
+            _SetCutDepth(depth);
+        }
+
+        /// <summary>
+        /// 设置切深/步距
+        /// </summary>
+        /// <param name="depth"></param>
+        protected void _SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)
+        {
+            ufSession.Param.SetDoubleValue(OperTag, param_index, depth);
+        }
+
+        /// <summary>
+        /// 设置切削层
+        /// </summary>
+        protected virtual void _SetCutLevels(NXOpen.Tag faceTag, levelsPosition levelsPosition= levelsPosition.BottomLevel)
+        {
+            Helper.SetCutLevels(OperTag, faceTag, (int)levelsPosition);
         }
     }
 }

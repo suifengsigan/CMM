@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NXOpen;
 
 namespace AutoCAMUI
 {
@@ -11,6 +12,14 @@ namespace AutoCAMUI
         {
             AUTOCAM_TYPE = "WsqAutoCAM";
             AUTOCAM_SUBTYPE = "CAVITY_MILL_C";
+        }
+
+        /// <summary>
+        /// 设置切削层
+        /// </summary>
+        public void SetCutLevels(Tag faceTag, levelsPosition levelsPosition = levelsPosition.BottomLevel)
+        {
+            _SetCutLevels(faceTag, levelsPosition);
         }
     }
 }
