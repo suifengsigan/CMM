@@ -6,6 +6,9 @@ using NXOpen;
 
 namespace AutoCAMUI
 {
+    /// <summary>
+    /// 电极头部开粗
+    /// </summary>
     public class WsqAutoCAM_CAVITY_MILL_C_Oper : CAMOper
     {
         public WsqAutoCAM_CAVITY_MILL_C_Oper()

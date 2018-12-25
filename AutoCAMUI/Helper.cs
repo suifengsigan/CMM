@@ -223,6 +223,13 @@ namespace AutoCAMUI
             CAM_CAVITY_MILL_C_0.SetCutLevels(ele.BaseFace.NXOpenTag);
             camOpers.Add(CAM_CAVITY_MILL_C_0);
 
+            //基准台开粗
+            var CAVITY_PLANAR_MILL_0 = new WsqAutoCAM_CAVITY_PLANAR_MILL_Oper();
+            CAVITY_PLANAR_MILL_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10_R);
+            CAVITY_PLANAR_MILL_0.SetCutDepth(0.3);
+            CAVITY_PLANAR_MILL_0.SetBoundaryAndCutFloor(ele);
+            camOpers.Add(CAVITY_PLANAR_MILL_0);
+
             #region old
             ////电极头部开粗
             //var camOper = new AutoCAMUI.CAMOper();

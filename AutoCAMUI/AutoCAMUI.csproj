@@ -77,7 +77,8 @@
     <Compile Include="UIBusiness.cs" />
     <Compile Include="Upload.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WsqAutoCAM_CAVITY_MILL_C_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_CAVITY_MILL_C_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_CAVITY_PLANAR_MILL_Oper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
