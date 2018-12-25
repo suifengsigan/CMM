@@ -30,6 +30,7 @@ namespace AutoCAMUI
             this.ProgramGroup = ProgramGroup;
             this.MethodGroupRoot = MethodGroupRoot;
             this.CAMCutter = CAMCutter;
+
             //TODO 创建工序
             NXOpen.Tag operTag;
             ufSession.Oper.Create(AUTOCAM_TYPE, AUTOCAM_SUBTYPE, out operTag);
@@ -38,6 +39,26 @@ namespace AutoCAMUI
             ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
             ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
             OperTag = operTag;
+
+            int count;
+            NXOpen.Tag[] list;
+            ufSession.Ncgroup.AskMemberList(ProgramGroup, out count, out list);
+            int index = -1;
+            string name;
+            for (int i = 0; i < count; i++)
+            {
+                ufSession.Obj.AskName(list[i], out name);
+                var strIndex = name.Split('_').LastOrDefault();
+                var tempInt = -1;
+                int.TryParse(strIndex, out tempInt);
+                if (tempInt > index)
+                {
+                    index = tempInt;
+                }
+            }
+
+            //设置名称
+            ufSession.Obj.SetName(operTag, string.Format("{0}_{1}", AUTOCAM_SUBTYPE, index + 1));
         }
 
         /// <summary>
