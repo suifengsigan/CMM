@@ -559,9 +559,9 @@ namespace AutoCAMUI
         /// <summary>
         /// 设置主轴转速
         /// </summary>
-        public static void SetSpeedValue(NXOpen.Tag operTag,double speedValue)
+        public static void SetSpeedValue(NXOpen.Tag operTag,double speedValue,int param_index= NXOpen.UF.UFConstants.UF_PARAM_SPINDLE_RPM)
         {
-            ufSession.Param.SetDoubleValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_SPINDLE_RPM, speedValue);
+            ufSession.Param.SetDoubleValue(operTag, param_index, speedValue);
         }
 
         /// <summary>

@@ -99,6 +99,19 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 设置进给率和主轴转速
+        /// </summary>
+        /// <param name="feedRate">进给率</param>
+        /// <param name="speedValue">主轴转速</param>
+        protected void _SetFeedRate(int feedRate,double speedValue)
+        {
+            Helper.SetFeedRate(OperTag, NXOpen.UF.UFConstants.UF_PARAM_FEED_ENGAGE, feedRate);
+            Helper.SetSpeedValue(OperTag, speedValue);
+            //Helper.SetSpeedValue(OperTag, speedValue, NXOpen.UF.UFConstants.UF_PARAM_SURFACE_SPEED);
+            //Helper.SetSpeedValue(OperTag, speedValue, NXOpen.UF.UFConstants.UF_PARAM_FEED_PER_TOOTH);
+        }
+
+        /// <summary>
         /// 设置切削层
         /// </summary>
         protected virtual void _SetCutLevels(NXOpen.Tag faceTag, levelsPosition levelsPosition= levelsPosition.BottomLevel)
