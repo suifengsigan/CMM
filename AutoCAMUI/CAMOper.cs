@@ -48,12 +48,15 @@ namespace AutoCAMUI
             for (int i = 0; i < count; i++)
             {
                 ufSession.Obj.AskName(list[i], out name);
-                var strIndex = name.Split('_').LastOrDefault();
-                var tempInt = -1;
-                int.TryParse(strIndex, out tempInt);
-                if (tempInt > index)
+                if (name.Contains(AUTOCAM_SUBTYPE))
                 {
-                    index = tempInt;
+                    var strIndex = name.Split('_').LastOrDefault();
+                    var tempInt = -1;
+                    int.TryParse(strIndex, out tempInt);
+                    if (tempInt > index)
+                    {
+                        index = tempInt;
+                    }
                 }
             }
 
