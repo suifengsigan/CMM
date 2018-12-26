@@ -785,13 +785,74 @@ namespace AutoCAMUI
         /// </summary>
         public static void GetOutlineCurve(
             Snap.NX.Face face
-            //, out List<NXOpen.Tag> peripheral
-            //, out List<List<NXOpen.Tag>> innerCircumference
+            , out List<NXOpen.Tag> peripheral
+            , out List<List<NXOpen.Tag>> innerCircumference
             )
         {
             Tag[] tagArray;
             ufSession.Modl.AskFaceEdges(face.NXOpenTag, out tagArray);
+            var edges = Enumerable.Select(tagArray, u => Snap.NX.Edge.Wrap(u)).ToList();
+            peripheral = new List<Tag>();
+            innerCircumference = new List<List<Tag>>();
+            while (edges.Count > 0)
+            {
+                var edge = edges.FirstOrDefault();
+                bool isHas = false;
+                foreach (var item in innerCircumference)
+                {
+                    isHas = item.Where(u => Snap.Compute.Distance(edge, Snap.NX.NXObject.Wrap(u)) <= SnapEx.Helper.Tolerance).Count() > 0;
+                    if (isHas)
+                    {
+                        item.Add(edge.NXOpenTag);
+                        break;
+                    }
+                }
+                if (!isHas)
+                {
+                    var tmpEdges = edges.Where(u => Snap.Compute.Distance(edge, u) <= SnapEx.Helper.Tolerance);
+                    tmpEdges.ToList().ForEach(u => {
+                        edges.Remove(u);
+                        edges.Insert(0, u);
+                    });
+                    innerCircumference.Add(new List<Tag> { edge.NXOpenTag });
+                }
+                edges.Remove(edge);
+            }
+
+            //排序
+            Func<List<Tag>, List<Tag>> func = (t) =>
+            {
+                var result = new List<Tag>();
+                //var tags = t.ToList();
+                //while (tags.Count > 0)
+                //{
+                //    var edge = tags.FirstOrDefault();
+                //    var tmpEdges = tags.Take(1).Where(u => Snap.Compute.Distance(Snap.NX.NXObject.Wrap(edge), Snap.NX.NXObject.Wrap(u)) <= SnapEx.Helper.Tolerance);
+                //    tmpEdges.ToList().ForEach(u => {
+                //        tags.Remove(u);
+                //        tags.Insert(0, u);
+                //    });
+                //    result.Add(edge);
+                //    tags.Remove(edge);
+                //}
+                tagArray.ToList().ForEach(u => {
+                    if (t.Where(m => m == u).Count() > 0)
+                    {
+                        result.Add(u);
+                    }
+                });
+                return result;
+            };
+
+            innerCircumference.ForEach(u => {
+                var result = func(u);
+                u = result;
+            });
+
+            peripheral = innerCircumference.OrderByDescending(u => Snap.Compute.Distance(face.GetCenterPointEx(), Snap.NX.NXObject.Wrap(u[0]))).FirstOrDefault();
+            innerCircumference.Remove(peripheral);
         }
+
 
         /// <summary>
         /// 删除边界
