@@ -36,5 +36,13 @@ namespace AutoCAMUI
         /// 刀刃长度(FL 刀刃长度)
         /// </summary>
         public double TL_FLUTE_LN { get; set; }
+        /// <summary>
+        /// 主轴转速
+        /// </summary>
+        public double Speed = 5000;
+        /// <summary>
+        /// 进给率
+        /// </summary>
+        public double FeedRate = 4000;
     }
 }

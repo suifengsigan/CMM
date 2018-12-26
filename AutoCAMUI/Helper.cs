@@ -532,27 +532,31 @@ namespace AutoCAMUI
         }
 
         [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_ask_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _AskFeedRate(Tag param_tag, int param_index, out int value);
+        internal static extern int _AskFeedRate(Tag param_tag, int param_index, out double value);
 
         [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_set_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _SetFeedRate(Tag param_tag, int param_index, int value);
+        internal static extern int _SetFeedRate(Tag param_tag, int param_index, double value);
 
         /// <summary>
         /// 获取进给率
         /// </summary>
-        public static int AskFeedRate(NXOpen.Tag operTag, int param_index)
+        public static double AskFeedRate(NXOpen.Tag operTag, int param_index)
         {
-            int result;
-            _AskFeedRate(operTag, param_index, out result);
+            double result;
+            NXOpen.Utilities.JAM.StartUFCall();
+            int errorCode = _AskFeedRate(operTag, param_index, out result);
+            NXOpen.Utilities.JAM.EndUFCall();
             return result;
         }
 
         /// <summary>
         /// 设置进给率
         /// </summary>
-        public static void SetFeedRate(NXOpen.Tag operTag, int param_index, int value)
+        public static void SetFeedRate(NXOpen.Tag operTag, int param_index, double value)
         {
-            _SetFeedRate(operTag, param_index, value);
+            NXOpen.Utilities.JAM.StartUFCall();
+            int errorCode = _SetFeedRate(operTag, param_index, value);
+            NXOpen.Utilities.JAM.EndUFCall();
         }
 
 

@@ -62,6 +62,9 @@ namespace AutoCAMUI
 
             //设置名称
             ufSession.Obj.SetName(operTag, string.Format("{0}_{1}", AUTOCAM_SUBTYPE, index + 1));
+
+            //设置进给率和速度
+            _SetFeedRate(CAMCutter.FeedRate, CAMCutter.Speed);
         }
 
         /// <summary>
@@ -103,12 +106,12 @@ namespace AutoCAMUI
         /// </summary>
         /// <param name="feedRate">进给率</param>
         /// <param name="speedValue">主轴转速</param>
-        protected void _SetFeedRate(int feedRate,double speedValue)
+        protected void _SetFeedRate(double feedRate,double speedValue)
         {
             Helper.SetFeedRate(OperTag, NXOpen.UF.UFConstants.UF_PARAM_FEED_ENGAGE, feedRate);
             Helper.SetSpeedValue(OperTag, speedValue);
-            //Helper.SetSpeedValue(OperTag, speedValue, NXOpen.UF.UFConstants.UF_PARAM_SURFACE_SPEED);
-            //Helper.SetSpeedValue(OperTag, speedValue, NXOpen.UF.UFConstants.UF_PARAM_FEED_PER_TOOTH);
+            Helper.SetSpeedValue(OperTag, 0, NXOpen.UF.UFConstants.UF_PARAM_SURFACE_SPEED);
+            Helper.SetSpeedValue(OperTag, 0, NXOpen.UF.UFConstants.UF_PARAM_FEED_PER_TOOTH);
         }
 
         /// <summary>
