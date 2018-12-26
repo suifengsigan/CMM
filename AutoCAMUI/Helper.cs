@@ -828,14 +828,16 @@ namespace AutoCAMUI
                 //{
                 //    var edge = tags.FirstOrDefault();
                 //    var tmpEdges = tags.Take(1).Where(u => Snap.Compute.Distance(Snap.NX.NXObject.Wrap(edge), Snap.NX.NXObject.Wrap(u)) <= SnapEx.Helper.Tolerance);
-                //    tmpEdges.ToList().ForEach(u => {
+                //    tmpEdges.ToList().ForEach(u =>
+                //    {
                 //        tags.Remove(u);
                 //        tags.Insert(0, u);
                 //    });
                 //    result.Add(edge);
                 //    tags.Remove(edge);
                 //}
-                tagArray.ToList().ForEach(u => {
+                tagArray.ToList().ForEach(u =>
+                {
                     if (t.Where(m => m == u).Count() > 0)
                     {
                         result.Add(u);
@@ -844,10 +846,11 @@ namespace AutoCAMUI
                 return result;
             };
 
-            innerCircumference.ForEach(u => {
-                var result = func(u);
-                u = result;
-            });
+            for (int i = 0; i < innerCircumference.Count; i++)
+            {
+                var result = func(innerCircumference[i]);
+                innerCircumference[i] = result;
+            }
 
             peripheral = innerCircumference.OrderByDescending(u => Snap.Compute.Distance(face.GetCenterPointEx(), Snap.NX.NXObject.Wrap(u[0]))).FirstOrDefault();
             innerCircumference.Remove(peripheral);

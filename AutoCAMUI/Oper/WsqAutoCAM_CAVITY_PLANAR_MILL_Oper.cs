@@ -30,11 +30,11 @@ namespace AutoCAMUI
         /// </summary>
         public void SetBoundaryAndCutFloor(ElecManage.Electrode electrode)
         {
-            var baseFaceTag = electrode.BaseFace.NXOpenTag;
-            NXOpen.Tag[] tagArray;
-            ufSession.Modl.AskFaceEdges(baseFaceTag, out tagArray);
+            List<NXOpen.Tag> peripheral;
+            List<List<NXOpen.Tag>> innerCircumference;
+            Helper.GetOutlineCurve(electrode.BaseFace, out peripheral, out innerCircumference);
             Helper.SetBoundaryByCurves(
-                tagArray.ToList()
+                peripheral.ToList()
                 , NXOpen.UF.CamGeomType.CamPart, OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             Helper.SetCutFloor(OperTag, electrode.TopFace.GetCenterPointEx());
         }
