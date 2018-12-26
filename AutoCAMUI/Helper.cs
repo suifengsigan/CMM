@@ -781,6 +781,65 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 获取轮廓线
+        /// </summary>
+        public static void GetOutlineCurve(
+            Snap.NX.Face face
+            //, out List<NXOpen.Tag> peripheral
+            //, out List<List<NXOpen.Tag>> innerCircumference
+            )
+        {
+            Tag[] tagArray;
+            ufSession.Modl.AskFaceEdges(face.NXOpenTag, out tagArray);
+        }
+
+        /// <summary>
+        /// 删除边界
+        /// </summary>
+        public static void DeleteBoundaries(NXOpen.Tag operTag, NXOpen.UF.CamGeomType camGeomType)
+        {
+            ufSession.Cambnd.DeleteBoundaries(operTag, camGeomType);
+        }
+
+        /// <summary>
+        /// 修剪边界
+        /// </summary>
+        public static void SetBoundaryByCurves(List<NXOpen.Tag> curves,NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, NXOpen.UF.CamMaterialSide materialSide)
+        {
+            var boundary_data = new NXOpen.UF.UFCambnd.BoundaryData();
+            boundary_data.boundary_type = NXOpen.UF.CamBoundaryType.CamBoundaryTypeClosed;
+            boundary_data.plane_type = 1;
+            boundary_data.origin = new double[] { 0, 0, 0 };
+            boundary_data.matrix = new double[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            boundary_data.material_side = materialSide;
+            boundary_data.ignore_holes = 0;
+            boundary_data.ignore_islands = 0;
+            boundary_data.ignore_chamfers = 0;
+            boundary_data.app_data = null;
+
+            var appDatas = new List<NXOpen.UF.UFCambnd.AppData>();
+            curves.ForEach(u => {
+                var app_data_list = new NXOpen.UF.UFCambnd.AppData();
+                /* Set flags. */
+                app_data_list.has_stock = 1;
+                app_data_list.has_tolerances = 0;
+                app_data_list.has_feedrate = 0;
+                app_data_list.has_blank_distance = 0;
+                app_data_list.has_tool_position = 0;
+
+                /* Set values. */
+                app_data_list.stock = 0.1;
+                app_data_list.tolerances = new double[] { 0.1, 0.1 };
+                app_data_list.feedrate_unit = NXOpen.UF.CamFeedrateUnit.CamFeedrateUnitPerMinute;
+                app_data_list.feedrate_value = 0.1;
+                app_data_list.blank_distance = 0.0;
+                app_data_list.tool_position = NXOpen.UF.CamToolPosition.CamToolPositionTanto;
+                appDatas.Add(app_data_list);
+            });
+            ufSession.Cambnd.AppendBndFromCurve(operTag, camGeomType, curves.Count, curves.ToArray(), ref boundary_data, appDatas.ToArray());
+        }
+
+        /// <summary>
         /// 设置面边界
         /// </summary>
         public static void SetBoundaryByFace(NXOpen.Tag faceTag,NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, NXOpen.UF.CamMaterialSide materialSide)
