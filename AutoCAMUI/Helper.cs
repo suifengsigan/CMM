@@ -632,6 +632,14 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 设置检查几何体
+        /// </summary>
+        public static void SetCheckGeometry(NXOpen.Tag operTag, NXOpen.Tag faceTag)
+        {
+            ufSession.Param.SetTagValue(operTag, NXOpen.UF.UFConstants.UF_PARAM_STOCK_CHECK, faceTag);
+        }
+
+        /// <summary>
         /// 设置部件余量和底部余量
         /// </summary>
         public static void SetPartStockAndFloorStock(NXOpen.Tag operTag, double sideStock, double floorStock)
