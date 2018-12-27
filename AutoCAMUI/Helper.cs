@@ -235,6 +235,19 @@ namespace AutoCAMUI
             D4_R.FeedRate = 1500;
             cutters.Add(D4_R);
 
+            var D10 = new CAMCutter();
+            D10.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+            D10.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+            D10.CutterName = "D10";
+            D10.TL_DIAMETER = 10;
+            D10.TL_COR1_RAD = 0;
+            D10.TL_HEIGHT = 70;
+            D10.TL_FLUTE_LN = 50;
+            D10.TL_NUMBER = 9;
+            D10.Speed = 5500;
+            D10.FeedRate = 3000;
+            cutters.Add(D10);
+
             CreateCutter(cutters, cutterGroupRootTag);
 
 
@@ -267,7 +280,26 @@ namespace AutoCAMUI
                     }
             }
 
-           
+            //基准平面
+            var FACE_MILLING_BASE_0 = new WsqAutoCAM_FACE_MILLING_BASE_Oper();
+            FACE_MILLING_BASE_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
+            FACE_MILLING_BASE_0.SetCutDepth(0.3);
+            FACE_MILLING_BASE_0.SetBoundary(ele);
+            camOpers.Add(FACE_MILLING_BASE_0);
+
+            //平面
+            var FACE_MILLING_0 = new WsqAutoCAM_FACE_MILLING_Oper();
+            FACE_MILLING_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
+            FACE_MILLING_0.SetCutDepth(0.1);
+            FACE_MILLING_0.SetBoundary(horizontalFaces);
+            camOpers.Add(FACE_MILLING_0);
+
+            //基准侧面
+            var PLANAR_MILL_BASE_0 = new WsqAutoCAM_PLANAR_MILL_BASE_Oper();
+            PLANAR_MILL_BASE_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
+            PLANAR_MILL_BASE_0.SetCutDepth(20);
+            PLANAR_MILL_BASE_0.SetBoundaryAndCutFloor(ele);
+            camOpers.Add(PLANAR_MILL_BASE_0);
 
             #region old
 

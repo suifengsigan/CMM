@@ -87,9 +87,9 @@ namespace AutoCAMUI
         /// 设置切深/步距
         /// </summary>
         /// <param name="depth"></param>
-        public virtual void SetCutDepth(double depth)
+        public virtual void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)
         {
-            _SetCutDepth(depth);
+            _SetCutDepth(depth, param_index);
         }
 
         /// <summary>
@@ -122,9 +122,23 @@ namespace AutoCAMUI
             Helper.SetCutLevels(OperTag, faceTag, (int)levelsPosition);
         }
 
+        /// <summary>
+        /// 设置参考刀具
+        /// </summary>
+        /// <param name="cutter"></param>
         protected virtual void _SetReferenceCutter(CAMCutter cutter)
         {
             Helper.SetReferenceCutter(OperTag, cutter.CutterTag);
+        }
+
+        /// <summary>
+        /// 设置部件余量及底部余量
+        /// </summary>
+        /// <param name="sideStock">部件余量</param>
+        /// <param name="floorStock">底部余量</param>
+        protected virtual void _SetPartStockAndFloorStock(double sideStock, double floorStock)
+        {
+            Helper.SetPartStockAndFloorStock(OperTag, sideStock, floorStock);
         }
     }
 }
