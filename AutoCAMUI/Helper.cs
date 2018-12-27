@@ -568,9 +568,14 @@ namespace AutoCAMUI
         /// </summary>
         public static void SetFeedRate(NXOpen.Tag operTag, int param_index, double value)
         {
-            NXOpen.Utilities.JAM.StartUFCall();
-            int errorCode = _SetFeedRate(operTag, param_index, value);
-            NXOpen.Utilities.JAM.EndUFCall();
+            //NXOpen.Utilities.JAM.StartUFCall();
+            //int errorCode = _SetFeedRate(operTag, param_index, value);
+            //NXOpen.Utilities.JAM.EndUFCall();
+            var oper = NXOpen.Utilities.NXObjectManager.Get(operTag) as NXOpen.CAM.Operation;
+            var feedsBuilder1 = NXOpen.Session.GetSession().Parts.Work.CAMSetup.CreateFeedsBuilder(new NXOpen.CAM.CAMObject[] { oper });
+            feedsBuilder1.FeedsBuilder.FeedCutBuilder.Value = value;
+            feedsBuilder1.Commit();
+            feedsBuilder1.Destroy();
         }
 
 
