@@ -84,6 +84,11 @@
     <Compile Include="Oper\WsqAutoCAM_FACE_MILLING_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_PLANAR_MILL_BASE_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_PLANAR_MILL_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_CONTOUR_AREA_NON_STEEP_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_FACE_MILLING_CORNER_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_FLOWCUT_REF_TOOL_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_ZLEVEL_CORNER_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

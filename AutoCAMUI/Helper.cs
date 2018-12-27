@@ -301,6 +301,13 @@ namespace AutoCAMUI
             PLANAR_MILL_BASE_0.SetBoundaryAndCutFloor(ele);
             camOpers.Add(PLANAR_MILL_BASE_0);
 
+            //直身位
+            var PLANAR_MILL_0 = new WsqAutoCAM_PLANAR_MILL_Oper();
+            PLANAR_MILL_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
+            PLANAR_MILL_0.SetCutDepth(20);
+            PLANAR_MILL_0.SetBoundaryAndCutFloor(ele);
+            camOpers.Add(PLANAR_MILL_0);
+
             #region old
 
             ////基准平面
