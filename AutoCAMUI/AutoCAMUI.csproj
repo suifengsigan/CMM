@@ -89,6 +89,8 @@
     <Compile Include="Oper\WsqAutoCAM_FLOWCUT_REF_TOOL_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_ZLEVEL_CORNER_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_CONTOUR_AREA_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_CONTOUR_TEXT_Oper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
