@@ -257,6 +257,7 @@ namespace AutoCAMUI
             CAM_CAVITY_MILL_C_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10_R);
             CAM_CAVITY_MILL_C_0.SetCutDepth(0.3);
             CAM_CAVITY_MILL_C_0.SetCutLevels(ele.BaseFace.NXOpenTag);
+            CAM_CAVITY_MILL_C_0.SetRegionStartPoints(ele);
             camOpers.Add(CAM_CAVITY_MILL_C_0);
 
             //基准台开粗（2d开粗基准）
@@ -561,6 +562,20 @@ namespace AutoCAMUI
             int errorCode = _AskFeedRate(operTag, param_index, out result);
             NXOpen.Utilities.JAM.EndUFCall();
             return result;
+        }
+
+        /// <summary>
+        /// 设置非切削移动区域起点
+        /// </summary>
+        public static void SetRegionStartPoints(NXOpen.Tag operTag, Snap.Position pos)
+        {
+            var oper = NXOpen.Utilities.NXObjectManager.Get(operTag) as NXOpen.CAM.Operation;
+            var workPart = NXOpen.Session.GetSession().Parts.Work;
+            var cavityMillingBuilder1 = workPart.CAMSetup.CAMOperationCollection.CreatePlanarMillingBuilder(oper);
+            var point = workPart.Points.CreatePoint(pos);
+            cavityMillingBuilder1.NonCuttingBuilder.SetRegionStartPoints(new Point[] { point });
+            cavityMillingBuilder1.Commit();
+            cavityMillingBuilder1.Destroy();
         }
 
         /// <summary>
