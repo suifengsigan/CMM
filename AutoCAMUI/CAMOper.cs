@@ -48,7 +48,7 @@ namespace AutoCAMUI
             for (int i = 0; i < count; i++)
             {
                 ufSession.Obj.AskName(list[i], out name);
-                if (name.Contains(AUTOCAM_SUBTYPE))
+                if (name.Contains(AUTOCAM_SUBTYPE)&& operTag!=list[i])
                 {
                     var strIndex = name.Split('_').LastOrDefault();
                     var tempInt = -1;
