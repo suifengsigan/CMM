@@ -37,6 +37,10 @@ namespace AutoCAMUI
         /// </summary>
         public double TL_FLUTE_LN { get; set; }
         /// <summary>
+        /// 刀具号码
+        /// </summary>
+        public int TL_NUMBER { get; set; }
+        /// <summary>
         /// 主轴转速
         /// </summary>
         public double Speed = 5000;

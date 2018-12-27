@@ -121,5 +121,10 @@ namespace AutoCAMUI
         {
             Helper.SetCutLevels(OperTag, faceTag, (int)levelsPosition);
         }
+
+        protected virtual void _SetReferenceCutter(CAMCutter cutter)
+        {
+            Helper.SetReferenceCutter(OperTag, cutter.CutterTag);
+        }
     }
 }
