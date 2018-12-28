@@ -15,5 +15,14 @@ namespace AutoCAMUI
             AUTOCAM_TYPE = "WsqAutoCAM";
             AUTOCAM_SUBTYPE = "ZLEVEL_PROFILE_STEEP";
         }
+
+        /// <summary>
+        /// 设置加工区域
+        /// </summary>
+        /// <param name="ele">电极</param>
+        public void SetMillArea(ElecManage.Electrode ele)
+        {
+            Helper.SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, OperTag, Enumerable.Select(ele.ElecHeadFaces, u => u.NXOpenTag).ToList());
+        }
     }
 }

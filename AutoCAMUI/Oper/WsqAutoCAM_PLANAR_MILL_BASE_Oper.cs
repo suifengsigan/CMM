@@ -31,7 +31,11 @@ namespace AutoCAMUI
         /// <param name="ele">电极</param>
         public void SetBoundaryAndCutFloor(ElecManage.Electrode ele)
         {
-            Helper.SetBoundary(ele.BaseFace.GetCenterPointEx(), ele.BaseFace.NXOpenTag, NXOpen.UF.CamGeomType.CamPart, OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+            List<NXOpen.Tag> peripheral;
+            List<List<NXOpen.Tag>> innerCircumference;
+            Helper.GetOutlineCurve(ele.BaseFace, out peripheral, out innerCircumference);
+            Helper.SetBoundaryByCurves(peripheral
+               , NXOpen.UF.CamGeomType.CamPart, OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             Helper.SetCutFloor(OperTag, ele.TopFace.GetCenterPointEx());
         }
     }
