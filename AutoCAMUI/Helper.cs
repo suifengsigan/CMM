@@ -537,6 +537,22 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 进给参数设置
+        /// </summary>
+        /// <param name="oper">工序</param>
+        /// <param name="engage"></param>
+        /// <param name="first_cut">第一刀切削</param>
+        /// <param name="traversal">横越</param>
+        /// <param name="retract">退刀</param>
+        public static void SetFeedParam(NXOpen.Tag oper,double engage, double first_cut, double traversal, double retract)
+        {
+            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_ENGAGE, engage);
+            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_FIRST_CUT, first_cut);
+            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_TRAVERSAL, traversal);
+            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_RETRACT, retract);
+        }
+
+        /// <summary>
         /// 设置非切削移动区域起点
         /// </summary>
         public static void SetRegionStartPoints(NXOpen.Tag operTag, Snap.Position pos)
@@ -549,15 +565,19 @@ namespace AutoCAMUI
             cavityMillingBuilder1.Commit();
             cavityMillingBuilder1.Destroy();
         }
+        
+        public static void SetCutterFeed(NXOpen.Tag operTag, int param_index, double value)
+        {
+            NXOpen.Utilities.JAM.StartUFCall();
+            int errorCode = _SetFeedRate(operTag, param_index, value);
+            NXOpen.Utilities.JAM.EndUFCall();
+        }
 
         /// <summary>
         /// 设置进给率
         /// </summary>
-        public static void SetFeedRate(NXOpen.Tag operTag, int param_index, double value)
+        public static void SetFeedRate(NXOpen.Tag operTag, double value)
         {
-            //NXOpen.Utilities.JAM.StartUFCall();
-            //int errorCode = _SetFeedRate(operTag, param_index, value);
-            //NXOpen.Utilities.JAM.EndUFCall();
             var oper = NXOpen.Utilities.NXObjectManager.Get(operTag) as NXOpen.CAM.Operation;
             var feedsBuilder1 = NXOpen.Session.GetSession().Parts.Work.CAMSetup.CreateFeedsBuilder(new NXOpen.CAM.CAMObject[] { oper });
             feedsBuilder1.FeedsBuilder.FeedCutBuilder.Value = value;

@@ -108,7 +108,7 @@ namespace AutoCAMUI
         /// <param name="speedValue">主轴转速</param>
         protected void _SetFeedRate(double feedRate,double speedValue)
         {
-            Helper.SetFeedRate(OperTag, NXOpen.UF.UFConstants.UF_PARAM_FEED_ENGAGE, feedRate);
+            Helper.SetFeedRate(OperTag, feedRate);
             Helper.SetSpeedValue(OperTag, speedValue);
             Helper.SetSpeedValue(OperTag, 0, NXOpen.UF.UFConstants.UF_PARAM_SURFACE_SPEED);
             Helper.SetSpeedValue(OperTag, 0, NXOpen.UF.UFConstants.UF_PARAM_FEED_PER_TOOTH);
