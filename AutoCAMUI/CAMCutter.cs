@@ -41,6 +41,10 @@ namespace AutoCAMUI
         /// </summary>
         public int TL_NUMBER { get; set; }
         /// <summary>
+        /// 横越(移刀)
+        /// </summary>
+        public double FEED_TRAVERSAL = 9990;
+        /// <summary>
         /// 主轴转速
         /// </summary>
         public double Speed = 5000;
