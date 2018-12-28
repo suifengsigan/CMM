@@ -518,22 +518,48 @@ namespace AutoCAMUI
             });
         }
 
+        public enum EACT_FeedUnit
+        {
+            FeedNone,
+            FeedPerMinute,
+            FeedPerRevolution
+        }
+
+        public struct EACT_Feedrate
+        {
+            public EACT_FeedUnit unit;
+            public double value;
+            public short color;
+        }
+
         [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_ask_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _AskFeedRate(Tag param_tag, int param_index, out double value);
+        internal static extern int _AskFeedRate(Tag param_tag, int param_index, out EACT_Feedrate value);
 
         [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_set_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _SetFeedRate(Tag param_tag, int param_index, double value);
+        internal static extern int _SetFeedRate(Tag param_tag, int param_index, EACT_Feedrate value);
 
         /// <summary>
         /// 获取进给率
         /// </summary>
-        public static double AskFeedRate(NXOpen.Tag operTag, int param_index)
+        public static EACT_Feedrate AskFeedRate(NXOpen.Tag operTag, int param_index)
         {
-            double result;
+            EACT_Feedrate result;
             NXOpen.Utilities.JAM.StartUFCall();
             int errorCode = _AskFeedRate(operTag, param_index, out result);
             NXOpen.Utilities.JAM.EndUFCall();
             return result;
+        }
+
+        /// <summary>
+        /// 设置进给参数
+        /// </summary>
+        public static void SetCutterFeed(NXOpen.Tag operTag, int param_index, double value)
+        {
+            var feedRate = AskFeedRate(operTag, param_index);
+            NXOpen.Utilities.JAM.StartUFCall();
+            feedRate.value = value;
+            int errorCode = _SetFeedRate(operTag, param_index, feedRate);
+            NXOpen.Utilities.JAM.EndUFCall();
         }
 
         /// <summary>
@@ -564,13 +590,6 @@ namespace AutoCAMUI
             cavityMillingBuilder1.NonCuttingBuilder.SetRegionStartPoints(new Point[] { point });
             cavityMillingBuilder1.Commit();
             cavityMillingBuilder1.Destroy();
-        }
-        
-        public static void SetCutterFeed(NXOpen.Tag operTag, int param_index, double value)
-        {
-            NXOpen.Utilities.JAM.StartUFCall();
-            int errorCode = _SetFeedRate(operTag, param_index, value);
-            NXOpen.Utilities.JAM.EndUFCall();
         }
 
         /// <summary>
