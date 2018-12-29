@@ -317,6 +317,13 @@ namespace AutoCAMUI
 
 
             var camOpers = new List<AutoCAMUI.CAMOper>();
+            //杀顶
+            var FACE_MILLING_TOP_0 = new WsqAutoCAM_FACE_MILLING_TOP_Oper();
+            FACE_MILLING_TOP_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10_R);
+            FACE_MILLING_TOP_0.SetCutDepth(0.3);
+            FACE_MILLING_TOP_0.SetBoundary(ele);
+            camOpers.Add(FACE_MILLING_TOP_0);
+
             //电极头部开粗（开粗）
             var CAM_CAVITY_MILL_C_0 = new WsqAutoCAM_CAVITY_MILL_C_Oper();
             CAM_CAVITY_MILL_C_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10_R);
@@ -576,6 +583,40 @@ namespace AutoCAMUI
             SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_FIRST_CUT, first_cut);
             SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_TRAVERSAL, traversal);
             SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_RETRACT, retract);
+        }
+
+        /// <summary>
+        /// 创建智能曲线
+        /// </summary>
+        public static NXOpen.Tag Create_SO_Curve(Snap.Position pos,Snap.Position pos1)
+        {
+            NXOpen.Tag result;
+            var workPart = NXOpen.Session.GetSession().Parts.Work;
+            var pointLst = new List<NXOpen.Tag>();
+            pointLst.Add(Create_SO_Point(pos));
+            pointLst.Add(Create_SO_Point(pos1));
+            ufSession.So.CreateLineTwoPoints(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling,pointLst.ToArray(),out result);
+            ufSession.So.SetVisibilityOption(result, NXOpen.UF.UFSo.VisibilityOption.Visible);
+            return result;
+        }
+
+        /// <summary>
+        /// 创建智能点
+        /// </summary>
+        public static NXOpen.Tag Create_SO_Point(Snap.Position pos)
+        {
+            NXOpen.Tag result;
+            var scalarDoubleLst = new List<NXOpen.Tag>();
+            NXOpen.Tag scalarDouble;
+            var workPart = NXOpen.Session.GetSession().Parts.Work;
+            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, pos.X, out scalarDouble);
+            scalarDoubleLst.Add(scalarDouble);
+            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, pos.Y, out scalarDouble);
+            scalarDoubleLst.Add(scalarDouble);
+            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, pos.Z, out scalarDouble);
+            scalarDoubleLst.Add(scalarDouble);
+            ufSession.So.CreatePoint3Scalars(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, scalarDoubleLst.ToArray(), out result);
+            return result;
         }
 
         /// <summary>
