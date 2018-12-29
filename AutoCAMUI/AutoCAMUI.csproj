@@ -71,7 +71,7 @@
     <Compile Include="CAMConfig.cs" />
     <Compile Include="CAMCutter.cs" />
     <Compile Include="CAMFace.cs" />
-    <Compile Include="CAMOper.cs" />
+    <Compile Include="Oper\CAMOper.cs" />
     <Compile Include="EleAutoCamUI.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="UIBusiness.cs" />
@@ -91,6 +91,8 @@
     <Compile Include="Oper\WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_CONTOUR_AREA_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_CONTOUR_TEXT_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_FACE_MILLING_TOP_Oper.cs" />
+    <Compile Include="Oper\WsqAutoCAM_Oper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
