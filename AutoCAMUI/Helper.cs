@@ -595,8 +595,8 @@ namespace AutoCAMUI
             var pointLst = new List<NXOpen.Tag>();
             pointLst.Add(Create_SO_Point(pos));
             pointLst.Add(Create_SO_Point(pos1));
-            ufSession.So.CreateLineTwoPoints(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling,pointLst.ToArray(),out result);
-            ufSession.So.SetVisibilityOption(result, NXOpen.UF.UFSo.VisibilityOption.Visible);
+            ufSession.So.CreateLineTwoPoints(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateAfterModeling,pointLst.ToArray(),out result);
+            ufSession.So.SetVisibilityOption(result, NXOpen.UF.UFSo.VisibilityOption.Invisible);
             return result;
         }
 
@@ -609,13 +609,13 @@ namespace AutoCAMUI
             var scalarDoubleLst = new List<NXOpen.Tag>();
             NXOpen.Tag scalarDouble;
             var workPart = NXOpen.Session.GetSession().Parts.Work;
-            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, pos.X, out scalarDouble);
+            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateAfterModeling, pos.X, out scalarDouble);
             scalarDoubleLst.Add(scalarDouble);
-            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, pos.Y, out scalarDouble);
+            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateAfterModeling, pos.Y, out scalarDouble);
             scalarDoubleLst.Add(scalarDouble);
-            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, pos.Z, out scalarDouble);
+            ufSession.So.CreateScalarDouble(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateAfterModeling, pos.Z, out scalarDouble);
             scalarDoubleLst.Add(scalarDouble);
-            ufSession.So.CreatePoint3Scalars(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateWithinModeling, scalarDoubleLst.ToArray(), out result);
+            ufSession.So.CreatePoint3Scalars(workPart.Tag, NXOpen.UF.UFSo.UpdateOption.UpdateAfterModeling, scalarDoubleLst.ToArray(), out result);
             return result;
         }
 

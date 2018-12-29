@@ -25,7 +25,6 @@ namespace AutoCAMUI
         /// </summary>
         public void SetBoundary(ElecManage.Electrode electrode)
         {
-            return;
             List<NXOpen.Tag> peripheral = new List<NXOpen.Tag>();
             var box3d = electrode.ElecBody.Box;
             var p1 = new Snap.Position(box3d.MinX, box3d.MaxY, box3d.MaxZ);
@@ -39,7 +38,7 @@ namespace AutoCAMUI
             peripheral.Add(Helper.Create_SO_Curve(p4, p1));
             Helper.SetBoundaryByCurves(
                 peripheral.ToList()
-                , NXOpen.UF.CamGeomType.CamTrim, OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
+                , NXOpen.UF.CamGeomType.CamBlank, OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
         }
     }
 }
