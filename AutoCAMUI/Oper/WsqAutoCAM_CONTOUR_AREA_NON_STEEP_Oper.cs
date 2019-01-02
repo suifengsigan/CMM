@@ -27,7 +27,7 @@ namespace AutoCAMUI
         /// <param name="ele">电极</param>
         public void SetMillArea(ElecManage.Electrode ele)
         {
-            Helper.SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, OperTag, Enumerable.Select(ele.ElecHeadFaces, u => u.NXOpenTag).ToList());
+            Helper.SetCamgeom(NXOpen.UF.CamGeomType.CamCutArea, OperTag, Enumerable.Select(ele.ElecHeadFaces, u => u.NXOpenTag).ToList());
         }
     }
 }

@@ -201,7 +201,7 @@ namespace AutoCAMUI
             ufSession.Ncgroup.AcceptMember(orderGroupRootTag, programGroupTag);
 
             //TODO 添加Body作为工作几何体
-            SetMillArea(NXOpen.UF.CamGeomType.CamPart, workGeometryGroupTag, new List<NXOpen.Tag> { body.NXOpenTag });
+            SetCamgeom(NXOpen.UF.CamGeomType.CamPart, workGeometryGroupTag, new List<NXOpen.Tag> { body.NXOpenTag });
 
             //TODO 设置毛坯为自动块
             ufSession.Cam.SetAutoBlank(workGeometryGroupTag, NXOpen.UF.UFCam.BlankGeomType.AutoBlockType, autoBlankOffset);
@@ -774,9 +774,9 @@ namespace AutoCAMUI
         }
         
         /// <summary>
-        /// 设置区域
+        /// 设置几何体
         /// </summary>
-        public static void SetMillArea(NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, List<NXOpen.Tag> cutAreaGeometryTags)
+        public static void SetCamgeom(NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, List<NXOpen.Tag> cutAreaGeometryTags)
         {
             var appDatas = new List<NXOpen.UF.UFCamgeom.AppData>();
             cutAreaGeometryTags.ForEach(u =>

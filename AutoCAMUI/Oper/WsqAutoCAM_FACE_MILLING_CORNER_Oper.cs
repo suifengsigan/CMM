@@ -26,7 +26,7 @@ namespace AutoCAMUI
         /// </summary>
         public void SetMillArea(List<NXOpen.Tag> faces)
         {
-            Helper.SetMillArea(NXOpen.UF.CamGeomType.CamCutArea, OperTag, faces);
+            Helper.SetCamgeom(NXOpen.UF.CamGeomType.CamCutArea, OperTag, faces);
         }
     }
 }
