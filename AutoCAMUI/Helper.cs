@@ -586,6 +586,14 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 指定文本几何体
+        /// </summary>
+        public static void SetCamText(NXOpen.Tag oper, List<Tag> tags)
+        {
+            ufSession.Camtext.AppendItems(oper, tags.Count, tags.ToArray());
+        }
+
+        /// <summary>
         /// 创建智能曲线
         /// </summary>
         public static NXOpen.Tag Create_SO_Curve(Snap.Position pos,Snap.Position pos1)
