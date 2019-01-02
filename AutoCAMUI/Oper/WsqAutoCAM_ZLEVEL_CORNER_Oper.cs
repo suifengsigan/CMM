@@ -23,6 +23,10 @@ namespace AutoCAMUI
         public void SetMillArea(ElecManage.Electrode ele)
         {
             Helper.SetCamgeom(NXOpen.UF.CamGeomType.CamCutArea, OperTag, Enumerable.Select(ele.ElecHeadFaces, u => u.NXOpenTag).ToList());
+            //指定检查体
+            Helper.SetCamgeom(NXOpen.UF.CamGeomType.CamCheck, OperTag, Enumerable.Select(
+                new List<Snap.NX.Face> { ele.BaseFace },
+                u => u.NXOpenTag).ToList());
         }
     }
 }

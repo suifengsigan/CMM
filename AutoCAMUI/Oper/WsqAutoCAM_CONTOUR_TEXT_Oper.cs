@@ -21,7 +21,12 @@ namespace AutoCAMUI
         /// </summary>
         public void SetText(string text,ElecManage.Electrode ele)
         {
-
+            ele.GetChamferFace();
+            if (ele.ChamferFace != null)
+            {
+                var textNxObject = Snap.NX.NXObject.Wrap(SnapEx.Create.CreateNode(text, ele.GetElecBasePos()));
+                Helper.SetCamText(OperTag, new List<NXOpen.Tag> { textNxObject.NXOpenTag });
+            }
         }
     }
 }
