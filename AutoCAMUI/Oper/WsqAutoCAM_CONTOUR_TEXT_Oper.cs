@@ -15,5 +15,13 @@ namespace AutoCAMUI
             AUTOCAM_TYPE = "WsqAutoCAM";
             AUTOCAM_SUBTYPE = "CONTOUR_TEXT";
         }
+
+        /// <summary>
+        /// 设置刻字内容
+        /// </summary>
+        public void SetText(string text,ElecManage.Electrode ele)
+        {
+
+        }
     }
 }
