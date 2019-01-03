@@ -555,7 +555,7 @@ namespace AutoCAMUI
             path = System.IO.Path.Combine(path, "EACTCNCFILE");
             if (System.IO.Directory.Exists(path))
             {
-                System.IO.Directory.Delete(path);
+                System.IO.Directory.Delete(path,true);
             }
 
             System.IO.Directory.CreateDirectory(path);
