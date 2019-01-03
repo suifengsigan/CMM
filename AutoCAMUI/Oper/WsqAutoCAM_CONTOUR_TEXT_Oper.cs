@@ -58,6 +58,13 @@ namespace AutoCAMUI
                 trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateTranslation(textCenterPoint - Snap.Position.Origin));
                 var textNxObject = Snap.NX.NXObject.Wrap(SnapEx.Create.CreateNode(text, Snap.Position.Origin));
                 textNxObject.Move(trans);
+                var eData = new EdmDraw.DraftingEnvironmentData();
+                var mpi = eData.mpi;
+                var mpr = eData.mpr;
+                var ufSession = NXOpen.UF.UFSession.GetUFSession();
+                ufSession.Drf.AskObjectPreferences(textNxObject.NXOpenTag, eData.mpi, eData.mpr, out eData.radiusValue, out eData.diameterValue);
+                //设置尺寸
+                ufSession.Drf.SetObjectPreferences(textNxObject.NXOpenTag, eData.mpi, eData.mpr, eData.radiusValue, eData.diameterValue);
                 Helper.SetCamText(OperTag, new List<NXOpen.Tag> { textNxObject.NXOpenTag });
             }
         }
