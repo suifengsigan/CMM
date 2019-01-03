@@ -542,6 +542,53 @@ namespace AutoCAMUI
                 ufSession.Obj.AskName(u.OperTag, out name);
                 Snap.InfoWindow.WriteLine(string.Format("{0}:{1}", name, IsPathGouged(u.OperTag) ? "过切" : "未过切"));
             });
+
+            //获取后处理器列表
+            string[] names;
+            int count;
+            ufSession.Cam.OptAskPostNames(out count, out names);
+            var postName = "铜电极-自动换刀";
+            var extension = "nc";
+
+            var path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Path.Combine(path, "Temp");
+            path = System.IO.Path.Combine(path, "EACTCNCFILE");
+            if (System.IO.Directory.Exists(path))
+            {
+                System.IO.Directory.Delete(path);
+            }
+
+            System.IO.Directory.CreateDirectory(path);
+
+            camOpers.ForEach(u => {
+                string name;
+                ufSession.Obj.AskName(u.OperTag, out name);
+                //TODO 判断是否有无刀路
+                try
+                {
+                    //生成nc程式
+                    ufSession.Setup.GenerateProgram(
+                        Snap.Globals.WorkPart.NXOpenPart.CAMSetup.Tag,
+                       u.OperTag
+                        , postName
+                        , System.IO.Path.Combine(path, string.Format(@"{0}_{1}_{2}.{3}", ele.ElecBody.Name, name, camOpers.IndexOf(u), extension))
+                        , NXOpen.UF.UFSetup.OutputUnits.OutputUnitsOutputDefined
+                        );
+                }
+                catch (Exception ex)
+                {
+                    Snap.InfoWindow.WriteLine(string.Format("{0}:{1}", name, ex.Message));
+                }
+            });
+
+            //生成nc程式
+            ufSession.Setup.GenerateProgram(
+                Snap.Globals.WorkPart.NXOpenPart.CAMSetup.Tag,
+                programGroupTag
+                , postName
+                , System.IO.Path.Combine(path, string.Format(@"{0}.{1}", ele.ElecBody.Name, extension))
+                , NXOpen.UF.UFSetup.OutputUnits.OutputUnitsOutputDefined
+                );
         }
 
         public enum EACT_FeedUnit
