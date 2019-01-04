@@ -52,7 +52,7 @@ namespace AutoCAMUI
                 var textCenterPoint = (edge.StartPoint + edge.EndPoint) / 2;
                 var face = ele.BaseSideFaces.OrderBy(u => Snap.Compute.Distance(textCenterPoint, u)).FirstOrDefault();
                 var yDir = Snap.Vector.Unit(-face.GetFaceDirection());
-                textCenterPoint = textCenterPoint.Copy(Snap.Geom.Transform.CreateTranslation((minDistance / 3) * yDir));
+                textCenterPoint = textCenterPoint.Copy(Snap.Geom.Transform.CreateTranslation((minDistance*2 / 5) * yDir));
                 var textOri = new Snap.Orientation(Snap.Vector.Cross(yDir, Snap.Orientation.Identity.AxisZ), yDir);
                 var trans = Snap.Geom.Transform.CreateRotation(textOri, Snap.Orientation.Identity);
                 trans = Snap.Geom.Transform.Composition(trans, Snap.Geom.Transform.CreateTranslation(textCenterPoint - Snap.Position.Origin));
@@ -64,6 +64,21 @@ namespace AutoCAMUI
                 var ufSession = NXOpen.UF.UFSession.GetUFSession();
                 ufSession.Drf.AskObjectPreferences(textNxObject.NXOpenTag, eData.mpi, eData.mpr, out eData.radiusValue, out eData.diameterValue);
                 //设置尺寸
+                var textStyle = new Snap.NX.TextStyle();
+                textStyle.SetFont("chinesef", Snap.NX.TextStyle.FontType.NX);
+                //文字对齐位置 首选项→公共→文字→对齐位置
+                mpi[30] = (int)textStyle.AlignmentPosition;
+                //文字样式 首选项→公共→文字→文本参数→字体(将字体设置为blockfont)
+                mpi[88] = textStyle.FontIndex;
+                //文字样式 首选项→公共→文字→文本参数→设置字宽(粗细)
+                mpi[89] = 0;
+                //字大小
+                mpr[44] = 3.5;
+                //文本长宽比
+                mpr[45] = 0.5;
+                //字体间距
+                mpr[46] = 0.1;
+                textStyle.AlignmentPosition = Snap.NX.TextStyle.AlignmentPositions.MidCenter;
                 ufSession.Drf.SetObjectPreferences(textNxObject.NXOpenTag, eData.mpi, eData.mpr, eData.radiusValue, eData.diameterValue);
                 Helper.SetCamText(OperTag, new List<NXOpen.Tag> { textNxObject.NXOpenTag });
             }
