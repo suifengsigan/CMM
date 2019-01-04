@@ -23,6 +23,10 @@ namespace AutoCAMUI
         public NXOpen.Tag ProgramGroup { get; set; }
         public NXOpen.Tag MethodGroupRoot { get; set; }
         public NXOpen.Tag OperTag { get; protected set; }
+        /// <summary>
+        /// 火花位
+        /// </summary>
+        public double FRIENUM { get; set; }
 
         public void CreateOper(NXOpen.Tag WorkGeometryGroup, NXOpen.Tag ProgramGroup, NXOpen.Tag MethodGroupRoot, CAMCutter CAMCutter)
         {
