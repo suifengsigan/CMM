@@ -11,6 +11,14 @@ namespace AutoCAMUI
         {
             new EleAutoCamUI().Show();
         }
+
+        /// <summary>
+        /// 自动编程
+        /// </summary>
+        public static void AutoCam()
+        {
+            AutoCamBusiness.AutoCAM();
+        }
         public static int GetUnloadOption(string arg)
         {
             //return System.Convert.ToInt32(Session.LibraryUnloadOption.Explicitly);
