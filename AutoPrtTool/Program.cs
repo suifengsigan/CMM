@@ -21,6 +21,8 @@ namespace AutoPrtTool
 
         static void Excute()
         {
+            AutoCAMUI.AutoCamBusiness.AutoCAM();
+            return;
             ShowMsg("正在匹配图档...");
             var cmmConfig = CMMTool.CMMConfig.GetInstance();
             var path = CMMTool.CMMConfig.GetInstance().AutoPrtToolDir;

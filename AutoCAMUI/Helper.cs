@@ -624,6 +624,18 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 设置横越(移刀)
+        /// </summary>
+        public static void SetFeedTraversal(NXOpen.Tag operTag, double value)
+        {
+            var oper = NXOpen.Utilities.NXObjectManager.Get(operTag) as NXOpen.CAM.Operation;
+            var feedsBuilder1 = NXOpen.Session.GetSession().Parts.Work.CAMSetup.CreateFeedsBuilder(new NXOpen.CAM.CAMObject[] { oper });
+            feedsBuilder1.FeedsBuilder.FeedTraversalBuilder.Value = value;
+            feedsBuilder1.Commit();
+            feedsBuilder1.Destroy();
+        }
+
+        /// <summary>
         /// 设置进给参数
         /// </summary>
         public static void SetCutterFeed(NXOpen.Tag operTag, int param_index, double value)

@@ -67,6 +67,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoCAMUI\AutoCAMUI.csproj">
+      <Project>{4d71cc89-2a3e-4b0e-aa1b-5b05c6133762}</Project>
+      <Name>AutoCAMUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CMMTool\CMMToolUI.csproj">
       <Project>{b82f3151-d1ef-48e0-999a-dc8a5bb724b4}</Project>
       <Name>CMMToolUI</Name>

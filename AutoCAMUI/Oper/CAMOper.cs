@@ -71,7 +71,7 @@ namespace AutoCAMUI
             _SetFeedRate(CAMCutter.FeedRate, CAMCutter.Speed);
 
             //设置横越(移刀)
-            Helper.SetCutterFeed(OperTag, NXOpen.UF.UFConstants.UF_PARAM_FEED_TRAVERSAL, CAMCutter.FEED_TRAVERSAL);
+            Helper.SetFeedTraversal(OperTag, CAMCutter.FEED_TRAVERSAL);
         }
 
         /// <summary>
