@@ -844,10 +844,14 @@ namespace AutoCAMUI
             var result = new List<CAMCutter>();
             foreach (var item in cutters)
             {
-                NXOpen.Tag cutterTag;
-                ufSession.Cutter.Create(item.AUTOCAM_TYPE, item.AUTOCAM_SUBTYPE, out cutterTag);
-                ufSession.Ncgroup.AcceptMember(cutterGroupRootTag, cutterTag);
-                ufSession.Obj.SetName(cutterTag, item.CutterName);
+                NXOpen.Tag cutterTag = NXOpen.Tag.Null;
+                cutterTag = GetCutter(item.CutterName, cutterGroupRootTag);
+                if (cutterTag == NXOpen.Tag.Null)
+                {
+                    ufSession.Cutter.Create(item.AUTOCAM_TYPE, item.AUTOCAM_SUBTYPE, out cutterTag);
+                    ufSession.Ncgroup.AcceptMember(cutterGroupRootTag, cutterTag);
+                    ufSession.Obj.SetName(cutterTag, item.CutterName);
+                }
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_DIAMETER, item.TL_DIAMETER);
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_COR1_RAD, item.TL_COR1_RAD);
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_HEIGHT, item.TL_HEIGHT);
@@ -1108,7 +1112,7 @@ namespace AutoCAMUI
         /// <summary>
         /// 显示信息窗体
         /// </summary>
-        public static void ShowInfoWindow(string msg, bool isClear = true, int type = 0)
+        public static void ShowInfoWindow(string msg, bool isClear = false, int type = 0)
         {
             if (CSharpProxy.ProxyObject.Instance == null)
             {
