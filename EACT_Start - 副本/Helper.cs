@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,17 +9,6 @@ namespace EACT_Start
 {
     public abstract class Helper
     {
-        public static void UpdateAppSettings(string key,string value)
-        {
-            //获取Configuration对象
-            Configuration config = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings[key].Value = value;
-            //一定要记得保存，写不带参数的config.Save()也可以
-            config.Save(ConfigurationSaveMode.Modified);
-            //刷新，否则程序读取的还是之前的值（可能已装入内存）
-            System.Configuration.ConfigurationManager.RefreshSection("appSettings");
-        }
-
         public static void Send(List<string> args)
         {
             args.Insert(0, System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
