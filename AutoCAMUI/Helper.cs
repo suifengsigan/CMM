@@ -864,6 +864,7 @@ namespace AutoCAMUI
         /// </summary>
         public static void SetCamgeom(NXOpen.UF.CamGeomType camGeomType, NXOpen.Tag operTag, List<NXOpen.Tag> cutAreaGeometryTags)
         {
+            if (cutAreaGeometryTags.Count <= 0) return;
             var appDatas = new List<NXOpen.UF.UFCamgeom.AppData>();
             cutAreaGeometryTags.ForEach(u =>
             {
