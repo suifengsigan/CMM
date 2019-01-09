@@ -34,6 +34,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\PHEact\Application\CommonInterface.dll</HintPath>
     </Reference>
+    <Reference Include="EactConfig, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PHEact\Application\EactConfig.dll</HintPath>
+    </Reference>
     <Reference Include="ElecManage, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\PHEact\Application\ElecManage.dll</HintPath>
@@ -72,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoCamBusiness.cs" />
     <Compile Include="CAMConfig.cs" />
     <Compile Include="CAMCutter.cs" />
     <Compile Include="CAMFace.cs" />
@@ -97,6 +102,16 @@
     <Compile Include="Oper\WsqAutoCAM_CONTOUR_TEXT_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_FACE_MILLING_TOP_Oper.cs" />
     <Compile Include="Oper\WsqAutoCAM_Oper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSharpProxy\CSharpProxy.csproj">
+      <Project>{89348461-450d-4213-9fc4-c12a64e60a96}</Project>
+      <Name>CSharpProxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EactTool\EactTool.csproj">
+      <Project>{0bab8ae1-2397-41c2-8946-7689b3e164c6}</Project>
+      <Name>EactTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1091,6 +1091,18 @@ namespace AutoCAMUI
             boundary_data.app_data = new NXOpen.UF.UFCambnd.AppData[] { };
             ufSession.Cambnd.AppendBndFromFace(operTag, camGeomType, faceTag, ref boundary_data);
         }
+
+        public static void ShowMsg(string msg, int type = 0)
+        {
+            if (CSharpProxy.ProxyObject.Instance == null)
+            {
+                NXOpen.UF.UFSession.GetUFSession().Ui.SetStatus(msg);
+            }
+            else
+            {
+                CSharpProxy.ProxyObject.Instance.ShowMsg(msg, type);
+            }
+        }
     }
 
     public class AUTOCAM_TYPE
