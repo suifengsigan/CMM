@@ -528,19 +528,19 @@ namespace AutoCAMUI
             #endregion
 
 
-            Snap.InfoWindow.Clear();
+            ShowInfoWindow("正在生成路径...", true);
             camOpers.ForEach(u => {
                 var exMsg = PathGenerate(u.OperTag);
                 if (!string.IsNullOrEmpty(exMsg))
                 {
-                    Snap.InfoWindow.WriteLine(exMsg);
+                    ShowInfoWindow(exMsg);
                 }
             });
            
             camOpers.ForEach(u => {
                 string name;
                 ufSession.Obj.AskName(u.OperTag, out name);
-                Snap.InfoWindow.WriteLine(string.Format("{0}:{1}", name, IsPathGouged(u.OperTag) ? "过切" : "未过切"));
+                ShowInfoWindow(string.Format("{0}:{1}", name, IsPathGouged(u.OperTag) ? "过切" : "未过切"));
             });
 
             //获取后处理器列表
@@ -577,7 +577,7 @@ namespace AutoCAMUI
                 }
                 catch (Exception ex)
                 {
-                    Snap.InfoWindow.WriteLine(string.Format("{0}:{1}", name, ex.Message));
+                    ShowInfoWindow(string.Format("{0}:{1}", name, ex.Message));
                 }
             });
 
@@ -1102,6 +1102,28 @@ namespace AutoCAMUI
             boundary_data.ignore_chamfers = 0;
             boundary_data.app_data = new NXOpen.UF.UFCambnd.AppData[] { };
             ufSession.Cambnd.AppendBndFromFace(operTag, camGeomType, faceTag, ref boundary_data);
+        }
+
+        /// <summary>
+        /// 显示信息窗体
+        /// </summary>
+        public static void ShowInfoWindow(string msg, bool isClear = true, int type = 0)
+        {
+            if (CSharpProxy.ProxyObject.Instance == null)
+            {
+                if (isClear)
+                {
+                    Snap.InfoWindow.Clear();
+                }
+                else
+                {
+                    Snap.InfoWindow.WriteLine(msg);
+                }
+            }
+            else
+            {
+                CSharpProxy.ProxyObject.Instance.ShowMsg(msg, type);
+            }
         }
 
         public static void ShowMsg(string msg, int type = 0)
