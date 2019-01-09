@@ -15,7 +15,7 @@ namespace AutoCAMUI
         {
             Helper.ShowMsg("正在匹配图档...");
             var ConfigData = EactConfig.ConfigData.GetInstance();
-            EactTool.FileHelper.InitFileMode(true ? 1 : 0, ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false);
+            EactTool.FileHelper.InitFileMode(true ? 1 : 0, ConfigData.FTP.Address, "", ConfigData.FTP.User, ConfigData.FTP.Pass, false, "/Eact_AutoCNC", @"Temp\Eact_AutoCNC", @"Temp\Eact_AutoCNC_Error");
             var path = string.Empty;
             var fileName = EactTool.FileHelper.FindFile(path);
             if (!string.IsNullOrEmpty(fileName))
