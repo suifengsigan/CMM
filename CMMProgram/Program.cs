@@ -28,6 +28,7 @@ namespace CMMProgram
             System.Environment.SetEnvironmentVariable("Path", path);
             System.Environment.SetEnvironmentVariable("UGII_ROOT_DIR", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_ROOT_DIR"));
             System.Environment.SetEnvironmentVariable("UGII_BASE_DIR", System.Configuration.ConfigurationManager.AppSettings.Get("UGII_BASE_DIR"));
+            System.Environment.SetEnvironmentVariable("UGII_CAM_POST_DIR", System.IO.Path.Combine(Application.StartupPath, @"MACH\resource\postprocessor\"));
             #region 系统只运行一次
             bool bCreatedNew;
             Mutex ltt = new Mutex(false, Path.GetFileNameWithoutExtension(Application.ExecutablePath), out bCreatedNew);
