@@ -39,8 +39,8 @@ namespace EACT_Start
                 return;
             }
             var dirInfo = new System.IO.DirectoryInfo(System.IO.Path.GetDirectoryName(regUGPath));
-            System.Configuration.ConfigurationManager.AppSettings["UGII_BASE_DIR"] = dirInfo.Parent.FullName;
-            System.Configuration.ConfigurationManager.AppSettings["UGII_ROOT_DIR"] = dirInfo.FullName;
+            System.Configuration.ConfigurationManager.AppSettings.Set("UGII_BASE_DIR",dirInfo.Parent.FullName);
+            System.Configuration.ConfigurationManager.AppSettings.Set("UGII_ROOT_DIR",dirInfo.FullName);
         }
 
         private void DispMsg(string strMsg)
