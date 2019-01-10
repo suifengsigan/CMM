@@ -516,6 +516,15 @@ namespace AutoCAMUI
 
         [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_set_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
         internal static extern int _SetFeedRate(Tag param_tag, int param_index, EACT_Feedrate value);
+        [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_CUT_LEVELS_load", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+        internal static extern int _CutterLevel_Load(Tag oper_tag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value);
+        public static int CutterLevel_Load(NXOpen.Tag operTag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value)
+        {
+            NXOpen.Utilities.JAM.StartUFCall();
+            int errorCode = _CutterLevel_Load(operTag, ref value);
+            NXOpen.Utilities.JAM.EndUFCall();
+            return errorCode;
+        }
 
         /// <summary>
         /// 获取进给率
@@ -706,10 +715,10 @@ namespace AutoCAMUI
         public static void SetCutLevels(NXOpen.Tag operTag,NXOpen.Tag faceTag , int levelsPosition = 1)
         {
             double zLevels = Snap.NX.Face.Wrap(faceTag).BoxEx().MaxZ;
-            var cut_levels = new NXOpen.UF.UFCutLevels.CutLevelsStruct();
+            NXOpen.UF.UFCutLevels.CutLevelsStruct cut_levels;
             ufSession.CutLevels.SetRangeType(operTag, NXOpen.UF.ParamClvRangeType.ParamClvRangeUserDefined, out cut_levels);
             var cut_levels_ptr_addr = new NXOpen.UF.UFCutLevels.CutLevelsStruct[] { cut_levels };
-            //ufSession.CutLevels.Load(operTag, out cut_levels_ptr_addr);
+            //CutterLevel_Load(operTag, ref cut_levels_ptr_addr);
             foreach (var item in cut_levels_ptr_addr)
             {
                 int num_levels = item.num_levels;
