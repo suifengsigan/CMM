@@ -375,7 +375,7 @@ namespace AutoCAMUI
 
             //平面
             var FACE_MILLING_0 = new WsqAutoCAM_FACE_MILLING_Oper();
-            FACE_MILLING_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
+            FACE_MILLING_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10, horizontalFaces.Count>0);
             FACE_MILLING_0.SetCutDepth(0.1);
             FACE_MILLING_0.SetBoundary(horizontalFaces);
             camOpers.Add(FACE_MILLING_0);
