@@ -428,8 +428,8 @@ namespace AutoCAMUI
 
                         //平面清角
                         var FACE_MILLING_CORNER_0 = new WsqAutoCAM_FACE_MILLING_CORNER_Oper();
-                        FACE_MILLING_CORNER_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D05);
-                        FACE_MILLING_CORNER_0.SetMillArea(Enumerable.Select(horizontalFaces,u=>u.FaceTag).ToList());
+                        FACE_MILLING_CORNER_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D05, horizontalFaces.Count > 0);
+                        FACE_MILLING_CORNER_0.SetMillArea(Enumerable.Select(horizontalFaces, u => u.FaceTag).ToList());
                         FACE_MILLING_CORNER_0.SetCutDepth(0.06);
                         camOpers.Add(FACE_MILLING_CORNER_0);
 
@@ -527,20 +527,23 @@ namespace AutoCAMUI
 
             #endregion
 
-
             ShowInfoWindow("正在生成路径...", true);
+            camOpers = camOpers.Where(u => u.OperIsValid).ToList();
             camOpers.ForEach(u => {
-                var exMsg = PathGenerate(u.OperTag);
+                var exMsg = u.PathGenerate();
                 if (!string.IsNullOrEmpty(exMsg))
                 {
                     ShowInfoWindow(exMsg);
                 }
             });
-           
+
             camOpers.ForEach(u => {
-                string name;
-                ufSession.Obj.AskName(u.OperTag, out name);
-                ShowInfoWindow(string.Format("{0}:{1}", name, IsPathGouged(u.OperTag) ? "过切" : "未过切"));
+                if (u.OperIsValid)
+                {
+                    string name;
+                    ufSession.Obj.AskName(u.OperTag, out name);
+                    ShowInfoWindow(string.Format("{0}:{1}", name, u.IsPathGouged() ? "过切" : "未过切"));
+                }
             });
 
             //获取后处理器列表
@@ -561,24 +564,7 @@ namespace AutoCAMUI
             System.IO.Directory.CreateDirectory(path);
 
             camOpers.ForEach(u => {
-                string name;
-                ufSession.Obj.AskName(u.OperTag, out name);
-                //TODO 判断是否有无刀路
-                try
-                {
-                    //生成nc程式
-                    ufSession.Setup.GenerateProgram(
-                        Snap.Globals.WorkPart.NXOpenPart.CAMSetup.Tag,
-                       u.OperTag
-                        , postName
-                        , System.IO.Path.Combine(path, string.Format(@"{0}_{1}_{2}.{3}", ele.ElecBody.Name, name, camOpers.IndexOf(u), extension))
-                        , NXOpen.UF.UFSetup.OutputUnits.OutputUnitsOutputDefined
-                        );
-                }
-                catch (Exception ex)
-                {
-                    ShowInfoWindow(string.Format("{0}:{1}", name, ex.Message));
-                }
+                u.GenerateProgram(postName, path, extension);
             });
 
             //生成nc程式

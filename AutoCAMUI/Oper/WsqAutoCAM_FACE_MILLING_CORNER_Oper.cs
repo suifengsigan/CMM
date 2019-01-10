@@ -18,7 +18,10 @@ namespace AutoCAMUI
 
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT)
         {
-            base.SetCutDepth(depth, param_index);
+            if (OperIsValid)
+            {
+                base.SetCutDepth(depth, param_index);
+            }
         }
 
         /// <summary>
@@ -26,7 +29,10 @@ namespace AutoCAMUI
         /// </summary>
         public void SetMillArea(List<NXOpen.Tag> faces)
         {
-            Helper.SetCamgeom(NXOpen.UF.CamGeomType.CamCutArea, OperTag, faces);
+            if (OperIsValid)
+            {
+                Helper.SetCamgeom(NXOpen.UF.CamGeomType.CamCutArea, OperTag, faces);
+            }
         }
     }
 }

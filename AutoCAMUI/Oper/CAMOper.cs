@@ -26,7 +26,22 @@ namespace AutoCAMUI
         /// <summary>
         /// 工序是否可用
         /// </summary>
-        protected bool _operIsValid { get { return OperTag != NXOpen.Tag.Null; } }
+        public virtual bool OperIsValid { get { return OperTag != NXOpen.Tag.Null; } }
+        /// <summary>
+        /// 工序名称
+        /// </summary>
+        protected string _operName {
+            get
+            {
+                if (OperIsValid)
+                {
+                    string name;
+                    ufSession.Obj.AskName(OperTag, out name);
+                    return name;
+                }
+                return string.Empty;
+            }
+        }
         /// <summary>
         /// 火花位
         /// </summary>
@@ -42,13 +57,7 @@ namespace AutoCAMUI
             if (operIsValid)
             {
                 //TODO 创建工序
-                NXOpen.Tag operTag;
-                ufSession.Oper.Create(AUTOCAM_TYPE, AUTOCAM_SUBTYPE, out operTag);
-                ufSession.Ncgroup.AcceptMember(WorkGeometryGroup, operTag);
-                ufSession.Ncgroup.AcceptMember(ProgramGroup, operTag);
-                ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
-                ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
-                OperTag = operTag;
+                var operTag = CreateOper();
 
                 int count;
                 NXOpen.Tag[] list;
@@ -84,7 +93,7 @@ namespace AutoCAMUI
         /// <summary>
         /// 创建工序
         /// </summary>
-        public void CreateOper()
+        NXOpen.Tag CreateOper()
         {
             //TODO 创建工序
             NXOpen.Tag operTag;
@@ -95,6 +104,7 @@ namespace AutoCAMUI
             ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
             ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
             OperTag = operTag;
+            return operTag;
         }
 
         /// <summary>
@@ -104,6 +114,54 @@ namespace AutoCAMUI
         public virtual void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)
         {
             _SetCutDepth(depth, param_index);
+        }
+
+        /// <summary>
+        /// 生成路径
+        /// </summary>
+        public virtual string PathGenerate()
+        {
+            if (OperIsValid)
+            {
+                return Helper.PathGenerate(OperTag);
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// 是否过切
+        /// </summary>
+        public virtual bool IsPathGouged()
+        {
+            if (OperIsValid)
+            {
+                return Helper.IsPathGouged(OperTag);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 生成程序
+        /// </summary>
+        public virtual void GenerateProgram(string postName,string path,string extension)
+        {
+            var name = _operName;
+            //TODO 判断是否有无刀路
+            try
+            {
+                //生成nc程式
+                ufSession.Setup.GenerateProgram(
+                    Snap.Globals.WorkPart.NXOpenPart.CAMSetup.Tag,
+                   OperTag
+                    , postName
+                    , System.IO.Path.Combine(path, string.Format(@"{0}.{1}",name, extension))
+                    , NXOpen.UF.UFSetup.OutputUnits.OutputUnitsOutputDefined
+                    );
+            }
+            catch (Exception ex)
+            {
+                Helper.ShowInfoWindow(string.Format("{0}:{1}", name, ex.Message));
+            }
         }
 
         /// <summary>
