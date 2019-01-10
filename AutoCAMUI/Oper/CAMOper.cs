@@ -24,54 +24,61 @@ namespace AutoCAMUI
         public NXOpen.Tag MethodGroupRoot { get; set; }
         public NXOpen.Tag OperTag { get; protected set; }
         /// <summary>
+        /// 工序是否可用
+        /// </summary>
+        protected bool _operIsValid { get { return OperTag != NXOpen.Tag.Null; } }
+        /// <summary>
         /// 火花位
         /// </summary>
         public double FRIENUM { get; set; }
 
-        public void CreateOper(NXOpen.Tag WorkGeometryGroup, NXOpen.Tag ProgramGroup, NXOpen.Tag MethodGroupRoot, CAMCutter CAMCutter)
+        public void CreateOper(NXOpen.Tag WorkGeometryGroup, NXOpen.Tag ProgramGroup, NXOpen.Tag MethodGroupRoot, CAMCutter CAMCutter,bool operIsValid=true)
         {
             this.WorkGeometryGroup = WorkGeometryGroup;
             this.ProgramGroup = ProgramGroup;
             this.MethodGroupRoot = MethodGroupRoot;
             this.CAMCutter = CAMCutter;
 
-            //TODO 创建工序
-            NXOpen.Tag operTag;
-            ufSession.Oper.Create(AUTOCAM_TYPE, AUTOCAM_SUBTYPE, out operTag);
-            ufSession.Ncgroup.AcceptMember(WorkGeometryGroup, operTag);
-            ufSession.Ncgroup.AcceptMember(ProgramGroup, operTag);
-            ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
-            ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
-            OperTag = operTag;
-
-            int count;
-            NXOpen.Tag[] list;
-            ufSession.Ncgroup.AskMemberList(ProgramGroup, out count, out list);
-            int index = -1;
-            string name;
-            for (int i = 0; i < count; i++)
+            if (operIsValid)
             {
-                ufSession.Obj.AskName(list[i], out name);
-                if (name.Contains(AUTOCAM_SUBTYPE)&& operTag!=list[i])
+                //TODO 创建工序
+                NXOpen.Tag operTag;
+                ufSession.Oper.Create(AUTOCAM_TYPE, AUTOCAM_SUBTYPE, out operTag);
+                ufSession.Ncgroup.AcceptMember(WorkGeometryGroup, operTag);
+                ufSession.Ncgroup.AcceptMember(ProgramGroup, operTag);
+                ufSession.Ncgroup.AcceptMember(MethodGroupRoot, operTag);
+                ufSession.Ncgroup.AcceptMember(CAMCutter.CutterTag, operTag);
+                OperTag = operTag;
+
+                int count;
+                NXOpen.Tag[] list;
+                ufSession.Ncgroup.AskMemberList(ProgramGroup, out count, out list);
+                int index = -1;
+                string name;
+                for (int i = 0; i < count; i++)
                 {
-                    var strIndex = name.Split('_').LastOrDefault();
-                    var tempInt = -1;
-                    int.TryParse(strIndex, out tempInt);
-                    if (tempInt > index)
+                    ufSession.Obj.AskName(list[i], out name);
+                    if (name.Contains(AUTOCAM_SUBTYPE) && operTag != list[i])
                     {
-                        index = tempInt;
+                        var strIndex = name.Split('_').LastOrDefault();
+                        var tempInt = -1;
+                        int.TryParse(strIndex, out tempInt);
+                        if (tempInt > index)
+                        {
+                            index = tempInt;
+                        }
                     }
                 }
+
+                //设置名称
+                ufSession.Obj.SetName(operTag, string.Format("{0}_{1}", AUTOCAM_SUBTYPE, index + 1));
+
+                //设置进给率和速度
+                _SetFeedRate(CAMCutter.FeedRate, CAMCutter.Speed);
+
+                //设置横越(移刀)
+                Helper.SetFeedTraversal(OperTag, CAMCutter.FEED_TRAVERSAL);
             }
-
-            //设置名称
-            ufSession.Obj.SetName(operTag, string.Format("{0}_{1}", AUTOCAM_SUBTYPE, index + 1));
-
-            //设置进给率和速度
-            _SetFeedRate(CAMCutter.FeedRate, CAMCutter.Speed);
-
-            //设置横越(移刀)
-            Helper.SetFeedTraversal(OperTag, CAMCutter.FEED_TRAVERSAL);
         }
 
         /// <summary>
