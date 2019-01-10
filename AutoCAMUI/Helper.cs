@@ -518,6 +518,19 @@ namespace AutoCAMUI
         internal static extern int _SetFeedRate(Tag param_tag, int param_index, EACT_Feedrate value);
         [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_CUT_LEVELS_load", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
         internal static extern int _CutterLevel_Load(Tag oper_tag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value);
+
+
+
+        //UG10 版本调用dll位置不同
+        [System.Runtime.InteropServices.DllImport("libufun_cam.dll", EntryPoint = "UF_PARAM_ask_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+        internal static extern int _AskFeedRate_libufun_cam(Tag param_tag, int param_index, out EACT_Feedrate value);
+
+        [System.Runtime.InteropServices.DllImport("libufun_cam.dll", EntryPoint = "UF_PARAM_set_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+        internal static extern int _SetFeedRate_libufun_cam(Tag param_tag, int param_index, EACT_Feedrate value);
+        [System.Runtime.InteropServices.DllImport("libufun_cam.dll", EntryPoint = "UF_CUT_LEVELS_load", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
+        internal static extern int _CutterLevel_Load_libufun_cam(Tag oper_tag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value);
+
+
         public static int CutterLevel_Load(NXOpen.Tag operTag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value)
         {
             NXOpen.Utilities.JAM.StartUFCall();
