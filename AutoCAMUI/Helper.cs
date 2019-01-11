@@ -497,60 +497,6 @@ namespace AutoCAMUI
                 );
         }
 
-        public enum EACT_FeedUnit
-        {
-            FeedNone,
-            FeedPerMinute,
-            FeedPerRevolution
-        }
-
-        public struct EACT_Feedrate
-        {
-            public EACT_FeedUnit unit;
-            public double value;
-            public short color;
-        }
-
-        [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_ask_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _AskFeedRate(Tag param_tag, int param_index, out EACT_Feedrate value);
-
-        [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_PARAM_set_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _SetFeedRate(Tag param_tag, int param_index, EACT_Feedrate value);
-        [System.Runtime.InteropServices.DllImport("libufun.dll", EntryPoint = "UF_CUT_LEVELS_load", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _CutterLevel_Load(Tag oper_tag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value);
-
-
-
-        //UG10 版本调用dll位置不同
-        [System.Runtime.InteropServices.DllImport("libufun_cam.dll", EntryPoint = "UF_PARAM_ask_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _AskFeedRate_libufun_cam(Tag param_tag, int param_index, out EACT_Feedrate value);
-
-        [System.Runtime.InteropServices.DllImport("libufun_cam.dll", EntryPoint = "UF_PARAM_set_subobj_ptr_value", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _SetFeedRate_libufun_cam(Tag param_tag, int param_index, EACT_Feedrate value);
-        [System.Runtime.InteropServices.DllImport("libufun_cam.dll", EntryPoint = "UF_CUT_LEVELS_load", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl, CharSet = System.Runtime.InteropServices.CharSet.Ansi)]
-        internal static extern int _CutterLevel_Load_libufun_cam(Tag oper_tag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value);
-
-
-        public static int CutterLevel_Load(NXOpen.Tag operTag, ref NXOpen.UF.UFCutLevels.CutLevelsStruct[] value)
-        {
-            NXOpen.Utilities.JAM.StartUFCall();
-            int errorCode = _CutterLevel_Load(operTag, ref value);
-            NXOpen.Utilities.JAM.EndUFCall();
-            return errorCode;
-        }
-
-        /// <summary>
-        /// 获取进给率
-        /// </summary>
-        public static EACT_Feedrate AskFeedRate(NXOpen.Tag operTag, int param_index)
-        {
-            EACT_Feedrate result;
-            NXOpen.Utilities.JAM.StartUFCall();
-            int errorCode = _AskFeedRate(operTag, param_index, out result);
-            NXOpen.Utilities.JAM.EndUFCall();
-            return result;
-        }
-
         /// <summary>
         /// 设置横越(移刀)
         /// </summary>
@@ -564,18 +510,6 @@ namespace AutoCAMUI
         }
 
         /// <summary>
-        /// 设置进给参数
-        /// </summary>
-        public static void SetCutterFeed(NXOpen.Tag operTag, int param_index, double value)
-        {
-            var feedRate = AskFeedRate(operTag, param_index);
-            NXOpen.Utilities.JAM.StartUFCall();
-            feedRate.value = value;
-            int errorCode = _SetFeedRate(operTag, param_index, feedRate);
-            NXOpen.Utilities.JAM.EndUFCall();
-        }
-
-        /// <summary>
         /// 进给参数设置
         /// </summary>
         /// <param name="oper">工序</param>
@@ -585,10 +519,10 @@ namespace AutoCAMUI
         /// <param name="retract">退刀</param>
         public static void SetFeedParam(NXOpen.Tag oper,double engage, double first_cut, double traversal, double retract)
         {
-            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_ENGAGE, engage);
-            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_FIRST_CUT, first_cut);
-            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_TRAVERSAL, traversal);
-            SetCutterFeed(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_RETRACT, retract);
+            SnapEx.EactUF.SetFeedRate(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_ENGAGE, engage);
+            SnapEx.EactUF.SetFeedRate(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_FIRST_CUT, first_cut);
+            SnapEx.EactUF.SetFeedRate(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_TRAVERSAL, traversal);
+            SnapEx.EactUF.SetFeedRate(oper, NXOpen.UF.UFConstants.UF_PARAM_FEED_RETRACT, retract);
         }
 
         /// <summary>
@@ -731,7 +665,7 @@ namespace AutoCAMUI
             NXOpen.UF.UFCutLevels.CutLevelsStruct cut_levels;
             ufSession.CutLevels.SetRangeType(operTag, NXOpen.UF.ParamClvRangeType.ParamClvRangeUserDefined, out cut_levels);
             var cut_levels_ptr_addr = new NXOpen.UF.UFCutLevels.CutLevelsStruct[] { cut_levels };
-            //CutterLevel_Load(operTag, ref cut_levels_ptr_addr);
+            SnapEx.EactUF.UF_CUT_LEVELS_load(operTag, ref cut_levels_ptr_addr);
             foreach (var item in cut_levels_ptr_addr)
             {
                 int num_levels = item.num_levels;
