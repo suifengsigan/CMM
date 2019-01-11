@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -10,6 +11,28 @@ namespace CNCConfig
     /// </summary>
     public class CAMConfig
     {
+        static string _path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.Combine("Config", "CamConfig.json"));
+        public static CAMConfig GetInstance()
+        {
+            var json = string.Empty;
+            if (File.Exists(_path))
+            {
+                json = File.ReadAllText(_path);
+            }
+
+            if (!string.IsNullOrEmpty(json))
+            {
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<CAMConfig>(json) ?? new CAMConfig();
+            }
+            return new CAMConfig();
+        }
+
+        public static void WriteConfig(CAMConfig data)
+        {
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            File.WriteAllText(_path, json);
+        }
+
         /// <summary>
         /// 基准面颜色ID
         /// </summary>
@@ -35,5 +58,28 @@ namespace CNCConfig
         /// </summary>
         public int ButtonedFaceColor = 186;
 
+        public List<CutterInfo> Cutters = new List<CutterInfo>();
+
+        public class CutterInfo
+        {
+            public string 刀具名称 { get; set; }
+            public string 直径 { get; set; }
+            public string R角 { get; set; }
+            public string 刀长 { get; set; }
+            public string 刃长 { get; set; }
+            public string 刀号 { get; set; }
+            public string 补正号 { get; set; }
+            public string 转速 { get; set; }
+            public string 进刀 { get; set; }
+            public string 进给 { get; set; }
+            public string 横越 { get; set; }
+            public string 切深 { get; set; }
+            public string 刀柄 { get; set; }
+            public string 刀具类型 { get; set; }
+        }
+
     }
+
+   
+    
 }
