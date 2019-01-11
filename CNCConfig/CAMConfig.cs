@@ -59,6 +59,7 @@ namespace CNCConfig
         public int ButtonedFaceColor = 186;
 
         public List<CutterInfo> Cutters = new List<CutterInfo>();
+        public List<OperationInfo> Operations = new List<OperationInfo>();
 
         public class CutterInfo
         {
@@ -78,6 +79,12 @@ namespace CNCConfig
             public string 刀具类型 { get; set; }
         }
 
+        public class OperationInfo
+        {
+            public string 显示名称 { get; set; }
+            public string 模板名称 { get; set; }
+            public string 操作类型 { get; set; }
+        }
     }
 
    
