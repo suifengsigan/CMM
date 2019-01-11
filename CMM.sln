@@ -37,6 +37,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckRegions", "CheckRegion
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EACT_Start", "EACT_Start\EACT_Start.csproj", "{5BB3C766-EB70-4105-AD6F-9DE4BF4264C0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CNCConfig", "CNCConfig\CNCConfig.csproj", "{1A5B2984-1A3A-4EE7-9342-BF7A00A69272}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{5BB3C766-EB70-4105-AD6F-9DE4BF4264C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BB3C766-EB70-4105-AD6F-9DE4BF4264C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BB3C766-EB70-4105-AD6F-9DE4BF4264C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A5B2984-1A3A-4EE7-9342-BF7A00A69272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A5B2984-1A3A-4EE7-9342-BF7A00A69272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A5B2984-1A3A-4EE7-9342-BF7A00A69272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A5B2984-1A3A-4EE7-9342-BF7A00A69272}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
