@@ -14,6 +14,12 @@ namespace CNCConfig
         public Form1()
         {
             InitializeComponent();
+            this.FormClosing += Form1_FormClosing;
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            camConfigUserControl1.Save();
         }
     }
 }

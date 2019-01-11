@@ -20,9 +20,16 @@ namespace CNCConfig
 
         CAMConfig _camConfig = CAMConfig.GetInstance();
 
+        public void Save()
+        {
+            CAMConfigUserControl_Disposed(null, null);
+        }
+
         void InitUI()
         {
             InitDgv(dataGridView1);
+            InitDgv(dataGridView2);
+            dataGridView2.DataSource = _camConfig.Operations;
             var config=EactConfig.ConfigData.GetInstance();
             var poperty = config.Poperties.FirstOrDefault(u => u.DisplayName == "电极材质");
             if (poperty != null)
@@ -47,7 +54,7 @@ namespace CNCConfig
         void InitEvent()
         {
             dataGridView2.MouseDown += DataGridView2_MouseDown;
-            this.Disposed += CAMConfigUserControl_Disposed;
+            //this.Disposed += CAMConfigUserControl_Disposed;
         }
         private void _cms_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
@@ -61,8 +68,8 @@ namespace CNCConfig
                     if (obj != null)
                     {
                         datasource1.Remove(obj);
-                        dataGridViewPSelection.DataSource = datasource1;
-                        dataGridViewPSelection.Refresh();
+                        _camConfig.Operations = datasource1.ToList();
+                        dataGridViewPSelection.DataSource = _camConfig.Operations;
                     }
                 }
 
@@ -70,8 +77,8 @@ namespace CNCConfig
             else if (e.ClickedItem.Text == "新增工序")
             {
                 datasource1.Add(new CAMConfig.OperationInfo { });
-                dataGridViewPSelection.Refresh();
-                dataGridViewPSelection.DataSource = datasource1;
+                _camConfig.Operations = datasource1.ToList();
+                dataGridViewPSelection.DataSource = _camConfig.Operations;
             }
         }
 
