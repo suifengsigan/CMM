@@ -36,14 +36,14 @@
             this.camConfigUserControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.camConfigUserControl1.Location = new System.Drawing.Point(0, 0);
             this.camConfigUserControl1.Name = "camConfigUserControl1";
-            this.camConfigUserControl1.Size = new System.Drawing.Size(960, 499);
+            this.camConfigUserControl1.Size = new System.Drawing.Size(791, 499);
             this.camConfigUserControl1.TabIndex = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(960, 499);
+            this.ClientSize = new System.Drawing.Size(791, 499);
             this.Controls.Add(this.camConfigUserControl1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
