@@ -60,6 +60,7 @@ namespace CNCConfig
 
         public List<CutterInfo> Cutters = new List<CutterInfo>();
         public List<OperationInfo> Operations = new List<OperationInfo>();
+        public List<ProjectInfo> Projects = new List<ProjectInfo>();
 
         public class CutterInfo
         {
@@ -81,9 +82,26 @@ namespace CNCConfig
 
         public class OperationInfo
         {
+            public int 序号 { get; set; }
             public string 显示名称 { get; set; }
             public string 模板名称 { get; set; }
             public string 操作类型 { get; set; }
+        }
+
+        public class ProjectInfo
+        {
+            public string 方案名称 { get; set; }
+        }
+
+        public class ProjectDetail
+        {
+            [NonSerialized]
+            public int Operation;
+            public string 工序 { get; set; }
+            public string 刀具 { get; set; }
+            public string 参考刀具 { get; set; }
+            public double 切深_步距 { get; set; }
+            public double 进给 { get; set; }
         }
     }
 
