@@ -95,7 +95,7 @@ namespace CNCConfig
             {
                 _cms = new ContextMenuStrip();
                 _cms.Items.Add("新增工序");
-                var list = dataGridViewPSelection.DataSource as List<EactConfig.ConfigData.PopertySelection> ?? new List<EactConfig.ConfigData.PopertySelection>();
+                var list = dataGridViewPSelection.DataSource as List<CAMConfig.OperationInfo> ?? new List<CAMConfig.OperationInfo>();
                 bool temp = dataGridViewPSelection.CurrentRow != null && dataGridViewPSelection.CurrentRow.Index >= 0 && dataGridViewPSelection.CurrentRow.Index < list.Count;
                 if (temp)
                 {
