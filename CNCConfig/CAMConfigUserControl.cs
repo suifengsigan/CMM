@@ -56,9 +56,42 @@ namespace CNCConfig
 
         void InitEvent()
         {
+            //this.Disposed += CAMConfigUserControl_Disposed;
             dataGridView2.MouseDown += DataGridView2_MouseDown;
             dataGridView4.MouseDown += DataGridView4_MouseDown;
-            //this.Disposed += CAMConfigUserControl_Disposed;
+            dataGridView3.MouseDown += DataGridView3_MouseDown;
+            dataGridView4.SelectionChanged += DataGridView4_SelectionChanged;
+        }
+
+        private void DataGridView4_SelectionChanged(object sender, EventArgs e)
+        {
+            var dataGridViewPSelection = dataGridView4;
+            var list = dataGridViewPSelection.DataSource as List<CAMConfig.ProjectInfo> ?? new List<CAMConfig.ProjectInfo>();
+            bool temp = dataGridViewPSelection.CurrentRow != null && dataGridViewPSelection.CurrentRow.Index >= 0 && dataGridViewPSelection.CurrentRow.Index < list.Count;
+            if (temp)
+            {
+                var obj = dataGridViewPSelection.CurrentRow.DataBoundItem as CAMConfig.ProjectInfo;
+                dataGridView3.DataSource = obj.Details;
+            }
+        }
+
+        private void DataGridView3_MouseDown(object sender, MouseEventArgs e)
+        {
+            var dataGridViewPSelection = dataGridView3;
+            if (e.Button == MouseButtons.Right)
+            {
+                _cms = new ContextMenuStrip();
+                _cms.Items.Add("新增方案工序");
+                var list = dataGridViewPSelection.DataSource as List<CAMConfig.ProjectDetail> ?? new List<CAMConfig.ProjectDetail>();
+                bool temp = dataGridViewPSelection.CurrentRow != null && dataGridViewPSelection.CurrentRow.Index >= 0 && dataGridViewPSelection.CurrentRow.Index < list.Count;
+                if (temp)
+                {
+                    _cms.Items.Add("删除方案工序");
+                }
+                _cms.ItemClicked += _cms_ItemClicked;
+                //弹出操作菜单
+                _cms.Show(MousePosition.X, MousePosition.Y);
+            }
         }
 
         private void DataGridView4_MouseDown(object sender, MouseEventArgs e)
@@ -87,6 +120,9 @@ namespace CNCConfig
 
             var dataGridViewPSelection2 = dataGridView4;
             var datasource2 = dataGridViewPSelection2.DataSource as List<CAMConfig.ProjectInfo>;
+
+            var dataGridViewPSelection3 = dataGridView3;
+            var datasource3 = dataGridViewPSelection3.DataSource as List<CAMConfig.ProjectDetail>;
 
             if (e.ClickedItem.Text == "删除工序")
             {
@@ -127,6 +163,30 @@ namespace CNCConfig
                 datasource2.Add(new CAMConfig.ProjectInfo { });
                 _camConfig.Projects = datasource2.ToList();
                 dataGridViewPSelection2.DataSource = _camConfig.Projects;
+            }
+            else if (e.ClickedItem.Text == "删除方案工序")
+            {
+                if (dataGridViewPSelection2.CurrentRow != null && datasource3 != null)
+                {
+                    var obj1 = dataGridViewPSelection2.CurrentRow.DataBoundItem as CAMConfig.ProjectInfo;
+                    var obj = dataGridViewPSelection3.CurrentRow.DataBoundItem as CAMConfig.ProjectDetail;
+                    if (obj != null)
+                    {
+                        datasource3.Remove(obj);
+                        obj1.Details = datasource3.ToList();
+                        dataGridViewPSelection2.DataSource = obj1.Details;
+                    }
+                }
+            }
+            else if (e.ClickedItem.Text == "新增方案工序")
+            {
+                if (dataGridViewPSelection2.CurrentRow != null && datasource3 != null)
+                {
+                    var obj1 = dataGridViewPSelection2.CurrentRow.DataBoundItem as CAMConfig.ProjectInfo;
+                    datasource3.Add(new CAMConfig.ProjectDetail { });
+                    obj1.Details = datasource3.ToList();
+                    dataGridViewPSelection2.DataSource = obj1.Details;
+                }
             }
         }
 

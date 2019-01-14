@@ -82,7 +82,7 @@ namespace CNCConfig
 
         public class OperationInfo
         {
-            public int 序号 { get; set; }
+            //public int 序号 { get; set; }
             public string 显示名称 { get; set; }
             public string 模板名称 { get; set; }
             public string 操作类型 { get; set; }
@@ -91,12 +91,11 @@ namespace CNCConfig
         public class ProjectInfo
         {
             public string 方案名称 { get; set; }
+            public List<ProjectDetail> Details = new List<ProjectDetail>();
         }
 
         public class ProjectDetail
         {
-            [NonSerialized]
-            public int Operation;
             public string 工序 { get; set; }
             public string 刀具 { get; set; }
             public string 参考刀具 { get; set; }
