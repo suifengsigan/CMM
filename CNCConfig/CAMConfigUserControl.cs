@@ -60,7 +60,41 @@ namespace CNCConfig
             dataGridView2.MouseDown += DataGridView2_MouseDown;
             dataGridView4.MouseDown += DataGridView4_MouseDown;
             dataGridView3.MouseDown += DataGridView3_MouseDown;
+            dataGridView1.MouseDown += DataGridView1_MouseDown;
             dataGridView4.SelectionChanged += DataGridView4_SelectionChanged;
+            cbCutterType.SelectionChangeCommitted += CbCutterType_SelectionChangeCommitted;
+        }
+
+        private void DataGridView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            var item = cbCutterType.SelectedItem as ComboBoxItem;
+            if (item != null)
+            {
+                var dataGridViewPSelection = dataGridView1;
+                if (e.Button == MouseButtons.Right)
+                {
+                    _cms = new ContextMenuStrip();
+                    _cms.Items.Add("新增刀具");
+                    var list = dataGridViewPSelection.DataSource as List<CAMConfig.CutterDetail> ?? new List<CAMConfig.CutterDetail>();
+                    bool temp = dataGridViewPSelection.CurrentRow != null && dataGridViewPSelection.CurrentRow.Index >= 0 && dataGridViewPSelection.CurrentRow.Index < list.Count;
+                    if (temp)
+                    {
+                        _cms.Items.Add("删除刀具");
+                    }
+                    _cms.ItemClicked += _cms_ItemClicked;
+                    //弹出操作菜单
+                    _cms.Show(MousePosition.X, MousePosition.Y);
+                }
+            }
+        }
+
+        private void CbCutterType_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            var item = cbCutterType.SelectedItem as ComboBoxItem;
+            if (item != null)
+            {
+                dataGridView1.DataSource = _camConfig.GetCutters(item.Value.ToString()).Details;
+            }
         }
 
         private void DataGridView4_SelectionChanged(object sender, EventArgs e)
@@ -124,6 +158,9 @@ namespace CNCConfig
             var dataGridViewPSelection3 = dataGridView3;
             var datasource3 = dataGridViewPSelection3.DataSource as List<CAMConfig.ProjectDetail>;
 
+            var dataGridViewPSelection4 = dataGridView1;
+            var datasource4 = dataGridViewPSelection4.DataSource as List<CAMConfig.CutterDetail>;
+
             if (e.ClickedItem.Text == "删除工序")
             {
                 if (dataGridViewPSelection.CurrentRow != null)
@@ -174,7 +211,7 @@ namespace CNCConfig
                     {
                         datasource3.Remove(obj);
                         obj1.Details = datasource3.ToList();
-                        dataGridViewPSelection2.DataSource = obj1.Details;
+                        dataGridViewPSelection3.DataSource = obj1.Details;
                     }
                 }
             }
@@ -185,7 +222,38 @@ namespace CNCConfig
                     var obj1 = dataGridViewPSelection2.CurrentRow.DataBoundItem as CAMConfig.ProjectInfo;
                     datasource3.Add(new CAMConfig.ProjectDetail { });
                     obj1.Details = datasource3.ToList();
-                    dataGridViewPSelection2.DataSource = obj1.Details;
+                    dataGridViewPSelection3.DataSource = obj1.Details;
+                }
+            }
+            else if (e.ClickedItem.Text == "删除刀具")
+            {
+                var item = cbCutterType.SelectedItem as ComboBoxItem;
+                if (item != null)
+                {
+                    var info = _camConfig.GetCutters(item.Value.ToString());
+                    if (dataGridViewPSelection4.CurrentRow != null)
+                    {
+                        var obj = dataGridViewPSelection4.CurrentRow.DataBoundItem as CAMConfig.CutterDetail;
+                        if (obj != null)
+                        {
+                            datasource4.Remove(obj);
+                            info.Details = datasource4.ToList();
+                            dataGridViewPSelection4.DataSource = info.Details;
+                        }
+                    }
+                }
+               
+
+            }
+            else if (e.ClickedItem.Text == "新增刀具")
+            {
+                var item = cbCutterType.SelectedItem as ComboBoxItem;
+                if (item != null)
+                {
+                    var info = _camConfig.GetCutters(item.Value.ToString());
+                    datasource4.Add(new CAMConfig.CutterDetail { });
+                    info.Details = datasource4.ToList();
+                    dataGridViewPSelection4.DataSource = info.Details;
                 }
             }
         }

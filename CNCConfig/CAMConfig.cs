@@ -57,12 +57,41 @@ namespace CNCConfig
         /// 倒扣面颜色ID
         /// </summary>
         public int ButtonedFaceColor = 186;
-
+        /// <summary>
+        /// 刀具列表
+        /// </summary>
         public List<CutterInfo> Cutters = new List<CutterInfo>();
+        public CutterInfo GetCutters(string key)
+        {
+            CutterInfo result;
+            var info = Cutters.Where(u => u.刀具类型 == key).FirstOrDefault();
+            if (info != null)
+            {
+                result = info;
+            }
+            else
+            {
+                result = new CutterInfo { 刀具类型 = key, Details = new List<CutterDetail>()};
+                Cutters.Add(result);
+            }
+            return result;
+        }
+        /// <summary>
+        /// 工序列表
+        /// </summary>
         public List<OperationInfo> Operations = new List<OperationInfo>();
+        /// <summary>
+        /// 方案列表
+        /// </summary>
         public List<ProjectInfo> Projects = new List<ProjectInfo>();
 
         public class CutterInfo
+        {
+            public string 刀具类型 { get; set; }
+            public List<CutterDetail> Details = new List<CutterDetail>();
+        }
+
+        public class CutterDetail
         {
             public string 刀具名称 { get; set; }
             public string 直径 { get; set; }
@@ -77,7 +106,6 @@ namespace CNCConfig
             public string 横越 { get; set; }
             public string 切深 { get; set; }
             public string 刀柄 { get; set; }
-            public string 刀具类型 { get; set; }
         }
 
         public class OperationInfo
