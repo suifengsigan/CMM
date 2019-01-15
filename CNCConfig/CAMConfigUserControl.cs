@@ -282,5 +282,48 @@ namespace CNCConfig
                 _cms.Show(MousePosition.X, MousePosition.Y);
             }
         }
+
+        private void btnExportCutter_Click(object sender, EventArgs e)
+        {
+            var item = cbCutterType.SelectedItem as ComboBoxItem;
+            var dataGridViewPSelection4 = dataGridView1;
+            var datasource4 = dataGridViewPSelection4.DataSource as List<CAMConfig.CutterDetail>;
+            if (item != null)
+            {
+                var file = new OpenFileDialog();
+                file.Filter = "表格文件(*.xls)|*.xls";
+                if (file.ShowDialog() == DialogResult.OK)
+                {
+                    var fileName = file.FileName;
+                    var dataTable = Common.ExcelToDataTableEx(fileName, 0, string.Empty, true);
+                    var list = new DbTableConvertor<XKCutterInfo>().ConvertToList(dataTable);
+                    list = list.Where(u => !string.IsNullOrEmpty(u.刀具名称)).ToList();
+                    var info = _camConfig.GetCutters(item.Value.ToString());
+                    list.ForEach(u => {
+                        var detail = Newtonsoft.Json.JsonConvert.DeserializeObject<CAMConfig.CutterDetail>(Newtonsoft.Json.JsonConvert.SerializeObject(u));
+                        datasource4.Add(detail);
+                    });
+                    info.Details = datasource4.ToList();
+                    dataGridViewPSelection4.DataSource = info.Details;
+                }
+               
+            }
+            
+        }
+
+        private void btnClearCutter_Click(object sender, EventArgs e)
+        {
+            var item = cbCutterType.SelectedItem as ComboBoxItem;
+            var dataGridViewPSelection4 = dataGridView1;
+            var datasource4 = dataGridViewPSelection4.DataSource as List<CAMConfig.CutterDetail>;
+            if (item != null)
+            {
+                var info = _camConfig.GetCutters(item.Value.ToString());
+                datasource4.Clear();
+                info.Details = datasource4.ToList();
+                dataGridViewPSelection4.DataSource = info.Details;
+
+            }
+        }
     }
 }

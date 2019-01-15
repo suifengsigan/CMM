@@ -30,6 +30,8 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -39,20 +41,23 @@
             this.cbCutterType = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnExportCutter = new System.Windows.Forms.Button();
+            this.btnClearCutter = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.panel4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
@@ -72,6 +77,8 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.comboBox1);
+            this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -79,6 +86,24 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "基本配置";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(87, 21);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(287, 20);
+            this.comboBox1.TabIndex = 70;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(25, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 12);
+            this.label1.TabIndex = 69;
+            this.label1.Text = "模版";
             // 
             // tabPage2
             // 
@@ -135,6 +160,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnClearCutter);
+            this.panel1.Controls.Add(this.btnExportCutter);
             this.panel1.Controls.Add(this.cbCutterType);
             this.panel1.Controls.Add(this.label21);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -149,7 +176,7 @@
             this.cbCutterType.FormattingEnabled = true;
             this.cbCutterType.Location = new System.Drawing.Point(150, 14);
             this.cbCutterType.Name = "cbCutterType";
-            this.cbCutterType.Size = new System.Drawing.Size(480, 20);
+            this.cbCutterType.Size = new System.Drawing.Size(354, 20);
             this.cbCutterType.TabIndex = 68;
             // 
             // label21
@@ -174,24 +201,6 @@
             this.tabPage4.Text = "方案管理";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // panel3
-            // 
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel3.Location = new System.Drawing.Point(3, 3);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(794, 64);
-            this.panel3.TabIndex = 0;
-            this.panel3.Visible = false;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.groupBox1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel4.Location = new System.Drawing.Point(3, 67);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 338);
-            this.panel4.TabIndex = 1;
-            // 
             // dataGridView3
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -201,6 +210,15 @@
             this.dataGridView3.RowTemplate.Height = 23;
             this.dataGridView3.Size = new System.Drawing.Size(594, 338);
             this.dataGridView3.TabIndex = 2;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.groupBox1);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel4.Location = new System.Drawing.Point(3, 67);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(200, 338);
+            this.panel4.TabIndex = 1;
             // 
             // groupBox1
             // 
@@ -223,6 +241,35 @@
             this.dataGridView4.Size = new System.Drawing.Size(194, 318);
             this.dataGridView4.TabIndex = 0;
             // 
+            // panel3
+            // 
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel3.Location = new System.Drawing.Point(3, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(794, 64);
+            this.panel3.TabIndex = 0;
+            this.panel3.Visible = false;
+            // 
+            // btnExportCutter
+            // 
+            this.btnExportCutter.Location = new System.Drawing.Point(559, 12);
+            this.btnExportCutter.Name = "btnExportCutter";
+            this.btnExportCutter.Size = new System.Drawing.Size(75, 23);
+            this.btnExportCutter.TabIndex = 69;
+            this.btnExportCutter.Text = "导入刀具";
+            this.btnExportCutter.UseVisualStyleBackColor = true;
+            this.btnExportCutter.Click += new System.EventHandler(this.btnExportCutter_Click);
+            // 
+            // btnClearCutter
+            // 
+            this.btnClearCutter.Location = new System.Drawing.Point(675, 12);
+            this.btnClearCutter.Name = "btnClearCutter";
+            this.btnClearCutter.Size = new System.Drawing.Size(75, 23);
+            this.btnClearCutter.TabIndex = 70;
+            this.btnClearCutter.Text = "清空刀具";
+            this.btnClearCutter.UseVisualStyleBackColor = true;
+            this.btnClearCutter.Click += new System.EventHandler(this.btnClearCutter_Click);
+            // 
             // CAMConfigUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -231,6 +278,8 @@
             this.Name = "CAMConfigUserControl";
             this.Size = new System.Drawing.Size(808, 434);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage3.ResumeLayout(false);
@@ -238,8 +287,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.panel4.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.ResumeLayout(false);
@@ -264,5 +313,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExportCutter;
+        private System.Windows.Forms.Button btnClearCutter;
     }
 }

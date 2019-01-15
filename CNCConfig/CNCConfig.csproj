@@ -37,6 +37,22 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\BLL\UG\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NPOI, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Project\packages\NPOI.2.3.0\lib\net20\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Project\packages\NPOI.2.3.0\lib\net20\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Project\packages\NPOI.2.3.0\lib\net20\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats, Version=2.3.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Project\packages\NPOI.2.3.0\lib\net20\NPOI.OpenXmlFormats.dll</HintPath>
+    </Reference>
     <Reference Include="NXOpen">
       <HintPath>..\..\..\BLL\UG\NXOpen.dll</HintPath>
       <Private>False</Private>
@@ -67,14 +83,17 @@
       <DependentUpon>CAMConfigUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="ComboBoxItem.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="PropertieNameAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Upload.cs" />
+    <Compile Include="XKCutterInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CAMConfigUserControl.resx">
