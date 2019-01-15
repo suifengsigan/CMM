@@ -29,8 +29,76 @@ namespace CNCConfig
         {
             InitDgv(dataGridView1);
             InitDgv(dataGridView2);
-            InitDgv(dataGridView3);
+            InitDgv(dgv_Data);
             InitDgv(dataGridView4);
+            var 工序_Column = new DataGridViewComboBoxColumn();
+            工序_Column.Name = "工序";
+            工序_Column.DataPropertyName = "工序";
+
+            var operations = _camConfig.Operations.ToList();
+
+            operations.ForEach(u => { 工序_Column.Items.Add(u.显示名称 ?? string.Empty); });
+
+            _camConfig.Projects.ForEach(p => {
+                p.Details.ForEach(u => {
+                    if (operations.Where(m => m.显示名称 == u.工序).Count() <= 0)
+                    {
+                        工序_Column.Items.Add(u.工序 ?? string.Empty);
+                    }
+                });
+            });
+            dgv_Data.Columns.Add(工序_Column);
+
+            var 刀具_Column = new DataGridViewComboBoxColumn();
+            刀具_Column.Name = "刀具";
+            刀具_Column.DataPropertyName = "刀具";
+            var cutterDetails = new List<CAMConfig.CutterDetail>();
+            if (_camConfig.Cutters.Count > 0)
+            {
+                cutterDetails = _camConfig.Cutters.First().Details;
+                cutterDetails.ForEach(u =>
+                {
+                    刀具_Column.Items.Add(u.刀具名称 ?? string.Empty);
+                });
+            }
+            _camConfig.Projects.ForEach(p =>
+            {
+                p.Details.ForEach(u =>
+                {
+                    if (cutterDetails.Where(m => m.刀具名称 == u.刀具).Count() <= 0)
+                    {
+                        刀具_Column.Items.Add(u.刀具 ?? string.Empty);
+                    }
+                });
+            });
+            dgv_Data.Columns.Add(刀具_Column);
+
+            var 参考刀具_Column = new DataGridViewComboBoxColumn();
+            参考刀具_Column.Name = "参考刀具";
+            参考刀具_Column.DataPropertyName = "参考刀具";
+            cutterDetails.ForEach(u => {
+                参考刀具_Column.Items.Add(u.刀具名称 ?? string.Empty);
+            });
+            _camConfig.Projects.ForEach(p => {
+                p.Details.ForEach(u => {
+                    if (cutterDetails.Where(m => m.刀具名称 == u.参考刀具).Count() <= 0)
+                    {
+                        参考刀具_Column.Items.Add(u.参考刀具 ?? string.Empty);
+                    }
+                });
+            });
+            dgv_Data.Columns.Add(参考刀具_Column);
+            Action<DataGridViewComboBoxColumn> distinctAction = (c) => {
+                c.Items.Add(string.Empty);
+                var result = c.Items.Cast<string>().ToList().Distinct();
+                c.Items.Clear();
+                result.ToList().ForEach(u => {
+                    c.Items.Add(u);
+                });
+            };
+            distinctAction(工序_Column);
+            distinctAction(参考刀具_Column);
+            distinctAction(刀具_Column);
             dataGridView2.DataSource = _camConfig.Operations;
             dataGridView4.DataSource = _camConfig.Projects;
             var config=EactConfig.ConfigData.GetInstance();
@@ -59,11 +127,12 @@ namespace CNCConfig
             //this.Disposed += CAMConfigUserControl_Disposed;
             dataGridView2.MouseDown += DataGridView2_MouseDown;
             dataGridView4.MouseDown += DataGridView4_MouseDown;
-            dataGridView3.MouseDown += DataGridView3_MouseDown;
+            dgv_Data.MouseDown += DataGridView3_MouseDown;
             dataGridView1.MouseDown += DataGridView1_MouseDown;
             dataGridView4.SelectionChanged += DataGridView4_SelectionChanged;
             cbCutterType.SelectionChangeCommitted += CbCutterType_SelectionChangeCommitted;
         }
+        
 
         private void DataGridView1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -105,13 +174,13 @@ namespace CNCConfig
             if (temp)
             {
                 var obj = dataGridViewPSelection.CurrentRow.DataBoundItem as CAMConfig.ProjectInfo;
-                dataGridView3.DataSource = obj.Details;
+                dgv_Data.DataSource = obj.Details;
             }
         }
 
         private void DataGridView3_MouseDown(object sender, MouseEventArgs e)
         {
-            var dataGridViewPSelection = dataGridView3;
+            var dataGridViewPSelection = dgv_Data;
             if (e.Button == MouseButtons.Right)
             {
                 _cms = new ContextMenuStrip();
@@ -155,7 +224,7 @@ namespace CNCConfig
             var dataGridViewPSelection2 = dataGridView4;
             var datasource2 = dataGridViewPSelection2.DataSource as List<CAMConfig.ProjectInfo>;
 
-            var dataGridViewPSelection3 = dataGridView3;
+            var dataGridViewPSelection3 = dgv_Data;
             var datasource3 = dataGridViewPSelection3.DataSource as List<CAMConfig.ProjectDetail>;
 
             var dataGridViewPSelection4 = dataGridView1;
