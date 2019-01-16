@@ -170,11 +170,11 @@ namespace CNCConfig
             /// <summary>
             /// 默认
             /// </summary>
-            public const string Default = "默认";
+            public const string Default = "EACT_AutoCAM_Default";
             /// <summary>
-            /// EACT_AUTOCAM
+            /// 简易工具箱
             /// </summary>
-            public const string EACT_AUTOCAM = "EACT_AUTOCAM";
+            public const string EACT_AUTOCAM = "EACT_AutoCAM_JY";
         }
     }
 

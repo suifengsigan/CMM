@@ -9,7 +9,7 @@ namespace AutoCAMUI
     {
         public WsqAutoCAM_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
+            AUTOCAM_TYPE = CNCConfig.CAMConfig.S_OperationTemplate.Default; 
         }
     }
 }
