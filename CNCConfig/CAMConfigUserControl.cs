@@ -108,7 +108,23 @@ namespace CNCConfig
                 poperty.Selections.ForEach(s => {
                     cbCutterType.Items.Add(new ComboBoxItem { Text = s.Value + "电极刀具", Value = s.Value });
                 });
+
+                if (cbCutterType.Items.Count > 0)
+                {
+                    cbCutterType.SelectedItem = cbCutterType.Items[0];
+                }
             }
+
+            txtCAVITYPartStock.Text = _camConfig.CAVITYPartStock.ToString();
+            txtCAVITYFloorStock.Text = _camConfig.CAVITYFloorStock.ToString();
+
+            //火花位
+            cbbSparkPosition.Items.Add(new ComboBoxItem { Text = "余量", Value = CAMConfig.E_SparkPosition.Stock });
+            cbbSparkPosition.Items.Add(new ComboBoxItem { Text = "骗刀Z", Value = CAMConfig.E_SparkPosition.CheatKnifeZ });
+            cbbSparkPosition.Items.Add(new ComboBoxItem { Text = "骗刀", Value = CAMConfig.E_SparkPosition.CheatKnife });
+
+            var items = cbbSparkPosition.Items.Cast<ComboBoxItem>().ToList();
+            cbbSparkPosition.SelectedIndex = items.IndexOf(items.FirstOrDefault(u => (CAMConfig.E_SparkPosition)u.Value == _camConfig.SparkPosition));
         }
 
         void InitDgv(DataGridView view)
@@ -130,9 +146,17 @@ namespace CNCConfig
             dgv_Data.MouseDown += DataGridView3_MouseDown;
             dataGridView1.MouseDown += DataGridView1_MouseDown;
             dataGridView4.SelectionChanged += DataGridView4_SelectionChanged;
-            cbCutterType.SelectionChangeCommitted += CbCutterType_SelectionChangeCommitted;
+            cbCutterType.SelectedIndexChanged += CbCutterType_SelectedIndexChanged;
         }
-        
+
+        private void CbCutterType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var item = cbCutterType.SelectedItem as ComboBoxItem;
+            if (item != null)
+            {
+                dataGridView1.DataSource = _camConfig.GetCutters(item.Value.ToString()).Details;
+            }
+        }
 
         private void DataGridView1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -154,15 +178,6 @@ namespace CNCConfig
                     //弹出操作菜单
                     _cms.Show(MousePosition.X, MousePosition.Y);
                 }
-            }
-        }
-
-        private void CbCutterType_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            var item = cbCutterType.SelectedItem as ComboBoxItem;
-            if (item != null)
-            {
-                dataGridView1.DataSource = _camConfig.GetCutters(item.Value.ToString()).Details;
             }
         }
 
@@ -329,6 +344,9 @@ namespace CNCConfig
 
         private void CAMConfigUserControl_Disposed(object sender, EventArgs e)
         {
+            _camConfig.SparkPosition = (CAMConfig.E_SparkPosition)(cbbSparkPosition.SelectedItem as ComboBoxItem).Value;
+            _camConfig.CAVITYPartStock = double.Parse(txtCAVITYPartStock.Text);
+            _camConfig.CAVITYFloorStock = double.Parse(txtCAVITYFloorStock.Text);
             CAMConfig.WriteConfig(_camConfig);
         }
 

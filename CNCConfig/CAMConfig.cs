@@ -58,6 +58,18 @@ namespace CNCConfig
         /// </summary>
         public int ButtonedFaceColor = 186;
         /// <summary>
+        /// 开粗部件余量
+        /// </summary>
+        public double CAVITYPartStock = 0.1;
+        /// <summary>
+        /// 开粗底部余量
+        /// </summary>
+        public double CAVITYFloorStock = 0.1;
+        /// <summary>
+        /// 火花位类型
+        /// </summary>
+        public E_SparkPosition SparkPosition = E_SparkPosition.Stock;
+        /// <summary>
         /// 刀具列表
         /// </summary>
         public List<CutterInfo> Cutters = new List<CutterInfo>();
@@ -129,6 +141,22 @@ namespace CNCConfig
             public string 参考刀具 { get; set; }
             public double 切深_步距 { get; set; }
             public double 进给 { get; set; }
+        }
+
+        public enum E_SparkPosition
+        {
+            /// <summary>
+            /// 余量
+            /// </summary>
+            Stock,
+            /// <summary>
+            /// 骗刀Z
+            /// </summary>
+            CheatKnifeZ,
+            /// <summary>
+            /// 骗刀
+            /// </summary>
+            CheatKnife
         }
     }
 

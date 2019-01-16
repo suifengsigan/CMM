@@ -30,14 +30,20 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.txtCAVITYFloorStock = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtCAVITYPartStock = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbbSparkPosition = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnClearCutter = new System.Windows.Forms.Button();
+            this.btnExportCutter = new System.Windows.Forms.Button();
             this.cbCutterType = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -46,8 +52,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.btnExportCutter = new System.Windows.Forms.Button();
-            this.btnClearCutter = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -77,8 +81,12 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.comboBox1);
-            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.txtCAVITYFloorStock);
+            this.tabPage1.Controls.Add(this.label4);
+            this.tabPage1.Controls.Add(this.txtCAVITYPartStock);
+            this.tabPage1.Controls.Add(this.label3);
+            this.tabPage1.Controls.Add(this.cbbSparkPosition);
+            this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -87,23 +95,57 @@
             this.tabPage1.Text = "基本配置";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // txtCAVITYFloorStock
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(87, 21);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(287, 20);
-            this.comboBox1.TabIndex = 70;
+            this.txtCAVITYFloorStock.Location = new System.Drawing.Point(114, 122);
+            this.txtCAVITYFloorStock.Name = "txtCAVITYFloorStock";
+            this.txtCAVITYFloorStock.Size = new System.Drawing.Size(287, 21);
+            this.txtCAVITYFloorStock.TabIndex = 76;
+            this.txtCAVITYFloorStock.Text = "0.1";
             // 
-            // label1
+            // label4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(25, 24);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 69;
-            this.label1.Text = "模版";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(23, 125);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 75;
+            this.label4.Text = "开粗底余量";
+            // 
+            // txtCAVITYPartStock
+            // 
+            this.txtCAVITYPartStock.Location = new System.Drawing.Point(114, 80);
+            this.txtCAVITYPartStock.Name = "txtCAVITYPartStock";
+            this.txtCAVITYPartStock.Size = new System.Drawing.Size(287, 21);
+            this.txtCAVITYPartStock.TabIndex = 74;
+            this.txtCAVITYPartStock.Text = "0.1";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(23, 83);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 12);
+            this.label3.TabIndex = 73;
+            this.label3.Text = "开粗侧余量";
+            // 
+            // cbbSparkPosition
+            // 
+            this.cbbSparkPosition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbbSparkPosition.FormattingEnabled = true;
+            this.cbbSparkPosition.Location = new System.Drawing.Point(114, 33);
+            this.cbbSparkPosition.Name = "cbbSparkPosition";
+            this.cbbSparkPosition.Size = new System.Drawing.Size(287, 20);
+            this.cbbSparkPosition.TabIndex = 72;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(23, 36);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 71;
+            this.label2.Text = "火花方式";
             // 
             // tabPage2
             // 
@@ -169,6 +211,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(794, 51);
             this.panel1.TabIndex = 0;
+            // 
+            // btnClearCutter
+            // 
+            this.btnClearCutter.Location = new System.Drawing.Point(675, 12);
+            this.btnClearCutter.Name = "btnClearCutter";
+            this.btnClearCutter.Size = new System.Drawing.Size(75, 23);
+            this.btnClearCutter.TabIndex = 70;
+            this.btnClearCutter.Text = "清空刀具";
+            this.btnClearCutter.UseVisualStyleBackColor = true;
+            this.btnClearCutter.Click += new System.EventHandler(this.btnClearCutter_Click);
+            // 
+            // btnExportCutter
+            // 
+            this.btnExportCutter.Location = new System.Drawing.Point(559, 12);
+            this.btnExportCutter.Name = "btnExportCutter";
+            this.btnExportCutter.Size = new System.Drawing.Size(75, 23);
+            this.btnExportCutter.TabIndex = 69;
+            this.btnExportCutter.Text = "导入刀具";
+            this.btnExportCutter.UseVisualStyleBackColor = true;
+            this.btnExportCutter.Click += new System.EventHandler(this.btnExportCutter_Click);
             // 
             // cbCutterType
             // 
@@ -250,26 +312,6 @@
             this.panel3.TabIndex = 0;
             this.panel3.Visible = false;
             // 
-            // btnExportCutter
-            // 
-            this.btnExportCutter.Location = new System.Drawing.Point(559, 12);
-            this.btnExportCutter.Name = "btnExportCutter";
-            this.btnExportCutter.Size = new System.Drawing.Size(75, 23);
-            this.btnExportCutter.TabIndex = 69;
-            this.btnExportCutter.Text = "导入刀具";
-            this.btnExportCutter.UseVisualStyleBackColor = true;
-            this.btnExportCutter.Click += new System.EventHandler(this.btnExportCutter_Click);
-            // 
-            // btnClearCutter
-            // 
-            this.btnClearCutter.Location = new System.Drawing.Point(675, 12);
-            this.btnClearCutter.Name = "btnClearCutter";
-            this.btnClearCutter.Size = new System.Drawing.Size(75, 23);
-            this.btnClearCutter.TabIndex = 70;
-            this.btnClearCutter.Text = "清空刀具";
-            this.btnClearCutter.UseVisualStyleBackColor = true;
-            this.btnClearCutter.Click += new System.EventHandler(this.btnClearCutter_Click);
-            // 
             // CAMConfigUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -313,9 +355,13 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnExportCutter;
         private System.Windows.Forms.Button btnClearCutter;
+        private System.Windows.Forms.ComboBox cbbSparkPosition;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtCAVITYFloorStock;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtCAVITYPartStock;
+        private System.Windows.Forms.Label label3;
     }
 }
