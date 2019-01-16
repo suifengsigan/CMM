@@ -23,7 +23,11 @@ public partial class EleAutoCamUI:SnapEx.BaseUI
         if (ele != null)
         {
             ele.InitAllFace();
-            AutoCAMUI.Helper.AutoCAM(ele);
+            //AutoCAMUI.Helper.AutoCAM(ele);
+            var camConfig = CNCConfig.CAMConfig.GetInstance();
+            var camEle = new AutoCAMUI.CAMElectrode();
+            camEle.Init(ele, camConfig);
+            AutoCAMUI.AutoCamBusiness.AutoCam(camEle, camConfig);
         }
     }
 

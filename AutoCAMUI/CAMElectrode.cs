@@ -32,6 +32,7 @@ namespace AutoCAMUI
         /// 水平面
         /// </summary>
         public List<CAMFace> HorizontalFaces { get; private set; }
+        public Snap.Geom.Box3d BodyBox { get; private set; }
         public void Init(ElecManage.Electrode ele,CNCConfig.CAMConfig camConfig)
         {
             Electrode = ele;
@@ -39,8 +40,7 @@ namespace AutoCAMUI
             var body = ele.ElecBody;
             var basePos = ele.GetElecBasePos();
             var eleInfo = ele.GetElectrodeInfo();
-            var bodyBox = body.AcsToWcsBox3d(new Snap.Orientation(-ele.BaseFace.GetFaceDirection()));
-            var autoBlankOffset = new double[] { 2, 2, 2, 2, 2, 0 };
+            BodyBox = body.AcsToWcsBox3d(new Snap.Orientation(-ele.BaseFace.GetFaceDirection()));
 
             //分析面
             var faces = ele.ElecBody.Faces;

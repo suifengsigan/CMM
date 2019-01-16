@@ -73,6 +73,23 @@ namespace CNCConfig
         /// 刀具列表
         /// </summary>
         public List<CutterInfo> Cutters = new List<CutterInfo>();
+        public List<CutterDetail> FindCutterInfo(string key)
+        {
+            List<CutterDetail> result = new List<CutterDetail>();
+            if (Cutters.Count > 0)
+            {
+                var info = Cutters.Where(u => u.刀具类型 == key).FirstOrDefault();
+                if (info != null)
+                {
+                    result = info.Details;
+                }
+                else
+                {
+                    result = Cutters.FirstOrDefault().Details;
+                }
+            }
+            return result;
+        }
         public CutterInfo GetCutters(string key)
         {
             CutterInfo result;

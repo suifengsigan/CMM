@@ -52,5 +52,9 @@ namespace AutoCAMUI
         /// 进给率
         /// </summary>
         public double FeedRate = 4000;
+        /// <summary>
+        /// 切深
+        /// </summary>
+        public double CutDepth = 0.1;
     }
 }
