@@ -82,7 +82,7 @@ namespace AutoCAMUI
 
         public static void AutoCAM(ElecManage.Electrode ele)
         {
-            var camConfig = new CAMConfig();
+            var camConfig = CNCConfig.CAMConfig.GetInstance();
             var body = ele.ElecBody;
             var basePos = ele.GetElecBasePos();
             var eleInfo = ele.GetElectrodeInfo();

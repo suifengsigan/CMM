@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoCamBusiness.cs" />
-    <Compile Include="CAMConfig.cs" />
     <Compile Include="CAMCutter.cs" />
     <Compile Include="CAMFace.cs" />
     <Compile Include="Oper\CAMOper.cs" />
@@ -105,6 +104,10 @@
     <Compile Include="Oper\WsqAutoCAM_Oper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CNCConfig\CNCConfig.csproj">
+      <Project>{1a5b2984-1a3a-4ee7-9342-bf7a00a69272}</Project>
+      <Name>CNCConfig</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CSharpProxy\CSharpProxy.csproj">
       <Project>{89348461-450d-4213-9fc4-c12a64e60a96}</Project>
       <Name>CSharpProxy</Name>
