@@ -139,7 +139,7 @@ namespace CNCConfig
             public string 工序 { get; set; }
             public string 刀具 { get; set; }
             public string 参考刀具 { get; set; }
-            public double 切深_步距 { get; set; }
+            public double 切深 { get; set; }
             public double 进给 { get; set; }
         }
 
