@@ -122,10 +122,16 @@ namespace CNCConfig
 
         public class OperationInfo
         {
+            public OperationInfo()
+            {
+                模版类型 = S_OperationTemplate.Default;
+            }
             //public int 序号 { get; set; }
             public string 显示名称 { get; set; }
             public string 模板名称 { get; set; }
+            public string 模版类型 { get; set; }
             public string 操作类型 { get; set; }
+            
         }
 
         public class ProjectInfo
@@ -157,6 +163,18 @@ namespace CNCConfig
             /// 骗刀
             /// </summary>
             CheatKnife
+        }
+
+        public struct S_OperationTemplate
+        {
+            /// <summary>
+            /// 默认
+            /// </summary>
+            public const string Default = "默认";
+            /// <summary>
+            /// EACT_AUTOCAM
+            /// </summary>
+            public const string EACT_AUTOCAM = "EACT_AUTOCAM";
         }
     }
 

@@ -31,10 +31,17 @@ namespace CNCConfig
             InitDgv(dataGridView2);
             InitDgv(dgv_Data);
             InitDgv(dataGridView4);
+
+            var 模版类型_Column = new DataGridViewComboBoxColumn();
+            模版类型_Column.Name = "模版类型";
+            模版类型_Column.DataPropertyName = "模版类型";
+            模版类型_Column.Items.Add(CAMConfig.S_OperationTemplate.Default);
+            模版类型_Column.Items.Add(CAMConfig.S_OperationTemplate.EACT_AUTOCAM);
+            dataGridView2.Columns.Add(模版类型_Column);
+
             var 工序_Column = new DataGridViewComboBoxColumn();
             工序_Column.Name = "工序";
             工序_Column.DataPropertyName = "工序";
-
             var operations = _camConfig.Operations.ToList();
 
             operations.ForEach(u => { 工序_Column.Items.Add(u.显示名称 ?? string.Empty); });
