@@ -72,5 +72,16 @@ namespace AutoCAMUI
                 snapPart.Close(true, true);
             }
         }
+
+
+        /// <summary>
+        /// 自动编程
+        /// </summary>
+        /// <param name="ele"></param>
+        /// <param name="camConfig"></param>
+        static void AutoCam(CAMElectrode ele, CNCConfig.CAMConfig camConfig)
+        {
+
+        }
     }
 }

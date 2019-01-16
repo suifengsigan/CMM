@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="AutoCamBusiness.cs" />
     <Compile Include="CAMCutter.cs" />
+    <Compile Include="CAMElectrode.cs" />
     <Compile Include="CAMFace.cs" />
     <Compile Include="Oper\CAMOper.cs" />
     <Compile Include="EleAutoCamUI.cs" />
