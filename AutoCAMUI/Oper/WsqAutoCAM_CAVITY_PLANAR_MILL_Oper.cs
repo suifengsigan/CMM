@@ -9,12 +9,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 基准台开粗
     /// </summary>
-    public class WsqAutoCAM_CAVITY_PLANAR_MILL_Oper : CAMOper
+    public class WsqAutoCAM_CAVITY_PLANAR_MILL_Oper : WsqAutoCAM_Oper
     {
         public WsqAutoCAM_CAVITY_PLANAR_MILL_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "CAVITY_PLANAR_MILL";
+            TmplateOper = E_TmplateOper.CAVITY_PLANAR_MILL;
         }
 
         /// <summary>

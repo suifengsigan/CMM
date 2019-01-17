@@ -107,7 +107,8 @@ namespace AutoCAMUI
             ufSession.Setup.AskMthdRoot(setup_tag, out methodGroupRootTag);
 
             //根据配置文件创建刀具
-            CreateCutter(ele, camConfig, cutterGroupRootTag);
+            CNCConfig.CAMConfig.ProjectInfo projectConfig;
+            var cutters = CreateCutter(ele, camConfig, cutterGroupRootTag, out projectConfig);
 
             //TODO删除旧的程序
 
@@ -140,6 +141,8 @@ namespace AutoCAMUI
                 ufSession.Ncprog.Create(AUTOCAM_TYPE.mill_planar, AUTOCAM_SUBTYPE.PROGRAM, out programGroupTag);
                 ufSession.Obj.SetName(programGroupTag,string.Format("{0}-{1}", eleInfo.Elec_Name,type));
                 ufSession.Ncgroup.AcceptMember(orderGroupRootTag, programGroupTag);
+
+                CAMOper.CreateCamOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, cutterGroupRootTag, ele, projectConfig, cutters);
             };
 
             if (eleInfo.FINISH_NUMBER > 0)  //精
@@ -158,11 +161,12 @@ namespace AutoCAMUI
             }
         }
 
-        public static void CreateCutter(CAMElectrode ele, CNCConfig.CAMConfig camConfig, NXOpen.Tag cutterGroupRootTag)
+        public static List<CAMCutter> CreateCutter(CAMElectrode ele, CNCConfig.CAMConfig camConfig, NXOpen.Tag cutterGroupRootTag,out CNCConfig.CAMConfig.ProjectInfo project)
         {
+            List<CAMCutter> result = new List<CAMCutter>();
             var info = ele.Electrode.GetElectrodeInfo();
             var cutterConfigs = camConfig.FindCutterInfo(info.MAT_NAME);
-            var project = camConfig.Projects.Where(u => u.方案名称 == "自动").FirstOrDefault() ?? camConfig.Projects.Where(u => u.方案名称 == "自动").FirstOrDefault();
+            project = camConfig.Projects.Where(u => u.方案名称 == "自动").FirstOrDefault() ?? camConfig.Projects.Where(u => u.方案名称 == "自动").FirstOrDefault();
             if (project == null)
             {
                 throw new Exception("配置工具未配置方案!");
@@ -193,13 +197,15 @@ namespace AutoCAMUI
                     camCutter.FeedRate = double.Parse(cutterConfig.进给);
                     camCutter.FEED_TRAVERSAL = double.Parse(cutterConfig.横越);
                     camCutter.CutDepth = double.Parse(cutterConfig.切深);
-                    Helper.CreateCutter(new List<CAMCutter> { camCutter }, cutterGroupRootTag);
+                    result.Add(camCutter);
                 }
                 else
                 {
                     throw new Exception("配置工具方案刀具配置异常!");
                 }
             }
+            result= Helper.CreateCutter(result, cutterGroupRootTag); 
+            return result;
         }
     }
 }

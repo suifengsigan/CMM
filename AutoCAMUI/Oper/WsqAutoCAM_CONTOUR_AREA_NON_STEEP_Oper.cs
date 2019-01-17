@@ -8,12 +8,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 曲面角度
     /// </summary>
-    public class WsqAutoCAM_CONTOUR_AREA_NON_STEEP_Oper:CAMOper
+    public class WsqAutoCAM_CONTOUR_AREA_NON_STEEP_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_CONTOUR_AREA_NON_STEEP_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "CONTOUR_AREA_NON_STEEP";
+            TmplateOper = E_TmplateOper.CONTOUR_AREA_NON_STEEP;
         }
 
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)

@@ -8,12 +8,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 等高清角
     /// </summary>
-    public class WsqAutoCAM_ZLEVEL_CORNER_Oper:CAMOper
+    public class WsqAutoCAM_ZLEVEL_CORNER_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_ZLEVEL_CORNER_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "ZLEVEL_CORNER";
+            TmplateOper = E_TmplateOper.ZLEVEL_CORNER;
         }
 
         /// <summary>

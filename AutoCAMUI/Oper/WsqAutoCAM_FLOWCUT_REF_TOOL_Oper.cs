@@ -8,12 +8,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 曲面清角
     /// </summary>
-    public class WsqAutoCAM_FLOWCUT_REF_TOOL_Oper:CAMOper
+    public class WsqAutoCAM_FLOWCUT_REF_TOOL_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_FLOWCUT_REF_TOOL_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "FLOWCUT_REF_TOOL";
+            TmplateOper = E_TmplateOper.FLOWCUT_REF_TOOL;
         }
 
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)

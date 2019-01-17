@@ -5,11 +5,6 @@ using System.Text;
 
 namespace AutoCAMUI
 {
-    public enum levelsPosition
-    {
-        TopLevel,
-        BottomLevel
-    }
     /// <summary>
     /// 加工工序类
     /// </summary>
@@ -17,12 +12,15 @@ namespace AutoCAMUI
     {
         protected NXOpen.UF.UFSession ufSession = NXOpen.UF.UFSession.GetUFSession();
         public string AUTOCAM_TYPE { get; set; }
-        public string AUTOCAM_SUBTYPE { get; set; }
+        public string AUTOCAM_SUBTYPE { get { return GetEnumNameByKey(TmplateOper); } }
+        public E_TmplateOper TmplateOper { get; protected set; }
         public CAMCutter CAMCutter { get; set; }
         public NXOpen.Tag WorkGeometryGroup { get; set; }
         public NXOpen.Tag ProgramGroup { get; set; }
         public NXOpen.Tag MethodGroupRoot { get; set; }
         public NXOpen.Tag OperTag { get; protected set; }
+        CAMElectrode _camElectrode { get; set; }
+        CNCConfig.CAMConfig _camConfig { get; set; }
         /// <summary>
         /// 工序是否可用
         /// </summary>
@@ -46,6 +44,93 @@ namespace AutoCAMUI
         /// 火花位
         /// </summary>
         public double FRIENUM { get; set; }
+
+        public static List<CAMOper> CreateCamOper(
+            NXOpen.Tag WorkGeometryGroup,
+            NXOpen.Tag ProgramGroup, 
+            NXOpen.Tag MethodGroupRoot,
+            NXOpen.Tag cutterGroupRootTag,
+            CAMElectrode ele,
+            CNCConfig.CAMConfig.ProjectInfo project,
+            List<CAMCutter> cutterDetails
+            )
+        {
+            var result = new List<CAMOper>();
+            foreach (var item in project.Details)
+            {
+                var operConfig = ele.CamConfig.Operations.FirstOrDefault(m => m.显示名称 == item.工序);
+                var cutter = cutterDetails.FirstOrDefault(m => m.CutterName == item.刀具);
+                var refCutter = cutterDetails.FirstOrDefault(m => m.CutterName == item.参考刀具);
+
+                if (operConfig == null)
+                {
+                    throw new Exception("配置工具方案工序配置异常！");
+                }
+                CAMOper camOper = null;
+                switch (operConfig.模版类型)
+                {
+                    case CNCConfig.CAMConfig.S_OperationTemplate.EACT_AUTOCAM:
+                        {
+                            break;
+                        }
+                    default:
+                        {
+                            switch (GetEnumByKey(operConfig.模板名称))
+                            {
+                                case E_TmplateOper.CAVITY_MILL_C:
+                                    {
+                                        camOper = new WsqAutoCAM_CAVITY_MILL_C_Oper();
+                                        break;
+                                    }
+                            }
+                            break;
+                        }
+                }
+
+
+                if (camOper != null)
+                {
+                    camOper.AutoAnalysis(ele, WorkGeometryGroup, ProgramGroup, MethodGroupRoot,cutter, refCutter);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 根据电极分析数据设置工序相关参数
+        /// </summary>
+        public virtual void AutoSet(CAMElectrode ele)
+        {
+
+        }
+
+        /// <summary>
+        /// 根据电极分析数据判断该工序是否可用
+        /// </summary>
+        public virtual bool AnalysisOperIsValid(CAMElectrode ele)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 根据类型自动设置相关参数
+        /// </summary>
+        public virtual void AutoAnalysis(CAMElectrode ele, NXOpen.Tag WorkGeometryGroup, NXOpen.Tag ProgramGroup, NXOpen.Tag MethodGroupRoot
+            , CAMCutter CAMCutter, CAMCutter refCAMCutter
+            )
+        {
+            if (AnalysisOperIsValid(ele))
+            {
+                CreateOper(WorkGeometryGroup, ProgramGroup, MethodGroupRoot, CAMCutter);
+                if (refCAMCutter != null)
+                {
+                    _SetReferenceCutter(refCAMCutter);
+                }
+                AutoSet(ele);
+            }
+        }
+
+       
 
         public void CreateOper(NXOpen.Tag WorkGeometryGroup, NXOpen.Tag ProgramGroup, NXOpen.Tag MethodGroupRoot, CAMCutter CAMCutter,bool operIsValid=true)
         {
@@ -212,5 +297,92 @@ namespace AutoCAMUI
         {
             Helper.SetPartStockAndFloorStock(OperTag, sideStock, floorStock);
         }
+        public static E_TmplateOper GetEnumByKey(string key)
+        {
+            return (E_TmplateOper)Enum.Parse(typeof(E_TmplateOper), key);
+        }
+        public static string GetEnumNameByKey(E_TmplateOper enumKey)
+        {
+
+            return Enum.GetName(typeof(E_TmplateOper), enumKey);
+        }
+    }
+
+    public enum levelsPosition
+    {
+        TopLevel,
+        BottomLevel
+    }
+
+    public enum E_TmplateOper
+    {
+        /// <summary>
+        /// 未知
+        /// </summary>
+        Unkown,
+        /// <summary>
+        /// 杀顶
+        /// </summary>
+        FACE_MILLING_TOP,
+        /// <summary>
+        /// 铜开粗
+        /// </summary>
+        CAVITY_MILL_C,
+        /// <summary>
+        /// 石墨开粗
+        /// </summary>
+        CAVITY_MILL_G,
+        /// <summary>
+        /// 2D开粗基准
+        /// </summary>
+        CAVITY_PLANAR_MILL,
+        /// <summary>
+        /// 残料开粗
+        /// </summary>
+        CAVITY_MILL_REF,
+        /// <summary>
+        /// 基准平面
+        /// </summary>
+        FACE_MILLING_BASE,
+        /// <summary>
+        /// 基准侧面
+        /// </summary>
+        PLANAR_MILL_BASE,
+        /// <summary>
+        /// 平面
+        /// </summary>
+        FACE_MILLING,
+        /// <summary>
+        /// 直身位
+        /// </summary>
+        PLANAR_MILL,
+        /// <summary>
+        /// 等高角度
+        /// </summary>
+        ZLEVEL_PROFILE_STEEP,
+        /// <summary>
+        /// 等高清角
+        /// </summary>
+        ZLEVEL_CORNER,
+        /// <summary>
+        /// 曲面加工
+        /// </summary>
+        CONTOUR_AREA,
+        /// <summary>
+        /// 曲面角度
+        /// </summary>
+        CONTOUR_AREA_NON_STEEP,
+        /// <summary>
+        /// 曲面清角
+        /// </summary>
+        FLOWCUT_REF_TOOL,
+        /// <summary>
+        /// 刻字
+        /// </summary>
+        CONTOUR_TEXT,
+        /// <summary>
+        /// 平面清角
+        /// </summary>
+        FACE_MILLING_CORNER
     }
 }

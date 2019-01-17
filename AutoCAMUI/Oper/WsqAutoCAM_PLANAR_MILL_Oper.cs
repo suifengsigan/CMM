@@ -6,12 +6,11 @@ using SnapEx;
 
 namespace AutoCAMUI
 {
-    public class WsqAutoCAM_PLANAR_MILL_Oper:CAMOper
+    public class WsqAutoCAM_PLANAR_MILL_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_PLANAR_MILL_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "PLANAR_MILL";
+            TmplateOper = E_TmplateOper.PLANAR_MILL;
         }
 
         /// <summary>

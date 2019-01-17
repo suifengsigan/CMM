@@ -9,12 +9,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 基准侧面
     /// </summary>
-    public class WsqAutoCAM_PLANAR_MILL_BASE_Oper:CAMOper
+    public class WsqAutoCAM_PLANAR_MILL_BASE_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_PLANAR_MILL_BASE_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "PLANAR_MILL_BASE";
+            TmplateOper = E_TmplateOper.PLANAR_MILL_BASE;
         }
 
         /// <summary>

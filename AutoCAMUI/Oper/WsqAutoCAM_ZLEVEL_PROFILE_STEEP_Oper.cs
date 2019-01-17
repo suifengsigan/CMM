@@ -8,12 +8,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 等高角度
     /// </summary>
-    public class WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper:CAMOper
+    public class WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "ZLEVEL_PROFILE_STEEP";
+            TmplateOper = E_TmplateOper.ZLEVEL_PROFILE_STEEP;
         }
 
         /// <summary>

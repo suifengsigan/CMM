@@ -12,7 +12,7 @@ namespace AutoCAMUI
     {
         public WsqAutoCAM_CONTOUR_AREA_Oper()
         {
-            AUTOCAM_SUBTYPE = "CONTOUR_AREA";
+            TmplateOper = E_TmplateOper.CONTOUR_AREA;
         }
 
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)

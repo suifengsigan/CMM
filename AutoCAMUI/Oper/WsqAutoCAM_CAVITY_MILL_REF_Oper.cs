@@ -8,12 +8,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 残料开粗
     /// </summary>
-    public class WsqAutoCAM_CAVITY_MILL_REF_Oper:CAMOper
+    public class WsqAutoCAM_CAVITY_MILL_REF_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_CAVITY_MILL_REF_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "CAVITY_MILL_REF";
+            TmplateOper = E_TmplateOper. CAVITY_MILL_REF;
         }
 
         /// <summary>

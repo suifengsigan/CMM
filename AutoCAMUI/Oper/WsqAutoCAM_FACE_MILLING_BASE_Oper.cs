@@ -8,12 +8,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 基准平面
     /// </summary>
-    public class WsqAutoCAM_FACE_MILLING_BASE_Oper : CAMOper
+    public class WsqAutoCAM_FACE_MILLING_BASE_Oper : WsqAutoCAM_Oper
     {
         public WsqAutoCAM_FACE_MILLING_BASE_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "FACE_MILLING_BASE";
+            TmplateOper = E_TmplateOper.FACE_MILLING_BASE;
         }
 
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT)

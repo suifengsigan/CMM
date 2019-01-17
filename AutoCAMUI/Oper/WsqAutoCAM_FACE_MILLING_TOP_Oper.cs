@@ -12,7 +12,7 @@ namespace AutoCAMUI
     {
         public WsqAutoCAM_FACE_MILLING_TOP_Oper()
         {
-            AUTOCAM_SUBTYPE = "FACE_MILLING_TOP";
+            TmplateOper = E_TmplateOper.FACE_MILLING_TOP;
         }
 
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT)

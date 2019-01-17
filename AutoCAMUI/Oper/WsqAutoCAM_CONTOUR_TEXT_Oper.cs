@@ -9,12 +9,11 @@ namespace AutoCAMUI
     /// <summary>
     /// 刻字
     /// </summary>
-    public class WsqAutoCAM_CONTOUR_TEXT_Oper:CAMOper
+    public class WsqAutoCAM_CONTOUR_TEXT_Oper:WsqAutoCAM_Oper
     {
         public WsqAutoCAM_CONTOUR_TEXT_Oper()
         {
-            AUTOCAM_TYPE = "WsqAutoCAM";
-            AUTOCAM_SUBTYPE = "CONTOUR_TEXT";
+            TmplateOper = E_TmplateOper.CONTOUR_TEXT;
         }
 
         /// <summary>

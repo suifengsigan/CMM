@@ -32,9 +32,11 @@ namespace AutoCAMUI
         /// 水平面
         /// </summary>
         public List<CAMFace> HorizontalFaces { get; private set; }
+        public CNCConfig.CAMConfig CamConfig { get; private set; }
         public Snap.Geom.Box3d BodyBox { get; private set; }
         public void Init(ElecManage.Electrode ele,CNCConfig.CAMConfig camConfig)
         {
+            CamConfig = camConfig;
             Electrode = ele;
 
             var body = ele.ElecBody;

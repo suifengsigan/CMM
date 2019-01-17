@@ -14,7 +14,7 @@ namespace AutoCAMUI
     {
         public WsqAutoCAM_CAVITY_MILL_G_Oper()
         {
-            AUTOCAM_SUBTYPE = "CAVITY_MILL_G";
+            TmplateOper = E_TmplateOper.CAVITY_MILL_G;
         }
 
         /// <summary>
