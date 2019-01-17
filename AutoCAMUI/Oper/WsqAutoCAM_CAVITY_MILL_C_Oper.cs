@@ -17,6 +17,13 @@ namespace AutoCAMUI
             TmplateOper = E_TmplateOper.CAVITY_MILL_C;
         }
 
+        protected override void AutoSet(CAMElectrode ele)
+        {
+            _SetPartStockAndFloorStock(ele.CamConfig.CAVITYPartStock, ele.CamConfig.CAVITYFloorStock);
+            SetCutLevels(ele.Electrode.BaseFace.NXOpenTag);
+            SetRegionStartPoints(ele.Electrode);
+        }
+
         /// <summary>
         /// 设置切削层
         /// </summary>

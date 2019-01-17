@@ -11,7 +11,7 @@ namespace AutoCAMUI
     public class CAMOper
     {
         protected NXOpen.UF.UFSession ufSession = NXOpen.UF.UFSession.GetUFSession();
-        public string AUTOCAM_TYPE { get; set; }
+        public string AUTOCAM_TYPE { get;protected set; }
         public string AUTOCAM_SUBTYPE { get { return GetEnumNameByKey(TmplateOper); } }
         public E_TmplateOper TmplateOper { get; protected set; }
         public CAMCutter CAMCutter { get; set; }
@@ -19,8 +19,7 @@ namespace AutoCAMUI
         public NXOpen.Tag ProgramGroup { get; set; }
         public NXOpen.Tag MethodGroupRoot { get; set; }
         public NXOpen.Tag OperTag { get; protected set; }
-        CAMElectrode _camElectrode { get; set; }
-        CNCConfig.CAMConfig _camConfig { get; set; }
+        
         /// <summary>
         /// 工序是否可用
         /// </summary>
@@ -91,15 +90,35 @@ namespace AutoCAMUI
                 if (camOper != null)
                 {
                     camOper.AutoAnalysis(ele, WorkGeometryGroup, ProgramGroup, MethodGroupRoot,cutter, refCutter);
+                    if (item.切深 > 0)
+                    {
+                        camOper.SetCutDepth(item.切深);
+                    }
+
+                    if (item.进给 > 0)
+                    {
+                        camOper.SetFeedRate(item.进给);
+                    } 
                 }
             }
             return result;
         }
 
         /// <summary>
+        /// 设置进给
+        /// </summary>
+        public virtual void SetFeedRate(double feedRate)
+        {
+            if (OperIsValid)
+            {
+                Helper.SetFeedRate(OperTag, feedRate);
+            }
+        }
+
+        /// <summary>
         /// 根据电极分析数据设置工序相关参数
         /// </summary>
-        public virtual void AutoSet(CAMElectrode ele)
+        protected virtual void AutoSet(CAMElectrode ele)
         {
 
         }
@@ -107,7 +126,7 @@ namespace AutoCAMUI
         /// <summary>
         /// 根据电极分析数据判断该工序是否可用
         /// </summary>
-        public virtual bool AnalysisOperIsValid(CAMElectrode ele)
+        protected virtual bool AnalysisOperIsValid(CAMElectrode ele)
         {
             return true;
         }
@@ -169,6 +188,9 @@ namespace AutoCAMUI
 
                 //设置进给率和速度
                 _SetFeedRate(CAMCutter.FeedRate, CAMCutter.Speed);
+
+                //设置切深
+                SetCutDepth(CAMCutter.CutDepth);
 
                 //设置横越(移刀)
                 Helper.SetFeedTraversal(OperTag, CAMCutter.FEED_TRAVERSAL);
