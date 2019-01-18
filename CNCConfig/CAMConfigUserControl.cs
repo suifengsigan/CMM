@@ -154,6 +154,58 @@ namespace CNCConfig
             dataGridView1.MouseDown += DataGridView1_MouseDown;
             dataGridView4.SelectionChanged += DataGridView4_SelectionChanged;
             cbCutterType.SelectedIndexChanged += CbCutterType_SelectedIndexChanged;
+            btnUp.Click += BtnUp_Click;
+            btnDown.Click += BtnDown_Click;
+        }
+
+        private void BtnDown_Click(object sender, EventArgs e)
+        {
+            var dataGridViewPSelection3 = dgv_Data;
+            var datasource3 = dataGridViewPSelection3.DataSource as List<CAMConfig.ProjectDetail> ?? new List<CAMConfig.ProjectDetail>();
+            bool temp = dataGridViewPSelection3.CurrentRow != null && dataGridViewPSelection3.CurrentRow.Index >= 0 && dataGridViewPSelection3.CurrentRow.Index < datasource3.Count;
+            var dataGridViewPSelection2 = dataGridView4;
+            if (dataGridViewPSelection2.CurrentRow != null && true)
+            {
+                var obj1 = dataGridViewPSelection2.CurrentRow.DataBoundItem as CAMConfig.ProjectInfo;
+                var obj = dataGridViewPSelection3.CurrentRow.DataBoundItem as CAMConfig.ProjectDetail;
+                if (obj != null)
+                {
+                    var dataIndex = datasource3.IndexOf(obj);
+                    dataIndex++;
+                    if (dataIndex <= datasource3.Count - 1)
+                    {
+                        datasource3.Remove(obj);
+                        datasource3.Insert(dataIndex, obj);
+                        obj1.Details = datasource3.ToList();
+                        dataGridViewPSelection3.DataSource = obj1.Details;
+                    }
+                }
+            }
+        }
+
+        private void BtnUp_Click(object sender, EventArgs e)
+        {
+            var dataGridViewPSelection3 = dgv_Data;
+            var datasource3 = dataGridViewPSelection3.DataSource as List<CAMConfig.ProjectDetail> ?? new List<CAMConfig.ProjectDetail>();
+            bool temp = dataGridViewPSelection3.CurrentRow != null && dataGridViewPSelection3.CurrentRow.Index >= 0 && dataGridViewPSelection3.CurrentRow.Index < datasource3.Count;
+            var dataGridViewPSelection2 = dataGridView4;
+            if (dataGridViewPSelection2.CurrentRow != null && true)
+            {
+                var obj1 = dataGridViewPSelection2.CurrentRow.DataBoundItem as CAMConfig.ProjectInfo;
+                var obj = dataGridViewPSelection3.CurrentRow.DataBoundItem as CAMConfig.ProjectDetail;
+                if (obj != null)
+                {
+                    var dataIndex = datasource3.IndexOf(obj);
+                    dataIndex--;
+                    if (dataIndex >= 0)
+                    {
+                        datasource3.Remove(obj);
+                        datasource3.Insert(dataIndex, obj);
+                        obj1.Details = datasource3.ToList();
+                        dataGridViewPSelection3.DataSource = obj1.Details;
+                    }
+                }
+            }
         }
 
         private void CbCutterType_SelectedIndexChanged(object sender, EventArgs e)

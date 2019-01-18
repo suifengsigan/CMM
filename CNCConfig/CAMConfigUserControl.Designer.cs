@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CAMConfigUserControl));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txtCAVITYFloorStock = new System.Windows.Forms.TextBox();
@@ -47,11 +48,14 @@
             this.cbCutterType = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.dgv_Data = new System.Windows.Forms.DataGridView();
             this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.dgv_Data = new System.Windows.Forms.DataGridView();
+            this.btnUp = new System.Windows.Forms.Button();
+            this.btnDown = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -60,10 +64,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Data)).BeginInit();
             this.panel4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Data)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -253,6 +258,7 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.dgv_Data);
+            this.tabPage4.Controls.Add(this.panel5);
             this.tabPage4.Controls.Add(this.panel4);
             this.tabPage4.Controls.Add(this.panel3);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -262,16 +268,6 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "方案管理";
             this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // dgv_Data
-            // 
-            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Data.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_Data.Location = new System.Drawing.Point(203, 67);
-            this.dgv_Data.Name = "dgv_Data";
-            this.dgv_Data.RowTemplate.Height = 23;
-            this.dgv_Data.Size = new System.Drawing.Size(594, 338);
-            this.dgv_Data.TabIndex = 2;
             // 
             // panel4
             // 
@@ -312,6 +308,44 @@
             this.panel3.TabIndex = 0;
             this.panel3.Visible = false;
             // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.btnDown);
+            this.panel5.Controls.Add(this.btnUp);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel5.Location = new System.Drawing.Point(708, 67);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(89, 338);
+            this.panel5.TabIndex = 3;
+            // 
+            // dgv_Data
+            // 
+            this.dgv_Data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Data.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv_Data.Location = new System.Drawing.Point(203, 67);
+            this.dgv_Data.Name = "dgv_Data";
+            this.dgv_Data.RowTemplate.Height = 23;
+            this.dgv_Data.Size = new System.Drawing.Size(505, 338);
+            this.dgv_Data.TabIndex = 4;
+            // 
+            // btnUp
+            // 
+            this.btnUp.Image = ((System.Drawing.Image)(resources.GetObject("btnUp.Image")));
+            this.btnUp.Location = new System.Drawing.Point(6, 43);
+            this.btnUp.Name = "btnUp";
+            this.btnUp.Size = new System.Drawing.Size(68, 73);
+            this.btnUp.TabIndex = 0;
+            this.btnUp.UseVisualStyleBackColor = true;
+            // 
+            // btnDown
+            // 
+            this.btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
+            this.btnDown.Location = new System.Drawing.Point(6, 205);
+            this.btnDown.Name = "btnDown";
+            this.btnDown.Size = new System.Drawing.Size(68, 73);
+            this.btnDown.TabIndex = 1;
+            this.btnDown.UseVisualStyleBackColor = true;
+            // 
             // CAMConfigUserControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -329,10 +363,11 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_Data)).EndInit();
             this.panel4.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_Data)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -350,7 +385,6 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.DataGridView dgv_Data;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView4;
@@ -363,5 +397,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtCAVITYPartStock;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.DataGridView dgv_Data;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Button btnDown;
+        private System.Windows.Forms.Button btnUp;
     }
 }
