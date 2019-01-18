@@ -15,6 +15,11 @@ namespace AutoCAMUI
             TmplateOper = E_TmplateOper.FLOWCUT_REF_TOOL;
         }
 
+        protected override void AutoSet(CAMElectrode ele)
+        {
+            SetMillArea(ele.Electrode);
+        }
+
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)
         {
             //base.SetCutDepth(depth, param_index);

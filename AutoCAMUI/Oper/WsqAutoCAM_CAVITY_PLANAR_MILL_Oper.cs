@@ -7,13 +7,18 @@ using SnapEx;
 namespace AutoCAMUI
 {
     /// <summary>
-    /// 基准台开粗
+    /// 基准台开粗（2D开粗基准）
     /// </summary>
     public class WsqAutoCAM_CAVITY_PLANAR_MILL_Oper : WsqAutoCAM_Oper
     {
         public WsqAutoCAM_CAVITY_PLANAR_MILL_Oper()
         {
             TmplateOper = E_TmplateOper.CAVITY_PLANAR_MILL;
+        }
+
+        protected override void AutoSet(CAMElectrode ele)
+        {
+            SetBoundaryAndCutFloor(ele.Electrode);
         }
 
         /// <summary>

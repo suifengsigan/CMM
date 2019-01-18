@@ -15,6 +15,16 @@ namespace AutoCAMUI
             TmplateOper = E_TmplateOper.FACE_MILLING;
         }
 
+        protected override void AutoSet(CAMElectrode ele)
+        {
+            SetBoundary(ele.HorizontalFaces);
+        }
+
+        protected override bool AnalysisOperIsValid(CAMElectrode ele)
+        {
+            return ele.HorizontalFaces.Count > 0;
+        }
+
         public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT)
         {
             if (OperIsValid)

@@ -15,6 +15,11 @@ namespace AutoCAMUI
             TmplateOper = E_TmplateOper.ZLEVEL_CORNER;
         }
 
+        protected override void AutoSet(CAMElectrode ele)
+        {
+            SetMillArea(ele.Electrode);
+        }
+
         /// <summary>
         /// 设置加工区域
         /// </summary>

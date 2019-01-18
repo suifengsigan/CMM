@@ -13,6 +13,11 @@ namespace AutoCAMUI
             TmplateOper = E_TmplateOper.PLANAR_MILL;
         }
 
+        protected override void AutoSet(CAMElectrode ele)
+        {
+            SetBoundaryAndCutFloor(ele.Electrode);
+        }
+
         /// <summary>
         /// 设置切深
         /// </summary>

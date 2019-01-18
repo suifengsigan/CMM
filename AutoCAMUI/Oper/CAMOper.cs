@@ -76,9 +76,74 @@ namespace AutoCAMUI
                         {
                             switch (GetEnumByKey(operConfig.模板名称))
                             {
+                                case E_TmplateOper.FACE_MILLING_TOP:
+                                    {
+                                        camOper = new WsqAutoCAM_FACE_MILLING_TOP_Oper();
+                                        break;
+                                    }
                                 case E_TmplateOper.CAVITY_MILL_C:
                                     {
                                         camOper = new WsqAutoCAM_CAVITY_MILL_C_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.CAVITY_PLANAR_MILL:
+                                    {
+                                        camOper = new WsqAutoCAM_CAVITY_PLANAR_MILL_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.CAVITY_MILL_REF:
+                                    {
+                                        camOper = new WsqAutoCAM_CAVITY_MILL_REF_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.FACE_MILLING_BASE:
+                                    {
+                                        camOper = new WsqAutoCAM_FACE_MILLING_BASE_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.FACE_MILLING:
+                                    {
+                                        camOper = new WsqAutoCAM_FACE_MILLING_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.PLANAR_MILL_BASE:
+                                    {
+                                        camOper = new WsqAutoCAM_PLANAR_MILL_BASE_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.PLANAR_MILL:
+                                    {
+                                        camOper = new WsqAutoCAM_PLANAR_MILL_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.ZLEVEL_PROFILE_STEEP:
+                                    {
+                                        camOper = new WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.ZLEVEL_CORNER:
+                                    {
+                                        camOper = new WsqAutoCAM_ZLEVEL_CORNER_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.CONTOUR_AREA_NON_STEEP:
+                                    {
+                                        camOper=new WsqAutoCAM_CONTOUR_AREA_NON_STEEP_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.FLOWCUT_REF_TOOL:
+                                    {
+                                        camOper = new WsqAutoCAM_FLOWCUT_REF_TOOL_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.FACE_MILLING_CORNER:
+                                    {
+                                        camOper = new WsqAutoCAM_FACE_MILLING_CORNER_Oper();
+                                        break;
+                                    }
+                                case E_TmplateOper.CONTOUR_TEXT:
+                                    {
+                                        camOper = new WsqAutoCAM_CONTOUR_TEXT_Oper();
                                         break;
                                     }
                             }
@@ -143,7 +208,7 @@ namespace AutoCAMUI
                 CreateOper(WorkGeometryGroup, ProgramGroup, MethodGroupRoot, CAMCutter);
                 if (refCAMCutter != null)
                 {
-                    _SetReferenceCutter(refCAMCutter);
+                    SetReferenceCutter(refCAMCutter);
                 }
                 AutoSet(ele);
             }
@@ -305,7 +370,7 @@ namespace AutoCAMUI
         /// 设置参考刀具
         /// </summary>
         /// <param name="cutter"></param>
-        protected virtual void _SetReferenceCutter(CAMCutter cutter)
+        public virtual void SetReferenceCutter(CAMCutter cutter)
         {
             Helper.SetReferenceCutter(OperTag, cutter.CutterTag);
         }

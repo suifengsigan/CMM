@@ -15,13 +15,9 @@ namespace AutoCAMUI
             TmplateOper = E_TmplateOper. CAVITY_MILL_REF;
         }
 
-        /// <summary>
-        /// 设置参考刀具
-        /// </summary>
-        /// <param name="cutter">参考刀具</param>
-        public void SetReferenceCutter(CAMCutter cutter)
+        protected override void AutoSet(CAMElectrode ele)
         {
-            _SetReferenceCutter(cutter);
+            SetCutLevels(ele.Electrode);
         }
 
         /// <summary>
