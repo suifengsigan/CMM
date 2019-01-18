@@ -313,9 +313,9 @@
             this.panel5.Controls.Add(this.btnDown);
             this.panel5.Controls.Add(this.btnUp);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel5.Location = new System.Drawing.Point(708, 67);
+            this.panel5.Location = new System.Drawing.Point(719, 67);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(89, 338);
+            this.panel5.Size = new System.Drawing.Size(78, 338);
             this.panel5.TabIndex = 3;
             // 
             // dgv_Data
@@ -325,24 +325,24 @@
             this.dgv_Data.Location = new System.Drawing.Point(203, 67);
             this.dgv_Data.Name = "dgv_Data";
             this.dgv_Data.RowTemplate.Height = 23;
-            this.dgv_Data.Size = new System.Drawing.Size(505, 338);
+            this.dgv_Data.Size = new System.Drawing.Size(516, 338);
             this.dgv_Data.TabIndex = 4;
             // 
             // btnUp
             // 
             this.btnUp.Image = ((System.Drawing.Image)(resources.GetObject("btnUp.Image")));
-            this.btnUp.Location = new System.Drawing.Point(6, 43);
+            this.btnUp.Location = new System.Drawing.Point(20, 46);
             this.btnUp.Name = "btnUp";
-            this.btnUp.Size = new System.Drawing.Size(68, 73);
+            this.btnUp.Size = new System.Drawing.Size(39, 42);
             this.btnUp.TabIndex = 0;
             this.btnUp.UseVisualStyleBackColor = true;
             // 
             // btnDown
             // 
             this.btnDown.Image = ((System.Drawing.Image)(resources.GetObject("btnDown.Image")));
-            this.btnDown.Location = new System.Drawing.Point(6, 205);
+            this.btnDown.Location = new System.Drawing.Point(20, 243);
             this.btnDown.Name = "btnDown";
-            this.btnDown.Size = new System.Drawing.Size(68, 73);
+            this.btnDown.Size = new System.Drawing.Size(39, 38);
             this.btnDown.TabIndex = 1;
             this.btnDown.UseVisualStyleBackColor = true;
             // 

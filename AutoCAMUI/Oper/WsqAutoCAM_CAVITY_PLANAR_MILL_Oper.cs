@@ -24,9 +24,9 @@ namespace AutoCAMUI
         /// <summary>
         /// 设置切深步距
         /// </summary>
-        public override void SetCutDepth(double depth,int param_index= NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_MAX_DEPTH)
+        public override void SetCutDepth(double depth)
         {
-            base.SetCutDepth(depth, param_index);
+            _SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_MAX_DEPTH);
         }
 
         /// <summary>

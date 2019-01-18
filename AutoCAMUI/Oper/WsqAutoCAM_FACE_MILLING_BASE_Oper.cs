@@ -20,9 +20,9 @@ namespace AutoCAMUI
             SetBoundary(ele.Electrode);
         }
 
-        public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT)
+        public override void SetCutDepth(double depth)
         {
-            base.SetCutDepth(depth, param_index);
+           _SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT);
         }
 
         /// <summary>

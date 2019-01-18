@@ -8,7 +8,7 @@ namespace AutoCAMUI
     /// <summary>
     /// 加工工序类
     /// </summary>
-    public class CAMOper
+    public class CAMOper : ICAMOper
     {
         protected NXOpen.UF.UFSession ufSession = NXOpen.UF.UFSession.GetUFSession();
         public string AUTOCAM_TYPE { get;protected set; }
@@ -65,7 +65,7 @@ namespace AutoCAMUI
                 {
                     throw new Exception("配置工具方案工序配置异常！");
                 }
-                CAMOper camOper = null;
+                ICAMOper camOper = null;
                 switch (operConfig.模版类型)
                 {
                     case CNCConfig.CAMConfig.S_OperationTemplate.EACT_AUTOCAM:
@@ -283,9 +283,9 @@ namespace AutoCAMUI
         /// 设置切深/步距
         /// </summary>
         /// <param name="depth"></param>
-        public virtual void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH)
+        public virtual void SetCutDepth(double depth)
         {
-            _SetCutDepth(depth, param_index);
+            _SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH);
         }
 
         /// <summary>

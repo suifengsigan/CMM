@@ -25,11 +25,11 @@ namespace AutoCAMUI
             return ele.HorizontalFaces.Count > 0;
         }
 
-        public override void SetCutDepth(double depth, int param_index = NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT)
+        public override void SetCutDepth(double depth)
         {
             if (OperIsValid)
             {
-                base.SetCutDepth(depth, param_index);
+                _SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_DEPTH_PER_CUT);
             }
         }
 

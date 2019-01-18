@@ -83,6 +83,7 @@
     <Compile Include="Oper\CAMOper.cs" />
     <Compile Include="EleAutoCamUI.cs" />
     <Compile Include="Helper.cs" />
+    <Compile Include="Oper\ICAMOper.cs" />
     <Compile Include="Oper\WsqAutoCAM_CAVITY_MILL_G_Oper.cs" />
     <Compile Include="UIBusiness.cs" />
     <Compile Include="Upload.cs" />
