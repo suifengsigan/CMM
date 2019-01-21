@@ -70,6 +70,14 @@ namespace AutoCAMUI
                 {
                     case CNCConfig.CAMConfig.S_OperationTemplate.EACT_AUTOCAM:
                         {
+                            switch (GetEnumByKey(operConfig.模板名称))
+                            {
+                                case E_TmplateOper.FACE_MILLING_KC:
+                                    {
+                                        camOper = new JYTools_FACE_MILLING_KC_Oper();
+                                        break;
+                                    }
+                            }
                             break;
                         }
                     default:
@@ -470,6 +478,10 @@ namespace AutoCAMUI
         /// <summary>
         /// 平面清角
         /// </summary>
-        FACE_MILLING_CORNER
+        FACE_MILLING_CORNER,
+        /// <summary>
+        /// 简易工具箱杀顶
+        /// </summary>
+        FACE_MILLING_KC
     }
 }
