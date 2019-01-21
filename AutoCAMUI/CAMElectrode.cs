@@ -32,6 +32,10 @@ namespace AutoCAMUI
         /// 水平面
         /// </summary>
         public List<CAMFace> HorizontalFaces { get; private set; }
+        /// <summary>
+        /// 平缓面
+        /// </summary>
+        public List<CAMFace> GentleFaces { get; private set; }
         public CNCConfig.CAMConfig CamConfig { get; private set; }
         public Snap.Geom.Box3d BodyBox { get; private set; }
         public void Init(ElecManage.Electrode ele,CNCConfig.CAMConfig camConfig)
@@ -59,7 +63,7 @@ namespace AutoCAMUI
             //水平面
             HorizontalFaces = camFaces.Where(u => u.DraftAngle == 90 && u.GetSnapFace().ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
             //平缓面（等高面）
-            var gentleFaces = camFaces.Where(u =>
+            GentleFaces = camFaces.Where(u =>
             (u.DraftAngle >= judgeValue && u.DraftAngle < 90)
             ||
             (u.DraftAngle == 90 && u.GetSnapFace().ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane)
@@ -88,7 +92,7 @@ namespace AutoCAMUI
                 u.SetColor(camConfig.HorizontalPlaneColor);
             });
             //设置平缓面颜色
-            gentleFaces.ForEach(u => {
+            GentleFaces.ForEach(u => {
                 u.SetColor(camConfig.GentlePlaneColor);
             });
             //设置陡峭面颜色

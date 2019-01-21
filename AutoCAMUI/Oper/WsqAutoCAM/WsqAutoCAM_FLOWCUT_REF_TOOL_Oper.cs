@@ -17,12 +17,23 @@ namespace AutoCAMUI
 
         protected override void AutoSet(CAMElectrode ele)
         {
-            SetMillArea(ele.Electrode);
+            SetMillArea(ele);
         }
 
         public override void SetCutDepth(double depth)
         {
             //_SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH);
+        }
+
+        public void SetMillArea(CAMElectrode ele)
+        {
+            var faces = ele.Electrode.ElecHeadFaces.Where(u => u.ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
+            var tags = Enumerable.Select(faces, u => u.NXOpenTag).ToList();
+            ele.GentleFaces.ForEach(u => {
+                tags.Add(u.FaceTag);
+            });
+            tags = tags.Distinct().ToList();
+            Helper.SetCamgeom(NXOpen.UF.CamGeomType.CamCutArea, OperTag, tags);
         }
 
         /// <summary>
