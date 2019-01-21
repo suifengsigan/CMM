@@ -843,6 +843,7 @@ namespace AutoCAMUI
             , out List<List<NXOpen.Tag>> innerCircumference
             )
         {
+            var tolerance = 0.1;
             Tag[] tagArray;
             ufSession.Modl.AskFaceEdges(face.NXOpenTag, out tagArray);
             var edges = Enumerable.Select(tagArray, u => Snap.NX.Edge.Wrap(u)).ToList();
@@ -854,7 +855,7 @@ namespace AutoCAMUI
                 bool isHas = false;
                 foreach (var item in innerCircumference)
                 {
-                    isHas = item.Where(u => Snap.Compute.Distance(edge, Snap.NX.NXObject.Wrap(u)) <= SnapEx.Helper.Tolerance).Count() > 0;
+                    isHas = item.Where(u => Snap.Compute.Distance(edge, Snap.NX.NXObject.Wrap(u)) <= tolerance).Count() > 0;
                     if (isHas)
                     {
                         item.Add(edge.NXOpenTag);
@@ -863,7 +864,7 @@ namespace AutoCAMUI
                 }
                 if (!isHas)
                 {
-                    var tmpEdges = edges.Where(u => Snap.Compute.Distance(edge, u) <= SnapEx.Helper.Tolerance);
+                    var tmpEdges = edges.Where(u => Snap.Compute.Distance(edge, u) <= tolerance);
                     tmpEdges.ToList().ForEach(u => {
                         edges.Remove(u);
                         edges.Insert(0, u);
