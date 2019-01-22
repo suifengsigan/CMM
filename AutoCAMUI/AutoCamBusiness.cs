@@ -142,7 +142,15 @@ namespace AutoCAMUI
                 ufSession.Obj.SetName(programGroupTag,string.Format("{0}-{1}", eleInfo.Elec_Name,type));
                 ufSession.Ncgroup.AcceptMember(orderGroupRootTag, programGroupTag);
 
-                CAMOper.CreateCamOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, cutterGroupRootTag, ele, projectConfig, cutters, fireNum);
+                var list=CAMOper.CreateCamOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, cutterGroupRootTag, ele, projectConfig, cutters, fireNum);
+                list = list.Where(u => u.OperIsValid).ToList();
+                list.ForEach(u => {
+                    var exMsg = u.PathGenerate();
+                    if (!string.IsNullOrEmpty(exMsg))
+                    {
+                        Helper.ShowInfoWindow(exMsg);
+                    }
+                });
             };
 
             if (eleInfo.FINISH_NUMBER > 0)  //精

@@ -44,7 +44,7 @@ namespace AutoCAMUI
         /// </summary>
         public double FRIENUM { get; set; }
 
-        public static List<CAMOper> CreateCamOper(
+        public static List<ICAMOper> CreateCamOper(
             NXOpen.Tag WorkGeometryGroup,
             NXOpen.Tag ProgramGroup, 
             NXOpen.Tag MethodGroupRoot,
@@ -55,7 +55,7 @@ namespace AutoCAMUI
             double fireNum
             )
         {
-            var result = new List<CAMOper>();
+            var result = new List<ICAMOper>();
             foreach (var item in project.Details)
             {
                 var operConfig = ele.CamConfig.Operations.FirstOrDefault(m => m.显示名称 == item.工序);
@@ -177,6 +177,7 @@ namespace AutoCAMUI
 
                 if (camOper != null)
                 {
+                    result.Add(camOper);
                     camOper.FRIENUM = fireNum;
                     camOper.AutoAnalysis(ele, WorkGeometryGroup, ProgramGroup, MethodGroupRoot,cutter, refCutter);
                     if (item.切深 > 0)
