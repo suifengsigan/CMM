@@ -59,9 +59,13 @@ namespace AutoCAMUI
             //基准面
             AllBaseFaces = faces.Where(u => camFaces.FirstOrDefault(m => m.FaceTag == u.NXOpenTag) == null).ToList();
             //垂直面
-            VerticalFaces = camFaces.Where(u => u.DraftAngle == 0 && u.GetSnapFace().ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
+            VerticalFaces = camFaces.Where(u => u.DraftAngle == 0 
+            //&& u.GetSnapFace().ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane
+            ).ToList();
             //水平面
-            HorizontalFaces = camFaces.Where(u => u.DraftAngle == 90 && u.GetSnapFace().ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
+            HorizontalFaces = camFaces.Where(u => u.DraftAngle == 90 
+            && u.GetSnapFace().ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane
+            ).ToList();
             //平缓面（等高面）
             GentleFaces = camFaces.Where(u =>
             (u.DraftAngle >= judgeValue && u.DraftAngle < 90)
@@ -71,8 +75,8 @@ namespace AutoCAMUI
             //陡峭面
             var steepFaces = camFaces.Where(u =>
             (u.DraftAngle < judgeValue && u.DraftAngle > 0)
-            ||
-            (u.DraftAngle == 0 && u.GetSnapFace().ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane)
+            //||
+            //(u.DraftAngle == 0 && u.GetSnapFace().ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane)
             ).ToList();
             //倒扣面
             ButtonedFaces = camFaces.Where(u => u.DraftAngle < 0).ToList();
