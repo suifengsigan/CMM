@@ -500,6 +500,22 @@ namespace AutoCAMUI
         }
 
         /// <summary>
+        /// 设置Z偏置（骗刀Z）
+        /// </summary>
+        public static void SetZoffset(NXOpen.Tag operTag, double value)
+        {
+            Session theSession = Session.GetSession();
+            Part workPart = theSession.Parts.Work;
+            Part displayPart = theSession.Parts.Display;
+            var oper = NXOpen.Utilities.NXObjectManager.Get(operTag) as NXOpen.CAM.Operation;
+            var zLevelMillingBuilder1 = workPart.CAMSetup.CAMOperationCollection.CreatePlanarMillingBuilder(oper);
+            zLevelMillingBuilder1.ToolChangeSetting.Zoffset.Value = value;
+            NXObject nXObject1;
+            nXObject1 = zLevelMillingBuilder1.Commit();
+            zLevelMillingBuilder1.Destroy();
+        }
+
+        /// <summary>
         /// 设置横越(移刀)
         /// </summary>
         public static void SetFeedTraversal(NXOpen.Tag operTag, double value)
