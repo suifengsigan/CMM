@@ -190,8 +190,9 @@ namespace AutoCAMUI
                         camCutter.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
                         camCutter.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
                         camCutter.CutterName = cutterConfig.刀具名称 + (f != 0 ? f.ToString() : "");
-                        camCutter.TL_DIAMETER = double.Parse(cutterConfig.直径) - (f * 2);
-                        camCutter.TL_COR1_RAD = double.Parse(cutterConfig.R角) - f;
+                        camCutter.TL_DIAMETER = double.Parse(cutterConfig.直径) + (f * 2);
+                        camCutter.TL_COR1_RAD = double.Parse(cutterConfig.R角) + f;
+                        camCutter.TL_COR1_RAD = camCutter.TL_COR1_RAD < 0 ? 0 : camCutter.TL_COR1_RAD;
                         camCutter.TL_HEIGHT = double.Parse(cutterConfig.刀长);
                         camCutter.TL_FLUTE_LN = double.Parse(cutterConfig.刃长);
                         camCutter.TL_NUMBER = int.Parse(cutterConfig.刀号);
