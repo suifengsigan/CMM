@@ -65,6 +65,12 @@ namespace CNCConfig
         /// 开粗底部余量
         /// </summary>
         public double CAVITYFloorStock = 0.1;
+        public double AutoBlankXPlus = 4.0;
+        public double AutoBlankXReduce = 4.0;
+        public double AutoBlankYPlus = 4.0;
+        public double AutoBlankYReduce = 4.0;
+        public double AutoBlankZPlus = 0.2;
+        public double AutoBlankZReduce = 0;
         /// <summary>
         /// 火花位类型
         /// </summary>

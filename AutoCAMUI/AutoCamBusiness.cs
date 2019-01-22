@@ -82,7 +82,7 @@ namespace AutoCAMUI
         {
             //安全距离
             var safeDistance = 10;
-            var autoBlankOffset = new double[] { 2, 2, 2, 2, 2, 0 };
+            var autoBlankOffset = new double[] { camConfig.AutoBlankXPlus, camConfig.AutoBlankXReduce, camConfig.AutoBlankYPlus, camConfig.AutoBlankYReduce, camConfig.AutoBlankZPlus, camConfig.AutoBlankZReduce };
             var eleInfo = ele.Electrode.GetElectrodeInfo();
             var bodyBox = ele.BodyBox;
 
