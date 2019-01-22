@@ -737,6 +737,7 @@ namespace AutoCAMUI
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_HEIGHT, item.TL_HEIGHT);
                 ufSession.Param.SetDoubleValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_FLUTE_LN,item.TL_FLUTE_LN);
                 ufSession.Param.SetIntValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_NUMBER, item.TL_NUMBER);
+                ufSession.Param.SetIntValue(cutterTag, NXOpen.UF.UFConstants.UF_PARAM_TL_ADJ_REG, item.TL_ADJ_REG);
                 item.CutterTag = cutterTag;
                 result.Add(item);
             }

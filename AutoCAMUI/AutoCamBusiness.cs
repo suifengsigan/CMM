@@ -196,6 +196,7 @@ namespace AutoCAMUI
                         camCutter.TL_HEIGHT = double.Parse(cutterConfig.刀长);
                         camCutter.TL_FLUTE_LN = double.Parse(cutterConfig.刃长);
                         camCutter.TL_NUMBER = int.Parse(cutterConfig.刀号);
+                        camCutter.TL_ADJ_REG = int.Parse(cutterConfig.补正号);
                         camCutter.Speed = double.Parse(cutterConfig.转速);
                         camCutter.FeedRate = double.Parse(cutterConfig.进给);
                         camCutter.FEED_TRAVERSAL = double.Parse(cutterConfig.横越);

@@ -41,6 +41,10 @@ namespace AutoCAMUI
         /// </summary>
         public int TL_NUMBER { get; set; }
         /// <summary>
+        /// 补偿寄存器（补正号）
+        /// </summary>
+        public int TL_ADJ_REG { get; set; }
+        /// <summary>
         /// 横越(移刀)
         /// </summary>
         public double FEED_TRAVERSAL = 9990;
