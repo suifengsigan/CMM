@@ -51,7 +51,8 @@ namespace AutoCAMUI
             NXOpen.Tag cutterGroupRootTag,
             CAMElectrode ele,
             CNCConfig.CAMConfig.ProjectInfo project,
-            List<CAMCutter> cutterDetails
+            List<CAMCutter> cutterDetails,
+            double fireNum
             )
         {
             var result = new List<CAMOper>();
@@ -162,6 +163,7 @@ namespace AutoCAMUI
 
                 if (camOper != null)
                 {
+                    camOper.FRIENUM = fireNum;
                     camOper.AutoAnalysis(ele, WorkGeometryGroup, ProgramGroup, MethodGroupRoot,cutter, refCutter);
                     if (item.切深 > 0)
                     {

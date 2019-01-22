@@ -7,6 +7,9 @@ namespace AutoCAMUI
         string AUTOCAM_SUBTYPE { get; }
         string AUTOCAM_TYPE { get; }
         CAMCutter CAMCutter { get; set; }
+        /// <summary>
+        /// 火花位
+        /// </summary>
         double FRIENUM { get; set; }
         Tag MethodGroupRoot { get; set; }
         bool OperIsValid { get; }

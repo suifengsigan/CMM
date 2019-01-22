@@ -142,7 +142,7 @@ namespace AutoCAMUI
                 ufSession.Obj.SetName(programGroupTag,string.Format("{0}-{1}", eleInfo.Elec_Name,type));
                 ufSession.Ncgroup.AcceptMember(orderGroupRootTag, programGroupTag);
 
-                CAMOper.CreateCamOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, cutterGroupRootTag, ele, projectConfig, cutters);
+                CAMOper.CreateCamOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, cutterGroupRootTag, ele, projectConfig, cutters, fireNum);
             };
 
             if (eleInfo.FINISH_NUMBER > 0)  //精
@@ -163,6 +163,7 @@ namespace AutoCAMUI
 
         public static List<CAMCutter> CreateCutter(CAMElectrode ele, CNCConfig.CAMConfig camConfig, NXOpen.Tag cutterGroupRootTag,out CNCConfig.CAMConfig.ProjectInfo project)
         {
+            var eleInfo = ele.Electrode.GetElectrodeInfo();
             List<CAMCutter> result = new List<CAMCutter>();
             var info = ele.Electrode.GetElectrodeInfo();
             var cutterConfigs = camConfig.FindCutterInfo(info.MAT_NAME);
@@ -184,20 +185,39 @@ namespace AutoCAMUI
                 var cutterConfig = cutterConfigs.FirstOrDefault(m => m.刀具名称 == item);
                 if (cutterConfig != null)
                 {
-                    var camCutter = new CAMCutter();
-                    camCutter.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-                    camCutter.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-                    camCutter.CutterName = cutterConfig.刀具名称;
-                    camCutter.TL_DIAMETER = double.Parse(cutterConfig.直径);
-                    camCutter.TL_COR1_RAD = double.Parse(cutterConfig.R角);
-                    camCutter.TL_HEIGHT = double.Parse(cutterConfig.刀长);
-                    camCutter.TL_FLUTE_LN = double.Parse(cutterConfig.刃长);
-                    camCutter.TL_NUMBER = int.Parse(cutterConfig.刀号);
-                    camCutter.Speed = double.Parse(cutterConfig.转速);
-                    camCutter.FeedRate = double.Parse(cutterConfig.进给);
-                    camCutter.FEED_TRAVERSAL = double.Parse(cutterConfig.横越);
-                    camCutter.CutDepth = double.Parse(cutterConfig.切深);
-                    result.Add(camCutter);
+                    Action<double> action = (f) => {
+                        var camCutter = new CAMCutter();
+                        camCutter.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
+                        camCutter.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
+                        camCutter.CutterName = cutterConfig.刀具名称 + (f != 0 ? f.ToString() : "");
+                        camCutter.TL_DIAMETER = double.Parse(cutterConfig.直径) - (f * 2);
+                        camCutter.TL_COR1_RAD = double.Parse(cutterConfig.R角) - f;
+                        camCutter.TL_HEIGHT = double.Parse(cutterConfig.刀长);
+                        camCutter.TL_FLUTE_LN = double.Parse(cutterConfig.刃长);
+                        camCutter.TL_NUMBER = int.Parse(cutterConfig.刀号);
+                        camCutter.Speed = double.Parse(cutterConfig.转速);
+                        camCutter.FeedRate = double.Parse(cutterConfig.进给);
+                        camCutter.FEED_TRAVERSAL = double.Parse(cutterConfig.横越);
+                        camCutter.CutDepth = double.Parse(cutterConfig.切深);
+                        result.Add(camCutter);
+                    };
+
+                    action(0);
+
+                    if (eleInfo.FINISH_NUMBER > 0)  //精
+                    {
+                        action(eleInfo.FINISH_SPACE);
+                    }
+
+                    if (eleInfo.MIDDLE_NUMBER > 0)  //中
+                    {
+                        action(eleInfo.MIDDLE_SPACE);
+                    }
+
+                    if (eleInfo.ROUGH_NUMBER > 0)  //粗
+                    {
+                        action(eleInfo.ROUGH_SPACE);
+                    }
                 }
                 else
                 {
