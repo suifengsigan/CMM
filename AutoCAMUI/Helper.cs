@@ -679,7 +679,7 @@ namespace AutoCAMUI
         /// </summary>
         public static void SetCutLevels(NXOpen.Tag operTag,NXOpen.Tag faceTag , int levelsPosition = 1)
         {
-            double zLevels = Snap.NX.Face.Wrap(faceTag).BoxEx().MaxZ;
+            double zLevels = Snap.NX.Face.Wrap(faceTag).GetCenterPointEx().Z;
             NXOpen.UF.UFCutLevels.CutLevelsStruct cut_levels;
             ufSession.CutLevels.SetRangeType(operTag, NXOpen.UF.ParamClvRangeType.ParamClvRangeUserDefined, out cut_levels);
             var cut_levels_ptr_addr = new NXOpen.UF.UFCutLevels.CutLevelsStruct[] { cut_levels };
