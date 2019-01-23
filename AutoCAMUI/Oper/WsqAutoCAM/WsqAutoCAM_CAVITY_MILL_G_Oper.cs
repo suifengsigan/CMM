@@ -17,26 +17,12 @@ namespace AutoCAMUI
             TmplateOper = E_TmplateOper.CAVITY_MILL_G;
         }
 
-        /// <summary>
-        /// 设置切削层
-        /// </summary>
-        public void SetCutLevels(Tag faceTag, levelsPosition levelsPosition = levelsPosition.BottomLevel)
+        protected override void AutoSet(CAMElectrode ele)
         {
-            _SetCutLevels(faceTag, levelsPosition);
+            _SetPartStockAndFloorStock(ele.CamConfig.CAVITYPartStock, ele.CamConfig.CAVITYFloorStock);
+            _SetCutLevels(ele);
+            _SetRegionStartPoints(ele.Electrode);
         }
-
-        /// <summary>
-        /// 设置非切削移动 区域起点
-        /// </summary>
-        public void SetRegionStartPoints(ElecManage.Electrode electrode)
-        {
-            var baseFace = electrode.BaseFace;
-            var result = baseFace.GetCenterPointEx();
-            var box = electrode.ElecBody.Box;
-            var info = electrode.GetElectrodeInfo();
-            result.X = System.Math.Abs(box.MaxX - box.MinX);
-            result.Z = System.Math.Abs(info.HEADPULLUPH);
-            Helper.SetRegionStartPoints(OperTag, result);
-        }
+      
     }
 }

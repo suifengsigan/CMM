@@ -58,7 +58,10 @@ namespace AutoCAMUI
                 if (ele != null)
                 {
                     ele.InitAllFace();
-                    AutoCAMUI.Helper.AutoCAM(ele);
+                    var camConfig = CNCConfig.CAMConfig.GetInstance();
+                    var camEle = new AutoCAMUI.CAMElectrode();
+                    camEle.Init(ele, camConfig);
+                    AutoCam(camEle, camConfig);
                     Helper.ShowMsg(string.Format("{0}自动编程完成", name));
                 }
             }

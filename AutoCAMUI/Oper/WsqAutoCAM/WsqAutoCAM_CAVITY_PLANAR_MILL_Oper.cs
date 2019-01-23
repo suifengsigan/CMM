@@ -19,6 +19,7 @@ namespace AutoCAMUI
         protected override void AutoSet(CAMElectrode ele)
         {
             SetBoundaryAndCutFloor(ele.Electrode);
+            _SetRegionStartPoints(ele.Electrode);
         }
 
         /// <summary>

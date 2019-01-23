@@ -46,7 +46,7 @@ namespace AutoCAMUI
             var body = ele.ElecBody;
             var basePos = ele.GetElecBasePos();
             var eleInfo = ele.GetElectrodeInfo();
-            BodyBox = body.AcsToWcsBox3d(new Snap.Orientation(-ele.BaseFace.GetFaceDirection()));
+            BodyBox = body.Box ;
 
             //分析面
             var faces = ele.ElecBody.Faces;

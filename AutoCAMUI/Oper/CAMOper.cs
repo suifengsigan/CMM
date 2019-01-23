@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SnapEx;
 
 namespace AutoCAMUI
 {
@@ -386,9 +387,21 @@ namespace AutoCAMUI
         /// <summary>
         /// 设置切削层
         /// </summary>
-        protected virtual void _SetCutLevels(NXOpen.Tag faceTag, levelsPosition levelsPosition= levelsPosition.BottomLevel)
+        protected virtual void _SetCutLevels(CAMElectrode ele)
         {
-            Helper.SetCutLevels(OperTag, faceTag, (int)levelsPosition);
+            if (OperIsValid)
+            {
+                var zLevels = new List<double>();
+                zLevels.Add(ele.BodyBox.MaxZ);
+                var hFace = ele.HorizontalFaces.OrderBy(u => u.GetSnapFace().GetCenterPointEx().Z).FirstOrDefault();
+                if (hFace != null)
+                {
+                    zLevels.Add(hFace.GetSnapFace().GetCenterPointEx().Z);
+                }
+                zLevels.Add(ele.Electrode.BaseFace.GetCenterPointEx().Z);
+                zLevels = zLevels.OrderByDescending(u => u).ToList();
+                Helper.SetCutLevels(OperTag, zLevels, (int)levelsPosition.BottomLevel);
+            }
         }
 
         /// <summary>
@@ -398,6 +411,23 @@ namespace AutoCAMUI
         public virtual void SetReferenceCutter(CAMCutter cutter)
         {
             Helper.SetReferenceCutter(OperTag, cutter.CutterTag);
+        }
+
+        /// <summary>
+        /// 设置非切削移动 区域起点
+        /// </summary>
+        protected void _SetRegionStartPoints(ElecManage.Electrode electrode)
+        {
+            if (OperIsValid)
+            {
+                var baseFace = electrode.BaseFace;
+                var result = baseFace.GetCenterPointEx();
+                var box = electrode.ElecBody.Box;
+                var info = electrode.GetElectrodeInfo();
+                result.X = System.Math.Abs(box.MaxX - box.MinX);
+                result.Z = System.Math.Abs(info.HEADPULLUPH);
+                Helper.SetRegionStartPoints(OperTag, result);
+            }
         }
 
         /// <summary>

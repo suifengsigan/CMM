@@ -85,422 +85,47 @@ namespace AutoCAMUI
             return result;
         }
 
-        public static void AutoCAM(ElecManage.Electrode ele)
-        {
-            var camConfig = CNCConfig.CAMConfig.GetInstance();
-            var body = ele.ElecBody;
-            var basePos = ele.GetElecBasePos();
-            var eleInfo = ele.GetElectrodeInfo();
-            var bodyBox = body.AcsToWcsBox3d(new Snap.Orientation(-ele.BaseFace.GetFaceDirection()));
-            var autoBlankOffset = new double[] { 2, 2, 2, 2, 2, 0 };
-            var safeDistance = 10;
+        //public static void AutoCAM(ElecManage.Electrode ele)
+        //{
+        //    camOpers.ForEach(u => {
+        //        if (u.OperIsValid)
+        //        {
+        //            string name;
+        //            ufSession.Obj.AskName(u.OperTag, out name);
+        //            ShowInfoWindow(string.Format("{0}:{1}", name, u.IsPathGouged() ? "过切" : "未过切"));
+        //        }
+        //    });
 
-            //分析面
-            var faces = ele.ElecBody.Faces;
-            double judgeValue = 15;
-            var camFaces = new List<CAMFace>();
-            ele.ElecHeadFaces.ForEach(u => {
-                camFaces.Add(new CAMFace { FaceTag = u.NXOpenTag, DraftAngle = u.GetDraftAngle() });
-            });
+        //    //获取后处理器列表
+        //    string[] names;
+        //    int count;
+        //    ufSession.Cam.OptAskPostNames(out count, out names);
+        //    var postName = "铜电极-自动换刀";
+        //    var extension = "nc";
 
-            //基准面
-            var allBaseFaces = faces.Where(u => camFaces.FirstOrDefault(m => m.FaceTag == u.NXOpenTag) == null).ToList();
-            //垂直面
-            var verticalFaces = camFaces.Where(u => u.DraftAngle == 0 && u.GetSnapFace().ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
-            //水平面
-            var horizontalFaces = camFaces.Where(u => u.DraftAngle == 90 && u.GetSnapFace().ObjectSubType == Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
-            //平缓面（等高面）
-            var gentleFaces = camFaces.Where(u =>
-            (u.DraftAngle >= judgeValue && u.DraftAngle < 90)
-            ||
-            (u.DraftAngle == 90 && u.GetSnapFace().ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane)
-            ).ToList();
-            //陡峭面
-            var steepFaces = camFaces.Where(u =>
-            (u.DraftAngle < judgeValue && u.DraftAngle > 0)
-            ||
-            (u.DraftAngle == 0 && u.GetSnapFace().ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane)
-            ).ToList();
-            //倒扣面
-            var buttonedFaces = camFaces.Where(u => u.DraftAngle < 0).ToList();
-            //非平面
-            var nonPlanefaces = ele.ElecHeadFaces.Where(u => u.ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
+        //    var path = System.AppDomain.CurrentDomain.BaseDirectory;
+        //    path = System.IO.Path.Combine(path, "Temp");
+        //    path = System.IO.Path.Combine(path, "EACTCNCFILE");
+        //    if (System.IO.Directory.Exists(path))
+        //    {
+        //        System.IO.Directory.Delete(path,true);
+        //    }
 
-            //设置基准面颜色
-            allBaseFaces.ForEach(u => {
-                CAMFace.SetColor(camConfig.BaseFaceColor,u.NXOpenTag);
-            });
-            //设置垂直面颜色
-            verticalFaces.ForEach(u => {
-                u.SetColor(camConfig.VerticalPlaneColor);
-            });
-            //设置水平面颜色
-            horizontalFaces.ForEach(u => {
-                u.SetColor(camConfig.HorizontalPlaneColor);
-            });
-            //设置平缓面颜色
-            gentleFaces.ForEach(u => {
-                u.SetColor(camConfig.GentlePlaneColor);
-            });
-            //设置陡峭面颜色
-            steepFaces.ForEach(u => {
-                u.SetColor(camConfig.CurveSurfaceColor);
-            });
-            //倒扣面
-            buttonedFaces.ForEach(u => {
-                u.SetColor(camConfig.ButtonedFaceColor);
-            });
+        //    System.IO.Directory.CreateDirectory(path);
 
-            //判断加工方案
-            var camScheme = E_CamScheme.SIMPLE;
-            if (gentleFaces.Count > 0 || steepFaces.Count > 0)
-            {
-                camScheme = E_CamScheme.FIRST;
-            }
+        //    camOpers.ForEach(u => {
+        //        u.GenerateProgram(postName, path, extension);
+        //    });
 
-            //几何组根节点
-            NXOpen.Tag geometryGroupRootTag;
-
-            //程序组根节点
-            NXOpen.Tag orderGroupRootTag;
-
-            //刀具组根节点
-            NXOpen.Tag cutterGroupRootTag;
-
-            //方法组根节点
-            NXOpen.Tag methodGroupRootTag;
-
-            //几何体组
-            NXOpen.Tag workGeometryGroupTag;
-
-
-            //TODO 初始化对象
-            NXOpen.Tag setup_tag;
-            ufSession.Setup.AskSetup(out setup_tag);
-            ufSession.Setup.AskGeomRoot(setup_tag, out geometryGroupRootTag);
-            ufSession.Setup.AskProgramRoot(setup_tag, out orderGroupRootTag);
-            ufSession.Setup.AskMctRoot(setup_tag, out cutterGroupRootTag);
-            ufSession.Setup.AskMthdRoot(setup_tag, out methodGroupRootTag);
-
-            //TODO 创建坐标系和几何体
-            //加工坐标系
-            NXOpen.Tag workMcsGroupTag;
-            ufSession.Ncgeom.Create(AUTOCAM_TYPE.mill_planar, AUTOCAM_SUBTYPE.MCS, out workMcsGroupTag);
-            ufSession.Obj.SetName(workMcsGroupTag, AUTOCAM_ROOTNAME.GEOM_EACT);
-            ufSession.Ncgroup.AcceptMember(geometryGroupRootTag, workMcsGroupTag);
-
-            //TODO 设置安全平面
-            var normal = new Snap.Vector(0, 0, 1);
-            var origin = new Snap.Position((bodyBox.MinX+bodyBox.MaxX)/2, (bodyBox.MinY + bodyBox.MaxY) / 2, bodyBox.MaxZ + safeDistance);
-            ufSession.Cam.SetClearPlaneData(workMcsGroupTag, origin.Array, normal.Array);
-
-            //TODO 创建几何体
-            ufSession.Ncgeom.Create(AUTOCAM_TYPE.mill_planar, AUTOCAM_SUBTYPE.WORKPIECE, out workGeometryGroupTag);
-            ufSession.Obj.SetName(workGeometryGroupTag, AUTOCAM_ROOTNAME.WORKPIECE_EACT);
-            ufSession.Ncgroup.AcceptMember(workMcsGroupTag, workGeometryGroupTag);
-
-            //TODO 创建程序
-            NXOpen.Tag programGroupTag;
-            ufSession.Ncprog.Create(AUTOCAM_TYPE.mill_planar, AUTOCAM_SUBTYPE.PROGRAM, out programGroupTag);
-            ufSession.Obj.SetName(programGroupTag, eleInfo.Elec_Name);
-            ufSession.Ncgroup.AcceptMember(orderGroupRootTag, programGroupTag);
-
-            //TODO 添加Body作为工作几何体
-            SetCamgeom(NXOpen.UF.CamGeomType.CamPart, workGeometryGroupTag, new List<NXOpen.Tag> { body.NXOpenTag });
-
-            //TODO 设置毛坯为自动块
-            ufSession.Cam.SetAutoBlank(workGeometryGroupTag, NXOpen.UF.UFCam.BlankGeomType.AutoBlockType, autoBlankOffset);
-
-            //TODO 创建刀具
-            var cutters = new List<CAMCutter>();
-            //TODO 通过配置创建刀具
-            var D10_R = new CAMCutter();
-            D10_R.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            D10_R.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            D10_R.CutterName = "D10_R";
-            D10_R.TL_DIAMETER = 10;
-            D10_R.TL_COR1_RAD = 0;
-            D10_R.TL_HEIGHT = 70;
-            D10_R.TL_FLUTE_LN = 45;
-            D10_R.TL_NUMBER = 3;
-            D10_R.Speed = 5000;
-            D10_R.FeedRate = 3000;
-            cutters.Add(D10_R);
-
-            var D4_R = new CAMCutter();
-            D4_R.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            D4_R.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            D4_R.CutterName = "D4_R";
-            D4_R.TL_DIAMETER = 4;
-            D4_R.TL_COR1_RAD = 0;
-            D4_R.TL_HEIGHT = 50;
-            D4_R.TL_FLUTE_LN = 30;
-            D4_R.TL_NUMBER = 6;
-            D4_R.Speed = 6500;
-            D4_R.FeedRate = 1500;
-            cutters.Add(D4_R);
-
-            var D10 = new CAMCutter();
-            D10.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            D10.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            D10.CutterName = "D10";
-            D10.TL_DIAMETER = 10;
-            D10.TL_COR1_RAD = 0;
-            D10.TL_HEIGHT = 70;
-            D10.TL_FLUTE_LN = 50;
-            D10.TL_NUMBER = 9;
-            D10.Speed = 5500;
-            D10.FeedRate = 3000;
-            cutters.Add(D10);
-
-            var D8R05 = new CAMCutter();
-            D8R05.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            D8R05.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            D8R05.CutterName = "D8R0.5";
-            D8R05.TL_DIAMETER = 8;
-            D8R05.TL_COR1_RAD = 0.5;
-            D8R05.TL_HEIGHT = 70;
-            D8R05.TL_FLUTE_LN = 50;
-            D8R05.TL_NUMBER = 19;
-            D8R05.Speed = 6000;
-            D8R05.FeedRate = 3000;
-            cutters.Add(D8R05);
-
-            var D03 = new CAMCutter();
-            D03.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            D03.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            D03.CutterName = "D0.3";
-            D03.TL_DIAMETER = 0.3;
-            D03.TL_COR1_RAD = 0;
-            D03.TL_HEIGHT = 50;
-            D03.TL_FLUTE_LN = 3;
-            D03.TL_NUMBER = 21;
-            D03.Speed = 8000;
-            D03.FeedRate = 500;
-            cutters.Add(D03);
-
-            var R2 = new CAMCutter();
-            R2.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            R2.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            R2.CutterName = "R2";
-            R2.TL_DIAMETER = 4;
-            R2.TL_COR1_RAD = 2;
-            R2.TL_HEIGHT = 50;
-            R2.TL_FLUTE_LN = 30;
-            R2.TL_NUMBER = 24;
-            R2.Speed = 7000;
-            R2.FeedRate = 2000;
-            cutters.Add(R2);
-
-            var R1 = new CAMCutter();
-            R1.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            R1.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            R1.CutterName = "R1";
-            R1.TL_DIAMETER = 2;
-            R1.TL_COR1_RAD = 1;
-            R1.TL_HEIGHT = 50;
-            R1.TL_FLUTE_LN = 8;
-            R1.TL_NUMBER = 26;
-            R1.Speed = 8000;
-            R1.FeedRate = 1000;
-            cutters.Add(R1);
-
-            var D05 = new CAMCutter();
-            D05.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            D05.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            D05.CutterName = "D0.5";
-            D05.TL_DIAMETER = 0.5;
-            D05.TL_COR1_RAD = 0;
-            D05.TL_HEIGHT = 50;
-            D05.TL_FLUTE_LN = 3;
-            D05.TL_NUMBER = 18;
-            D05.Speed = 10000;
-            D05.FeedRate = 400;
-            cutters.Add(D05);
-
-            var KEZI = new CAMCutter();
-            KEZI.AUTOCAM_TYPE = AUTOCAM_TYPE.mill_planar;
-            KEZI.AUTOCAM_SUBTYPE = AUTOCAM_SUBTYPE.MILL;
-            KEZI.CutterName = "KEZI";
-            KEZI.TL_DIAMETER = 0.6;
-            KEZI.TL_COR1_RAD = 0.3;
-            KEZI.TL_HEIGHT = 70;
-            KEZI.TL_FLUTE_LN = 20;
-            KEZI.TL_NUMBER = 20;
-            KEZI.Speed = 7000;
-            KEZI.FeedRate = 500;
-            cutters.Add(KEZI);
-
-            CreateCutter(cutters, cutterGroupRootTag);
-
-
-            var camOpers = new List<AutoCAMUI.CAMOper>();
-            //杀顶
-            var FACE_MILLING_TOP_0 = new WsqAutoCAM_FACE_MILLING_TOP_Oper();
-            FACE_MILLING_TOP_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10_R);
-            FACE_MILLING_TOP_0.SetCutDepth(0.3);
-            FACE_MILLING_TOP_0.SetBoundary(ele);
-            camOpers.Add(FACE_MILLING_TOP_0);
-
-            //电极头部开粗（开粗）
-            var CAM_CAVITY_MILL_C_0 = new WsqAutoCAM_CAVITY_MILL_C_Oper();
-            CAM_CAVITY_MILL_C_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10_R);
-            CAM_CAVITY_MILL_C_0.SetCutDepth(0.3);
-            CAM_CAVITY_MILL_C_0.SetCutLevels(ele.BaseFace.NXOpenTag);
-            CAM_CAVITY_MILL_C_0.SetRegionStartPoints(ele);
-            camOpers.Add(CAM_CAVITY_MILL_C_0);
-
-            //基准台开粗（2d开粗基准）
-            var CAVITY_PLANAR_MILL_0 = new WsqAutoCAM_CAVITY_PLANAR_MILL_Oper();
-            CAVITY_PLANAR_MILL_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10_R);
-            CAVITY_PLANAR_MILL_0.SetCutDepth(0.3);
-            CAVITY_PLANAR_MILL_0.SetBoundaryAndCutFloor(ele);
-            camOpers.Add(CAVITY_PLANAR_MILL_0);
-
-            switch (camScheme)
-            {
-                case E_CamScheme.FIRST:
-                    {
-                        //残料开粗
-                        var CAVITY_MILL_REF_0 = new WsqAutoCAM_CAVITY_MILL_REF_Oper();
-                        CAVITY_MILL_REF_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D4_R);
-                        CAVITY_MILL_REF_0.SetReferenceCutter(D10_R);
-                        CAVITY_MILL_REF_0.SetCutDepth(0.15);
-                        camOpers.Add(CAVITY_MILL_REF_0);
-                        break;
-                    }
-            }
-
-            //基准平面
-            var FACE_MILLING_BASE_0 = new WsqAutoCAM_FACE_MILLING_BASE_Oper();
-            FACE_MILLING_BASE_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
-            FACE_MILLING_BASE_0.SetCutDepth(0.3);
-            FACE_MILLING_BASE_0.SetBoundary(ele);
-            camOpers.Add(FACE_MILLING_BASE_0);
-
-            //平面
-            var FACE_MILLING_0 = new WsqAutoCAM_FACE_MILLING_Oper();
-            FACE_MILLING_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10, horizontalFaces.Count>0);
-            FACE_MILLING_0.SetCutDepth(0.1);
-            FACE_MILLING_0.SetBoundary(horizontalFaces);
-            camOpers.Add(FACE_MILLING_0);
-
-            //基准侧面
-            var PLANAR_MILL_BASE_0 = new WsqAutoCAM_PLANAR_MILL_BASE_Oper();
-            PLANAR_MILL_BASE_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
-            PLANAR_MILL_BASE_0.SetCutDepth(20);
-            PLANAR_MILL_BASE_0.SetBoundaryAndCutFloor(ele);
-            camOpers.Add(PLANAR_MILL_BASE_0);
-
-            //直身位
-            var PLANAR_MILL_0 = new WsqAutoCAM_PLANAR_MILL_Oper();
-            PLANAR_MILL_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D10);
-            PLANAR_MILL_0.SetCutDepth(20);
-            PLANAR_MILL_0.SetBoundaryAndCutFloor(ele);
-            camOpers.Add(PLANAR_MILL_0);
-
-            switch (camScheme)
-            {
-                case E_CamScheme.FIRST:
-                    {
-                        //等高角度
-                        var ZLEVEL_PROFILE_STEEP_0 = new WsqAutoCAM_ZLEVEL_PROFILE_STEEP_Oper();
-                        ZLEVEL_PROFILE_STEEP_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D8R05);
-                        ZLEVEL_PROFILE_STEEP_0.SetMillArea(ele);
-                        ZLEVEL_PROFILE_STEEP_0.SetCutDepth(0.15);
-                        camOpers.Add(ZLEVEL_PROFILE_STEEP_0);
-
-                        //等高清角
-                        var ZLEVEL_CORNER_0 = new WsqAutoCAM_ZLEVEL_CORNER_Oper();
-                        ZLEVEL_CORNER_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D03);
-                        ZLEVEL_CORNER_0.SetMillArea(ele);
-                        ZLEVEL_CORNER_0.SetCutDepth(0.06);
-                        camOpers.Add(ZLEVEL_CORNER_0);
-
-                        //曲面角度
-                        var CONTOUR_AREA_NON_STEEP_0 = new WsqAutoCAM_CONTOUR_AREA_NON_STEEP_Oper();
-                        CONTOUR_AREA_NON_STEEP_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, R2);
-                        CONTOUR_AREA_NON_STEEP_0.SetMillArea(ele);
-                        CONTOUR_AREA_NON_STEEP_0.SetCutDepth(0.1);
-                        camOpers.Add(CONTOUR_AREA_NON_STEEP_0);
-
-                        //曲面清角
-                        var FLOWCUT_REF_TOOL_0 = new WsqAutoCAM_FLOWCUT_REF_TOOL_Oper();
-                        FLOWCUT_REF_TOOL_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, R1);
-                        FLOWCUT_REF_TOOL_0.SetMillArea(ele);
-                        FLOWCUT_REF_TOOL_0.SetCutDepth(0.04);
-                        camOpers.Add(FLOWCUT_REF_TOOL_0);
-
-                        //平面清角
-                        var FACE_MILLING_CORNER_0 = new WsqAutoCAM_FACE_MILLING_CORNER_Oper();
-                        FACE_MILLING_CORNER_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, D05, horizontalFaces.Count > 0);
-                        FACE_MILLING_CORNER_0.SetMillArea(Enumerable.Select(horizontalFaces, u => u.FaceTag).ToList());
-                        FACE_MILLING_CORNER_0.SetCutDepth(0.06);
-                        camOpers.Add(FACE_MILLING_CORNER_0);
-
-                        break;
-                    }
-                case E_CamScheme.SIMPLE:
-                    {
-                        break;
-                    }
-            }
-
-            //刻字
-            var CONTOUR_TEXT_Oper_0 = new WsqAutoCAM_CONTOUR_TEXT_Oper();
-            CONTOUR_TEXT_Oper_0.CreateOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, KEZI);
-            CONTOUR_TEXT_Oper_0.SetText(ele.ElecBody.Name,ele);
-            camOpers.Add(CONTOUR_TEXT_Oper_0);
-
-            ShowInfoWindow("正在生成路径...", true);
-            camOpers = camOpers.Where(u => u.OperIsValid).ToList();
-            camOpers.ForEach(u => {
-                var exMsg = u.PathGenerate();
-                if (!string.IsNullOrEmpty(exMsg))
-                {
-                    ShowInfoWindow(exMsg);
-                }
-            });
-
-            camOpers.ForEach(u => {
-                if (u.OperIsValid)
-                {
-                    string name;
-                    ufSession.Obj.AskName(u.OperTag, out name);
-                    ShowInfoWindow(string.Format("{0}:{1}", name, u.IsPathGouged() ? "过切" : "未过切"));
-                }
-            });
-
-            //获取后处理器列表
-            string[] names;
-            int count;
-            ufSession.Cam.OptAskPostNames(out count, out names);
-            var postName = "铜电极-自动换刀";
-            var extension = "nc";
-
-            var path = System.AppDomain.CurrentDomain.BaseDirectory;
-            path = System.IO.Path.Combine(path, "Temp");
-            path = System.IO.Path.Combine(path, "EACTCNCFILE");
-            if (System.IO.Directory.Exists(path))
-            {
-                System.IO.Directory.Delete(path,true);
-            }
-
-            System.IO.Directory.CreateDirectory(path);
-
-            camOpers.ForEach(u => {
-                u.GenerateProgram(postName, path, extension);
-            });
-
-            //生成nc程式
-            ufSession.Setup.GenerateProgram(
-                Snap.Globals.WorkPart.NXOpenPart.CAMSetup.Tag,
-                programGroupTag
-                , postName
-                , System.IO.Path.Combine(path, string.Format(@"{0}.{1}", ele.ElecBody.Name, extension))
-                , NXOpen.UF.UFSetup.OutputUnits.OutputUnitsOutputDefined
-                );
-        }
+        //    //生成nc程式
+        //    ufSession.Setup.GenerateProgram(
+        //        Snap.Globals.WorkPart.NXOpenPart.CAMSetup.Tag,
+        //        programGroupTag
+        //        , postName
+        //        , System.IO.Path.Combine(path, string.Format(@"{0}.{1}", ele.ElecBody.Name, extension))
+        //        , NXOpen.UF.UFSetup.OutputUnits.OutputUnitsOutputDefined
+        //        );
+        //}
 
         /// <summary>
         /// 设置Z偏置（骗刀Z）

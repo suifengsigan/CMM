@@ -20,30 +20,9 @@ namespace AutoCAMUI
         protected override void AutoSet(CAMElectrode ele)
         {
             _SetPartStockAndFloorStock(ele.CamConfig.CAVITYPartStock, ele.CamConfig.CAVITYFloorStock);
-            SetCutLevels(ele.Electrode.BaseFace.NXOpenTag);
-            SetRegionStartPoints(ele.Electrode);
+            _SetCutLevels(ele);
+            _SetRegionStartPoints(ele.Electrode);
         }
-
-        /// <summary>
-        /// 设置切削层
-        /// </summary>
-        public void SetCutLevels(Tag faceTag, levelsPosition levelsPosition = levelsPosition.BottomLevel)
-        {
-            _SetCutLevels(faceTag, levelsPosition);
-        }
-
-        /// <summary>
-        /// 设置非切削移动 区域起点
-        /// </summary>
-        public void SetRegionStartPoints(ElecManage.Electrode electrode)
-        {
-            var baseFace = electrode.BaseFace;
-            var result = baseFace.GetCenterPointEx();
-            var box = electrode.ElecBody.Box;
-            var info = electrode.GetElectrodeInfo();
-            result.X =System.Math.Abs(box.MaxX - box.MinX);
-            result.Z= System.Math.Abs(info.HEADPULLUPH);
-            Helper.SetRegionStartPoints(OperTag, result);
-        }
+        
     }
 }

@@ -17,16 +17,19 @@ namespace AutoCAMUI
 
         protected override void AutoSet(CAMElectrode ele)
         {
-            SetCutLevels(ele.Electrode);
+            SetCutLevels(ele);
         }
 
         /// <summary>
         /// 设置加工层
         /// </summary>
         /// <param name="ele">电极</param>
-        public void SetCutLevels(ElecManage.Electrode ele)
+        public void SetCutLevels(CAMElectrode ele)
         {
-            _SetCutLevels(ele.BaseFace.NXOpenTag);
+            if (OperIsValid)
+            {
+                _SetCutLevels(ele);
+            }
         }
 
     }
