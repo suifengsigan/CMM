@@ -144,8 +144,8 @@ namespace AutoCAMUI
 
                 var list=CAMOper.CreateCamOper(workGeometryGroupTag, programGroupTag, methodGroupRootTag, cutterGroupRootTag, ele, projectConfig, cutters, fireNum);
                 list = list.Where(u => u.OperIsValid).ToList();
-                var exMsg=Helper.PathGenerate(programGroupTag);
-                Helper.ShowInfoWindow(exMsg);
+                //var exMsg=Helper.PathGenerate(programGroupTag);
+                //Helper.ShowInfoWindow(exMsg);
             };
 
             if (eleInfo.FINISH_NUMBER > 0)  //精
