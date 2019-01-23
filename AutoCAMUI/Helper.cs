@@ -66,7 +66,10 @@ namespace AutoCAMUI
 
                 });
 
-                System.IO.File.WriteAllText(optFile, str.ToString());
+                if (optFileInfo != str.ToString())
+                {
+                    System.IO.File.WriteAllText(optFile, str.ToString());
+                }
             }
 
             //ufSession.Cam.ReinitOpt(eact_cam_general_optFile);
