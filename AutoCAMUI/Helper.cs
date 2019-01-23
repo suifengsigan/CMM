@@ -677,9 +677,8 @@ namespace AutoCAMUI
         /// <summary>
         /// //通过Z轴偏置值设置加工层
         /// </summary>
-        public static void SetCutLevels(NXOpen.Tag operTag,NXOpen.Tag faceTag , int levelsPosition = 1)
+        public static void SetCutLevels(NXOpen.Tag operTag, double zLevels, int levelsPosition = 1)
         {
-            double zLevels = Snap.NX.Face.Wrap(faceTag).GetCenterPointEx().Z;
             NXOpen.UF.UFCutLevels.CutLevelsStruct cut_levels;
             ufSession.CutLevels.SetRangeType(operTag, NXOpen.UF.ParamClvRangeType.ParamClvRangeUserDefined, out cut_levels);
             var cut_levels_ptr_addr = new NXOpen.UF.UFCutLevels.CutLevelsStruct[] { cut_levels };
@@ -702,7 +701,15 @@ namespace AutoCAMUI
                 }
                 ufSession.CutLevels.EditLevelUsingZ(operTag, num, zLevels, item.cut_levels[num].local_cut_depth, out cut_levels);
             }
+        }
 
+        /// <summary>
+        /// //通过Z轴偏置值设置加工层
+        /// </summary>
+        public static void SetCutLevels(NXOpen.Tag operTag,NXOpen.Tag faceTag , int levelsPosition = 1)
+        {
+            double zLevels = Snap.NX.Face.Wrap(faceTag).GetCenterPointEx().Z;
+            SetCutLevels(operTag, zLevels, levelsPosition);
         }
 
         /// <summary>
