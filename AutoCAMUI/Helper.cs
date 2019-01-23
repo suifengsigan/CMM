@@ -682,28 +682,47 @@ namespace AutoCAMUI
         /// </summary>
         public static void SetCutLevels(NXOpen.Tag operTag, double zLevels, int levelsPosition = 1)
         {
+            SetCutLevels(operTag, new List<double> { zLevels }, levelsPosition);
+        }
+
+        /// <summary>
+        /// //通过Z轴偏置值设置加工层
+        /// </summary>
+        public static void SetCutLevels(NXOpen.Tag operTag, List<double> zLevels, int levelsPosition = 1)
+        {
             NXOpen.UF.UFCutLevels.CutLevelsStruct cut_levels;
             ufSession.CutLevels.SetRangeType(operTag, NXOpen.UF.ParamClvRangeType.ParamClvRangeUserDefined, out cut_levels);
-            var cut_levels_ptr_addr = new NXOpen.UF.UFCutLevels.CutLevelsStruct[] { cut_levels };
-            SnapEx.EactUF.UF_CUT_LEVELS_load(operTag, ref cut_levels_ptr_addr);
-            foreach (var item in cut_levels_ptr_addr)
+            int num = 0;
+            switch (levelsPosition)
             {
-                int num_levels = item.num_levels;
-                var num = 0;
-                switch (levelsPosition)
-                {
-                    case 1: //BottomLevel
+                case 0:
+                    {
+                        NXOpen.UF.UFCutLevels.CutLevelsStruct tmpCut_levels;
+                        ufSession.CutLevels.EditLevelUsingZ(operTag, num, zLevels.First(), cut_levels.cut_levels[num].local_cut_depth, out tmpCut_levels);
+                        break;
+                    }
+                default:
+                    {
+                        num = cut_levels.num_levels - 1;
+                        for (int i = 0; i < zLevels.Count; i++)
                         {
-                            num = num_levels - 1;
-                            break;
+                            NXOpen.UF.UFCutLevels.CutLevelsStruct tmpCut_levels;
+
+                            if (i == 0)
+                            {
+                                ufSession.CutLevels.EditLevelUsingZ(operTag, num, zLevels[i], cut_levels.cut_levels[num].local_cut_depth, out tmpCut_levels);
+                            }
+                            else
+                            {
+                                var tmpZ = zLevels[i];
+                                ufSession.CutLevels.AddLevelsUsingZ(operTag, num + i, ref tmpZ, cut_levels.cut_levels[num].local_cut_depth, out tmpCut_levels);
+                            }
                         }
-                    default: //TopLevel
-                        {
-                            break;
-                        }
-                }
-                ufSession.CutLevels.EditLevelUsingZ(operTag, num, zLevels, item.cut_levels[num].local_cut_depth, out cut_levels);
+                        break;
+                    }
             }
+          
+           
         }
 
         /// <summary>
