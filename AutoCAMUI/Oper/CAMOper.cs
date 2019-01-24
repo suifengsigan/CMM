@@ -416,13 +416,14 @@ namespace AutoCAMUI
         /// <summary>
         /// 设置非切削移动 区域起点
         /// </summary>
-        protected void _SetRegionStartPoints(ElecManage.Electrode electrode)
+        protected virtual void _SetRegionStartPoints(CAMElectrode ele)
         {
             if (OperIsValid)
             {
+                var electrode = ele.Electrode;
                 var baseFace = electrode.BaseFace;
                 var result = baseFace.GetCenterPointEx();
-                var box = electrode.ElecBody.Box;
+                var box = ele.BodyBox;
                 var info = electrode.GetElectrodeInfo();
                 result.X = System.Math.Abs(box.MaxX - box.MinX);
                 result.Z = System.Math.Abs(info.HEADPULLUPH);

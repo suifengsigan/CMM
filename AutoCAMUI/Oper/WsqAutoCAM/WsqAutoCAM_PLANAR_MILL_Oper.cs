@@ -16,6 +16,7 @@ namespace AutoCAMUI
         protected override void AutoSet(CAMElectrode ele)
         {
             SetBoundaryAndCutFloor(ele.Electrode);
+            _SetRegionStartPoints(ele);
         }
 
         /// <summary>
@@ -35,8 +36,19 @@ namespace AutoCAMUI
             List<NXOpen.Tag> peripheral;
             List<List<NXOpen.Tag>> innerCircumference;
             Helper.GetOutlineCurve(ele.BaseFace, out peripheral, out innerCircumference);
+            var trans = Snap.Geom.Transform.CreateTranslation(0, 0, ele.GetElectrodeInfo().HEADPULLUPH);
             innerCircumference.ForEach(u => {
-                Helper.SetBoundaryByCurves(u
+                var curves = new List<NXOpen.Tag>();
+                u.ForEach(m => {
+                    NXOpen.Tag tmpValue;
+                    ufSession.Modl.CreateCurveFromEdge(m, out tmpValue);
+                    var curve = Snap.NX.Curve.Wrap(tmpValue);
+                    curve.IsHidden = true;
+                    curve.Move(trans);
+                    curves.Add(tmpValue);
+                });
+               
+                Helper.SetBoundaryByCurves(curves
                , NXOpen.UF.CamGeomType.CamPart, OperTag, NXOpen.UF.CamMaterialSide.CamMaterialSideInLeft);
             });
 

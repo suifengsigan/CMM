@@ -21,7 +21,7 @@ namespace AutoCAMUI
         {
             _SetPartStockAndFloorStock(ele.CamConfig.CAVITYPartStock, ele.CamConfig.CAVITYFloorStock);
             _SetCutLevels(ele);
-            _SetRegionStartPoints(ele.Electrode);
+            _SetRegionStartPoints(ele);
         }
       
     }
