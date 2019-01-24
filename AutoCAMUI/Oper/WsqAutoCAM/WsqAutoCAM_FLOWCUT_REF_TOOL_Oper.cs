@@ -27,8 +27,7 @@ namespace AutoCAMUI
 
         public void SetMillArea(CAMElectrode ele)
         {
-            var faces = ele.Electrode.ElecHeadFaces.Where(u => u.ObjectSubType != Snap.NX.ObjectTypes.SubType.FacePlane).ToList();
-            var tags = Enumerable.Select(faces, u => u.NXOpenTag).ToList();
+            var tags = new List<NXOpen.Tag>();
             ele.GentleFaces.ForEach(u => {
                 tags.Add(u.FaceTag);
             });
