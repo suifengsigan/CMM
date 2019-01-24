@@ -22,7 +22,7 @@ namespace AutoCAMUI
 
         public override void SetCutDepth(double depth)
         {
-            //_SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH);
+            _SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_STEPOVER_DIST);
         }
 
         /// <summary>
