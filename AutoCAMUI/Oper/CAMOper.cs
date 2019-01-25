@@ -75,7 +75,7 @@ namespace AutoCAMUI
                     return c;
                 };
                 var cutter = GetCutterAction(item.刀具);
-                var refCutter = GetCutterAction(item.参考刀具);
+                var refCutter = cutterDetails.FirstOrDefault(m => m.CutterName == item.参考刀具);
 
                 if (operConfig == null)
                 {
