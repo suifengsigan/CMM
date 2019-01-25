@@ -20,9 +20,21 @@ namespace AutoCAMUI
             SetMillArea(ele);
         }
 
+        public override void SetReferenceCutter(CAMCutter cutter)
+        {
+            if (OperIsValid)
+            {
+                NX.Entry.GetInstance().SetFlowCutRefTool(OperTag, cutter.CutterTag);
+            }
+            
+        }
+
         public override void SetCutDepth(double depth)
         {
-            //_SetCutDepth(depth, NXOpen.UF.UFConstants.UF_PARAM_CUTLEV_GLOBAL_CUT_DEPTH);
+            if (OperIsValid)
+            {
+                NX.Entry.GetInstance().SetFlowCutStepOver(OperTag, depth);
+            }
         }
 
         public void SetMillArea(CAMElectrode ele)
